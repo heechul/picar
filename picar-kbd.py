@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
+import os
 import time
 import atexit
 
@@ -65,9 +66,12 @@ def read_single_keypress():
 steeringMotor = mh.getMotor(1)
 speedMotor = mh.getMotor(3)
 
-MAX_SPEED = 200
 MAX_STEERING = 50 # safe margin.
-currentSpeed = 0
+MAX_SPEED = 1500  # pwm  1500us/20ms = max full throttle
+NEU_SPEED = 1270  # pwm  1270us/20ms = stop
+MIN_SPEED = 950   # pwm   950us/20ms = reverse full throttle
+
+currentSpeed = NEU_SPEED
 
 # set the speed to start, from 0 (off) to 255 (max speed)
 steeringMotor.setSpeed(127)
@@ -101,29 +105,21 @@ def ffw(inc):
         currentSpeed = currentSpeed + inc
         if currentSpeed > MAX_SPEED:
                 currentSpeed = MAX_SPEED
-        if currentSpeed > 0:
-                speedMotor.run(Adafruit_MotorHAT.FORWARD)
-                speedMotor.setSpeed(currentSpeed)                
-        else:
-                speedMotor.setSpeed(-currentSpeed)
-        print "accellerate: ", currentSpeed
+	os.system("echo 0=%dus > /dev/servoblaster" % currentSpeed)
+	print "accel:", currentSpeed
 def stop():
         global currentSpeed
-        currentSpeed = 0
-        speedMotor.run(Adafruit_MotorHAT.RELEASE);
+        currentSpeed = NEU_SPEED
         print "stop"
+	os.system("echo 0=%dus > /dev/servoblaster" % currentSpeed)
 
 def rew(dec):
         global currentSpeed
-        currentSpeed -= dec
-        if currentSpeed < -MAX_SPEED:
-                currentSpeed = -MAX_SPEED
-        if currentSpeed < 0:
-                speedMotor.run(Adafruit_MotorHAT.BACKWARD)
-                speedMotor.setSpeed(-currentSpeed)
-        else:
-                speedMotor.setSpeed(currentSpeed)
-        print "decellerate: ", currentSpeed
+        currentSpeed = currentSpeed - dec
+        if currentSpeed < MIN_SPEED:
+                currentSpeed = MIN_SPEED
+	os.system("echo 0=%dus > /dev/servoblaster" % currentSpeed)
+        print "slowdown: ", currentSpeed
         
 
 while (True):
@@ -134,11 +130,11 @@ while (True):
         elif ch == 'k':
                 right(MAX_STEERING, 0.05)
         elif ch == 'a':
-                ffw(10)
+                ffw(20)
         elif ch == 's':
                 stop()
         elif ch == 'z':
-                rew(10)
+                rew(20)
         elif ch == 'q':
                 break
         
