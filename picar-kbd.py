@@ -14,8 +14,11 @@ def turnOffMotors():
 	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
 	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
 	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
-
+def turnOffRecording():
+	os.system("killall -HUP mencoder")
+	
 atexit.register(turnOffMotors)
+atexit.register(turnOffRecording)
 
 def read_single_keypress():
     """Waits for a single keypress on stdin.
@@ -121,6 +124,15 @@ def rew(dec):
 	os.system("echo 0=%dus > /dev/servoblaster" % currentSpeed)
         print "slowdown: ", currentSpeed
         
+recCmd = 'start'
+def record_video():
+	global recCmd
+	if recCmd == 'start':
+		os.system("mencoder tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -nosound -ovc lavc -o out-mencoder.avi &")
+		recCmd = 'stop'
+	else:
+		os.system("killall -HUP mencoder")
+		recCmd = 'start'
 
 while (True):
         ch = read_single_keypress()
@@ -137,4 +149,5 @@ while (True):
                 rew(20)
         elif ch == 'q':
                 break
-        
+	elif ch == 'r':
+		record_video()
