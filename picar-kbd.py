@@ -9,16 +9,14 @@ import atexit
 mh = Adafruit_MotorHAT(addr=0x60)
 
 # recommended for auto-disabling motors on shutdown!
-def turnOffMotors():
+def turnOff():
 	mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
 	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
 	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
 	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
-def turnOffRecording():
 	os.system("killall -HUP mencoder")
 	
-atexit.register(turnOffMotors)
-atexit.register(turnOffRecording)
+atexit.register(turnOff)
 
 def read_single_keypress():
     """Waits for a single keypress on stdin.
@@ -91,15 +89,15 @@ speedMotor.run(Adafruit_MotorHAT.RELEASE);
 
 def right(speed, delay):
         steeringMotor.run(Adafruit_MotorHAT.FORWARD)
-        print "left"        
         steeringMotor.setSpeed(speed)
+        print "left"        
         time.sleep(delay)
         steeringMotor.run(Adafruit_MotorHAT.RELEASE);
 
 def left(speed, delay):
         steeringMotor.run(Adafruit_MotorHAT.BACKWARD)
-        print "right"
         steeringMotor.setSpeed(speed)
+        print "right"
         time.sleep(delay)
         steeringMotor.run(Adafruit_MotorHAT.RELEASE);
 
@@ -138,9 +136,9 @@ while (True):
         ch = read_single_keypress()
         print "ch = ", ch 
         if ch == 'j':
-                left(MAX_STEERING, 0.05)
+                left(MAX_STEERING, 0.10)
         elif ch == 'k':
-                right(MAX_STEERING, 0.05)
+                right(MAX_STEERING, 0.10)
         elif ch == 'a':
                 ffw(20)
         elif ch == 's':

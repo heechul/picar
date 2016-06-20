@@ -32,13 +32,13 @@ currentSpeed = NEU_SPEED
 
 
 def right(rad):
-    speed = int(-rad / 0.5 * 255)
+    speed = int(-rad / 0.5 * 100)
     steeringMotor.run(Adafruit_MotorHAT.FORWARD)
     steeringMotor.setSpeed(speed)
     print "right"
 
 def left(rad):
-    speed = int(rad / 0.5 * 255)
+    speed = int(rad / 0.5 * 100)
     steeringMotor.run(Adafruit_MotorHAT.BACKWARD)
     steeringMotor.setSpeed(speed)
     print "left"
@@ -46,6 +46,16 @@ def left(rad):
 def center():
     steeringMotor.run(Adafruit_MotorHAT.RELEASE);
     print "center"
+
+def ffw(vel):
+    speed = int(vel / 0.5 * 150) + NEU_SPEED
+    os.system("echo 0=%dus > /dev/servoblaster" % speed)
+    print "accel:", speed
+    
+def stop():
+    print "stop"
+    os.system("echo 0=%dus > /dev/servoblaster" % NEU_SPEED)
+    
     
 def callback(msg):
     rospy.loginfo("Received a /cmd_vel message!")
@@ -55,8 +65,14 @@ def callback(msg):
     # Do velocity processing here:
     # Use the kinematics of your robot to map linear and angular velocities into motor commands
 
+    # speed
+    if msg.linear.x < 0.01 and msg.linear.x > -0.01:
+        stop()
+    else:
+        ffw(msg.linear.x)
+    
+    # turn 
     if msg.angular.z < -0.01:
-        # turn right
         right(msg.angular.z)
     elif msg.angular.z > 0.01:
         left(msg.angular.z)
