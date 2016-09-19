@@ -11,7 +11,10 @@
 
 <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
-<script type="text/javascript" src="http://cdn.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script>
+
+<!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script> -->
+
+<script type="text/javascript" src="http://192.168.0.109:8080/keyboardteleop.js"></script> 
 
 <script type="text/javascript">
   /**
@@ -34,7 +37,7 @@
       range : 'min',
       min : 0,
       max : 100,
-      value : 90,
+      value : 50,
       slide : function(event, ui) {
         // Change the speed label.
         $('#speed-label').html('Speed: ' + ui.value + '%');
@@ -58,7 +61,7 @@
       <img src="./?action=stream" />
     </center>
 <hr>
-  This is Heechul's Robot Control (Teleop) <p>
+  Heechul's Robot Control (Teleop) <p>
 
   W - forward <br>
   A - left <br>
