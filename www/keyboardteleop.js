@@ -33,6 +33,9 @@ KEYBOARDTELEOP.Teleop = function(options) {
     var y = 0;
     var z = 0;
 
+    var speed_throttle = 0.5;
+    var speed_steering = 0.5;
+
     var cmdVel = new ROSLIB.Topic({
 	ros : ros,
 	name : topic,
@@ -48,45 +51,56 @@ KEYBOARDTELEOP.Teleop = function(options) {
 
 	var pub = true;
 
-	var speed = 0;
-	// throttle the speed by the slider and throttle constant
-	speed = throttle * that.scale;
-	
 	// check which key was pressed
 	switch (keyCode) {
 	case 74:
-	    // turn left
-            x = 0;
-	    z = 1 * speed;
+	    // turn left: j
+	    z = 1.0;
 	    break;
 	case 73:
-	    // up
-	    x = 1.0 * speed;
-            z = 0;
+	    // up: i
+	    x = 1.0;
 	    break;
 	case 76:
-	    // turn right
-            x = 0;
-	    z = -1 * speed;
+	    // turn right: l
+	    z = -1.0;
 	    break;
-	case 188:
-	    // down
-	    x = -1.0 * speed;
+	case 75:
+	    // center: k
 	    z = 0;
 	    break;
+	case 188:
+	    // down: ,
+	    x = -1.0;
+	    break;
 	case 85:
-	    // forward + left
-	    x = 1.0 * speed;
-	    z = 1.0 * speed;
+	    // forward + left: u
+	    x = 1.0;
+	    z = 1.0;
 	    break;
 	case 79:
-	    // forward + right
-	    x = 1.0 * speed;
-	    z = -1.0 * speed;
+	    // forward + right: o
+	    x = 1.0;
+	    z = -1.0;
+	    break;
+	case 87:
+	    // W = speed up
+	    speed_throttle = Math.max(0.0, Math.min(speed_throttle + 0.1, 1.0));
+	    break;
+	case 88:
+	    // W = speed down
+	    speed_throttle = Math.max(0.0, Math.min(speed_throttle - 0.1, 1.0));
+	    break;
+	case 69:
+	    // E = steering speed up
+	    speed_steering = Math.max(0.0, Math.min(speed_steering + 0.1, 1.0));
+	    break;
+	case 67:
+	    // C = steering speed down
+	    speed_steering = Math.max(0.0, Math.min(speed_steering - 0.1, 1.0));
 	    break;
 	default:
-	    // pub = false;
-	    x = y = z = 0;
+	    x = z = 0.0;
 	}
 
 	// publish the command
@@ -95,10 +109,10 @@ KEYBOARDTELEOP.Teleop = function(options) {
 		angular : {
 		    x : 0,
 		    y : 0,
-		    z : z
+		    z : z * speed_steering
 		},
 		linear : {
-		    x : x,
+		    x : x * speed_throttle,
 		    y : 0,
 		    z : 0
 		}
