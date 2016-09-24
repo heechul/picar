@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 import rospy
 from geometry_msgs.msg import Twist 
+from sensor_msgs.msg import Imu
+from tf.transformations import euler_from_quaternion
+
+rad2degrees = 180.0/math.pi
+precision = 2 #round to this number of digits
+
+yaw_offset = 0 #used to align animation upon key press
+yaw_measured = 0
 
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
@@ -59,9 +67,8 @@ def stop():
     
 def callback(msg):
     rospy.loginfo("Received a /cmd_vel message!")
-    rospy.loginfo("Linear Components: [%f, %f, %f]"%(msg.linear.x, msg.linear.y, msg.linear.z))
-    rospy.loginfo("Angular Components: [%f, %f, %f]"%(msg.angular.x, msg.angular.y, msg.angular.z))
-   
+    rospy.loginfo("Linear Components: [%f, %f, %f]" % (msg.linear.x, msg.linear.y, msg.linear.z))
+    rospy.loginfo("Angular Components: [%f, %f, %f]" % (msg.angular.x, msg.angular.y, msg.angular.z))
     # Do velocity processing here:
     # Use the kinematics of your robot to map linear and angular velocities into motor commands
 
@@ -78,7 +85,25 @@ def callback(msg):
         left(msg.angular.z)
     else:
         center()
- 
+
+def processIMU_message(imuMsg):
+    global yaw_offset, yaw_measured
+
+    roll=0
+    pitch=0
+    yaw=0
+
+    quaternion = (
+      imuMsg.orientation.x,
+      imuMsg.orientation.y,
+      imuMsg.orientation.z,
+      imuMsg.orientation.w)
+    (roll,pitch,yaw) = euler_from_quaternion(quaternion)
+    
+    print(str(round((yaw)*rad2degrees, precision)) + " / " + str(round((yaw), precision)))
+    
+    yaw_measured = yaw
+
 def listener():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
@@ -87,7 +112,7 @@ def listener():
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
     rospy.init_node('picar_base', anonymous=True)
-
+    sub = rospy.Subscriber('imu', Imu, processIMU_message)
     rospy.Subscriber("cmd_vel", Twist, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
