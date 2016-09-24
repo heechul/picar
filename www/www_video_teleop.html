@@ -14,7 +14,7 @@
 
 <!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script> -->
 
-<script type="text/javascript" src="http://192.168.0.109:8080/keyboardteleop.js"></script> 
+<script type="text/javascript" src="http://pi3.local:8080/keyboardteleop.js"></script> 
 
 <script type="text/javascript">
   /**
@@ -23,7 +23,7 @@
   function init() {
     // Connecting to ROS.
     var ros = new ROSLIB.Ros({
-      url : 'ws://192.168.0.109:9090'
+      url : 'ws://pi3.local:9090'
     });
 
     // Initialize the teleop.
