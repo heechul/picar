@@ -11,10 +11,7 @@
 
 <script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script type="text/javascript" src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
-
-<!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script> -->
-
-<script type="text/javascript" src="http://devboard-picar:8080/keyboardteleop.js"></script> 
+<script type="text/javascript" src="http://cdn.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script>
 
 <script type="text/javascript">
   /**
@@ -23,7 +20,7 @@
   function init() {
     // Connecting to ROS.
     var ros = new ROSLIB.Ros({
-      url : 'ws://devboard-picar:9090'
+      url : 'ws://192.168.0.109:9090'
     });
 
     // Initialize the teleop.
@@ -31,6 +28,24 @@
       ros : ros,
       topic : '/cmd_vel'
     });
+
+    // Create a UI slider using JQuery UI.
+    $('#speed-slider').slider({
+      range : 'min',
+      min : 0,
+      max : 100,
+      value : 90,
+      slide : function(event, ui) {
+        // Change the speed label.
+        $('#speed-label').html('Speed: ' + ui.value + '%');
+        // Scale the speed.
+        teleop.scale = (ui.value / 100.0);
+      }
+    });
+
+    // Set the initial speed .
+    $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
+    teleop.scale = ($('#speed-slider').slider('value') / 100.0);
   }
 </script>
 </head>
@@ -43,27 +58,18 @@
       <img src="./?action=stream" />
     </center>
 <hr>
-  Heechul's Robot Control (Teleop) <p>
+  This is Heechul's Robot Control (Teleop) <p>
 
-<pre>
-W  E       U    I    O     
-           J    K    L
-X  C            <            
-</pre>
+  W - forward <br>
+  A - left <br>
+  D - right <br>
+  S - backward <br>
 
-<hr>
-  I - forward <br>
-  J - left <br>
-  L - right <br>
-  , - backward <br>
-  K - stop <br>
-  U - left turn <br>
-  O - right turn <br>
+  <br> 
+  Q - left turn <br>
+  E - right turn <br>
 
-  W - throttle speed up <br>
-  X - throttle speed down <br>
-  E - steering speed up <br>
-  C - steering speed down <br>
+ 
 </body>
 </html>
 
