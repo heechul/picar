@@ -1,0 +1,16 @@
+vlc v4l2:///dev/video0
+mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0
+
+cvlc v4l2:///dev/video0 :v4l2-standard= :input-slave=alsa://hw:0,0 :live-caching=300 :sout="#transcode{vcodec=WMV2,vb=800,scale=1,acodec=wma2,ab=128,channels=2,samplerate=44100}:http{dst=:8080/stream.wmv}"
+
+
+	
+http://stackoverflow.com/questions/24017930/how-to-stream-with-ffmpeg-via-http-protocol
+
+ffmpeg -f v4l2 -r 25 -i /dev/video0 http://192.168.0.108:8090/cam1.ffm
+
+avconv -f oss -f video4linux2 -i /dev/video0 out.mpg
+  > 4 threads. 30-50% util
+
+mencoder tv:// -tv driver=v4l2:device=/dev/video0 -ovc lavc -noaudio -o webcam.avi
+  > 1 thread, 80% util

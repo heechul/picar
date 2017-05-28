@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import math
 from geometry_msgs.msg import Twist 
 from sensor_msgs.msg import Imu
 from tf.transformations import euler_from_quaternion
@@ -100,7 +101,7 @@ def processIMU_message(imuMsg):
       imuMsg.orientation.w)
     (roll,pitch,yaw) = euler_from_quaternion(quaternion)
     
-    print(str(round((yaw)*rad2degrees, precision)) + " / " + str(round((yaw), precision)))
+    # print(str(round((yaw)*rad2degrees, precision)) + " / " + str(round((yaw), precision)))
     
     yaw_measured = yaw
 

@@ -116,7 +116,10 @@ def stop():
 
 def rew(dec):
         global currentSpeed
-        currentSpeed = currentSpeed - dec
+	if currentSpeed == NEU_SPEED:
+		currentSpeed = 1250
+	else:
+        	currentSpeed = currentSpeed - dec
         if currentSpeed < MIN_SPEED:
                 currentSpeed = MIN_SPEED
 	os.system("echo 0=%dus > /dev/servoblaster" % currentSpeed)
@@ -140,11 +143,11 @@ while (True):
         elif ch == 'k':
                 right(MAX_STEERING, 0.10)
         elif ch == 'a':
-                ffw(20)
+                ffw(10)
         elif ch == 's':
                 stop()
         elif ch == 'z':
-                rew(20)
+                rew(10)
         elif ch == 'q':
                 break
 	elif ch == 'r':
