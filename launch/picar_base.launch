@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-    <node pkg="picar_base" type="motor_driver.py" name="motor_driver">
-    </node>
+    <node pkg="picar_base" type="motor_driver.py" name="motor_driver" output="screen" />
+
+    <node pkg="picar_base" type="mjpg_streamer" name="streamer" output="screen" args="-o 'output_http.so -w /home/heechul/PiCar2016/www' -i 'input_uvc.so'" />
 
     <node pkg="rtimulib_ros" type="rtimulib_ros" name="rtimulib_node" output="screen">
         <param name="calibration_file_path" value="$(find rtimulib_ros)/config"/>
@@ -25,8 +26,8 @@
       <param name="certfile" value="$(arg certfile)" />
       <param name="keyfile" value="$(arg keyfile)" />
       <param name="authenticate" value="$(arg authenticate)" />
-      <param name="port" value="$(arg port)"/>
-      <param name="address" value="$(arg address)"/>
+      <param name="port" value="9090"/>
+      <param name="address" value="devboard-picar-wifi"/>
       <param name="retry_startup_delay" value="$(arg retry_startup_delay)"/>
       <param name="fragment_timeout" value="$(arg fragment_timeout)"/>
       <param name="delay_between_messages" value="$(arg delay_between_messages)"/>
@@ -43,6 +44,7 @@
       <param name="delay_between_messages" value="$(arg delay_between_messages)"/>
       <param name="max_message_size" value="$(arg max_message_size)"/>
     </node>
+
   </group>
   <node name="rosapi" pkg="rosapi" type="rosapi_node" />
 </launch>

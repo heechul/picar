@@ -120,4 +120,10 @@ def listener():
     rospy.spin()
 
 if __name__ == '__main__':
+    print "***************************************"
+    print "       Move base for the PiCar         "
+    print "                                       "
+    print "Listen '/cmd_vel' topic                "
+    print "Control streering and throttle motors  "
+    print "***************************************"
     listener()
