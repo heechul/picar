@@ -2,8 +2,18 @@
 <launch>
     <node pkg="picar_base" type="motor_driver.py" name="motor_driver" output="screen" />
 
-    <node pkg="picar_base" type="mjpg_streamer" name="streamer" output="screen" args="-o 'output_http.so -w /home/heechul/PiCar2016/www' -i 'input_uvc.so'" />
+    <node pkg="picar_base" type="mjpg_streamer" name="streamer" output="screen" args="-o 'output_http.so -w /home/heechul/PiCar2016/www' -i 'input_uvc.so -f 30 -r 320x240'" />
 
+    <!-- <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" > -->
+    <!--   <param name="video_device" value="/dev/video0" /> -->
+    <!--   <param name="image_width" value="320" /> -->
+    <!--   <param name="image_height" value="240" /> -->
+    <!--   <param name="framerate" value="30" /> -->
+    <!--   <param name="pixel_format" value="yuyv" /> -->
+    <!--   <param name="camera_frame_id" value="usb_cam" /> -->
+    <!--   <param name="io_method" value="mmap"/> -->
+    <!-- </node> -->
+    
     <node pkg="rtimulib_ros" type="rtimulib_ros" name="rtimulib_node" output="screen">
         <param name="calibration_file_path" value="$(find rtimulib_ros)/config"/>
         <param name="frame_id" value="map"/> <!-- /map is used for debug in RViz, to be replaced by the imu_link -->
