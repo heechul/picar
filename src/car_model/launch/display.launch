@@ -13,8 +13,6 @@
         </node>
         <!--
         -->
-        <node name="joints" pkg="joint_state_publisher" type="joint_state_publisher"/>
-
 
         <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
 </launch>

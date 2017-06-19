@@ -27,8 +27,8 @@
     <collision>
       <geometry>
         <box size="0.25 0.5 0.0625"/>
-        <origin rpy="0 0 0" xyz="0 0 0.125"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.125"/>
     </collision>
     <inertial>
       <mass value="5"/>
@@ -162,7 +162,7 @@
   </link>
   <joint name="back_left_wheel_to_back_axle" type="revolute">
     <axis xyz="0 0 1"/>
-    <limit effort="1000.0" lower="3.14" upper="3.14" velocity="1.0"/>
+    <limit effort="1000.0" lower="-3140.0" upper="3140.0" velocity="1.0"/>
     <parent link="base_link"/>
     <child link="back_left_wheel"/>
     <origin rpy="0 -1.57 0" xyz="-0.25 -0.3 0.125"/>
@@ -189,7 +189,7 @@
   </link>
   <joint name="back_right_wheel_to_back_axle" type="revolute">
     <axis xyz="0 0 1"/>
-    <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="1.0"/>
+    <limit effort="1000.0" lower="-3140.0" upper="3140.0" velocity="1.0"/>
     <parent link="base_link"/>
     <child link="back_right_wheel"/>
     <origin rpy="0 -1.57 0" xyz="0.25 -0.3 0.125"/>

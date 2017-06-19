@@ -27,12 +27,14 @@
           </inertial>
         </xacro:macro>
 
+
         <xacro:macro name="global_joint" params="child">
                 <joint name="world_joint_to_${child}" type="fixed">
-                        <parent link="base_link" />
+                        <parent link="world" />
                         <child link="${child}" />
                 </joint>
         </xacro:macro>
+
 
 
         <xacro:macro name="car_base">
@@ -48,12 +50,13 @@
                         <collision>
                                 <geometry>
                                         <box size="${baselength/2} ${baselength} ${baselength/8}" />
-                                        <origin rpy="0 0 0" xyz="0 0 ${baseheight}" />
                                 </geometry>
+                                <origin rpy="0 0 0" xyz="0 0 ${baseheight}" />
                         </collision>
                         <xacro:default_inertial mass="5"/>
 
                 </link>
+
 
         </xacro:macro>
 
@@ -159,8 +162,8 @@
 
         <xacro:car_front_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="1" position="1" upper="0.785" lower="-0.393" />
         <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1" position="-1" upper="0.393" lower="-0.785" />
-        <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"  upper="3.14" lower="3.14" />
-        <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"  upper="3.14" lower="-3.14" />
+        <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
+        <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
         <!--
         -->
 
