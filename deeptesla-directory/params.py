@@ -29,4 +29,3 @@ epochs['train'] = [19]#[3, 4, 5, 6, 8]
 epochs['val'] = [20]#[1, 2, 7, 9, 10]
 
 maxAngle = 30 #Estimate for now, will need to get actual value in the future
-givenData = 0
