@@ -24,18 +24,16 @@ saver = tf.train.Saver()
 model_name = 'model.ckpt'
 model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
+data_dir = params.data_dir
 
 epoch_ids = [23] #sorted(list(set(itertools.chain(*params.epochs.values()))))
 
 for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
-    if not params.givenData:
-        if not os.path.exists("datasets/dataset{}/out-mencoder2.avi".format(epoch_id)): #If the video used for visualization doesn't exist
-            assert os.path.exists("datasets/dataset{}/out-mencoder.avi".format(epoch_id)) #Make sure a video exists
-            os.system("ffmpeg -i datasets/dataset%i/out-mencoder.avi -vf scale=1280:720 datasets/dataset%i/out-mencoder2.avi" % (epoch_id, epoch_id)) #Create a copy video that is resized to be 1280x720 so that it can be visualized
-        vid_path = "datasets/dataset{0}/out-mencoder2.avi".format(epoch_id) 
-    else:
-        vid_path = cm.jn(params.data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
+    if not os.path.exists(data_dir + "/dataset{}/out-mencoder2.avi".format(epoch_id)): #If the video used for visualization doesn't exist
+        assert os.path.exists(data_dir + "/dataset{}/out-mencoder.avi".format(epoch_id)) #Make sure a video exists
+        os.system("ffmpeg -i " + data_dir + "/dataset%i/out-mencoder.avi -vf scale=1280:720 datasets/dataset%i/out-mencoder2.avi" % (epoch_id, epoch_id)) #Create a copy video that is resized to be 1280x720 so that it can be visualized
+    vid_path = data_dir + "/dataset{0}/out-mencoder2.avi".format(epoch_id) 
     assert os.path.isfile(vid_path)
     frame_count = cm.frame_count(vid_path)
     cap = cv2.VideoCapture(vid_path)

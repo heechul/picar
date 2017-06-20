@@ -36,24 +36,15 @@ import ImageFont
 import local_common as cm
 
 MAX_ANGLE = params.maxAngle #Value used to adjust steering angles and statistics, they would otherwise be between -1 and 1
-HUMAN_MAX_ANGLE = params.maxAngle
-CSV_HEADER = 'angle'
-
-if params.givenData: #If using the given deep tesla data
-    HUMAN_MAX_ANGLE = 1 #Set max angle to 1, this way the actual angles aren't affected
-    CSV_HEADER = 'wheel'
 
 def get_human_steering(epoch_id):
     epoch_dir = params.data_dir
     assert os.path.isdir(epoch_dir)
-    if not params.givenData:
-        steering_path = "datasets/dataset%i/data.csv" % epoch_id 
-    else:
-        steering_path = cm.jn(epoch_dir, 'epoch{:0>2}_steering.csv'.format(epoch_id))
+    steering_path = epoch_dir + "/dataset%i/data.csv" % epoch_id 
     assert os.path.isfile(steering_path)
     
     rows = cm.fetch_csv_data(steering_path)
-    human_steering = [row[CSV_HEADER] for row in rows]
+    human_steering = [row['angle'] for row in rows]
     return human_steering
 
 def visualize(epoch_id, machine_steering, out_dir, timeArr, perform_smoothing=False,
@@ -76,15 +67,12 @@ def visualize(epoch_id, machine_steering, out_dir, timeArr, perform_smoothing=Fa
         machine_steering = list(cm.smooth(np.array(machine_steering)))
         #human_steering = list(cm.smooth(np.array(human_steering)))
 
-    steering_min = min(np.min(human_steering) * HUMAN_MAX_ANGLE, np.min(machine_steering) * MAX_ANGLE)
-    steering_max = max(np.max(human_steering) * HUMAN_MAX_ANGLE, np.max(machine_steering) * MAX_ANGLE)
+    steering_min = min(np.min(human_steering) * MAX_ANGLE, np.min(machine_steering) * MAX_ANGLE)
+    steering_max = max(np.max(human_steering) * MAX_ANGLE, np.max(machine_steering) * MAX_ANGLE)
 
     assert os.path.isdir(epoch_dir)
 
-    if not params.givenData:
-        front_vid_path = "datasets/dataset{0}/out-mencoder2.avi".format(epoch_id)
-    else:
-        front_vid_path = cm.jn(epoch_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
+    front_vid_path = epoch_dir + "/dataset{0}/out-mencoder2.avi".format(epoch_id)
     assert os.path.isfile(front_vid_path)
     
     dash_vid_path = cm.jn(epoch_dir, 'epoch{:0>2}_dash.mkv'.format(epoch_id))
@@ -139,7 +127,7 @@ def visualize(epoch_id, machine_steering, out_dir, timeArr, perform_smoothing=Fa
             if f_abs < 0 or f_abs >= len(machine_steering):
                 continue
             xx.append(f_rel/30)
-            hh.append(human_steering[f_abs] * HUMAN_MAX_ANGLE)
+            hh.append(human_steering[f_abs] * MAX_ANGLE)
             mm.append(machine_steering[f_abs] * MAX_ANGLE)
 
         fig = plt.figure()
@@ -186,12 +174,12 @@ def visualize(epoch_id, machine_steering, out_dir, timeArr, perform_smoothing=Fa
         ####################### human steering wheels ######################
         wimg = cm.imread(os.path.abspath("images/wheel-tesla-image-150.png"), cv2.IMREAD_UNCHANGED)
 
-        human_wimg = cm.rotate_image(wimg, (human_steering[f_cur] * HUMAN_MAX_ANGLE))
+        human_wimg = cm.rotate_image(wimg, (human_steering[f_cur] * MAX_ANGLE))
         wh, ww = human_wimg.shape[:2]
         fimg = cm.overlay_image(fimg, human_wimg, y_offset = rh+50, x_offset = dw+60)
 
         ####################### machine steering wheels ######################
-        disagreement = abs((machine_steering[f_cur] * MAX_ANGLE) - (human_steering[f_cur] * HUMAN_MAX_ANGLE))
+        disagreement = abs((machine_steering[f_cur] * MAX_ANGLE) - (human_steering[f_cur] * MAX_ANGLE))
         machine_wimg = cm.rotate_image(wimg, (machine_steering[f_cur] * MAX_ANGLE))
         red_machine_wimg = machine_wimg.copy()
         green_machine_wimg = machine_wimg.copy()
@@ -220,20 +208,17 @@ def visualize(epoch_id, machine_steering, out_dir, timeArr, perform_smoothing=Fa
         newImage = Image.new('RGBA', (300, 200), bgColor) #Create blank canvas for metrics
         drawer = ImageDraw.Draw(newImage) #Create ImageDraw for drawing the metrics
 
-        error = abs((human_steering[f_cur]*HUMAN_MAX_ANGLE) - (machine_steering[f_cur]*MAX_ANGLE)) #calculate the error for the current frame
+        error = abs((human_steering[f_cur]*MAX_ANGLE) - (machine_steering[f_cur]*MAX_ANGLE)) #calculate the error for the current frame
         totalError += error #Add the current error to the total error
         errorArr.append(error) #Add the current error to the error array
 
         stdDev = np.std(errorArr) #Calculate the standard deviation as of the current frame
         avgError = totalError / (f_cur + 1) #Calculate the average error as of the current frame
-        
-
-        # % (timeArr[f_cur] * 1000)
 
         drawer.text((10, 10), "Frame #%i" % f_cur, fill=textColor) #Print the frame number
         drawer.text((150, 10), "Time to get angle: %i ms" % (timeArr[f_cur] * 1000), fill=textColor) #Print the forward pass in milliseconds
         drawer.text((10,30), "Angles:", fill=textColor) #Print the steering angles
-        drawer.text((10,40), "Acutal: %.3f" % (human_steering[f_cur] * HUMAN_MAX_ANGLE), fill = textColor) #Print the actual steering angle
+        drawer.text((10,40), "Acutal: %.3f" % (human_steering[f_cur] * MAX_ANGLE), fill = textColor) #Print the actual steering angle
         drawer.text((150,40), "Predicted: %.3f" % (machine_steering[f_cur]* MAX_ANGLE), fill = textColor) #Print the predicted steering angle
         drawer.text((10,60), "Error: %.3f" % (error), fill=textColor) #Print the error for the current frame
         drawer.text((150,60), "Average error: %.3f" % (avgError), fill=textColor) #Print the average error as of the current frame

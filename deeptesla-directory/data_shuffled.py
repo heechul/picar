@@ -36,20 +36,14 @@ def load_imgs():
 
     for p in purposes:
         for epoch_id in epochs[p]:
-            print 'processing and loading "{}" epoch {} into memory, current num of imgs is {}...'.format(p, epoch_id, len(imgs[p]))
-            if not params.dataGiven:
-                vid_path = "datasets/dataset{0}/out-mencoder.avi".format(epoch_id) 
-            else:
-                vid_path = cm.jn(data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
+            print 'processing and loading "{}" datasets {} into memory, current num of imgs is {}...'.format(p, epoch_id, len(imgs[p]))
+            vid_path = data_dir +"/dataset{0}/out-mencoder.avi".format(epoch_id) 
             assert os.path.isfile(vid_path)
 
             frame_count = cm.frame_count(vid_path)
             cap = cv2.VideoCapture(vid_path)
 
-            if not params.dataGiven:
-                csv_path = "datasets/dataset%i/data.csv" % epoch_id
-            else: 
-                csv_path = cm.jn(data_dir, 'epoch{:0>2}_steering.csv'.format(epoch_id))
+            csv_path = data_dir + "/dataset%i/data.csv" % epoch_id
             assert os.path.isfile(csv_path)
             rows = cm.fetch_csv_data(csv_path)
             assert frame_count == len(rows)

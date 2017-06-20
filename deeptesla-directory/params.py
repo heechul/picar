@@ -14,7 +14,7 @@ write_summary = True
 epochArr = [14]
 
 # change this to the directory that contains the source videos
-data_dir = os.path.abspath('./epochs')
+data_dir = '~/PiCar2016/datasets'
 out_dir = os.path.abspath('./output')
 shuffle_training = True
 
