@@ -27,7 +27,6 @@
           </inertial>
         </xacro:macro>
 
-
         <xacro:macro name="global_joint" params="child">
                 <joint name="world_joint_to_${child}" type="fixed">
                         <parent link="world" />

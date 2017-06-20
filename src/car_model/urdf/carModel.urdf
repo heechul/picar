@@ -16,6 +16,7 @@
   <material name="gray">
     <color rgba="0.3 0.3 0.3 1"/>
   </material>
+  <link name="world"/>
   <link name="base_link">
     <visual>
       <geometry>
@@ -35,6 +36,10 @@
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
+  <joint name="world_to_base" type="continuous">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
   <link name="front_axle">
     <visual>
       <geometry>
