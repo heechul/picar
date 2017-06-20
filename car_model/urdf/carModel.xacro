@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<robot name="car_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+        <material name="black">
+                <color rgba="0 0 0 1"/>
+        </material>
+        <material name="blue">
+                <color rgba="0 0 0.8 1"/>
+        </material>
+        <material name="white">
+                <color rgba="1 1 1 1"/>
+        </material>
+        <material name="gray">
+                <color rgba="0.3 0.3 0.3 1"/>
+        </material>
+
+        <xacro:property name="wheelradius" value="0.125" />
+        <xacro:property name="baselength" value="0.5" />
+        <xacro:property name="baseheight" value="${wheelradius}" />
+        <xacro:property name="axlelength" value="0.4" />
+
+
+        <xacro:macro name="default_inertial" params="mass">
+          <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+          </inertial>
+        </xacro:macro>
+
+        <xacro:macro name="global_joint" params="child">
+                <joint name="world_joint_to_${child}" type="fixed">
+                        <parent link="base_link" />
+                        <child link="${child}" />
+                </joint>
+        </xacro:macro>
+
+
+        <xacro:macro name="car_base">
+                <link name="base_link">
+
+                        <visual>
+                                <geometry>
+                                        <box size="${baselength/2} ${baselength} ${baselength/8}" />
+                                </geometry>
+                                <material name="black" />
+                                <origin rpy="0 0 0" xyz="0 0 ${baseheight}" />
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <box size="${baselength/2} ${baselength} ${baselength/8}" />
+                                        <origin rpy="0 0 0" xyz="0 0 ${baseheight}" />
+                                </geometry>
+                        </collision>
+                        <xacro:default_inertial mass="5"/>
+
+                </link>
+
+        </xacro:macro>
+
+
+
+        <xacro:macro name="car_axle" params="frontback position upper lower">
+                <link name="${frontback}_axle">
+                        <visual>
+                                <geometry>
+                                        <cylinder radius="${baselength/8}" length="${axlelength}" />
+                                </geometry>
+                                <material name="gray" />
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <cylinder radius="${baselength/8}" length="${axlelength}" />
+                                </geometry>
+                        </collision>
+                        <xacro:default_inertial mass="3"/>
+                </link>
+
+                <joint name="${frontback}_axle_to_base" type="revolute">
+                        <axis xyz="1 0 0" />
+                        <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                        <parent link="base_link" />
+                        <child link="${frontback}_axle" />
+                        <origin rpy="0 -1.57 0" xyz="0 ${position * 0.3} ${baseheight}" />
+                </joint>
+                <!--
+                <xacro:global_joint child="${frontback}_axle"/>
+        -->
+        </xacro:macro>
+
+
+
+
+        <xacro:macro name="car_front_wheel" params="leftright lr axle position upper lower">
+                <link name="front_${leftright}_wheel">
+                        <visual>
+                                <geometry>
+                                        <cylinder radius="${wheelradius}" length="${wheelradius}" />
+                                </geometry>
+                                <material name="white" />
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <cylinder radius="${wheelradius}" length="${wheelradius}" />
+                                </geometry>
+                        </collision>
+                        <xacro:default_inertial mass="20"/>
+                </link>
+
+                <joint name="front_${leftright}_wheel_to_front_axle" type="revolute">
+                        <axis xyz="1 0 0" />
+                        <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                        <parent link="base_link" />
+                        <child link="front_${leftright}_wheel" />
+                        <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
+                </joint>
+
+                <!--
+                <xacro:global_joint child="front_${leftright}_wheel" />
+                -->
+        </xacro:macro>
+
+
+
+        <xacro:macro name="car_back_wheel" params="leftright axle lr upper lower">
+                <link name="back_${leftright}_wheel">
+                        <visual>
+                                <geometry>
+                                        <cylinder radius="${wheelradius}" length="${wheelradius}" />
+                                </geometry>
+                                <material name="white" />
+                        </visual>
+                        <collision>
+                                <geometry>
+                                        <cylinder radius="${wheelradius}" length="${wheelradius}" />
+                                </geometry>
+                        </collision>
+                        <xacro:default_inertial mass="20"/>
+                </link>
+
+                <joint name="back_${leftright}_wheel_to_back_axle" type="revolute">
+                        <axis xyz="0 0 1" />
+                        <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                        <parent link="base_link" />
+                        <child link="back_${leftright}_wheel" />
+                        <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
+                </joint>
+                <!--
+                <xacro:global_joint child="back_${leftright}_wheel"/>
+        -->
+        </xacro:macro>
+
+
+
+
+
+        <xacro:car_base />
+        <xacro:car_axle frontback="front" position="1" upper="0.785" lower="-0.785" />
+        <xacro:car_axle frontback="back" position="-1" upper="0.785" lower="-0.785" />
+
+        <xacro:car_front_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="1" position="1" upper="0.785" lower="-0.393" />
+        <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1" position="-1" upper="0.393" lower="-0.785" />
+        <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"  upper="3.14" lower="3.14" />
+        <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"  upper="3.14" lower="-3.14" />
+        <!--
+        -->
+
+</robot>
