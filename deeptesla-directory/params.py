@@ -25,7 +25,7 @@ if not os.path.isdir(out_dir):
 epochs = OrderedDict()
 # epochs['train'] = range(1, 11)
 # epochs['val'] = range(1, 11)
-epochs['train'] = [19]#[3, 4, 5, 6, 8]
-epochs['val'] = [20]#[1, 2, 7, 9, 10]
+epochs['train'] = [13]#[3, 4, 5, 6, 8]
+epochs['val'] = [23]#[1, 2, 7, 9, 10]
 
 maxAngle = 30 #Estimate for now, will need to get actual value in the future
