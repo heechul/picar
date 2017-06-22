@@ -7,11 +7,9 @@ from geometry_msgs.msg import Point, PoseStamped, TransformStamped, Twist
 from sensor_msgs.msg import JointState
 
 
-joint_state = None
-transf = None
-pose_st = None
-joint_pub = None
-broadcaster = None
+joint_pub = odom_pub = broadcaster = joint_state = odom_msg = \
+transf = pose_st = None
+
 
 original_linx = 0.5
 previous_linx = 0.5
@@ -28,11 +26,14 @@ move_x = 0
 move_y = 0
 move_z = 0
 
+display_open = False
+
 
 
 def receive_twist(msg):
     global original_linx, previous_linx, current_linx, turn, move_x, move_y, \
     move_z, angle, f_left, f_right, back_wheels
+    display_open = True
 
     #rospy.loginfo("Received a /cmd_vel message!")
     #rospy.loginfo("Linear Components: [%f, %f, %f]"%(msg.linear.x, msg.linear.y, msg.linear.z))
@@ -58,17 +59,17 @@ def receive_twist(msg):
             if msg.angular.z > 0: # u
                 f_left = 0.785
                 f_right = 0.393
-                back_wheels += 3.14*msg.angular.z
+                back_wheels += 3.140
 
             elif msg.angular.z == 0: # i
                 f_left = 0
                 f_right = 0
-                back_wheels += 3.14*msg.angular.z
+                back_wheels += 3.140
 
             else: # o
                 f_left = -0.393
                 f_right = -0.785
-                back_wheels += 3.14*msg.angular.z
+                back_wheels += 3.140
 
         elif msg.linear.x == 0: # if rotate
 
@@ -89,17 +90,17 @@ def receive_twist(msg):
             if msg.angular.z < 0: # m
                 f_left = 0.785
                 f_right = 0.393
-                back_wheels -= 3.14*msg.angular.z
+                back_wheels -= 3.140
 
             elif msg.angular.z == 0: # ,
                 f_left = 0
                 f_right = 0
-                back_wheels -= 3.14*msg.angular.z
+                back_wheels -= 3.140
 
             else: # .
                 f_left = -0.393
                 f_right = -0.785
-                back_wheels -= 3.14*msg.angular.z
+                back_wheels -= 3.140
 
 
 
@@ -124,6 +125,7 @@ def receive_twist(msg):
 
 
 def move_joints():
+    global f_left, f_right, back_wheels
     # update joint_state
 
 
@@ -143,17 +145,20 @@ def move_joints():
 def move_robot():
 
 
+
     # update transform and pose
-    quaternion = tf.transformations.quaternion_from_euler(0, 0, angle)
+    quaternion = tf.transformations.quaternion_from_euler(0,0,0)
 
 
 
+    """
+    """
     trans.header.stamp = rospy.Time.now()
     trans.header.frame_id = "odom"
     trans.child_frame_id = "base_link"
-    trans.transform.translation.x += move_x*quaternion[2]
-    trans.transform.translation.y += move_y*quaternion[3]
-    trans.transform.translation.z += move_z
+    trans.transform.translation.x = move_x
+    trans.transform.translation.y = move_x
+    trans.transform.translation.z = move_z
     trans.transform.rotation = quaternion
 
 
@@ -168,6 +173,7 @@ def move_robot():
 
 
     rospy.loginfo("Angle: %f"%(angle))
+    rospy.loginfo("Move: [%f, %f, %f]"%(move_x, move_y, move_z))
     rospy.loginfo("Quaternion: [%f, %f, %f, %f]"%(quaternion[0], quaternion[1], quaternion[2] , quaternion[3]))
 
 
@@ -180,10 +186,10 @@ def listener():
 
 if __name__ == '__main__':
     rospy.init_node("car_publisher")
-    rospy.set_param("publish_default_positions", True)
 
     joint_state = JointState()
     joint_state.header = Header()
+    joint_state.header.frame_id = "base_link"
 
 
     trans = TransformStamped()

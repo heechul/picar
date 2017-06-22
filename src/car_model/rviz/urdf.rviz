@@ -138,7 +138,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: odom
+    Fixed Frame: base_link
     Frame Rate: 10
   Name: root
   Tools:
@@ -173,10 +173,10 @@ Visualization Manager:
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.59979713
+      Pitch: 0.589797139
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.98356438
+      Yaw: 5.00356483
     Saved: ~
 Window Geometry:
   Displays:
