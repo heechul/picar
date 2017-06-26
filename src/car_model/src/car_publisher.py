@@ -131,11 +131,11 @@ def move_joints():
 
     joint_state.header.stamp = rospy.Time.now()
     joint_state.name = [
-        "front_axle_to_base" , "back_axle_to_base" ,
+        "base_footprint_joint" , "front_axle_to_base" , "back_axle_to_base" ,
         "front_left_wheel_to_front_axle" , "front_right_wheel_to_front_axle" ,
         "back_left_wheel_to_back_axle" , "back_right_wheel_to_back_axle"
     ]
-    joint_state.position = [ 0, 0, f_left, f_right, back_wheels, back_wheels ]
+    joint_state.position = [ 0, 0, 0, f_left, f_right, back_wheels, back_wheels ]
 
     # send the joint state and transform
     joint_pub.publish(joint_state)
@@ -155,10 +155,10 @@ def move_robot():
     """
     trans.header.stamp = rospy.Time.now()
     trans.header.frame_id = "odom"
-    trans.child_frame_id = "base_link"
-    trans.transform.translation.x = move_x
-    trans.transform.translation.y = move_x
-    trans.transform.translation.z = move_z
+    trans.child_frame_id = "base_footprint"
+    trans.transform.translation.x += move_x
+    trans.transform.translation.y += move_x
+    trans.transform.translation.z += move_z
     trans.transform.rotation = quaternion
 
 
@@ -185,11 +185,11 @@ def listener():
 
 
 if __name__ == '__main__':
-    rospy.init_node("car_publisher")
+    rospy.init_node("car_publish", anonymous=True)
 
     joint_state = JointState()
     joint_state.header = Header()
-    joint_state.header.frame_id = "base_link"
+    joint_state.header.frame_id = "base_footprint"
 
 
     trans = TransformStamped()
@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
 
     broadcaster = tf.TransformBroadcaster()
-    joint_pub = rospy.Publisher("joint_states", JointState, queue_size=1)
+    joint_pub = rospy.Publisher("joint_states", JointState, queue_size=10)
 
     try:
         listener()

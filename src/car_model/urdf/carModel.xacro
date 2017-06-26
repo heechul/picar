@@ -18,6 +18,7 @@
         <xacro:property name="baselength" value="0.5" />
         <xacro:property name="baseheight" value="${wheelradius}" />
         <xacro:property name="axlelength" value="0.4" />
+        <xacro:property name="update_rate" value="1" />
 
 
         <xacro:macro name="default_inertial" params="mass">
@@ -27,10 +28,24 @@
           </inertial>
         </xacro:macro>
 
-        <xacro:macro name="global_joint" params="child">
-                <joint name="world_joint_to_${child}" type="fixed">
-                        <parent link="world" />
-                        <child link="${child}" />
+        <xacro:macro name="world_link">
+                <link name="base_footprint">
+                        <visual>
+                                <geometry>
+                                <box size="0.001 0.001 0.001"/>
+                                </geometry>
+                                <origin rpy="0 0 0" xyz="0 0 0"/>
+                        </visual>
+                        <xacro:default_inertial mass="0.0001"/>
+                </link>
+                <gazebo reference="base_footprint">
+                        <material>Gazebo/Green</material>
+                        <turnGravityOff>false</turnGravityOff>
+                </gazebo>
+                <joint name="base_footprint_joint" type="fixed">
+                        <origin xyz="0 0 0" />
+                        <parent link="base_footprint" />
+                        <child link="base_link" />
                 </joint>
         </xacro:macro>
 
@@ -56,7 +71,9 @@
 
                 </link>
 
-
+                <gazebo reference="base_link">
+                        <material>Gazebo/Black</material>
+                </gazebo>
         </xacro:macro>
 
 
@@ -80,13 +97,14 @@
                 <joint name="${frontback}_axle_to_base" type="revolute">
                         <axis xyz="1 0 0" />
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
-                        <parent link="base_link" />
+                        <parent link="base_footprint" />
                         <child link="${frontback}_axle" />
                         <origin rpy="0 -1.57 0" xyz="0 ${position * 0.3} ${baseheight}" />
                 </joint>
-                <!--
-                <xacro:global_joint child="${frontback}_axle"/>
-        -->
+
+                <gazebo reference="${frontback}_axle">
+                        <material>Gazebo/Grey</material>
+                </gazebo>
         </xacro:macro>
 
 
@@ -111,14 +129,14 @@
                 <joint name="front_${leftright}_wheel_to_front_axle" type="revolute">
                         <axis xyz="1 0 0" />
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
-                        <parent link="base_link" />
+                        <parent link="base_footprint" />
                         <child link="front_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
                 </joint>
 
-                <!--
-                <xacro:global_joint child="front_${leftright}_wheel" />
-                -->
+                <gazebo reference="front_${leftright}_wheel">
+                        <material>Gazebo/White</material>
+                </gazebo>
         </xacro:macro>
 
 
@@ -142,19 +160,19 @@
                 <joint name="back_${leftright}_wheel_to_back_axle" type="revolute">
                         <axis xyz="0 0 1" />
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
-                        <parent link="base_link" />
+                        <parent link="base_footprint" />
                         <child link="back_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
                 </joint>
-                <!--
-                <xacro:global_joint child="back_${leftright}_wheel"/>
-        -->
+                <gazebo reference="back_${leftright}_wheel">
+                        <material>Gazebo/White</material>
+                </gazebo>
         </xacro:macro>
 
 
 
 
-
+        <xacro:world_link />
         <xacro:car_base />
         <xacro:car_axle frontback="front" position="1" upper="0.785" lower="-0.785" />
         <xacro:car_axle frontback="back" position="-1" upper="0.785" lower="-0.785" />
@@ -165,5 +183,26 @@
         <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
         <!--
         -->
+
+        <gazebo>
+                <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+                        <alwaysOn>true</alwaysOn>
+                        <legacyMode>false</legacyMode>
+                        <updateRate>${update_rate}</updateRate>
+                        <leftJoint>front_left_wheel_to_front_axle</leftJoint>
+                        <rightJoint>front_right_wheel_to_front_axle</rightJoint>
+                        <wheelSeparation>${axlelength}</wheelSeparation>
+                        <wheelDiameter>${wheelradius * 2}</wheelDiameter>
+                        <torque>20</torque>
+                        <commandTopic>cmd_vel</commandTopic>
+                        <odometryTopic>odom</odometryTopic>
+                        <odometryFrame>odom</odometryFrame>
+                        <robotBaseFrame>base_footprint</robotBaseFrame>
+                        <publishWheelTF>true</publishWheelTF>
+                        <publishTF>100</publishTF>
+                        <publishWheelJointState>true</publishWheelJointState>
+                        <wheelAcceleration>2</wheelAcceleration>
+                </plugin>
+        </gazebo>
 
 </robot>

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
         <arg name="model" default="$(find car_model)/urdf/carModel.xacro" />
         <arg name="rvizconfig" default="$(find car_model)/rviz/urdf.rviz" />
@@ -8,7 +9,7 @@
 
         <node name="robot_state" pkg="robot_state_publisher" type="robot_state_publisher" />
         <!--
-        <node name="car_publisher" pkg="car_model" type="car_publisher" />
+        <node name="car_publisher" pkg="car_model" type="car_publish" clear_params="true" required="true" />
 -->
         <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
 </launch>
