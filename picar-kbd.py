@@ -76,9 +76,16 @@ MAX_SPEED = 1500  # pwm  1500us/20ms = max full throttle
 NEU_SPEED = 1270  # pwm  1270us/20ms = stop
 MIN_SPEED = 950   # pwm   950us/20ms = reverse full throttle
 
+#If a folder for holding the datasets doesn't exist
+if not(os.path.exists('datasets')):
+	os.makedirs('datasets') #Create the datasets directory
+
 currentSpeed = NEU_SPEED
 angleArray = [] #Holds the steering angles collected while a video is recording
 angleVal = 0 #Angle value that is added to angleArray, should be between -1 and 1
+setNum = 1 #Holds the dataset number
+while(os.path.exists("datasets/dataset%i" % setNum)): #While a dataset of the current number exists
+    setNum+=1 #Increase the dataset number
 
 # set the speed to start, from 0 (off) to 255 (max speed)
 steeringMotor.setSpeed(127)
@@ -141,47 +148,64 @@ def rew(dec):
         
 recCmd = 'start'
 
+#Record the steering angle of the car while a video is recording
 def getData():
     global angleVal, angleArray
     while (True): #Continually get the steering angle till prompted to stop
         if recCmd == 'start': #If the video has stop recording
+            angleArray.append(angleVal) #Get the angle for the last frame
             break #Stop collecting the steering angle
         angleArray.append(angleVal) #Get the steering angle
         time.sleep(.033) #Delay the thread so that angle values aren't continually added to the array
 
+#Find the current dataset number and create the necessary directories and files for it
+def makeRunDir():
+    global setNum #Get the dataset number
+    if not (os.path.exists("datasets/dataset%i" % setNum)): #If a directory for the dataset doesn't already exist
+        os.makedirs("datasets/dataset%i" % setNum, 0755) #Create a directory for the new dataset
+        os.makedirs("datasets/dataset%i/png" % setNum, 0755) #Create a directory for the image files
+        file = open("datasets/dataset%i/data.csv" % setNum, "w").close() #Create a csv file for saving the data
+
+#Go through all of the collected data and save it
 def parseData():
-    global angleArray
-    video = cv2.VideoCapture('out-mencoder.avi') #Open the video
+    global angleArray, setNum
+    video = cv2.VideoCapture('datasets/dataset%i/out-mencoder.avi' % setNum) #Open the video
     framesLeft,image = video.read() #Read the current frame
     frameNum = 0 #Hold the frame number
     while framesLeft: #While there are still frames in the video
-        cv2.imwrite("data/png/Frame%d.png" % frameNum, image) #Save the frame as a png image
+        cv2.imwrite("./datasets/dataset%i/png/Frame%d.png" % (setNum, frameNum), image) #Save the frame as a png image
         frameNum += 1 #Increase the frame number by 1
         framesLeft,image = video.read() #Read the current frame
-    with open("data/data.csv", 'wb') as file: #Open the csv file
+    with open("./datasets/dataset%i/data.csv" % setNum, 'wb') as file: #Open the csv file
         writer = csv.writer(file, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL) #Create a writer
+        writer.writerow(['image', 'angle']) #Write the first row that labels the columns
         for i in range (frameNum): #For each frame
-            writer.writerow([os.getcwd() + '/data/png/Frame%d.png' % i, angleArray[i]]) #Write the path to the frame and the steering angle to the csv file
+            writer.writerow([os.getcwd() + '/datasets/dataset%i/png/Frame%d.png' % (setNum, i), angleArray[i]]) #Write the path to the frame and the steering angle to the csv file
     angleArray = [] #Empty the angle array for the next time data is gathered
-    print("Data has been collected") #Tell the user the data has been saved
     print("%i frames have been saved" % frameNum)
+    print("Data has been collected in datasets/dataset%i" % setNum) #Tell the user the data has been saved
 			
 #Create a thread for collecting the steering angle
 data_thread = threading.Thread(target=getData)
 
 def record_video():
-	global recCmd
+	global recCmd, data_thread, setNum, currentSpeed
 	if recCmd == 'start':
-		os.system("mencoder tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -nosound -ovc lavc -o out-mencoder.avi &")
+		makeRunDir()
+		os.system("mencoder tv:// -tv driver=v4l2:width=320:height=240:device=/dev/video0 -fps 15 -nosound -ovc lavc -o datasets/dataset%i/out-mencoder.avi &" % setNum)
 		recCmd = 'stop'
-		time.sleep(2) #Wait for mencoder to start recording, two seconds seems to be an appropriate time to wait
+		time.sleep(2.09) #Wait for mencoder to start recording, a little over two seconds seems to be an appropriate time to wait
 		data_thread.start() #Start collecting the steering angle
 	else:
 		os.system("killall -HUP mencoder")
 		recCmd = 'start'
+		currentSpeed = NEU_SPEED #Stop the car if it is moving
 		data_thread.join() #Wait for the getData method to finish
-		print(len(angleArray))
+		time.sleep(.5) #Wait so that the number of angles is printed after mencoder displays all video information
+		print("%i angles were collected" % len(angleArray)) #Print the number of angles collected to ensure that it's close to the number of frames in the video
 		parseData() #Go through and save the data collected
+		data_thread = threading.Thread(target=getData) #Recreate the data thread, allows for multiple datasets to be captured without having to restart picar-kbd.py
+		setNum += 1 #Move to the next dataset
 
 while (True):
         ch = read_single_keypress()
@@ -193,7 +217,6 @@ while (True):
         elif ch == 'a':
                 ffw(10)
         elif ch == 's':
-                print(len(angleArray))
                 stop()
         elif ch == 'z':
                 rew(10)
@@ -201,3 +224,6 @@ while (True):
                 break
 	elif ch == 'r':
 		record_video()
+	elif ch == 't':
+		angleVal = 0 #Reset the steering angle to 0 in the case that the wheels need to be centered after picar-kbd.py is started
+		print("Angle reset to %d" % angleVal) #Print out the steering angle so the user knows it was reset to 0
