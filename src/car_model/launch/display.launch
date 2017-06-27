@@ -9,7 +9,7 @@
 
         <node name="robot_state" pkg="robot_state_publisher" type="robot_state_publisher" />
         <!--
-        <node name="car_publisher" pkg="car_model" type="car_publish" clear_params="true" required="true" />
 -->
+        <node name="car_publisher" pkg="car_model" type="car_publisher" clear_params="true" />
         <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
 </launch>

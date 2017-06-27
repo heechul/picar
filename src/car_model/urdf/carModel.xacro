@@ -18,7 +18,7 @@
         <xacro:property name="baselength" value="0.5" />
         <xacro:property name="baseheight" value="${wheelradius}" />
         <xacro:property name="axlelength" value="0.4" />
-        <xacro:property name="update_rate" value="1" />
+        <xacro:property name="update_rate" value="0.5" />
 
 
         <xacro:macro name="default_inertial" params="mass">
@@ -187,21 +187,29 @@
         <gazebo>
                 <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
-                        <legacyMode>false</legacyMode>
-                        <updateRate>${update_rate}</updateRate>
-                        <leftJoint>front_left_wheel_to_front_axle</leftJoint>
-                        <rightJoint>front_right_wheel_to_front_axle</rightJoint>
-                        <wheelSeparation>${axlelength}</wheelSeparation>
-                        <wheelDiameter>${wheelradius * 2}</wheelDiameter>
-                        <torque>20</torque>
                         <commandTopic>cmd_vel</commandTopic>
-                        <odometryTopic>odom</odometryTopic>
+                        <!--
+                        <leftJoint>front_right_wheel_to_front_axle</leftJoint>
+                        -->
+                        <leftJoint>back_right_wheel_to_back_axle</leftJoint>
+                        <legacyMode>false</legacyMode>
                         <odometryFrame>odom</odometryFrame>
-                        <robotBaseFrame>base_footprint</robotBaseFrame>
+                        <odometrySource>1</odometrySource>
+                        <odometryTopic>odom</odometryTopic>
+                        <publishTf>10</publishTf>
+                        <publishWheelJointState>false</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
-                        <publishTF>100</publishTF>
-                        <publishWheelJointState>true</publishWheelJointState>
+                        <!--
+                        <rightJoint>front_left_wheel_to_front_axle</rightJoint>
+                        -->
+                        <rightJoint>back_left_wheel_to_back_axle</rightJoint>
+                        <robotBaseFrame>base_footprint</robotBaseFrame>
+                        <rosDebugLevel>na</rosDebugLevel>
+                        <wheelTorque>5</wheelTorque>
+                        <updateRate>${update_rate}</updateRate>
                         <wheelAcceleration>2</wheelAcceleration>
+                        <wheelDiameter>${wheelradius * 2}</wheelDiameter>
+                        <wheelSeparation>${axlelength}</wheelSeparation>
                 </plugin>
         </gazebo>
 
