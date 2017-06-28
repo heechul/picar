@@ -36,17 +36,19 @@
                                 </geometry>
                                 <origin rpy="0 0 0" xyz="0 0 0"/>
                         </visual>
+                        <collision>
+                                <geometry>
+                                <box size="0.001 0.001 0.001"/>
+                                </geometry>
+                                <origin rpy="0 0 0" xyz="0 0 0"/>
+                        </collision>
                         <xacro:default_inertial mass="0.0001"/>
                 </link>
                 <gazebo reference="base_footprint">
                         <material>Gazebo/Green</material>
                         <turnGravityOff>false</turnGravityOff>
                 </gazebo>
-                <joint name="base_footprint_joint" type="fixed">
-                        <origin xyz="0 0 0" />
-                        <parent link="base_footprint" />
-                        <child link="base_link" />
-                </joint>
+
         </xacro:macro>
 
 
@@ -70,44 +72,47 @@
                         <xacro:default_inertial mass="5"/>
 
                 </link>
-
+                <joint name="base_footprint_joint" type="fixed">
+                        <axis xyz="0 0 1" />
+                        <origin xyz="0 0 0" />
+                        <parent link="base_footprint" />
+                        <child link="base_link" />
+                </joint>
                 <gazebo reference="base_link">
                         <material>Gazebo/Black</material>
                 </gazebo>
         </xacro:macro>
 
 
-
         <xacro:macro name="car_axle" params="frontback position upper lower">
-                <link name="${frontback}_axle">
-                        <visual>
-                                <geometry>
-                                        <cylinder radius="${baselength/8}" length="${axlelength}" />
-                                </geometry>
-                                <material name="gray" />
-                        </visual>
-                        <collision>
-                                <geometry>
-                                        <cylinder radius="${baselength/8}" length="${axlelength}" />
-                                </geometry>
-                        </collision>
-                        <xacro:default_inertial mass="3"/>
-                </link>
+                       <link name="${frontback}_axle">
+                               <visual>
+                                       <geometry>
+                                               <cylinder radius="${baselength/8}" length="${axlelength}" />
+                                       </geometry>
+                                       <material name="gray" />
+                               </visual>
+                               <collision>
+                                       <geometry>
+                                               <cylinder radius="${baselength/8}" length="${axlelength}" />
+                                       </geometry>
+                               </collision>
+                               <xacro:default_inertial mass="3"/>
+                       </link>
 
-                <joint name="${frontback}_axle_to_base" type="revolute">
-                        <axis xyz="1 0 0" />
-                        <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
-                        <parent link="base_footprint" />
-                        <child link="${frontback}_axle" />
-                        <origin rpy="0 -1.57 0" xyz="0 ${position * 0.3} ${baseheight}" />
-                </joint>
+                       <joint name="${frontback}_axle_to_base" type="fixed">
+                               <axis xyz="1 0 0" />
+                               <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                               <mimic joint="base_footprint_joint" multiplier="1"/>
+                               <parent link="base_footprint" />
+                               <child link="${frontback}_axle" />
+                               <origin rpy="0 -1.57 0" xyz="0 ${position * 0.3} ${baseheight}" />
+                       </joint>
 
-                <gazebo reference="${frontback}_axle">
-                        <material>Gazebo/Grey</material>
-                </gazebo>
-        </xacro:macro>
-
-
+                       <gazebo reference="${frontback}_axle">
+                               <material>Gazebo/Grey</material>
+                       </gazebo>
+               </xacro:macro>
 
 
         <xacro:macro name="car_front_wheel" params="leftright lr axle position upper lower">
@@ -181,17 +186,15 @@
         <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1" position="-1" upper="0.393" lower="-0.785" />
         <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
         <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
-        <!--
-        -->
 
+
+        <!--
+-->
         <gazebo>
                 <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
                         <commandTopic>cmd_vel</commandTopic>
-                        <!--
                         <leftJoint>front_right_wheel_to_front_axle</leftJoint>
-                        -->
-                        <leftJoint>back_right_wheel_to_back_axle</leftJoint>
                         <legacyMode>false</legacyMode>
                         <odometryFrame>odom</odometryFrame>
                         <odometrySource>1</odometrySource>
@@ -199,10 +202,7 @@
                         <publishTf>10</publishTf>
                         <publishWheelJointState>false</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
-                        <!--
                         <rightJoint>front_left_wheel_to_front_axle</rightJoint>
-                        -->
-                        <rightJoint>back_left_wheel_to_back_axle</rightJoint>
                         <robotBaseFrame>base_footprint</robotBaseFrame>
                         <rosDebugLevel>na</rosDebugLevel>
                         <wheelTorque>5</wheelTorque>
@@ -212,5 +212,13 @@
                         <wheelSeparation>${axlelength}</wheelSeparation>
                 </plugin>
         </gazebo>
+
+        <!--
+        <leftJoint>front_right_wheel_to_front_axle</leftJoint>
+        <rightJoint>front_left_wheel_to_front_axle</rightJoint>
+        <leftJoint>back_right_wheel_to_back_axle</leftJoint>
+        <rightJoint>back_left_wheel_to_back_axle</rightJoint>
+        -->
+
 
 </robot>

@@ -21,18 +21,21 @@ class CarPublisher
                 void initialize_joint_states(sensor_msgs::JointState* joint_state);
                 void initialize_transformation(geometry_msgs::TransformStamped* trans);
                 void receive_Twist(const geometry_msgs::Twist msg);
+                void publish_Odometry();
                 static void move_car(CarPublisher* car_pub);
 
                 sensor_msgs::JointState* joint_state;
                 geometry_msgs::TransformStamped* trans;
+
                 ros::NodeHandle node;
                 ros::Publisher joint_pub;
                 ros::Publisher odom_pub;
                 ros::Subscriber get_twist;
                 tf::TransformBroadcaster broadcaster;
 
-                int f_left, f_right, back_wheels;
-                int original_linx, previous_linx, current_linx, turn, angle;
+                double f_left, f_right, back_wheels;
+                double original_speed, current_linx, current_angz, turn, angle;
+                double px, py, th, vx, vy, vth;
                 bool first_message;
 
 };
@@ -49,18 +52,14 @@ CarPublisher::CarPublisher()
         initialize_transformation(trans);
 
         joint_pub = node.advertise<sensor_msgs::JointState>("joint_states", 1);
-        //ros::Publisher odom_pub = node.advertise<nav_msgs::Odometry>("odom", 1);
+        //odom_pub = node.advertise<nav_msgs::Odometry>("odom", 1);
         get_twist = node.subscribe("/cmd_vel", 1, &CarPublisher::receive_Twist, this);
 
-        this->f_left = 0;
-        this->f_right = 0;
-        this->back_wheels = 0;
-        this->original_linx = 0;
-        this->current_linx = 0;
-        this->previous_linx = 0;
-        this->turn = 1;
-        this->angle = 1;
+        this->f_left = 0; this->f_right = 0; this->back_wheels = 0;
+        this->original_speed = 0; this->current_linx = 0; this->current_angz = 0;
+        this->turn = 1; this->angle += (M_PI/4);
         this->first_message = false;
+        this->px = 0; this->py = 0; this->th = 0; this->vx = 0.1; this->vy = -0.1; this->vth = 0.1;
 
 }
 
@@ -115,14 +114,13 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
         if( std::abs(msg.linear.x) != std::abs(current_linx) )
         {
-                previous_linx = current_linx;
                 current_linx = msg.linear.x;
         }
 
-        if( std::abs(msg.angular.z) != std::abs(turn) ) // else, only a change in angular speed has been detected
+        if( std::abs(msg.angular.z) != std::abs(current_angz) ) // else, only a change in angular speed has been detected
         {
-                turn = msg.angular.z / original_linx;
-                angle += msg.angular.z*(M_PI/2);
+                current_angz = msg.angular.z;
+                turn = msg.angular.z / original_speed;
         }
 
 
@@ -134,9 +132,10 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                 {
                         if( msg.angular.z > 0 )// u
                         {
-                                f_left = 1;
-                                f_right = 1;
+                                f_left = 0.785;
+                                f_right = 0.393;
                                 back_wheels += 3.14;
+                                angle += 1;
                         }
 
                         else if( msg.angular.z == 0 )// i
@@ -148,18 +147,21 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
                         else // o
                         {
-                                f_left = -1;
-                                f_right = -1;
+                                f_left = -0.393;
+                                f_right = -0.785;
                                 back_wheels += 3.14;
+                                angle -= (M_PI/4);
                         }
+
                 }
 
                 else if( msg.linear.x == 0 )// if( rotate
                 {
                         if( msg.angular.z > 0 )// j
                         {
-                                f_left = 1;
-                                f_right = 1;
+                                f_left = 0.785;
+                                f_right = 0.393;
+                                angle += 1;
                         }
 
                         else if( msg.angular.z == 0 )// k
@@ -170,8 +172,9 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
                         else // l
                         {
-                                f_left = -1;
-                                f_right = -1;
+                                f_left = -0.393;
+                                f_right = -0.785;
+                                angle -= (M_PI/4);
                         }
                 }
 
@@ -179,9 +182,10 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                 {
                         if( msg.angular.z < 0 )// m
                         {
-                                f_left = 1;
-                                f_right = 1;
+                                f_left = 0.785;
+                                f_right = 0.393;
                                 back_wheels -= 3.14;
+                                angle += 1;
                         }
 
                         else if( msg.angular.z == 0 )// ,
@@ -193,18 +197,19 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
                         else // .
                         {
-                                f_left = -1;
-                                f_right = -1;
+                                f_left = -0.393;
+                                f_right = -0.785;
                                 back_wheels -= 3.14;
+                                angle -= (M_PI/4);
                         }
                 }
 
         }
 
 
-        this->joint_state->position[0] = 0;
-        this->joint_state->position[1] = 0;
-        this->joint_state->position[2] = 0;
+        this->joint_state->position[0] = angle;
+        this->joint_state->position[1] = angle;
+        this->joint_state->position[2] = angle;
         this->joint_state->position[3] = f_left;
         this->joint_state->position[4] = f_right;
         this->joint_state->position[5] = back_wheels;
@@ -214,12 +219,33 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         joint_pub.publish(*this->joint_state);
 
         //tf::Quaternion quaternion = tf::Quaternion(0, 0, 0, 1);
-        this->trans->transform.translation.x += msg.linear.x*cos(angle);
-        this->trans->transform.translation.y += msg.linear.x*sin(angle);
+        this->trans->transform.translation.x += msg.linear.x*sin(angle);
+        this->trans->transform.translation.y += msg.linear.x*cos(angle);
         this->trans->transform.translation.z += msg.linear.z;
-        trans->transform.rotation = tf::createQuaternionMsgFromRollPitchYaw(0,0,0);
+        this->trans->transform.rotation = tf::createQuaternionMsgFromYaw(angle);
         this->trans->header.stamp = ros::Time::now();
         broadcaster.sendTransform(*this->trans);
+
+}
+
+
+
+void CarPublisher::publish_Odometry()
+{
+
+/*
+        double dt = (current_time - last_time).toSec();
+        double delta_x = (vx * cos(th) - vy * sin(th)) * dt;
+        double delta_y = (vx * sin(th) + vy * cos(th)) * dt;
+        double delta_th = vth * dt;
+
+        px += delta_x;
+        py += delta_y;
+        th += delta_th;
+
+        //since all odometry is 6DOF we'll need a quaternion created from yaw
+        geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
+*/
 
 }
 
@@ -229,6 +255,7 @@ void CarPublisher::move_car(CarPublisher* car_pub)
 
         for(;;)
         {
+                if(car_pub->first_message) {break;}
                 car_pub->joint_state->header.stamp = ros::Time::now();
                 car_pub->joint_pub.publish(*car_pub->joint_state);
                 car_pub->trans->header.stamp = ros::Time::now();
