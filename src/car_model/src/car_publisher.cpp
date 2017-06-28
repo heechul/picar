@@ -102,7 +102,7 @@ void CarPublisher::initialize_transformation(geometry_msgs::TransformStamped* tr
         trans->transform.translation.x = 0;
         trans->transform.translation.y = 0;
         trans->transform.translation.z = 0;
-        trans->transform.rotation = tf::createQuaternionMsgFromYaw(M_PI*2);
+        trans->transform.rotation = tf::createQuaternionMsgFromYaw(M_PI*4);
 
 }
 
@@ -135,7 +135,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                                 f_left = 0.785;
                                 f_right = 0.393;
                                 back_wheels += 3.14;
-                                angle += 1;
+                                angle += (M_PI/4);
                         }
 
                         else if( msg.angular.z == 0 )// i
@@ -161,7 +161,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                         {
                                 f_left = 0.785;
                                 f_right = 0.393;
-                                angle += 1;
+                                angle += (M_PI/4);
                         }
 
                         else if( msg.angular.z == 0 )// k
@@ -185,7 +185,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                                 f_left = 0.785;
                                 f_right = 0.393;
                                 back_wheels -= 3.14;
-                                angle += 1;
+                                angle += (M_PI/4);
                         }
 
                         else if( msg.angular.z == 0 )// ,
@@ -206,10 +206,41 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
         }
 
+        if(angle < 0)
+        {
+                angle = 2*M_PI + angle;
+        }
+        else if(angle > 2*M_PI)
+        {
+                angle -= 2*M_PI;
+        }
 
-        this->joint_state->position[0] = angle;
-        this->joint_state->position[1] = angle;
-        this->joint_state->position[2] = angle;
+        int x_dir, y_dir;
+        if(angle => 0 && angle < 90)
+        {
+                x_dir = 1;
+                y_dir = 1;
+        }
+        else if(angle >= 90 && angle < 180)
+        {
+                x_dir = 1;
+                y_dir = 1;
+        }
+        else if(angle >= 180 && angle < 270)
+        {
+                x_dir = 1;
+                y_dir = 1;
+        }
+        else
+        {
+                x_dir = 1;
+                y_dir = 1;
+        }
+
+
+        this->joint_state->position[0] = 0;
+        this->joint_state->position[1] = 0;
+        this->joint_state->position[2] = 0;
         this->joint_state->position[3] = f_left;
         this->joint_state->position[4] = f_right;
         this->joint_state->position[5] = back_wheels;
@@ -219,8 +250,8 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         joint_pub.publish(*this->joint_state);
 
         //tf::Quaternion quaternion = tf::Quaternion(0, 0, 0, 1);
-        this->trans->transform.translation.x += msg.linear.x*sin(angle);
-        this->trans->transform.translation.y += msg.linear.x*cos(angle);
+        this->trans->transform.translation.x += x_dir*msg.linear.x*cos(angle);
+        this->trans->transform.translation.y -= y_dir*msg.linear.x*sin(angle);
         this->trans->transform.translation.z += msg.linear.z;
         this->trans->transform.rotation = tf::createQuaternionMsgFromYaw(angle);
         this->trans->header.stamp = ros::Time::now();
