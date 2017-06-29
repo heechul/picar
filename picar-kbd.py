@@ -189,7 +189,7 @@ def parseData():
 data_thread = threading.Thread(target=getData)
 
 def record_video():
-	global recCmd, data_thread, setNum, currentSpeed
+	global recCmd, data_thread, setNum
 	if recCmd == 'start':
 		makeRunDir()
 		os.system("mencoder tv:// -tv driver=v4l2:width=320:height=240:device=/dev/video0 -fps 15 -nosound -ovc lavc -o datasets/dataset%i/out-mencoder.avi &" % setNum)
@@ -197,9 +197,9 @@ def record_video():
 		time.sleep(2.09) #Wait for mencoder to start recording, a little over two seconds seems to be an appropriate time to wait
 		data_thread.start() #Start collecting the steering angle
 	else:
+		stop()
 		os.system("killall -HUP mencoder")
 		recCmd = 'start'
-		currentSpeed = NEU_SPEED #Stop the car if it is moving
 		data_thread.join() #Wait for the getData method to finish
 		time.sleep(.5) #Wait so that the number of angles is printed after mencoder displays all video information
 		print("%i angles were collected" % len(angleArray)) #Print the number of angles collected to ensure that it's close to the number of frames in the video
@@ -221,6 +221,7 @@ while (True):
         elif ch == 'z':
                 rew(10)
         elif ch == 'q':
+                stop()
                 break
 	elif ch == 'r':
 		record_video()
