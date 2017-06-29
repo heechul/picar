@@ -35,8 +35,8 @@ class CarPublisher
 
                 double f_left, f_right, back_wheels;
                 double original_speed, current_linx, current_angz, turn, angle;
-                double px, py, th, vx, vy, vth;
-                bool first_message;
+                double move_x, move_y, move_z, px, py, th, vx, vy, vth;
+                bool first_message, turn_left, turn_right;
 
 };
 
@@ -45,11 +45,6 @@ class CarPublisher
 
 CarPublisher::CarPublisher()
 {
-        this->joint_state = new sensor_msgs::JointState();
-        initialize_joint_states(joint_state);
-
-        this->trans = new geometry_msgs::TransformStamped();
-        initialize_transformation(trans);
 
         joint_pub = node.advertise<sensor_msgs::JointState>("joint_states", 1);
         //odom_pub = node.advertise<nav_msgs::Odometry>("odom", 1);
@@ -57,10 +52,16 @@ CarPublisher::CarPublisher()
 
         this->f_left = 0; this->f_right = 0; this->back_wheels = 0;
         this->original_speed = 0; this->current_linx = 0; this->current_angz = 0;
-        this->turn = 1; this->angle += (M_PI/4);
-        this->first_message = false;
+        this->turn = 1; this->angle = 0;
+        this->first_message = false; this->turn_left = false; this->turn_right = false;
+        this->move_x = 0; this->move_y = 0; this->move_z = 0;
         this->px = 0; this->py = 0; this->th = 0; this->vx = 0.1; this->vy = -0.1; this->vth = 0.1;
 
+        this->joint_state = new sensor_msgs::JointState();
+        initialize_joint_states(joint_state);
+
+        this->trans = new geometry_msgs::TransformStamped();
+        initialize_transformation(trans);
 }
 
 
@@ -102,7 +103,7 @@ void CarPublisher::initialize_transformation(geometry_msgs::TransformStamped* tr
         trans->transform.translation.x = 0;
         trans->transform.translation.y = 0;
         trans->transform.translation.z = 0;
-        trans->transform.rotation = tf::createQuaternionMsgFromYaw(M_PI*4);
+        trans->transform.rotation = tf::createQuaternionMsgFromYaw(this->angle-(M_PI/2));
 
 }
 
@@ -123,7 +124,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                 turn = msg.angular.z / original_speed;
         }
 
-
+        double previous_angle = angle;
 
         if( msg.linear.y == 0 )// move
         {
@@ -206,39 +207,56 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
         }
 
-        if(angle < 0)
+        while(angle < 0)
         {
-                angle = 2*M_PI + angle;
+                angle += 2*M_PI;
         }
-        else if(angle > 2*M_PI)
+        while(angle >= 2*M_PI)
         {
                 angle -= 2*M_PI;
         }
 
         int x_dir, y_dir;
-        if(angle => 0 && angle < 90)
+        (previous_angle < angle) ? turn_left = true : turn_left = false; turn_right = !turn_left;
+        if(angle == 0)
         {
-                x_dir = 1;
-                y_dir = 1;
+                x_dir = 1; y_dir = 0; turn_left = false; turn_right = false;
         }
-        else if(angle >= 90 && angle < 180)
+        else if(angle > 0 && angle < (M_PI/2))
         {
-                x_dir = 1;
-                y_dir = 1;
+                x_dir = 1; y_dir = 1;
         }
-        else if(angle >= 180 && angle < 270)
+        else if(angle == (M_PI/2))
         {
-                x_dir = 1;
-                y_dir = 1;
+                x_dir = 0; y_dir = 1; turn_left = false; turn_right = false;
+        }
+        else if(angle > (M_PI/2) && angle < (M_PI))
+        {
+                x_dir = -1; y_dir = 1;
+        }
+        else if(angle == M_PI)
+        {
+                x_dir = -1; y_dir = 0; turn_left = false; turn_right = false;
+        }
+        else if(angle > (M_PI) && angle < (M_PI*1.5))
+        {
+                x_dir = -1; y_dir = -1;
+        }
+        else if(angle == (M_PI*1.5))
+        {
+                x_dir = 0; y_dir = -1; turn_left = false; turn_right = false;
         }
         else
         {
-                x_dir = 1;
-                y_dir = 1;
+                x_dir = 1; y_dir = -1;
         }
 
+        move_x = x_dir*msg.linear.x;
+        move_y = y_dir*msg.linear.x;
+        move_z = msg.linear.z;
 
-        this->joint_state->position[0] = 0;
+
+        this->joint_state->position[0] = angle;
         this->joint_state->position[1] = 0;
         this->joint_state->position[2] = 0;
         this->joint_state->position[3] = f_left;
@@ -250,10 +268,10 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         joint_pub.publish(*this->joint_state);
 
         //tf::Quaternion quaternion = tf::Quaternion(0, 0, 0, 1);
-        this->trans->transform.translation.x += x_dir*msg.linear.x*cos(angle);
-        this->trans->transform.translation.y -= y_dir*msg.linear.x*sin(angle);
-        this->trans->transform.translation.z += msg.linear.z;
-        this->trans->transform.rotation = tf::createQuaternionMsgFromYaw(angle);
+        this->trans->transform.translation.x += move_x;
+        this->trans->transform.translation.y += move_y;
+        this->trans->transform.translation.z += move_z;
+        this->trans->transform.rotation = tf::createQuaternionMsgFromYaw(angle - (M_PI/2));
         this->trans->header.stamp = ros::Time::now();
         broadcaster.sendTransform(*this->trans);
 
@@ -284,13 +302,29 @@ void CarPublisher::publish_Odometry()
 void CarPublisher::move_car(CarPublisher* car_pub)
 {
 
+
+        /*double update_angle = 0;
+        if(car_pub->first_message)
+        {
+                (car_pub->turn_left) ? update_angle = (M_PI/4) : update_angle = -(M_PI/4);
+        }
+        */
+
         for(;;)
         {
                 if(car_pub->first_message) {break;}
                 car_pub->joint_state->header.stamp = ros::Time::now();
                 car_pub->joint_pub.publish(*car_pub->joint_state);
+
+                //car_pub->angle += update_angle;
+
                 car_pub->trans->header.stamp = ros::Time::now();
                 car_pub->broadcaster.sendTransform(*car_pub->trans);
+                //car_pub->trans->transform.translation.x += car_pub->trans->transform.translation.x;
+                //car_pub->trans->transform.translation.y += car_pub->trans->transform.translation.y;
+                //car_pub->trans->transform.translation.z += car_pub->trans->transform.translation.z;
+                //car_pub->trans->transform.rotation = tf::createQuaternionMsgFromYaw(car_pub->angle-(M_PI/2));
+
                 std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
 
