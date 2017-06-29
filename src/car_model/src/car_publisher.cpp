@@ -19,12 +19,13 @@ class CarPublisher
                 CarPublisher();
                 ~CarPublisher();
                 void initialize_joint_states(sensor_msgs::JointState* joint_state);
-                void initialize_transformation(geometry_msgs::TransformStamped* trans);
+                void initialize_transformation(geometry_msgs::TransformStamped* trans, nav_msgs::Odometry* odom);
                 void receive_Twist(const geometry_msgs::Twist msg);
                 void publish_Odometry();
                 static void move_car(CarPublisher* car_pub);
 
                 sensor_msgs::JointState* joint_state;
+                nav_msgs::Odometry* odom;
                 geometry_msgs::TransformStamped* trans;
 
                 ros::NodeHandle node;
@@ -37,6 +38,7 @@ class CarPublisher
                 double original_speed, current_linx, current_angz, turn, angle;
                 double move_x, move_y, move_z, px, py, th, vx, vy, vth;
                 bool first_message, turn_left, turn_right;
+                ros::WallTime current_time, last_time;
 
 };
 
@@ -47,7 +49,7 @@ CarPublisher::CarPublisher()
 {
 
         joint_pub = node.advertise<sensor_msgs::JointState>("joint_states", 1);
-        //odom_pub = node.advertise<nav_msgs::Odometry>("odom", 1);
+        odom_pub = node.advertise<nav_msgs::Odometry>("odom", 1);
         get_twist = node.subscribe("/cmd_vel", 1, &CarPublisher::receive_Twist, this);
 
         this->f_left = 0; this->f_right = 0; this->back_wheels = 0;
@@ -55,13 +57,16 @@ CarPublisher::CarPublisher()
         this->turn = 1; this->angle = 0;
         this->first_message = false; this->turn_left = false; this->turn_right = false;
         this->move_x = 0; this->move_y = 0; this->move_z = 0;
-        this->px = 0; this->py = 0; this->th = 0; this->vx = 0.1; this->vy = -0.1; this->vth = 0.1;
+        this->px = 0; this->py = 0; this->th = 0; this->vx = 0.5; this->vy = 0.5; this->vth = (M_PI/4);
+        this->current_time = ros::WallTime::now(); this->last_time = ros::WallTime::now();
 
         this->joint_state = new sensor_msgs::JointState();
         initialize_joint_states(joint_state);
 
         this->trans = new geometry_msgs::TransformStamped();
-        initialize_transformation(trans);
+        this->odom = new nav_msgs::Odometry();
+        initialize_transformation(trans, odom);
+
 }
 
 
@@ -69,6 +74,7 @@ CarPublisher::CarPublisher()
 CarPublisher::~CarPublisher()
 {
         delete this->joint_state;
+        delete this->odom;
         delete this->trans;
 }
 
@@ -94,7 +100,7 @@ void CarPublisher::initialize_joint_states(sensor_msgs::JointState* joint_state)
 }
 
 
-void CarPublisher::initialize_transformation(geometry_msgs::TransformStamped* trans)
+void CarPublisher::initialize_transformation(geometry_msgs::TransformStamped* trans, nav_msgs::Odometry* odom)
 {
 
         trans->header.frame_id = "odom";
@@ -104,6 +110,20 @@ void CarPublisher::initialize_transformation(geometry_msgs::TransformStamped* tr
         trans->transform.translation.y = 0;
         trans->transform.translation.z = 0;
         trans->transform.rotation = tf::createQuaternionMsgFromYaw(this->angle-(M_PI/2));
+
+        odom->header.frame_id = "odom";
+        odom->child_frame_id = "base_footprint";
+        odom->header.stamp = ros::Time::now();
+        odom->pose.pose.position.x = 0;
+        odom->pose.pose.position.y = 0;
+        odom->pose.pose.position.z = 0;
+        odom->pose.pose.orientation = tf::createQuaternionMsgFromYaw(this->angle-(M_PI/2));
+        odom->twist.twist.linear.x = 0;
+        odom->twist.twist.linear.y = 0;
+        odom->twist.twist.linear.z = 0;
+        odom->twist.twist.angular.x = 0;
+        odom->twist.twist.angular.y = 0;
+        odom->twist.twist.angular.z = 0;
 
 }
 
@@ -186,7 +206,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                                 f_left = 0.785;
                                 f_right = 0.393;
                                 back_wheels -= 3.14;
-                                angle += (M_PI/4);
+                                angle -= (M_PI/4);
                         }
 
                         else if( msg.angular.z == 0 )// ,
@@ -201,7 +221,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                                 f_left = -0.393;
                                 f_right = -0.785;
                                 back_wheels -= 3.14;
-                                angle -= (M_PI/4);
+                                angle += (M_PI/4);
                         }
                 }
 
@@ -267,7 +287,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         this->joint_state->header.stamp = ros::Time::now();
         joint_pub.publish(*this->joint_state);
 
-        //tf::Quaternion quaternion = tf::Quaternion(0, 0, 0, 1);
+        //publish_Odometry(); return;
         this->trans->transform.translation.x += move_x;
         this->trans->transform.translation.y += move_y;
         this->trans->transform.translation.z += move_z;
@@ -282,19 +302,59 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 void CarPublisher::publish_Odometry()
 {
 
-/*
+        // tutorial from http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom
+        current_time = ros::WallTime::now();
+        th = angle-(M_PI/2);
+        vx = current_linx;
+        vy = current_linx;
+
+
         double dt = (current_time - last_time).toSec();
         double delta_x = (vx * cos(th) - vy * sin(th)) * dt;
         double delta_y = (vx * sin(th) + vy * cos(th)) * dt;
-        double delta_th = vth * dt;
+        //double delta_th = vth * dt;
 
-        px += delta_x;
-        py += delta_y;
-        th += delta_th;
+        px += move_x;
+        py += move_y;
+        //th += delta_th;
 
         //since all odometry is 6DOF we'll need a quaternion created from yaw
         geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
-*/
+
+        //first, we'll publish the transform over tf
+        trans->header.stamp = ros::Time::now();
+        trans->header.frame_id = "odom";
+        trans->child_frame_id = "base_footprint";
+
+        trans->transform.translation.x = move_x;
+        trans->transform.translation.y = move_y;
+        trans->transform.translation.z = move_z;
+        trans->transform.rotation = odom_quat;
+
+        //send the transform
+        broadcaster.sendTransform(*trans);
+
+        //next, we'll publish the odometry message over ROS
+        odom->header.stamp = ros::Time::now();
+        odom->header.frame_id = "odom";
+
+        //set the position
+        odom->pose.pose.position.x = px;
+        odom->pose.pose.position.y = py;
+        odom->pose.pose.position.z = 0.0;
+        odom->pose.pose.orientation = odom_quat;
+
+        //set the velocity
+        odom->child_frame_id = "base_footprint";
+        odom->twist.twist.linear.x = vx;
+        odom->twist.twist.linear.y = vy;
+        odom->twist.twist.angular.z = vth;
+
+        //publish the message
+        odom_pub.publish(*odom);
+
+        last_time = current_time;
+
 
 }
 
@@ -313,6 +373,10 @@ void CarPublisher::move_car(CarPublisher* car_pub)
         for(;;)
         {
                 if(car_pub->first_message) {break;}
+
+                car_pub->last_time = car_pub->current_time;
+                car_pub->current_time = ros::WallTime::now();
+
                 car_pub->joint_state->header.stamp = ros::Time::now();
                 car_pub->joint_pub.publish(*car_pub->joint_state);
 

@@ -18,7 +18,7 @@
         <xacro:property name="baselength" value="0.5" />
         <xacro:property name="baseheight" value="${wheelradius}" />
         <xacro:property name="axlelength" value="0.4" />
-        <xacro:property name="update_rate" value="0.5" />
+        <xacro:property name="update_rate" value="0.1" />
 
 
         <xacro:macro name="default_inertial" params="mass">
