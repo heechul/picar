@@ -200,7 +200,7 @@
                         <odometrySource>1</odometrySource>
                         <odometryTopic>odom</odometryTopic>
                         <publishTf>10</publishTf>
-                        <publishWheelJointState>false</publishWheelJointState>
+                        <publishWheelJointState>true</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
                         <rightJoint>front_left_wheel_to_front_axle</rightJoint>
                         <robotBaseFrame>base_link</robotBaseFrame>

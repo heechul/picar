@@ -31,6 +31,6 @@
 
 
   <!--
--->
   <node name="car_publisher" pkg="car_model" type="car_publisher" required="true" />
+-->
 </launch>
