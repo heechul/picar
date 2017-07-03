@@ -25,7 +25,6 @@ Panels:
   - Class: rviz/Views
     Expanded:
       - /Current View1
-      - /Current View1/Focal Point1
     Name: Views
     Splitter Ratio: 0.5
   - Class: rviz/Time
@@ -141,7 +140,7 @@ Visualization Manager:
         Shaft Length: 1
         Shaft Radius: 0.0500000007
         Value: Arrow
-      Topic: ""
+      Topic: /odom
       Unreliable: false
       Value: true
   Enabled: true
@@ -167,25 +166,25 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/ThirdPersonFollower
-      Distance: 34.0292397
+      Class: rviz/Orbit
+      Distance: 31.7769184
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.0442721248
-        Y: -7.91184711
-        Z: 0
-      Focal Shape Fixed Size: false
+        X: 0.785198689
+        Y: -0.728827953
+        Z: -0.176810086
+      Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.55479634
+      Pitch: 1.56979632
       Target Frame: <Fixed Frame>
-      Value: ThirdPersonFollower (rviz)
-      Yaw: 4.71856785
+      Value: Orbit (rviz)
+      Yaw: 4.72356558
     Saved: ~
 Window Geometry:
   Displays:

@@ -203,7 +203,7 @@
                         <publishWheelJointState>false</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
                         <rightJoint>front_left_wheel_to_front_axle</rightJoint>
-                        <robotBaseFrame>base_footprint</robotBaseFrame>
+                        <robotBaseFrame>base_link</robotBaseFrame>
                         <rosDebugLevel>na</rosDebugLevel>
                         <wheelTorque>5</wheelTorque>
                         <updateRate>${update_rate}</updateRate>
