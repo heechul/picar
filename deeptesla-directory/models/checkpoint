@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/michael/Documents/GitHub/deeptesla/models/model.ckpt"
+all_model_checkpoint_paths: "/home/michael/Documents/GitHub/deeptesla/models/model.ckpt"
