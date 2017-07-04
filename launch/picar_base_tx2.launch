@@ -17,7 +17,7 @@
     <node pkg="rtimulib_ros" type="rtimulib_ros" name="rtimulib_node" output="screen">
         <param name="calibration_file_path" value="$(find rtimulib_ros)/config"/>
     	<param name="frame_id" value="map"/>
-        <param name="update_rate" value="10"/>
+        <param name="update_rate" value="1"/>
     </node>
 
     <arg name="port" default="9090" />

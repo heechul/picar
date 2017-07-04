@@ -32,7 +32,7 @@ roslaunch rtimulib_ros rtimulib_ros.launch &  # publish 'imu' channel
 roslaunch picar-base picar-base.launch & # subscribe 'cmd_vel' channel
 roslaunch rosbridge_server rosbridge_websocket.launch &
 ./servod
-mjpg_streamer -o "output_http.so -w /home/heechul/PiCar2016/www" -i "input_uvc.so" 
+mjpg_streamer -o "output_http.so -w $HOME/picar/www" -i "input_uvc.so" 
 
 # rosrun teleop_twist_joy teleop_node & # publish 'cmd_vel' output from joystick input
 # rosrun teleop_twist_keyboard teleop_twist_keyboard.py &

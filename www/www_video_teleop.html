@@ -14,7 +14,7 @@
 
 <!-- <script type="text/javascript" src="http://cdn.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script> -->
 
-<script type="text/javascript" src="http://devboard-picar-wifi.ittc.ku.edu:8080/keyboardteleop.js"></script> 
+<script type="text/javascript" src="http://odroid.local:8080/keyboardteleop.js"></script> 
 
 <script type="text/javascript">
   /**
@@ -23,7 +23,7 @@
   function init() {
     // Connecting to ROS.
     var ros = new ROSLIB.Ros({
-      url : 'ws://devboard-picar-wifi:9090'
+      url : 'ws://odroid.local:9090'
     });
 
   ros.on('connection', function() {
