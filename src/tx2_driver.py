@@ -12,6 +12,8 @@ from sensor_msgs.msg import Imu
 from tf.transformations import euler_from_quaternion
 
 rad2degrees = 180.0/math.pi
+degree2rad = math.pi / 180.0
+
 precision = 2 #round to this number of digits
 
 yaw_offset = 0 #used to align animation upon key press
