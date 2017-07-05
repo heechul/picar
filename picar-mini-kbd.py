@@ -5,6 +5,7 @@ import atexit
 import serial
 import cv2
 import math
+import numpy as np
 
 def turnOff():
 	os.system("killall -HUP mencoder")
@@ -42,7 +43,10 @@ def stop():
 def degree2rad(deg):
         return deg * math.pi / 180.0
 
-frame_id = 0                
+
+frame_id = 0
+null_frame = np.zeros((160,120,3), np.uint8)
+
 while (True):
         # read a frame
         ret, frame = cap.read()
