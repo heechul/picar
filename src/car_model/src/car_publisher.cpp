@@ -261,37 +261,6 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         this->joint_state->position[5] = back_wheels;
         this->joint_state->position[6] = back_wheels;
 
-        /*
-        this->joint_state->header.stamp = current_time;
-        joint_pub.publish(*this->joint_state);
-
-
-        // tutorial from http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom
-
-        trans->header.stamp = current_time;
-        trans->transform.translation.x += move_x;
-        trans->transform.translation.y += move_y;
-        trans->transform.translation.z += move_z;
-        trans->transform.rotation = tf::createQuaternionMsgFromYaw(angle-(M_PI/2));
-
-        broadcaster.sendTransform(*trans);
-
-        //next, we'll publish the odometry message over ROS
-        odom->header.stamp = current_time;
-
-        odom->pose.pose.position.x += move_x;
-        odom->pose.pose.position.y += move_y;
-        odom->pose.pose.position.z += move_z;
-        odom->pose.pose.orientation = tf::createQuaternionMsgFromYaw(angle);
-
-        odom->twist.twist.linear.x = msg.linear.x;
-        odom->twist.twist.linear.y = msg.linear.y;
-        odom->twist.twist.linear.z = msg.linear.z;
-        odom->twist.twist.angular.z = msg.angular.z;
-
-        //publish the message
-        odom_pub.publish(*odom);
-        */
 }
 
 
@@ -357,7 +326,7 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
 int main(int argc, char** argv)
 {
 
-        ros::init(argc, argv, "car_publisher");
+        ros::init(argc, argv, "car_publisher", ros::init_options::AnonymousName);
         CarPublisher* car_pub = new CarPublisher();
 
         std::thread thr(CarPublisher::default_publish, car_pub);

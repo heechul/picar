@@ -194,16 +194,16 @@
                 <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
                         <commandTopic>cmd_vel</commandTopic>
-                        <leftJoint>front_right_wheel_to_front_axle</leftJoint>
+                        <leftJoint>front_left_wheel_to_front_axle</leftJoint>
                         <legacyMode>false</legacyMode>
                         <odometryFrame>odom</odometryFrame>
-                        <odometrySource>1</odometrySource>
                         <odometryTopic>odom</odometryTopic>
-                        <publishTf>10</publishTf>
-                        <publishWheelJointState>true</publishWheelJointState>
+                        <publishTf>100</publishTf>
+                        <publishWheelJointState>false</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
-                        <rightJoint>front_left_wheel_to_front_axle</rightJoint>
+                        <rightJoint>front_right_wheel_to_front_axle</rightJoint>
                         <robotBaseFrame>base_link</robotBaseFrame>
+                        <robotNamespace>robot::base_footprint</robotNamespace>
                         <rosDebugLevel>na</rosDebugLevel>
                         <wheelTorque>5</wheelTorque>
                         <updateRate>${update_rate}</updateRate>
