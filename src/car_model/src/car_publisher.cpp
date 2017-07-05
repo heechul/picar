@@ -35,7 +35,7 @@ class CarPublisher
                 tf::TransformBroadcaster broadcaster;
 
                 double f_left, f_right, back_wheels;
-                double original_speed, turn, angle;
+                double original_speed, current_linx, turn, angle, previous_angle;
                 double move_x, move_y, move_z, vx, vy, vth;
                 bool first_message, turn_left, turn_right;
 
@@ -52,10 +52,11 @@ CarPublisher::CarPublisher()
         get_twist = node.subscribe("/cmd_vel", 1, &CarPublisher::receive_Twist, this);
 
         this->f_left = 0; this->f_right = 0; this->back_wheels = 0;
-        this->original_speed = 0; this->turn = 1; this->angle = (M_PI/2);
+        this->original_speed = 0; this->current_linx = 0.5; this->turn = 1;
+        this->angle = (M_PI/2); this->previous_angle = (M_PI/2);
         this->first_message = false; this->turn_left = false; this->turn_right = false;
         this->move_x = 0; this->move_y = 0; this->move_z = 0;
-        this->vx = 0.5; this->vy = -0.5; this->vth = this->angle;
+        this->vx = 0.1; this->vy = 0.1; this->vth = this->angle;
         this->current_time = ros::Time::now(); this->last_time = ros::Time::now();
 
         this->joint_state = new sensor_msgs::JointState();
@@ -129,13 +130,16 @@ void CarPublisher::initialize_transformation(geometry_msgs::TransformStamped* tr
 void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 {
 
-        this->first_message = true;
-        this->last_time = current_time;
-        this->current_time = ros::Time::now();
+        first_message = true;
+        last_time = current_time;
+        current_time = ros::Time::now();
+        previous_angle = angle;
 
-        if( std::abs(msg.linear.x) != std::abs(vx) )
+                // increment speed variables
+        if( std::abs(msg.linear.x) != std::abs(current_linx) )
         {
-                vx = msg.linear.x; vy = -vx;
+                current_linx = msg.linear.x;
+                //vx = msg.linear.x; vy = vx;
         }
 
         if( std::abs(msg.angular.z) != std::abs(vth) ) // else, only a change in angular speed has been detected
@@ -144,7 +148,6 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
                 turn = msg.angular.z / original_speed;
         }
 
-        double previous_angle = angle;
 
         if( msg.linear.y == 0 )// move
         {
@@ -231,86 +234,54 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         {
                 angle += 2*M_PI;
         }
-        while(angle >= 2*M_PI)
+        while(angle > 2*M_PI)
         {
                 angle -= 2*M_PI;
         }
 
-        int x_dir, y_dir;
-        (previous_angle < angle) ? turn_left = true : turn_left = false; turn_right = !turn_left;
-        if(angle == 0)
+        if(angle == 0 || angle == (M_PI/2) || angle == (M_PI*1.5))
         {
-                x_dir = 1; y_dir = 0; turn_left = false; turn_right = false;
-        }
-        else if(angle > 0 && angle < (M_PI/2))
-        {
-                x_dir = 1; y_dir = 1;
-        }
-        else if(angle == (M_PI/2))
-        {
-                x_dir = 0; y_dir = 1; turn_left = false; turn_right = false;
-        }
-        else if(angle > (M_PI/2) && angle < (M_PI))
-        {
-                x_dir = -1; y_dir = 1;
-        }
-        else if(angle == M_PI)
-        {
-                x_dir = -1; y_dir = 0; turn_left = false; turn_right = false;
-        }
-        else if(angle > (M_PI) && angle < (M_PI*1.5))
-        {
-                x_dir = -1; y_dir = -1;
-        }
-        else if(angle == (M_PI*1.5))
-        {
-                x_dir = 0; y_dir = -1; turn_left = false; turn_right = false;
+                turn_left = false; turn_right = false;
         }
         else
         {
-                x_dir = 1; y_dir = -1;
+                turn_left = (previous_angle < angle); turn_right = !turn_left;
         }
 
-        move_x += x_dir*msg.linear.x;
-        move_y += y_dir*msg.linear.x;
-        move_z += msg.linear.z;
+        move_x = msg.linear.x*vx*cos(angle);
+        move_y = msg.linear.x*vy*sin(angle);
+        move_z = msg.linear.z;
 
 
-        this->joint_state->position[0] = 0;
-        this->joint_state->position[1] = 0;
-        this->joint_state->position[2] = 0;
+        this->joint_state->position[0] = angle;
+        this->joint_state->position[1] = move_x;
+        this->joint_state->position[2] = move_y;
         this->joint_state->position[3] = f_left;
         this->joint_state->position[4] = f_right;
         this->joint_state->position[5] = back_wheels;
         this->joint_state->position[6] = back_wheels;
 
+        /*
         this->joint_state->header.stamp = current_time;
         joint_pub.publish(*this->joint_state);
 
 
         // tutorial from http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom
 
-        geometry_msgs::Quaternion quat = tf::createQuaternionMsgFromYaw(angle-(M_PI/2));
-
         trans->header.stamp = current_time;
-        trans->header.frame_id = "odom";
-        trans->child_frame_id = "base_footprint";
-
-        trans->transform.translation.x = move_x;
-        trans->transform.translation.y = move_y;
-        trans->transform.translation.z = move_z;
-        trans->transform.rotation = quat;
+        trans->transform.translation.x += move_x;
+        trans->transform.translation.y += move_y;
+        trans->transform.translation.z += move_z;
+        trans->transform.rotation = tf::createQuaternionMsgFromYaw(angle-(M_PI/2));
 
         broadcaster.sendTransform(*trans);
 
         //next, we'll publish the odometry message over ROS
         odom->header.stamp = current_time;
-        odom->header.frame_id = "odom";
-        odom->child_frame_id = "base_footprint";
 
-        odom->pose.pose.position.x = move_x;
-        odom->pose.pose.position.y = move_y;
-        odom->pose.pose.position.z = move_z;
+        odom->pose.pose.position.x += move_x;
+        odom->pose.pose.position.y += move_y;
+        odom->pose.pose.position.z += move_z;
         odom->pose.pose.orientation = tf::createQuaternionMsgFromYaw(angle);
 
         odom->twist.twist.linear.x = msg.linear.x;
@@ -320,6 +291,7 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
 
         //publish the message
         odom_pub.publish(*odom);
+        */
 }
 
 
@@ -327,32 +299,56 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
 {
 
 
-        /*double update_angle = 0;
-        if(car_pub->first_message)
-        {
-                (car_pub->turn_left) ? update_angle = (M_PI/72) : update_angle = -(M_PI/72);
-        }
-        */
-
         for(;;)
         {
-                if(car_pub->first_message) {break;}
+                //if(car_pub->first_message) {break;}
+                if(car_pub->first_message && car_pub->f_left != 0)
+                {
+
+
+                        if(car_pub->angle == 0 || car_pub->angle == (M_PI/2) || car_pub->angle == (M_PI*1.5))
+                        {
+                                car_pub->turn_left = false; car_pub->turn_right = false;
+                        }
+                        else
+                        {
+                                car_pub->turn_left = (car_pub->previous_angle < car_pub->angle);
+                                car_pub->turn_right = !car_pub->turn_left;
+                        }
+
+                        car_pub->previous_angle = car_pub->angle;
+                        (car_pub->turn_left) ? car_pub->angle += (M_PI/72) : car_pub->angle -= (M_PI/72);
+
+
+
+                        car_pub->move_x = car_pub->move_x*cos(car_pub->angle)/cos(car_pub->previous_angle);
+                        car_pub->move_y = car_pub->move_y*sin(car_pub->angle)/sin(car_pub->previous_angle);
+                        car_pub->joint_state->position[0] = car_pub->angle;
+
+                }
+
+
                 car_pub->last_time = car_pub->current_time;
                 car_pub->current_time = ros::Time::now();
 
-                car_pub->joint_state->header.stamp = ros::Time::now();
+                car_pub->joint_state->header.stamp = car_pub->current_time;
                 car_pub->joint_pub.publish(*car_pub->joint_state);
 
-                //car_pub->angle += update_angle;
-
-                car_pub->trans->header.stamp = ros::Time::now();
+                car_pub->trans->header.stamp = car_pub->current_time;
+                car_pub->trans->transform.translation.x += car_pub->move_x;
+                car_pub->trans->transform.translation.y += car_pub->move_y;
+                car_pub->trans->transform.translation.z += car_pub->move_z;
+                car_pub->trans->transform.rotation = tf::createQuaternionMsgFromYaw(car_pub->angle-(M_PI/2));
                 car_pub->broadcaster.sendTransform(*car_pub->trans);
-                //car_pub->trans->transform.translation.x += car_pub->trans->transform.translation.x;
-                //car_pub->trans->transform.translation.y += car_pub->trans->transform.translation.y;
-                //car_pub->trans->transform.translation.z += car_pub->trans->transform.translation.z;
-                //car_pub->trans->transform.rotation = tf::createQuaternionMsgFromYaw(car_pub->angle-(M_PI/2));
 
-                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                car_pub->odom->header.stamp = car_pub->current_time;
+                car_pub->odom->pose.pose.position.x += car_pub->move_x;
+                car_pub->odom->pose.pose.position.y += car_pub->move_y;
+                car_pub->odom->pose.pose.position.z += car_pub->move_z;
+                car_pub->odom->pose.pose.orientation = tf::createQuaternionMsgFromYaw(car_pub->angle);
+                car_pub->odom_pub.publish(*car_pub->odom);
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
 
 }
@@ -364,14 +360,7 @@ int main(int argc, char** argv)
         ros::init(argc, argv, "car_publisher");
         CarPublisher* car_pub = new CarPublisher();
 
-
         std::thread thr(CarPublisher::default_publish, car_pub);
-        //thr.join();
-
-        if(car_pub->first_message)
-        {
-                thr.detach();
-        }
 
         ros::spin();
         delete car_pub;
