@@ -44,8 +44,10 @@ def degree2rad(deg):
         return deg * math.pi / 180.0
 
 
+view_video = False
 frame_id = 0
 null_frame = np.zeros((160,120,3), np.uint8)
+cv2.imshow('frame', null_frame)
 
 while (True):
         # read a frame
@@ -57,7 +59,9 @@ while (True):
 
         angle = 0.0
 
-        cv2.imshow('frame', frame)
+        if view_video == True:
+                cv2.imshow('frame', frame)
+                
         ch = cv2.waitKey(1) & 0xFF
         
         if ch == ord('j'):
@@ -77,13 +81,18 @@ while (True):
         elif ch == ord('q'):
                 break
 	elif ch == ord('r'):
+                print "toggle record mode"
                 if rec_start_time == 0:
                         rec_start_time = ts
                 else:
                         rec_start_time = 0
-        
-        print ts, frame_id, angle
-
+        elif ch == ord('t'):
+                print "toggle video mode"
+                if view_video == False:
+                        view_video = True
+                else:
+                        view_video = False
+                        
         if rec_start_time > 0:
                 # increase frame_id
                 frame_id = frame_id + 1
@@ -93,3 +102,5 @@ while (True):
                 keyfile.write(str)
                 # write video stream
                 vidfile.write(frame)
+
+                print ts, frame_id, angle
