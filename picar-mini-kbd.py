@@ -6,45 +6,43 @@ import serial
 import cv2
 import math
 import numpy as np
+import pygame
 
 def turnOff():
-	os.system("killall -HUP mencoder")
+        stop()
+        center()
 
 atexit.register(turnOff)
 
 cap = cv2.VideoCapture(0)
 cap.set(3,320)
 cap.set(4,240)
-ser = serial.Serial('/dev/ttyACM0', 115200)
+ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
 keyfile = open('out-key.csv', 'w+')
 
 rec_start_time = 0
 
-def right():
-        ser.write(b'r\n')
-        
-def left():
-        ser.write(b'l\n')
-        
-def center():
-        ser.write(b'c\n')
-        
-def ffw():
-        ser.write(b'f\n')
-        
-def rew():
-        ser.write(b'b\n')
-        
 def stop():
-        ser.write(b's\n')
-        
+        ser.write("s\n")
+def ffw():
+        ser.write("f\n")
+def rew():
+        ser.write("b\n")
+
+def center():
+        ser.write("c\n")
+def left():
+        ser.write("l\n")
+def right():
+        ser.write("r\n")
+
 def degree2rad(deg):
         return deg * math.pi / 180.0
 
 
-view_video = False
+view_video = True
 frame_id = 0
 null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
@@ -61,23 +59,29 @@ while (True):
 
         if view_video == True:
                 cv2.imshow('frame', frame)
-                
+
         ch = cv2.waitKey(1) & 0xFF
         
         if ch == ord('j'):
                 left()
                 angle = degree2rad(-30)
+                print "left"
         elif ch == ord('k'):
                 center()
+                print "center"
         elif ch == ord('l'):
                 right()
+                print "right"
                 angle = degree2rad(30)                
         elif ch == ord('a'):
                 ffw()
+                print "accel"
         elif ch == ord('s'):
                 stop()
+                print "stop"
         elif ch == ord('z'):
                 rew()
+                print "reverse"
         elif ch == ord('q'):
                 break
 	elif ch == ord('r'):
