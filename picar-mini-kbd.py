@@ -108,3 +108,7 @@ while (True):
                 vidfile.write(frame)
 
                 print ts, frame_id, angle
+
+cap.release()
+keyfile.close()
+vidfile.release()
