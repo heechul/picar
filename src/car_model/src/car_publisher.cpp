@@ -84,13 +84,14 @@ void CarPublisher::initialize_joint_states(sensor_msgs::JointState* joint_state)
 
         joint_state->header.frame_id = "base_footprint";
         joint_state->header.stamp = ros::Time::now();
-        joint_state->name.resize(7);
-        joint_state->position.resize(7);
-        std::string names[7] = { "base_footprint_joint" , "front_axle_to_base" , "back_axle_to_base" ,
+        joint_state->name.resize(8);
+        joint_state->position.resize(8);
+        std::string names[8] = { "base_footprint_joint" , "camera_joint" ,
+        "front_axle_to_base" , "back_axle_to_base" ,
         "front_left_wheel_to_front_axle" , "front_right_wheel_to_front_axle" ,
         "back_left_wheel_to_back_axle" , "back_right_wheel_to_back_axle" };
 
-        for( int i = 0 ; i < 7 ; i++ )
+        for( int i = 0 ; i < 8 ; i++ )
         {
                 joint_state->name[i] = names[i];
                 joint_state->position[i] = 0;
@@ -253,13 +254,14 @@ void CarPublisher::receive_Twist(const geometry_msgs::Twist msg)
         move_z = msg.linear.z;
 
 
-        this->joint_state->position[0] = angle;
-        this->joint_state->position[1] = move_x;
-        this->joint_state->position[2] = move_y;
-        this->joint_state->position[3] = f_left;
-        this->joint_state->position[4] = f_right;
-        this->joint_state->position[5] = back_wheels;
+        this->joint_state->position[0] = 0;
+        this->joint_state->position[1] = 0;
+        this->joint_state->position[2] = 0;
+        this->joint_state->position[3] = 0;
+        this->joint_state->position[4] = f_left;
+        this->joint_state->position[5] = f_right;
         this->joint_state->position[6] = back_wheels;
+        this->joint_state->position[7] = back_wheels;
 
 }
 
@@ -274,7 +276,6 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
                 if(car_pub->first_message && car_pub->f_left != 0)
                 {
 
-
                         if(car_pub->angle == 0 || car_pub->angle == (M_PI/2) || car_pub->angle == (M_PI*1.5))
                         {
                                 car_pub->turn_left = false; car_pub->turn_right = false;
@@ -288,11 +289,8 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
                         car_pub->previous_angle = car_pub->angle;
                         (car_pub->turn_left) ? car_pub->angle += (M_PI/72) : car_pub->angle -= (M_PI/72);
 
-
-
                         car_pub->move_x = car_pub->move_x*cos(car_pub->angle)/cos(car_pub->previous_angle);
                         car_pub->move_y = car_pub->move_y*sin(car_pub->angle)/sin(car_pub->previous_angle);
-                        car_pub->joint_state->position[0] = car_pub->angle;
 
                 }
 
