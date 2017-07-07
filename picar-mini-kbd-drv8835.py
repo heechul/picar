@@ -63,7 +63,7 @@ while (True):
         if view_video == True:
                 cv2.imshow('frame', frame)
 
-        ch = cv2.waitKey(1) & 0xFF
+        ch = cv2.waitKey(50) & 0xFF
         
         if ch == ord('j'):
                 left()
