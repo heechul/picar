@@ -21,7 +21,7 @@ ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
 keyfile = open('out-key.csv', 'w+')
-
+keyfile.write("ts_micro,frame,wheel\n")
 rec_start_time = 0
 
 def stop():
@@ -47,6 +47,8 @@ frame_id = 0
 null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
 
+angle = 0.0
+
 while (True):
         # read a frame
         ret, frame = cap.read()
@@ -55,12 +57,10 @@ while (True):
         if ret == False:
                 break
 
-        angle = 0.0
-
         if view_video == True:
                 cv2.imshow('frame', frame)
 
-        ch = cv2.waitKey(1) & 0xFF
+        ch = cv2.waitKey(50) & 0xFF
         
         if ch == ord('j'):
                 left()
@@ -68,6 +68,7 @@ while (True):
                 print "left"
         elif ch == ord('k'):
                 center()
+                angle = 0.0
                 print "center"
         elif ch == ord('l'):
                 right()
@@ -96,11 +97,11 @@ while (True):
                         view_video = True
                 else:
                         view_video = False
+        else:
+                center()
+                angle = 0.0                
                         
-        if rec_start_time > 0:
-                # increase frame_id
-                frame_id = frame_id + 1
-                
+        if rec_start_time > 0:                
                 # write keyboard input        
                 str = "{}, {}, {}\n".format(ts, frame_id, angle)
                 keyfile.write(str)
@@ -108,6 +109,9 @@ while (True):
                 vidfile.write(frame)
 
                 print ts, frame_id, angle
+
+                # increase frame_id
+                frame_id = frame_id + 1
 
 cap.release()
 keyfile.close()
