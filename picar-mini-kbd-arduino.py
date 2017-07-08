@@ -49,6 +49,7 @@ null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
 
 angle = 0.0
+btn = ''
 
 while (True):
         # read a frame
