@@ -12,12 +12,14 @@ void left()
 {
   digitalWrite(LEFT_PIN, LOW);
   digitalWrite(RIGHT_PIN, HIGH);
+  delay(50);
 }
 
 void right()
 {
   digitalWrite(RIGHT_PIN, LOW);
   digitalWrite(LEFT_PIN, HIGH);  
+  delay(50);
 }
 
 void center()
@@ -56,7 +58,15 @@ void demo()
   nomove();
   delay(500);
   left();
-  delay(500);
+  delay(100);
+  left();
+  delay(100);
+  left();
+  delay(100);
+  right();
+  delay(100);
+  right();
+  delay(100);
   right();
   delay(500);
   center();
@@ -78,35 +88,9 @@ void setup()
 }
 
 
-void loop_new() {
-  uint8_t command;
-  if(Serial.available() > 0) {
-    int cmd = Serial.read();
-  
-    switch(cmd) {
-      case 's': nomove(); break;
-      case 'a': forward(); break;
-      case 'z': backward(); break;
-
-      case 'c': center(); break;
-      case 'l': left(); break;
-      case 'r': right(); break;
-
-      default:
-        Serial.print("Invalid command\n");
-        Serial.print(cmd);
-    }
-  } else {
-    center();
-    nomove();
-  }
-}
-
-
 void loop() {
   if(Serial.available() > 0) {
     String str = Serial.readStringUntil('\n');
-  
     if (str == "l") {
       left();
     } else if (str == "r") {
@@ -126,5 +110,7 @@ void loop() {
     } else {
       Serial.println("ERR:" + str);
     }
+  // } else {
+  //   center();
   }
 }
