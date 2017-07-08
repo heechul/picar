@@ -21,13 +21,21 @@ vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
 keyfile = open('out-key.csv', 'w+')
 
 rec_start_time = 0
+cur_speed = MAX_SPEED
 
 def stop():
-        motors.motor2.setSpeed(0)
+        global cur_speed
+        cur_speed = 0
+        motors.motor2.setSpeed(cur_speed)
+        
 def ffw():
-        motors.motor2.setSpeed(MAX_SPEED)
+        global cur_speed
+        cur_speed = min(MAX_SPEED, cur_speed + MAX_SPEED/10)
+        motors.motor2.setSpeed(cur_speed)
 def rew():
-        motors.motor2.setSpeed(-MAX_SPEED)
+        global cur_speed        
+        cur_speed = max(-MAX_SPEED, cur_speed - MAX_SPEED/10)
+        motors.motor2.setSpeed(cur_speed)
 
 def center():
         motors.motor1.setSpeed(0)
@@ -45,33 +53,32 @@ def turnOff():
 
 atexit.register(turnOff)
 
-view_video = True
+view_video = False
 frame_id = 0
 null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
 
 while (True):
         # read a frame
-        ret, frame = cap.read()
+        # ret, frame = cap.read()
         ts = int(time.time() * 1000000)
         
-        if ret == False:
-                break
-
         angle = 0.0
 
         if view_video == True:
                 cv2.imshow('frame', frame)
 
+                
         ch = cv2.waitKey(50) & 0xFF
-        
+
         if ch == ord('j'):
                 left()
-                angle = degree2rad(-30)
                 print "left"
+                angle = degree2rad(-30)
         elif ch == ord('k'):
                 center()
                 print "center"
+                angle = degree2rad(0)                
         elif ch == ord('l'):
                 right()
                 print "right"
@@ -99,6 +106,7 @@ while (True):
                         view_video = True
                 else:
                         view_video = False
+		
                         
         if rec_start_time > 0:
                 # increase frame_id
@@ -110,7 +118,7 @@ while (True):
                 # write video stream
                 vidfile.write(frame)
 
-                print ts, frame_id, angle
+	print ts, frame_id, angle
 
 cap.release()
 keyfile.close()
