@@ -8,12 +8,6 @@ import math
 import numpy as np
 import pygame
 
-def turnOff():
-        stop()
-        center()
-
-atexit.register(turnOff)
-
 cap = cv2.VideoCapture(0)
 cap.set(3,320)
 cap.set(4,240)
@@ -21,7 +15,9 @@ ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
 keyfile = open('out-key.csv', 'w+')
+keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
+keyfile.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
 
 def stop():
@@ -41,8 +37,13 @@ def right():
 def degree2rad(deg):
         return deg * math.pi / 180.0
 
+def turnOff():
+        stop()
+        center()
 
-view_video = True
+atexit.register(turnOff)
+
+view_video = False
 frame_id = 0
 null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
@@ -55,31 +56,36 @@ while (True):
         ts = int(time.time() * 1000000)
         
         if ret == False:
+		print "Camera is not ready"
                 break
 
         if view_video == True:
                 cv2.imshow('frame', frame)
 
         ch = cv2.waitKey(50) & 0xFF
-        
+
         if ch == ord('j'):
                 left()
-                angle = degree2rad(-30)
                 print "left"
+                angle = degree2rad(-30)
+                btn   = ch
         elif ch == ord('k'):
                 center()
-                angle = 0.0
                 print "center"
+                angle = degree2rad(0)
+                btn   = ch                
         elif ch == ord('l'):
                 right()
                 print "right"
-                angle = degree2rad(30)                
+                angle = degree2rad(30)
+                btn   = ch                
         elif ch == ord('a'):
                 ffw()
                 print "accel"
         elif ch == ord('s'):
                 stop()
-                print "stop"
+                print "stop"                
+                btn   = ch
         elif ch == ord('z'):
                 rew()
                 print "reverse"
@@ -97,22 +103,26 @@ while (True):
                         view_video = True
                 else:
                         view_video = False
-        else:
-                center()
-                angle = 0.0                
+		
                         
-        if rec_start_time > 0:                
-                # write keyboard input        
-                str = "{}, {}, {}\n".format(ts, frame_id, angle)
+        if rec_start_time > 0:
+                # increase frame_id
+                frame_id = frame_id + 1
+                
+                # write input (angle)
+                str = "{},{},{}\n".format(ts, frame_id, angle)
                 keyfile.write(str)
+
+                # write input (button: left, center, stop, speed)
+                str = "{},{},{},{}\n".format(ts, frame_id, btn, cur_speed)
+                keyfile_btn.write(str)
+                
                 # write video stream
                 vidfile.write(frame)
 
-                print ts, frame_id, angle
-
-                # increase frame_id
-                frame_id = frame_id + 1
+	        print ts, frame_id, angle, btn
 
 cap.release()
 keyfile.close()
+keyfile_btn.close()
 vidfile.release()
