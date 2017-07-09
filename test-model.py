@@ -23,7 +23,7 @@ saver.restore(sess, model_path)
 
 epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
 
-epoch_ids = [6] # DBG - heechul
+# epoch_ids = [6] # DBG - heechul
 
 for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
