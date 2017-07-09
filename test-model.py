@@ -52,7 +52,8 @@ for epoch_id in epoch_ids:
         prep_time = pred_start - prep_start
         pred_time = pred_end - pred_start
 
-        print 'pred: {} deg. took {} ms'.format(deg, pred_time * 1000)
+        # print 'pred: {} deg. took {} ms'.format(deg, pred_time * 1000)
+        print 'pred: {} deg.'.format(deg)
 
         machine_steering.append(deg)
 
