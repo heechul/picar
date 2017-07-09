@@ -12,8 +12,14 @@ import os
 import preprocess
 # import visualize
 import time
+import math
 
 import local_common as cm
+
+def deg2rad(deg):
+        return deg * math.pi / 180.0
+def rad2deg(rad):
+        return 180.0 * rad / math.pi
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
@@ -46,14 +52,15 @@ for epoch_id in epoch_ids:
         img = preprocess.preprocess(img)
 
         pred_start = time.time()
-        deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        deg = rad2deg(rad)
         pred_end   = time.time()
 
         prep_time = pred_start - prep_start
         pred_time = pred_end - pred_start
 
         # print 'pred: {} deg. took {} ms'.format(deg, pred_time * 1000)
-        print 'pred: {} deg.'.format(deg)
+        print 'pred: {} deg (rad={})'.format(deg, rad)
 
         machine_steering.append(deg)
 
