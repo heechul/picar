@@ -29,12 +29,8 @@ for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
     # vid_path = cm.jn(params.data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
 
-    vid_scaled_path = cm.jn(params.data_dir, 'out-video-{}-scaled.avi'.format(epoch_id))
-    if not os.path.exists(vid_scaled_path):
-        vid_path = cm.jn(params.data_dir, 'out-video-{}.avi'.format(epoch_id))
-        assert os.path.isfile(vid_path)
-        os.system("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
-    vid_path = vid_scaled_path
+    vid_path = cm.jn(params.data_dir, 'out-video-{}.avi'.format(epoch_id))
+    assert os.path.isfile(vid_path)
     frame_count = cm.frame_count(vid_path)
     cap = cv2.VideoCapture(vid_path)
 
