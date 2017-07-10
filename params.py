@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 batch_size = 100
 # save_dir = os.path.abspath('models')
-save_dir = os.path.abspath('../picar/models')
+save_dir = os.path.abspath('../picar/models-v4')
 training_steps = 2000
 img_height = 66
 img_width = 200
@@ -26,8 +26,8 @@ if not os.path.isdir(out_dir):
     os.makedirs(out_dir)
 
 epochs = OrderedDict()
-epochs['train'] = [6,7,8,9,10,11,12] # range(0,5)
-epochs['val'] = [13] # range(0,5)
+epochs['train'] = [14,15,16] # range(0,5)
+epochs['val'] = [17] # range(0,5)
 # epochs['train'] = [3, 4, 5, 6, 8]
 # epochs['val'] = [1, 2, 7, 9, 10]
 
