@@ -16,6 +16,11 @@ import numpy as np
 import pygame
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
+def deg2rad(deg):
+        return deg * math.pi / 180.0
+def rad2deg(rad):
+        return 180.0 * rad / math.pi
+
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
 model_name = 'model.ckpt'
@@ -85,14 +90,16 @@ while (True):
                 cv2.imshow('frame', frame)
 
         img = preprocess.preprocess(frame)
-        deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        deg = rad2deg(rad)
+        
         # print "DNN predicted angle:", deg
 
-        if deg < 0.25 and deg > -0.25:
+        if deg < 15 and deg > -15:
                 ma_ch = ord('k') # center
-        elif deg >= 0.25:
+        elif deg >= 15:
                 ma_ch = ord('l') # right
-        elif deg <= -0.25:
+        elif deg <= -15:
                 ma_ch = ord('j') # left
                 
         ch = cv2.waitKey(50) & 0xFF
