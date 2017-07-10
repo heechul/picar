@@ -11,13 +11,13 @@ from pololu_drv8835_rpi import motors, MAX_SPEED
 
 motors.setSpeeds(0, 0)
 cap = cv2.VideoCapture(0)
-cap.set(3,320)
-cap.set(4,240)
+# cap.set(3,320)
+# cap.set(4,240)
 
 # ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 # ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
+vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (640,480))
 keyfile = open('out-key.csv', 'w+')
 keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
