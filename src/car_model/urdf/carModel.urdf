@@ -36,7 +36,6 @@
   </link>
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
-    <turnGravityOff>false</turnGravityOff>
   </gazebo>
   <link name="base_link">
     <visual>
@@ -53,7 +52,7 @@
       <origin rpy="0 0 0" xyz="0 0 0.125"/>
     </collision>
     <inertial>
-      <mass value="5"/>
+      <mass value="15"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
@@ -71,7 +70,7 @@
       <geometry>
         <box size="0.1 0.1 0.1"/>
       </geometry>
-      <material name="blue"/>
+      <material name="black"/>
     </visual>
     <collision>
       <geometry>
@@ -83,21 +82,20 @@
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
-  <joint name="camera_joint" type="fixed">
-    <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="0 0.3125 0.1875"/>
+  <joint name="camera_joint" type="continuous">
+    <origin rpy="-1.57 -1.57 1.57" xyz="0 0.375 0.1875"/>
     <parent link="base_footprint"/>
     <child link="camera"/>
   </joint>
   <gazebo reference="camera">
-    <!--from http://gazebosim.org/tutorials?tut=ros_gzplugins-->
-    <sensor name="camera" type="camera">
+    <material>Gazebo/Black</material>
+    <sensor name="car_model_camera" type="camera">
       <update_rate>33.3</update_rate>
-      <camera name="head">
+      <camera name="camera">
         <horizontal_fov>1.3962634</horizontal_fov>
         <image>
-          <width>&quot;640&quot;</width>
-          <height>&quot;480&quot;</height>
+          <width>640</width>
+          <height>480</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -106,9 +104,6 @@
         </clip>
         <noise>
           <type>gaussian</type>
-          <!-- Noise is sampled independently per pixel on each frame.
-                                                That pixel's noise value is added to each of its color
-                                                channels, which at that point lie in the range [0,1]. -->
           <mean>0.0</mean>
           <stddev>0.007</stddev>
         </noise>
@@ -116,10 +111,10 @@
       <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>robot/camera</cameraName>
+        <cameraName>car_model_camera</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>camera_link</frameName>
+        <frameName>odom</frameName>
         <hackBaseline>0.07</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -142,7 +137,7 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="3"/>
+      <mass value="10"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
@@ -170,7 +165,7 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="3"/>
+      <mass value="10"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
@@ -209,7 +204,29 @@
     <child link="front_left_wheel"/>
     <origin rpy="0 -1.57 0" xyz="-0.25 0.3 0.125"/>
   </joint>
+  <transmission name="front_left_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="front_left_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="front_left_wheel_to_front_axle">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <transmission name="front_left_vel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="front_left_vel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="front_left_wheel_to_front_axle">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
   <gazebo reference="front_left_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
     <material>Gazebo/White</material>
   </gazebo>
   <link name="front_right_wheel">
@@ -236,7 +253,29 @@
     <child link="front_right_wheel"/>
     <origin rpy="0 -1.57 0" xyz="0.25 0.3 0.125"/>
   </joint>
+  <transmission name="front_right_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="front_right_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="front_right_wheel_to_front_axle">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <transmission name="front_right_vel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="front_right_vel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="front_right_wheel_to_front_axle">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
   <gazebo reference="front_right_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
     <material>Gazebo/White</material>
   </gazebo>
   <link name="back_left_wheel">
@@ -263,7 +302,29 @@
     <child link="back_left_wheel"/>
     <origin rpy="0 -1.57 0" xyz="-0.25 -0.3 0.125"/>
   </joint>
+  <transmission name="back_left_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="back_left_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="back_left_wheel_to_back_axle">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <transmission name="back_left_vel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="back_left_vel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="back_left_wheel_to_back_axle">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
   <gazebo reference="back_left_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
     <material>Gazebo/White</material>
   </gazebo>
   <link name="back_right_wheel">
@@ -290,23 +351,50 @@
     <child link="back_right_wheel"/>
     <origin rpy="0 -1.57 0" xyz="0.25 -0.3 0.125"/>
   </joint>
+  <transmission name="back_right_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="back_right_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="back_right_wheel_to_back_axle">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <transmission name="back_right_vel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="back_right_vel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="back_right_wheel_to_back_axle">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
   <gazebo reference="back_right_wheel">
+    <mu1 value="200.0"/>
+    <mu2 value="100.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
     <material>Gazebo/White</material>
   </gazebo>
   <!--
 -->
   <gazebo>
+    <!--
+                <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                        <robotNamespace>/</robotNamespace>
+                </plugin>
+-->
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
       <alwaysOn>true</alwaysOn>
       <commandTopic>cmd_vel</commandTopic>
-      <leftJoint>front_left_wheel_to_front_axle</leftJoint>
+      <leftJoint>[front_left_wheel_to_front_axle, back_left_wheel_to_back_axle]</leftJoint>
       <legacyMode>false</legacyMode>
       <odometryFrame>odom</odometryFrame>
       <odometryTopic>odom</odometryTopic>
       <publishTf>100</publishTf>
       <publishWheelJointState>false</publishWheelJointState>
       <publishWheelTF>true</publishWheelTF>
-      <rightJoint>front_right_wheel_to_front_axle</rightJoint>
+      <rightJoint>[front_right_wheel_to_front_axle, back_right_wheel_to_back_axle]</rightJoint>
       <robotBaseFrame>base_link</robotBaseFrame>
       <robotNamespace>robot::base_footprint</robotNamespace>
       <rosDebugLevel>na</rosDebugLevel>

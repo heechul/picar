@@ -46,7 +46,6 @@
                 </link>
                 <gazebo reference="base_footprint">
                         <material>Gazebo/Green</material>
-                        <turnGravityOff>false</turnGravityOff>
                 </gazebo>
 
         </xacro:macro>
@@ -68,7 +67,7 @@
                                 </geometry>
                                 <origin rpy="0 0 0" xyz="0 0 ${baseheight}" />
                         </collision>
-                        <xacro:default_inertial mass="5"/>
+                        <xacro:default_inertial mass="15"/>
 
                 </link>
                 <joint name="base_footprint_joint" type="fixed">
@@ -96,7 +95,7 @@
                                                <cylinder radius="${baselength/8}" length="${axlelength}" />
                                        </geometry>
                                </collision>
-                               <xacro:default_inertial mass="3"/>
+                               <xacro:default_inertial mass="10"/>
                        </link>
 
                        <joint name="${frontback}_axle_to_base" type="fixed">
@@ -138,7 +137,32 @@
                         <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
                 </joint>
 
+                <transmission name="front_${leftright}_trans">
+                        <type>transmission_interface/SimpleTransmission</type>
+                        <actuator name="front_${leftright}_motor">
+                                <mechanicalReduction>1</mechanicalReduction>
+                        </actuator>
+                        <joint name="front_${leftright}_wheel_to_front_axle">
+                                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                        </joint>
+                </transmission>
+
+
+                <transmission name="front_${leftright}_vel_trans">
+                        <type>transmission_interface/SimpleTransmission</type>
+                        <actuator name="front_${leftright}_vel_motor">
+                                <mechanicalReduction>1</mechanicalReduction>
+                        </actuator>
+                        <joint name="front_${leftright}_wheel_to_front_axle">
+                                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                        </joint>
+                </transmission>
+
                 <gazebo reference="front_${leftright}_wheel">
+                        <mu1 value="200.0"/>
+                        <mu2 value="100.0"/>
+                        <kp value="10000000.0" />
+                        <kd value="1.0" />
                         <material>Gazebo/White</material>
                 </gazebo>
         </xacro:macro>
@@ -167,7 +191,32 @@
                         <child link="back_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
                 </joint>
+
+                <transmission name="back_${leftright}_trans">
+                        <type>transmission_interface/SimpleTransmission</type>
+                        <actuator name="back_${leftright}_motor">
+                                <mechanicalReduction>1</mechanicalReduction>
+                        </actuator>
+                        <joint name="back_${leftright}_wheel_to_back_axle">
+                                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                        </joint>
+                </transmission>
+
+                <transmission name="back_${leftright}_vel_trans">
+                        <type>transmission_interface/SimpleTransmission</type>
+                        <actuator name="back_${leftright}_vel_motor">
+                                <mechanicalReduction>1</mechanicalReduction>
+                        </actuator>
+                        <joint name="back_${leftright}_wheel_to_back_axle">
+                                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+                        </joint>
+                </transmission>
+
                 <gazebo reference="back_${leftright}_wheel">
+                        <mu1 value="200.0"/>
+                        <mu2 value="100.0"/>
+                        <kp value="10000000.0" />
+                        <kd value="1.0" />
                         <material>Gazebo/White</material>
                 </gazebo>
         </xacro:macro>
@@ -179,7 +228,7 @@
                                 <geometry>
                                         <box size="0.1 0.1 0.1"/>
                                 </geometry>
-                                <material name="blue"/>
+                                <material name="black"/>
                         </visual>
                         <collision>
                                 <geometry>
@@ -193,14 +242,13 @@
 
                 <joint name="camera_joint" type="fixed">
                         <axis xyz="0 0 1" />
-                        <origin xyz="0 ${(baselength/2)+(baselength/4)} ${baseheight+(baselength/8)}" rpy="1.57 0 0"/>
+                        <origin xyz="0 ${(baselength/2)+(baselength/4)} ${baseheight}" rpy="0 0 1.57"/>
                         <parent link="base_footprint"/>
                         <child link="camera"/>
                 </joint>
 
                 <gazebo reference="camera">
-                        <material>Gazebo/Blue</material>
-                        <!--from http://gazebosim.org/tutorials?tut=ros_gzplugins-->
+                        <material>Gazebo/Black</material>
                         <sensor type="camera" name="car_model_camera">
                                 <update_rate>33.3</update_rate>
                                 <camera name="camera">
@@ -216,9 +264,7 @@
                                         </clip>
                                         <noise>
                                                 <type>gaussian</type>
-                                                <!-- Noise is sampled independently per pixel on each frame.
-                                                That pixel's noise value is added to each of its color
-                                                channels, which at that point lie in the range [0,1]. -->
+
                                                 <mean>0.0</mean>
                                                 <stddev>0.007</stddev>
                                         </noise>
@@ -258,17 +304,22 @@
         <!--
 -->
         <gazebo>
+<!--
+                <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                        <robotNamespace>/</robotNamespace>
+                </plugin>
+-->
                 <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
                         <commandTopic>cmd_vel</commandTopic>
-                        <leftJoint>front_left_wheel_to_front_axle</leftJoint>
+                        <leftJoint>[front_left_wheel_to_front_axle, back_left_wheel_to_back_axle]</leftJoint>
                         <legacyMode>false</legacyMode>
                         <odometryFrame>odom</odometryFrame>
                         <odometryTopic>odom</odometryTopic>
                         <publishTf>100</publishTf>
                         <publishWheelJointState>false</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
-                        <rightJoint>front_right_wheel_to_front_axle</rightJoint>
+                        <rightJoint>[front_right_wheel_to_front_axle, back_right_wheel_to_back_axle]</rightJoint>
                         <robotBaseFrame>base_link</robotBaseFrame>
                         <robotNamespace>robot::base_footprint</robotNamespace>
                         <rosDebugLevel>na</rosDebugLevel>

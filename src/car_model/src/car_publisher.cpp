@@ -292,6 +292,8 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
                         car_pub->move_x = car_pub->move_x*cos(car_pub->angle)/cos(car_pub->previous_angle);
                         car_pub->move_y = car_pub->move_y*sin(car_pub->angle)/sin(car_pub->previous_angle);
 
+                        car_pub->joint_state->position[0] = car_pub->angle;
+
                 }
 
 
