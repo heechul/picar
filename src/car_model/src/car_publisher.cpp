@@ -272,7 +272,7 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
 
         for(;;)
         {
-                //if(car_pub->first_message) {break;}
+
                 if(car_pub->first_message && car_pub->f_left != 0)
                 {
 
@@ -284,10 +284,10 @@ void CarPublisher::default_publish(CarPublisher* car_pub)
                         {
                                 car_pub->turn_left = (car_pub->previous_angle < car_pub->angle);
                                 car_pub->turn_right = !car_pub->turn_left;
+                                car_pub->previous_angle = car_pub->angle;
+                                (car_pub->turn_left) ? car_pub->angle += (M_PI/72) : car_pub->angle -= (M_PI/72);
                         }
 
-                        car_pub->previous_angle = car_pub->angle;
-                        (car_pub->turn_left) ? car_pub->angle += (M_PI/72) : car_pub->angle -= (M_PI/72);
 
                         car_pub->move_x = car_pub->move_x*cos(car_pub->angle)/cos(car_pub->previous_angle);
                         car_pub->move_y = car_pub->move_y*sin(car_pub->angle)/sin(car_pub->previous_angle);
