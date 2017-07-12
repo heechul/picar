@@ -291,7 +291,7 @@
 
         <xacro:world_link />
         <xacro:car_base />
-        <xacro:camera_link height="480" width="640" />
+        <xacro:camera_link height="240" width="320" />
         <xacro:car_axle frontback="front" position="1" upper="0.785" lower="-0.785" />
         <xacro:car_axle frontback="back" position="-1" upper="0.785" lower="-0.785" />
 
