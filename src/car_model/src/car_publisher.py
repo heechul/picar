@@ -62,6 +62,7 @@ class Car_Publisher:
         self.f_left = 0; self.f_right = 0; self.back_wheels = 0;
         self.original_speed = 0.5; self.current_linx = 0.5; self.turn = 1;
         self.angle = (math.pi/2); self.previous_angle = (math.pi/2);
+        self.comparison_angle = self.angle
         self.first_message = False; self.turn_left = False; self.turn_right = False;
         self.move_x = 0; self.move_y = 0; self.move_z = 0;
         self.vx = 0.1; self.vy = 0.1; self.vth = self.angle;
@@ -119,10 +120,8 @@ class Car_Publisher:
                     self.f_left = 0.785; self.f_right = 0.393; self.back_wheels -= 3.14;
                     self.angle -= (math.pi/72)
 
-
                 elif msg.angular.z == 0: # ,
                     self.f_left = 0; self.f_right = 0; self.back_wheels -= 3.14;
-
 
                 else: # .
                     self.f_left = -0.393; self.f_right = -0.785; self.back_wheels -= 3.14;
@@ -130,13 +129,14 @@ class Car_Publisher:
 
 
         # variable for comparing angles?
-        while self.angle < 0:
-            self.angle += 2*math.pi
-        while self.angle > 2*math.pi:
-            self.angle -= 2*math.pi
+        self.comparison_angle = self.angle
+        while self.comparison_angle < 0:
+            self.comparison_angle += 2*math.pi
+        while self.comparison_angle > 2*math.pi:
+            self.comparison_angle -= 2*math.pi
 
 
-        if (self.angle == 0 or self.angle == (math.pi/2) or self.angle == (math.pi*1.5)):
+        if (self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5)):
             self.turn_left = False; self.turn_right = False;
         else:
             self.turn_left = (self.previous_angle < self.angle)
@@ -151,27 +151,31 @@ class Car_Publisher:
 
 
 
-
-
     def publish_messages(self):
 
         while not rospy.is_shutdown():
 
             if self.first_message and not (self.f_left == 0):
 
-                if self.angle == 0 or self.angle == (math.pi/2) or self.angle == (math.pi*1.5):
+                while self.comparison_angle < 0:
+                    self.comparison_angle += 2*math.pi
+                while self.comparison_angle > 2*math.pi:
+                    self.comparison_angle -= 2*math.pi
+
+                if self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5):
                     self.turn_left = False; self.turn_right = False;
 
                 else:
-                    self.turn_left = self.previous_angle < self.angle;
-                    self.turn_right = not self.turn_left;
+                    self.turn_left = self.previous_angle < self.angle
+                    self.turn_right = not self.turn_left
 
-                    self.previous_angle = self.angle;
+                    self.previous_angle = self.angle
                     if self.turn_left:
                         self.angle += (math.pi/72)
                     else:
-                        self.angle -= (math.pi/72);
+                        self.angle -= (math.pi/72)
 
+                    self.comparison_angle = self.angle
 
                 self.move_x = self.move_x * math.cos(self.angle) / math.cos(self.previous_angle)
                 self.move_y = self.move_y * math.sin(self.angle) / math.sin(self.previous_angle)

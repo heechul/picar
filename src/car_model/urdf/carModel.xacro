@@ -22,10 +22,10 @@
 
 
         <xacro:macro name="default_inertial" params="mass">
-          <inertial>
-            <mass value="${mass}" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
-          </inertial>
+                <inertial>
+                        <mass value="${mass}" />
+                        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+                </inertial>
         </xacro:macro>
 
         <xacro:macro name="world_link">
@@ -47,13 +47,11 @@
                 <gazebo reference="base_footprint">
                         <material>Gazebo/Green</material>
                 </gazebo>
-
         </xacro:macro>
 
 
         <xacro:macro name="car_base">
                 <link name="base_link">
-
                         <visual>
                                 <geometry>
                                         <box size="${baselength/2} ${baselength} ${baselength/8}" />
@@ -68,7 +66,6 @@
                                 <origin rpy="0 0 0" xyz="0 0 ${baseheight}" />
                         </collision>
                         <xacro:default_inertial mass="15"/>
-
                 </link>
                 <joint name="base_footprint_joint" type="fixed">
                         <axis xyz="0 0 1" />
@@ -83,34 +80,32 @@
 
 
         <xacro:macro name="car_axle" params="frontback position upper lower">
-                       <link name="${frontback}_axle">
-                               <visual>
-                                       <geometry>
-                                               <cylinder radius="${baselength/8}" length="${axlelength}" />
-                                       </geometry>
-                                       <material name="gray" />
-                               </visual>
-                               <collision>
-                                       <geometry>
-                                               <cylinder radius="${baselength/8}" length="${axlelength}" />
-                                       </geometry>
-                               </collision>
-                               <xacro:default_inertial mass="10"/>
-                       </link>
-
-                       <joint name="${frontback}_axle_to_base" type="fixed">
-                               <axis xyz="1 0 0" />
-                               <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
-                               <mimic joint="base_footprint_joint" multiplier="1"/>
-                               <parent link="base_footprint" />
-                               <child link="${frontback}_axle" />
-                               <origin rpy="0 -1.57 0" xyz="0 ${position * 0.3} ${baseheight}" />
-                       </joint>
-
-                       <gazebo reference="${frontback}_axle">
-                               <material>Gazebo/Grey</material>
-                       </gazebo>
-               </xacro:macro>
+               <link name="${frontback}_axle">
+                       <visual>
+                               <geometry>
+                                       <cylinder radius="${baselength/8}" length="${axlelength}" />
+                               </geometry>
+                               <material name="gray" />
+                       </visual>
+                       <collision>
+                               <geometry>
+                                       <cylinder radius="${baselength/8}" length="${axlelength}" />
+                               </geometry>
+                       </collision>
+                       <xacro:default_inertial mass="10"/>
+               </link>
+               <joint name="${frontback}_axle_to_base" type="fixed">
+                       <axis xyz="1 0 0" />
+                       <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                       <mimic joint="base_footprint_joint" multiplier="1"/>
+                       <parent link="base_footprint" />
+                       <child link="${frontback}_axle" />
+                       <origin rpy="0 -1.57 0" xyz="0 ${position * 0.3} ${baseheight}" />
+               </joint>
+               <gazebo reference="${frontback}_axle">
+                       <material>Gazebo/Grey</material>
+               </gazebo>
+       </xacro:macro>
 
 
         <xacro:macro name="car_front_wheel" params="leftright lr axle position upper lower">
@@ -128,7 +123,6 @@
                         </collision>
                         <xacro:default_inertial mass="20"/>
                 </link>
-
                 <joint name="front_${leftright}_wheel_to_front_axle" type="revolute">
                         <axis xyz="1 0 0" />
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
@@ -136,7 +130,6 @@
                         <child link="front_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
                 </joint>
-
                 <transmission name="front_${leftright}_trans">
                         <type>transmission_interface/SimpleTransmission</type>
                         <actuator name="front_${leftright}_motor">
@@ -146,8 +139,6 @@
                                 <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
                         </joint>
                 </transmission>
-
-
                 <transmission name="front_${leftright}_vel_trans">
                         <type>transmission_interface/SimpleTransmission</type>
                         <actuator name="front_${leftright}_vel_motor">
@@ -157,7 +148,6 @@
                                 <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
                         </joint>
                 </transmission>
-
                 <gazebo reference="front_${leftright}_wheel">
                         <mu1 value="200.0"/>
                         <mu2 value="100.0"/>
@@ -191,7 +181,6 @@
                         <child link="back_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
                 </joint>
-
                 <transmission name="back_${leftright}_trans">
                         <type>transmission_interface/SimpleTransmission</type>
                         <actuator name="back_${leftright}_motor">
@@ -201,7 +190,6 @@
                                 <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
                         </joint>
                 </transmission>
-
                 <transmission name="back_${leftright}_vel_trans">
                         <type>transmission_interface/SimpleTransmission</type>
                         <actuator name="back_${leftright}_vel_motor">
@@ -211,7 +199,6 @@
                                 <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
                         </joint>
                 </transmission>
-
                 <gazebo reference="back_${leftright}_wheel">
                         <mu1 value="200.0"/>
                         <mu2 value="100.0"/>
@@ -235,18 +222,14 @@
                                         <box size="0.1 0.1 0.1"/>
                                 </geometry>
                         </collision>
-
-
                         <xacro:default_inertial mass="1e-5"/>
                 </link>
-
                 <joint name="camera_joint" type="fixed">
                         <axis xyz="0 0 1" />
                         <origin xyz="0 ${(baselength/2)+(baselength/4)} ${baseheight}" rpy="0 0 1.57"/>
                         <parent link="base_footprint"/>
                         <child link="camera"/>
                 </joint>
-
                 <gazebo reference="camera">
                         <material>Gazebo/Black</material>
                         <sensor type="camera" name="car_model_camera">
@@ -264,7 +247,6 @@
                                         </clip>
                                         <noise>
                                                 <type>gaussian</type>
-
                                                 <mean>0.0</mean>
                                                 <stddev>0.007</stddev>
                                         </noise>
@@ -288,40 +270,44 @@
         </xacro:macro>
 
 
-
         <xacro:world_link />
         <xacro:car_base />
         <xacro:camera_link height="240" width="320" />
         <xacro:car_axle frontback="front" position="1" upper="0.785" lower="-0.785" />
         <xacro:car_axle frontback="back" position="-1" upper="0.785" lower="-0.785" />
 
-        <xacro:car_front_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="1" position="1" upper="0.785" lower="-0.393" />
-        <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1" position="-1" upper="0.393" lower="-0.785" />
-        <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
-        <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"  upper="${3.14*1000}" lower="${-3.14*1000}" />
+        <xacro:car_front_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="1"
+                position="1" upper="0.785" lower="-0.393" />
+        <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1"
+                position="-1" upper="0.393" lower="-0.785" />
+        <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"
+                upper="${3.14*1000}" lower="${-3.14*1000}" />
+        <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"
+                upper="${3.14*1000}" lower="${-3.14*1000}" />
 
 
         <!--
 -->
         <gazebo>
-<!--
+                <!--
                 <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
                         <robotNamespace>/</robotNamespace>
                 </plugin>
--->
-                <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+                -->
+                <plugin name="car_model_diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
                         <commandTopic>cmd_vel</commandTopic>
-                        <leftJoint>[front_left_wheel_to_front_axle, back_left_wheel_to_back_axle]</leftJoint>
+                        <leftJoint>front_left_wheel_to_front_axle</leftJoint>
                         <legacyMode>false</legacyMode>
                         <odometryFrame>odom</odometryFrame>
+                        <odometrySource>1</odometrySource>
                         <odometryTopic>odom</odometryTopic>
                         <publishTf>100</publishTf>
                         <publishWheelJointState>false</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
-                        <rightJoint>[front_right_wheel_to_front_axle, back_right_wheel_to_back_axle]</rightJoint>
-                        <robotBaseFrame>base_link</robotBaseFrame>
-                        <robotNamespace>robot::base_footprint</robotNamespace>
+                        <rightJoint>front_right_wheel_to_front_axle</rightJoint>
+                        <robotBaseFrame>base_footprint</robotBaseFrame>
+                        <robotNamespace>robot</robotNamespace>
                         <rosDebugLevel>na</rosDebugLevel>
                         <wheelTorque>5</wheelTorque>
                         <updateRate>${update_rate}</updateRate>
