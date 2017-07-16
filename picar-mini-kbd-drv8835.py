@@ -24,7 +24,7 @@ keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
 cur_speed = MAX_SPEED/2
-
+print "MAX speed:", MAX_SPEED
 def stop():
     global cur_speed
     cur_speed = 0
@@ -33,12 +33,12 @@ def stop():
 def ffw():
     global cur_speed
     # cur_speed = min(MAX_SPEED, cur_speed + MAX_SPEED/10)
-    cur_speed = MAX_SPEED-30
+    cur_speed = MAX_SPEED - 100
     motors.motor2.setSpeed(cur_speed)
 def rew():
     global cur_speed        
     # cur_speed = max(-MAX_SPEED, cur_speed - MAX_SPEED/10)
-    cur_speed = -(MAX_SPEED-20)
+    cur_speed = -(MAX_SPEED - 100)
     motors.motor2.setSpeed(cur_speed)
 
 def center():
