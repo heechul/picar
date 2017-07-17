@@ -42,7 +42,7 @@ class video_converter:
 
                 #cv2.imwrite("frames/frame%d.jpg"%count, image)
                 success, image = self.test_video.read()
-                sleep(0.01)
+                sleep(0.03)
 
         except KeyboardInterrupt:
             rospy.signal_shutdown("Shutting down")
