@@ -1,0 +1,2 @@
+model_checkpoint_path: "/nfs/users/m783b224/Documents/GitHub/picar/deeptesla-directory/models/model.ckpt"
+all_model_checkpoint_paths: "/nfs/users/m783b224/Documents/GitHub/picar/deeptesla-directory/models/model.ckpt"
