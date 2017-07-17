@@ -9,10 +9,15 @@ import numpy as np
 import pygame
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
+def deg2rad(deg):
+    return deg * math.pi / 180.0
+def rad2deg(rad):
+    return 180.0 * rad / math.pi
+
 motors.setSpeeds(0, 0)
 cap = cv2.VideoCapture(0)
-# cap.set(3,320)
-# cap.set(4,240)
+cap.set(3,640)
+cap.set(4,480)
 
 # ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 # ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
@@ -23,23 +28,26 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-cur_speed = MAX_SPEED/2
+SET_SPEED = MAX_SPEED/2 + 2*MAX_SPEED/10
+cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
+
 def stop():
     global cur_speed
     cur_speed = 0
-    motors.motor2.setSpeed(cur_speed)
+    motors.motor2.setSpeed(int(cur_speed))
         
 def ffw():
     global cur_speed
     # cur_speed = min(MAX_SPEED, cur_speed + MAX_SPEED/10)
-    cur_speed = MAX_SPEED - 100
-    motors.motor2.setSpeed(cur_speed)
+    cur_speed = SET_SPEED    
+    motors.motor2.setSpeed(int(cur_speed))
+
 def rew():
     global cur_speed        
     # cur_speed = max(-MAX_SPEED, cur_speed - MAX_SPEED/10)
-    cur_speed = -(MAX_SPEED - 100)
-    motors.motor2.setSpeed(cur_speed)
+    cur_speed = SET_SPEED
+    motors.motor2.setSpeed(int(cur_speed))
 
 def center():
     motors.motor1.setSpeed(0)
@@ -48,9 +56,6 @@ def left():
 def right():
     motors.motor1.setSpeed(-MAX_SPEED)
         
-def degree2rad(deg):
-    return deg * math.pi / 180.0
-
 def turnOff():
     stop()
     center()
@@ -78,18 +83,18 @@ while (True):
     if ch == ord('j'):
         left()
         print "left"
-        angle = degree2rad(-30)
+        angle = deg2rad(-30)
         btn   = ch
     elif ch == ord('k'):
         center()
         print "center"
-        angle = degree2rad(0)
+        angle = deg2rad(0)
         btn   = ch                
     elif ch == ord('l'):
         right()
         print "right"
-        angle = degree2rad(30)
-        btn   = ch                
+        angle = deg2rad(30)
+        btn   = ch               
     elif ch == ord('a'):
         ffw()
         print "accel"
@@ -132,6 +137,10 @@ while (True):
         vidfile.write(frame)
         
 	print ts, frame_id, angle, btn
+        
+        if frame_id >= 200:
+            print "recorded 200 frames"
+            break
         
 cap.release()
 keyfile.close()
