@@ -11,17 +11,24 @@ from time import sleep
 class stream_converter:
 
     def __init__(self):
-        self.webstream = urllib2.urlopen("http://devboard-picar-wifi.ittc.ku.edu:8080")
         self.bridge = CvBridge()
         self.frame_pub = rospy.Publisher("/sensor_msgs/Image",Image, queue_size=50)
-        self.camera = cv2.VideoCapture(0)
+        self.snapshot = None
 
     def stream_to_images(self):
 
-        try:
-            success, frame = self.webstream.read(360)
+        while True:
 
-            while success:
+            try:
+                self.snapshot = urllib2.urlopen("http://devboard-picar-wifi:8080?action=snapshot")
+                frame = self.snapshot.read()
+
+                frame = np.asarray(bytearray(frame), dtype="uint8")
+                frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+
+                #cv2.imshow("Image window", frame)
+                #cv2.waitKey(5)
+
                 pub_frame = self.bridge.cv2_to_imgmsg(frame, "bgr8")
                 pub_frame.header = Header()
                 pub_frame.header.frame_id = "odom"
@@ -32,13 +39,13 @@ class stream_converter:
                 except CvBridgeError as e:
                     rospy.loginfo(e)
 
-                success, frame = self.webstream.read(360)
                 sleep(0.03)
 
-        except KeyboardInterrupt:
-            cv2.destroyAllWindows()
-            rospy.signal_shutdown("Shutting down")
-            sys.exit(0)
+            except KeyboardInterrupt:
+                cv2.destroyAllWindows()
+                break
+                rospy.signal_shutdown("Shutting down")
+                sys.exit(0)
 
 def main(args):
     sc = stream_converter()
