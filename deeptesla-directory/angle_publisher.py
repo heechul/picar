@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 from __future__ import division
 
 import tensorflow as tf
@@ -45,14 +45,14 @@ while(True):
     ret, frame = cap.read()
     frame = preprocess.preprocess(frame)
     #deg = model.y.eval(feed_dict={model.x: [frame], model.keep_prob: 1.0})[0][0]
-    #twist.angular.z = deg	
+    #twist.angular.z = deg
     #pub.publish(twist)
     endTime = (time.time() - startTime) * 1000
     print endTime
 '''
 
 #Open the video and get the number of frames
-vid_path = "datasets/dataset{0}/out-mencoder.avi".format(epoch_id)
+vid_path = "../datasets/dataset{0}/out-mencoder.avi".format(epoch_id)
 assert os.path.isfile(vid_path)
 frame_count = cm.frame_count(vid_path)
 cap = cv2.VideoCapture(vid_path)
@@ -69,13 +69,13 @@ for frame_id in xrange(frame_count):
     deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] #Predict the angle
     deg = round(deg * 8) / 8 #Round the angle to the nearest eighth
     print deg #Print the rounded angle
-	
+
 	#Create a twist message that determines if a turn is necessary and publish it
     twist = Twist()
     twist.linear.x = TARGET_SPEED; twist.linear.y = 0; twist.linear.z = 0
     twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 2
     pub.publish(twist)
-	
+
 	#Update the temporary angle value to the angle of the current frame
     tempAngle = deg
 
