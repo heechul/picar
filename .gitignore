@@ -87,3 +87,11 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Untracked Raspberry PI Files and Folders
+RTIMULib/
+RTIMULib2/
+deeptesla/
+playbook-opencv/
+wiringPi/
+src/ivPID/
