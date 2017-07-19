@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="picar_base" type="mjpg_streamer" name="streamer" output="screen" args="-o 'output_http.so -w /home/heechul/PiCar2016/www' -i 'input_uvc.so -f 30 -r 320x240'" />
+
+    <node pkg="picar_base" type="controller.py" name="controller" />
+
+    <node pkg="rtimulib_ros" type="rtimulib_ros" name="rtimulib_node" output="screen">
+        <param name="calibration_file_path" value="$(find rtimulib_ros)/config"/>
+        <param name="frame_id" value="map"/> <!-- /map is used for debug in RViz, to be replaced by the imu_link -->
+        <param name="update_rate" value="10"/>
+    </node>
+
+    <arg name="port" default="9090" />
+    <arg name="address" default="devboard-picar-wifi.ittc.ku.edu" />
+    <arg name="ssl" default="false" />
+    <arg name="certfile" default=""/>
+    <arg name="keyfile" default="" />
+    <arg name="retry_startup_delay" default="5" />
+    <arg name="fragment_timeout" default="600" />
+    <arg name="delay_between_messages" default="0" />
+    <arg name="max_message_size" default="None" />
+    <arg name="authenticate" default="false" />
+    <arg name="model" default="$(find car_model)/urdf/carModel.xacro" />
+    <arg name="rvizconfig" default="$(find car_model)/rviz/urdf.rviz" />
+    <arg name="use_sim_time" default="false"/>
+    <arg name="gui" default="true" />
+
+
+    <group if="$(arg ssl)">
+      <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" output="screen">
+        <param name="certfile" value="$(arg certfile)" />
+	<param name="keyfile" value="$(arg keyfile)" />
+	<param name="authenticate" value="$(arg authenticate)" />
+	<param name="port" value="$(arg port)"/>
+	<param name="address" value="$(arg address)"/>
+	<param name="retry_startup_delay" value="$(arg retry_startup_delay)"/>
+	<param name="fragment_timeout" value="$(arg fragment_timeout)"/>
+	<param name="delay_between_messages" value="$(arg delay_between_messages)"/>
+	<param name="max_message_size" value="$(arg max_message_size)"/>
+      </node>
+    </group>
+    <group unless="$(arg ssl)">
+      <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" output="screen">
+	<param name="authenticate" value="$(arg authenticate)" />
+	<param name="port" value="$(arg port)"/>
+	<param name="address" value="$(arg address)"/>
+	<param name="retry_startup_delay" value="$(arg retry_startup_delay)"/>
+	<param name="fragment_timeout" value="$(arg fragment_timeout)"/>
+	<param name="delay_between_messages" value="$(arg delay_between_messages)"/>
+	<param name="max_message_size" value="$(arg max_message_size)"/>
+      </node>
+    </group>
+
+    <node name="rosapi" pkg="rosapi" type="rosapi_node" />
+
+    <!-- <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_keyboard_node" output="screen" /> -->
+
+</launch>
