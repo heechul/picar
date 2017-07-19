@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import roslib;
 roslib.load_manifest('car_model')
-import cv2, os, rospy, socket, sys, urllib2
+import cv2, os, rospy, signal, socket, sys, urllib2
 import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
@@ -17,17 +17,16 @@ class stream_converter:
 
     def stream_to_images(self):
 
-        while True:
+        try:
+            while True:
 
-            try:
                 self.snapshot = urllib2.urlopen("http://devboard-picar-wifi:8080?action=snapshot")
                 frame = self.snapshot.read()
-
                 frame = np.asarray(bytearray(frame), dtype="uint8")
                 frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
 
-                #cv2.imshow("Image window", frame)
-                #cv2.waitKey(5)
+                cv2.imshow("Image window", frame)
+                cv2.waitKey(5)
 
                 pub_frame = self.bridge.cv2_to_imgmsg(frame, "bgr8")
                 pub_frame.header = Header()
@@ -41,24 +40,26 @@ class stream_converter:
 
                 sleep(0.03)
 
-            except KeyboardInterrupt:
-                cv2.destroyAllWindows()
-                break
-                rospy.signal_shutdown("Shutting down")
-                sys.exit(0)
+        except KeyboardInterrupt:
+            return
+
+
+def signal_handler(signal, frame):
+    rospy.signal_shutdown("Shutting down")
+    sys.exit(0)
+
 
 def main(args):
     sc = stream_converter()
     try:
         sc.stream_to_images()
-    except KeyboardInterrupt:
-        cv2.destroyAllWindows()
-        rospy.signal_shutdown("Shutting down")
-        sys.exit(0)
-    rospy.signal_shutdown("Shutting down")
+    except KeyboardInterrupt as k:
+        rospy.loginfo("Break")
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
     rospy.init_node('stream_converter', anonymous=True)
+    signal.signal(signal.SIGINT, signal_handler)
     main(sys.argv)
     rospy.spin()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import roslib;
 roslib.load_manifest('car_model')
-import cv2, os, rospy, sys
+import cv2, os, rospy, signal, sys
 import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
@@ -27,9 +27,10 @@ class video_converter:
         try:
             while success:
 
-                #cv2.imshow("Image window", image)
-                #cv2.waitKey(2)
+                cv2.imshow("Image window", image)
+                cv2.waitKey(2)
 
+                """
                 pub_image = self.bridge.cv2_to_imgmsg(image, "bgr8")
                 pub_image.header = Header()
                 pub_image.header.frame_id = "odom"
@@ -39,35 +40,39 @@ class video_converter:
                     self.image_pub.publish(pub_image)
                 except CvBridgeError as e:
                     rospy.loginfo(e)
+                """
 
                 #cv2.imwrite("frames/frame%d.jpg"%count, image)
                 success, image = self.test_video.read()
                 sleep(0.03)
 
+            return 1
+
         except KeyboardInterrupt:
-            rospy.signal_shutdown("Shutting down")
-            sys.exit(0)
+            return 100
 
         self.test_video.release()
         rospy.loginfo("Done")
         #os.system("rm frames/*")
 
 
+def signal_handler(signal, frame):
+    rospy.signal_shutdown("Shutting down")
+    sys.exit(0)
+
 
 
 def main(args):
     vc = video_converter()
-    try:
-        for var in range(0,5):
-            vc.vid_to_images()
-    except KeyboardInterrupt:
-        cv2.destroyAllWindows()
-        rospy.signal_shutdown("Shutting down")
-        sys.exit(0)
-    rospy.signal_shutdown("Shutting down")
+    for var in range(0,5):
+        ret = vc.vid_to_images()
+        if ret == 100:
+            cv2.destroyAllWindows()
+            break
 
 
 if __name__ == '__main__':
     rospy.init_node('video_converter', anonymous=True)
+    signal.signal(signal.SIGINT, signal_handler)
     main(sys.argv)
     rospy.spin()
