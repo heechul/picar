@@ -12,17 +12,18 @@ from time import sleep
 
 class video_converter:
 
-    def __init__(self):
+    def __init__(self, source):
         self.bridge = CvBridge()
+        self.source_video_name = source
 
         self.image_pub = rospy.Publisher("/sensor_msgs/Image",Image, queue_size=50)
         #self.image_sub = rospy.Subscriber("image_topic",Image,self.callback)
-        self.test_video = cv2.VideoCapture("example.avi")
+        self.test_video = cv2.VideoCapture(source)
 
 
     def vid_to_images(self):
 
-        self.test_video = cv2.VideoCapture("example.avi")
+        self.test_video = cv2.VideoCapture(self.source_video_name)
         success, image = self.test_video.read()
         try:
             while success:
@@ -46,13 +47,13 @@ class video_converter:
                 success, image = self.test_video.read()
                 sleep(0.03)
 
-            return 1
 
         except KeyboardInterrupt:
             return 100
 
         self.test_video.release()
-        rospy.loginfo("Done")
+        #rospy.loginfo("Done")
+        return 1
         #os.system("rm frames/*")
 
 
@@ -63,12 +64,14 @@ def signal_handler(signal, frame):
 
 
 def main(args):
-    vc = video_converter()
-    for var in range(0,5):
+    vc = video_converter("../../../datasets/dataset25/out-mencoder.avi")
+    for var in range(0,2):
         ret = vc.vid_to_images()
         if ret == 100:
-            cv2.destroyAllWindows()
             break
+    cv2.destroyAllWindows()
+    rospy.signal_shutdown("Shutting down")
+    sys.exit(0)
 
 
 if __name__ == '__main__':

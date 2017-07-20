@@ -41,9 +41,9 @@ class stream_converter:
 
                 sleep(0.03)
 
-        except (urllib2.URLError, BadStatusLine):
-            return
-
+        except (KeyboardInterrupt, urllib2.URLError, BadStatusLine):
+            rospy.signal_shutdown("Shutting down")
+            sys.exit(0)
 
 def signal_handler(signal, frame):
     rospy.signal_shutdown("Shutting down")

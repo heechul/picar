@@ -7,6 +7,7 @@ catkin_package()
 catkin_python_setup()
 
 catkin_install_python(PROGRAMS deeptesla-directory/controller.py
+  deeptesla-directory/rviz_driver.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 include_directories(include ${catkin_INCLUDE_DIRS})
