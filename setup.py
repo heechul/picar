@@ -5,7 +5,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
-    scripts=['deeptesla-directory/controller.py', 'deeptesla-directory/rviz_driver.py'],
+    scripts=['deeptesla-directory/controller.py', 'deeptesla-directory/video_driver.py'],
     packages=['picar_base'],
     package_dir={'': 'src'},
 )
