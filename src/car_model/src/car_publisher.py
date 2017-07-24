@@ -20,7 +20,7 @@ class Car_Publisher:
         self.joint_pub = rospy.Publisher("joint_states", JointState, queue_size=50)
         self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
         self.broadcaster = tf.TransformBroadcaster()
-        self.thr = Thread(target = self.publish_messages)
+        self.thr = Thread(target = self.thread_publish)
 
 
         self.joint_state.header = Header()
@@ -148,88 +148,93 @@ class Car_Publisher:
 
         self.joint_state.position = [0, 0, 0, 0, self.f_left, self.f_right, self.back_wheels, self.back_wheels]
 
-
+        self.publish_messages()
 
 
     def publish_messages(self):
 
-        while not rospy.is_shutdown():
+        if self.first_message and not (self.f_left == 0):
 
-            if self.first_message and not (self.f_left == 0):
+            while self.comparison_angle < 0:
+                self.comparison_angle += 2*math.pi
+            while self.comparison_angle > 2*math.pi:
+                self.comparison_angle -= 2*math.pi
 
-                while self.comparison_angle < 0:
-                    self.comparison_angle += 2*math.pi
-                while self.comparison_angle > 2*math.pi:
-                    self.comparison_angle -= 2*math.pi
+            if self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5):
+                self.turn_left = False; self.turn_right = False;
 
-                if self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5):
-                    self.turn_left = False; self.turn_right = False;
+            else:
+                self.turn_left = self.previous_angle < self.angle
+                self.turn_right = not self.turn_left
 
+                self.previous_angle = self.angle
+                if self.turn_left:
+                    self.angle += (math.pi/72)
                 else:
-                    self.turn_left = self.previous_angle < self.angle
-                    self.turn_right = not self.turn_left
+                    self.angle -= (math.pi/72)
 
-                    self.previous_angle = self.angle
-                    if self.turn_left:
-                        self.angle += (math.pi/72)
-                    else:
-                        self.angle -= (math.pi/72)
+                self.comparison_angle = self.angle
 
-                    self.comparison_angle = self.angle
+            self.move_x = self.move_x * math.cos(self.angle) / math.cos(self.previous_angle)
+            self.move_y = self.move_y * math.sin(self.angle) / math.sin(self.previous_angle)
 
-                self.move_x = self.move_x * math.cos(self.angle) / math.cos(self.previous_angle)
-                self.move_y = self.move_y * math.sin(self.angle) / math.sin(self.previous_angle)
+        quat_1 = tf.transformations.quaternion_from_euler(0,0, (self.angle - math.pi/2) )
+        quat_2 = tf.transformations.quaternion_from_euler(0,0,self.angle)
 
-            quat_1 = tf.transformations.quaternion_from_euler(0,0, (self.angle - math.pi/2) )
-            quat_2 = tf.transformations.quaternion_from_euler(0,0,self.angle)
+        self.last_time = self.current_time; self.current_time = rospy.Time.now()
 
-            self.last_time = self.current_time; self.current_time = rospy.Time.now()
+        self.joint_state.header = Header()
+        self.joint_state.header.frame_id = "base_footprint"
+        self.joint_state.header.stamp = self.current_time
+        self.joint_pub.publish(self.joint_state)
 
-            self.joint_state.header = Header()
-            self.joint_state.header.frame_id = "base_footprint"
-            self.joint_state.header.stamp = self.current_time
-            self.joint_pub.publish(self.joint_state)
+        self.trans.header = Header()
+        self.trans.header.frame_id = "odom"
+        self.trans.child_frame_id = "base_footprint"
+        self.trans.header.stamp = self.current_time;
+        self.trans.transform.translation.x += self.move_x
+        self.trans.transform.translation.y += self.move_y
+        self.trans.transform.translation.z += self.move_z
+        self.trans.transform.rotation = quat_1
+        self.broadcaster.sendTransform(
+            (self.trans.transform.translation.x, self.trans.transform.translation.y, self.trans.transform.translation.z),
+            self.trans.transform.rotation,
+            self.current_time,
+            self.trans.child_frame_id,
+            self.trans.header.frame_id
+        )
 
-            self.trans.header = Header()
-            self.trans.header.frame_id = "odom"
-            self.trans.child_frame_id = "base_footprint"
-            self.trans.header.stamp = self.current_time;
-            self.trans.transform.translation.x += self.move_x
-            self.trans.transform.translation.y += self.move_y
-            self.trans.transform.translation.z += self.move_z
-            self.trans.transform.rotation = quat_1
-            self.broadcaster.sendTransform(
-                (self.trans.transform.translation.x, self.trans.transform.translation.y, self.trans.transform.translation.z),
-                self.trans.transform.rotation,
-                self.current_time,
-                self.trans.child_frame_id,
-                self.trans.header.frame_id
-            )
+        self.odom.header = Header()
+        self.odom.header.frame_id = "odom";
+        self.odom.child_frame_id = "base_footprint"
+        self.odom.header.stamp = self.current_time
+        self.odom.pose.pose.position.x += self.move_x
+        self.odom.pose.pose.position.y += self.move_y
+        self.odom.pose.pose.position.z += self.move_z
+        self.odom.pose.pose.orientation.x = quat_2[0]
+        self.odom.pose.pose.orientation.y = quat_2[1]
+        self.odom.pose.pose.orientation.z = quat_2[2]
+        self.odom.pose.pose.orientation.w = quat_2[3]
+        self.odom_pub.publish(self.odom);
 
-            self.odom.header = Header()
-            self.odom.header.frame_id = "odom";
-            self.odom.child_frame_id = "base_footprint"
-            self.odom.header.stamp = self.current_time
-            self.odom.pose.pose.position.x += self.move_x
-            self.odom.pose.pose.position.y += self.move_y
-            self.odom.pose.pose.position.z += self.move_z
-            self.odom.pose.pose.orientation.x = quat_2[0]
-            self.odom.pose.pose.orientation.y = quat_2[1]
-            self.odom.pose.pose.orientation.z = quat_2[2]
-            self.odom.pose.pose.orientation.w = quat_2[3]
-            self.odom_pub.publish(self.odom);
-
-            """
-            rospy.loginfo("Angle: %f"%(self.angle))
-            rospy.loginfo("Move: [%f , %f]"%(self.move_x, self.move_y))
-            rospy.loginfo("Transform: [%f, %f, %f]"%(
-                self.trans.transform.translation.x, self.trans.transform.translation.y,
-                self.trans.transform.translation.z)
-            )
-            """
-            sleep(0.1)
+        """
+        rospy.loginfo("Angle: %f"%(self.angle))
+        rospy.loginfo("Move: [%f , %f]"%(self.move_x, self.move_y))
+        rospy.loginfo("Transform: [%f, %f, %f]"%(
+            self.trans.transform.translation.x, self.trans.transform.translation.y,
+            self.trans.transform.translation.z)
+        )
+        """
+        sleep(0.1)
 
 
+
+    def thread_publish(self):
+        while not rospy.is_shutdown():
+            if not self.first_message:
+                self.publish_messages()
+            else:
+                break
 
 
     def listener(self):
