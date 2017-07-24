@@ -13,7 +13,7 @@ from threading import Thread
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-class driver_simulation:
+class VideoDriver:
 
     def __init__(self, video_location):
         self.bridge = CvBridge()
@@ -85,12 +85,18 @@ class driver_simulation:
                 self.publish_frame(img) #Publish the frame for viewing in RViz
 
                 img = preprocess.preprocess(img) #Process the image
-                deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] #Predict the angle
+                deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 0.9})[0][0] #Predict the angle
                 deg = round(deg * 8) / 8 #Round the angle to the nearest eighth
+
+                angz = 0
+                if deg < tempAngle:
+                    twist.angular.z = (tempAngle - deg) * 2
+                elif deg > tempAngle:
+                    twist.angular.z = (tempAngle + deg) * 2
 
                 #Create a twist message that determines if a turn is necessary and publish it
                 twist.linear.x = speed; twist.linear.y = 0; twist.linear.z = 0
-                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 2
+                twist.angular.x = 0; twist.angular.y = 0;
                 self.twist_pub.publish(twist)
 
                 #Update the temporary angle value to the angle of the current frame
@@ -107,10 +113,7 @@ class driver_simulation:
             twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0;
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0;
             self.twist_pub.publish(twist)
-            time.sleep(15)
-            rospy.signal_shutdown("Shutting down")
-            sys.exit(0)
-
+            self.video_source.release()
 
 def signal_handler(signal, frame):
     cv2.destroyAllWindows()
@@ -118,15 +121,16 @@ def signal_handler(signal, frame):
     sys.exit(0)
 
 if __name__ == "__main__":
-    rospy.init_node('driver_simulation', anonymous=True)
+    rospy.init_node('video_driver', anonymous=True)
     signal.signal(signal.SIGINT, signal_handler)
     """
     simulator = None
     try:
         video_source = sys.argv[1]
-        simulator = driver_simulation(video_source)
+        simulator = VideoDriver(video_source)
     except (IndexError, ValueError):
     """
-    simulator = driver_simulation("../datasets/dataset4/out-mencoder.avi")
-    simulator.publish_to_car()
+    simulator = VideoDriver("../datasets/dataset4/out-mencoder.avi")
+    while True:
+        simulator.publish_to_car()
     rospy.spin()

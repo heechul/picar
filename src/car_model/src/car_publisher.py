@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import roslib; roslib.load_manifest('car_model')
-import math, rospy, tf
+import math, os, rospy, signal, sys, tf
 from time import sleep
 from threading import Thread
 from std_msgs.msg import Header
-from geometry_msgs.msg import Point, Pose, Quaternion, Transform, TransformStamped, Twist, Vector3
+from geometry_msgs.msg import Quaternion, TransformStamped, Twist, Vector3
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import JointState
 
@@ -17,8 +17,8 @@ class Car_Publisher:
         self.joint_state = JointState()
         self.odom = Odometry()
         self.trans = TransformStamped()
-        self.joint_pub = rospy.Publisher("joint_states", JointState, queue_size=50)
-        self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
+        self.joint_pub = rospy.Publisher("joint_states", JointState, queue_size=1)
+        self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=1)
         self.broadcaster = tf.TransformBroadcaster()
         self.thr = Thread(target = self.thread_publish)
 
@@ -153,31 +153,6 @@ class Car_Publisher:
 
     def publish_messages(self):
 
-        if self.first_message and not (self.f_left == 0):
-
-            while self.comparison_angle < 0:
-                self.comparison_angle += 2*math.pi
-            while self.comparison_angle > 2*math.pi:
-                self.comparison_angle -= 2*math.pi
-
-            if self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5):
-                self.turn_left = False; self.turn_right = False;
-
-            else:
-                self.turn_left = self.previous_angle < self.angle
-                self.turn_right = not self.turn_left
-
-                self.previous_angle = self.angle
-                if self.turn_left:
-                    self.angle += (math.pi/72)
-                else:
-                    self.angle -= (math.pi/72)
-
-                self.comparison_angle = self.angle
-
-            self.move_x = self.move_x * math.cos(self.angle) / math.cos(self.previous_angle)
-            self.move_y = self.move_y * math.sin(self.angle) / math.sin(self.previous_angle)
-
         quat_1 = tf.transformations.quaternion_from_euler(0,0, (self.angle - math.pi/2) )
         quat_2 = tf.transformations.quaternion_from_euler(0,0,self.angle)
 
@@ -217,24 +192,13 @@ class Car_Publisher:
         self.odom.pose.pose.orientation.w = quat_2[3]
         self.odom_pub.publish(self.odom);
 
-        """
-        rospy.loginfo("Angle: %f"%(self.angle))
-        rospy.loginfo("Move: [%f , %f]"%(self.move_x, self.move_y))
-        rospy.loginfo("Transform: [%f, %f, %f]"%(
-            self.trans.transform.translation.x, self.trans.transform.translation.y,
-            self.trans.transform.translation.z)
-        )
-        """
-        sleep(0.1)
-
-
 
     def thread_publish(self):
         while not rospy.is_shutdown():
             if not self.first_message:
                 self.publish_messages()
             else:
-                break
+                return
 
 
     def listener(self):
@@ -244,10 +208,15 @@ class Car_Publisher:
 
 
 
+def signal_handler(signal, frame):
+    rospy.signal_shutdown("Shutting down")
+    sys.exit(0)
+
 
 if __name__ == '__main__':
     rospy.init_node("car_publisher", anonymous=True)
     car_pub = Car_Publisher()
+    signal.signal(signal.SIGINT, signal_handler)
 
     try:
         car_pub.listener()
