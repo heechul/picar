@@ -26,7 +26,7 @@ model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 data_dir = params.data_dir
 
-epoch_ids = [23] #sorted(list(set(itertools.chain(*params.epochs.values()))))
+epoch_ids = [1,2,3,4] #sorted(list(set(itertools.chain(*params.epochs.values()))))
 
 for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)

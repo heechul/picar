@@ -66,7 +66,7 @@ class VideoDriver:
 
         try:
             """adapted from angle_publisher.py"""
-            speed = 2
+            speed = 0.5
             frame_count = cm.frame_count(self.video_location)
             tempAngle = 0 #Hold the angle
 
@@ -78,21 +78,17 @@ class VideoDriver:
             saver.restore(sess, model_path)
 
             #Get the predicted angle from the model for each frame and publish the angle
-            for frame_id in xrange(frame_count):
+            for frame_id in range(0,frame_count+2):
                 ret, img = self.video_source.read() #Get the frame
                 assert ret #Make sure the frame exists
 
                 self.publish_frame(img) #Publish the frame for viewing in RViz
 
                 img = preprocess.preprocess(img) #Process the image
-                deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 0.9})[0][0] #Predict the angle
+                deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] #Predict the angle
                 deg = round(deg * 8) / 8 #Round the angle to the nearest eighth
 
-                angz = 0
-                if deg < tempAngle:
-                    twist.angular.z = (tempAngle - deg) * 2
-                elif deg > tempAngle:
-                    twist.angular.z = (tempAngle + deg) * 2
+                twist.angular.z = (tempAngle - deg) * 2
 
                 #Create a twist message that determines if a turn is necessary and publish it
                 twist.linear.x = speed; twist.linear.y = 0; twist.linear.z = 0
@@ -101,7 +97,6 @@ class VideoDriver:
 
                 #Update the temporary angle value to the angle of the current frame
                 tempAngle = deg
-                ret, img = self.video_source.read() #Get the frame
                 time.sleep(0.06)
             """end of code section"""
 
@@ -114,6 +109,8 @@ class VideoDriver:
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0;
             self.twist_pub.publish(twist)
             self.video_source.release()
+            time.sleep(5)
+            rospy.signal_shutdown("Shutting down")
 
 def signal_handler(signal, frame):
     cv2.destroyAllWindows()
@@ -123,14 +120,6 @@ def signal_handler(signal, frame):
 if __name__ == "__main__":
     rospy.init_node('video_driver', anonymous=True)
     signal.signal(signal.SIGINT, signal_handler)
-    """
-    simulator = None
-    try:
-        video_source = sys.argv[1]
-        simulator = VideoDriver(video_source)
-    except (IndexError, ValueError):
-    """
     simulator = VideoDriver("../datasets/dataset4/out-mencoder.avi")
-    while True:
-        simulator.publish_to_car()
+    simulator.publish_to_car()
     rospy.spin()
