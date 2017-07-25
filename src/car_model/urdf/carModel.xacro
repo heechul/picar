@@ -18,7 +18,7 @@
         <xacro:property name="baselength" value="0.5" />
         <xacro:property name="baseheight" value="${wheelradius}" />
         <xacro:property name="axlelength" value="0.4" />
-        <xacro:property name="update_rate" value="0.1" />
+        <xacro:property name="update_rate" value="1.0" />
 
 
         <xacro:macro name="default_inertial" params="mass">
@@ -130,24 +130,6 @@
                         <child link="front_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
                 </joint>
-                <transmission name="front_${leftright}_trans">
-                        <type>transmission_interface/SimpleTransmission</type>
-                        <actuator name="front_${leftright}_motor">
-                                <mechanicalReduction>1</mechanicalReduction>
-                        </actuator>
-                        <joint name="front_${leftright}_wheel_to_front_axle">
-                                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-                        </joint>
-                </transmission>
-                <transmission name="front_${leftright}_vel_trans">
-                        <type>transmission_interface/SimpleTransmission</type>
-                        <actuator name="front_${leftright}_vel_motor">
-                                <mechanicalReduction>1</mechanicalReduction>
-                        </actuator>
-                        <joint name="front_${leftright}_wheel_to_front_axle">
-                                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-                        </joint>
-                </transmission>
                 <gazebo reference="front_${leftright}_wheel">
                         <mu1 value="200.0"/>
                         <mu2 value="100.0"/>
@@ -181,24 +163,6 @@
                         <child link="back_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
                 </joint>
-                <transmission name="back_${leftright}_trans">
-                        <type>transmission_interface/SimpleTransmission</type>
-                        <actuator name="back_${leftright}_motor">
-                                <mechanicalReduction>1</mechanicalReduction>
-                        </actuator>
-                        <joint name="back_${leftright}_wheel_to_back_axle">
-                                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-                        </joint>
-                </transmission>
-                <transmission name="back_${leftright}_vel_trans">
-                        <type>transmission_interface/SimpleTransmission</type>
-                        <actuator name="back_${leftright}_vel_motor">
-                                <mechanicalReduction>1</mechanicalReduction>
-                        </actuator>
-                        <joint name="back_${leftright}_wheel_to_back_axle">
-                                <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-                        </joint>
-                </transmission>
                 <gazebo reference="back_${leftright}_wheel">
                         <mu1 value="200.0"/>
                         <mu2 value="100.0"/>
@@ -253,7 +217,7 @@
                                 </camera>
                                 <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
                                         <alwaysOn>true</alwaysOn>
-                                        <updateRate>0.0</updateRate>
+                                        <updateRate>0.00</updateRate>
                                         <cameraName>car_model_camera</cameraName>
                                         <imageTopicName>image_raw</imageTopicName>
                                         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -290,38 +254,37 @@
 -->
         <gazebo>
                 <!--
-                <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                        <robotNamespace>/</robotNamespace>
-                </plugin>
-                -->
+        -->
                 <plugin name="car_model_diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
                         <commandTopic>cmd_vel</commandTopic>
                         <leftJoint>front_left_wheel_to_front_axle</leftJoint>
-                        <legacyMode>false</legacyMode>
+                        <leftJoint>back_left_wheel_to_back_axle</leftJoint>
+                        <legacyMode>true</legacyMode>
                         <odometryFrame>odom</odometryFrame>
-                        <odometrySource>1</odometrySource>
+                        <odometrySource>odom</odometrySource>
                         <odometryTopic>odom</odometryTopic>
-                        <publishTf>100</publishTf>
+                        <publishTf>false</publishTf>
                         <publishWheelJointState>false</publishWheelJointState>
-                        <publishWheelTF>true</publishWheelTF>
+                        <publishWheelTF>false</publishWheelTF>
                         <rightJoint>front_right_wheel_to_front_axle</rightJoint>
+                        <rightJoint>back_right_wheel_to_back_axle</rightJoint>
                         <robotBaseFrame>base_footprint</robotBaseFrame>
-                        <robotNamespace>robot</robotNamespace>
                         <rosDebugLevel>na</rosDebugLevel>
-                        <wheelTorque>5</wheelTorque>
+                        <wheelTorque>20</wheelTorque>
                         <updateRate>${update_rate}</updateRate>
-                        <wheelAcceleration>2</wheelAcceleration>
+                        <wheelAcceleration>20</wheelAcceleration>
                         <wheelDiameter>${wheelradius * 2}</wheelDiameter>
                         <wheelSeparation>${axlelength}</wheelSeparation>
                 </plugin>
+
         </gazebo>
 
         <!--
-        <leftJoint>front_right_wheel_to_front_axle</leftJoint>
-        <rightJoint>front_left_wheel_to_front_axle</rightJoint>
-        <leftJoint>back_right_wheel_to_back_axle</leftJoint>
-        <rightJoint>back_left_wheel_to_back_axle</rightJoint>
+        <leftJoint>front_left_wheel_to_front_axle</leftJoint>
+        <rightJoint>front_right_wheel_to_front_axle</rightJoint>
+        <leftJoint>back_left_wheel_to_back_axle</leftJoint>
+        <rightJoint>back_right_wheel_to_back_axle</rightJoint>
         -->
 
 

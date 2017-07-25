@@ -197,6 +197,7 @@ class Car_Publisher:
         while not rospy.is_shutdown():
             if not self.first_message:
                 self.publish_messages()
+                sleep(1.0)
             else:
                 return
 
