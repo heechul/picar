@@ -28,4 +28,4 @@ epochs = OrderedDict()
 epochs['train'] = [1,2,3,4]#[3, 4, 5, 6, 8]
 epochs['val'] = [1,2,3,4]#[1, 2, 7, 9, 10]
 
-maxAngle = 30 #Estimate for now, will need to get actual value in the future
+maxAngle = 20 #Estimate for now, will need to get actual value in the future
