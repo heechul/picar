@@ -25,11 +25,9 @@ class video_converter:
 
         self.test_video = cv2.VideoCapture(self.source_video_name)
         success, image = self.test_video.read()
+        count = 0
         try:
             while success:
-
-                cv2.imshow("Image window", image)
-                cv2.waitKey(2)
 
                 """
                 pub_image = self.bridge.cv2_to_imgmsg(image, "bgr8")
@@ -43,13 +41,14 @@ class video_converter:
                     rospy.loginfo(e)
                 """
 
-                #cv2.imwrite("frames/frame%d.jpg"%count, image)
+                cv2.imwrite("./frames/frame%d.png"%count, image)
+                count += 1
                 success, image = self.test_video.read()
-                sleep(0.03)
+                #sleep(0.03)
 
 
-        except KeyboardInterrupt:
-            return 100
+        except:
+            return
 
         self.test_video.release()
         #rospy.loginfo("Done")
@@ -64,11 +63,8 @@ def signal_handler(signal, frame):
 
 
 def main(args):
-    vc = video_converter("../../../datasets/dataset25/out-mencoder.avi")
-    for var in range(0,2):
-        ret = vc.vid_to_images()
-        if ret == 100:
-            break
+    vc = video_converter("../../../datasets/dataset4/out-mencoder.avi")
+    ret = vc.vid_to_images()
     cv2.destroyAllWindows()
     rospy.signal_shutdown("Shutting down")
     sys.exit(0)
