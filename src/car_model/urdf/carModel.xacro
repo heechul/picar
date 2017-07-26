@@ -255,7 +255,7 @@
         <gazebo>
                 <!--
         -->
-                <plugin name="car_model_diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+                <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
                         <alwaysOn>true</alwaysOn>
                         <commandTopic>cmd_vel</commandTopic>
                         <leftJoint>front_left_wheel_to_front_axle</leftJoint>
@@ -271,7 +271,7 @@
                         <rightJoint>back_right_wheel_to_back_axle</rightJoint>
                         <robotBaseFrame>base_footprint</robotBaseFrame>
                         <rosDebugLevel>na</rosDebugLevel>
-                        <wheelTorque>20</wheelTorque>
+                        <wheelTorque>1</wheelTorque>
                         <updateRate>${update_rate}</updateRate>
                         <wheelAcceleration>20</wheelAcceleration>
                         <wheelDiameter>${wheelradius * 2}</wheelDiameter>

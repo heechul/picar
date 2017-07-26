@@ -30,7 +30,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: Image
 Visualization Manager:
   Class: ""
   Displays:
@@ -200,24 +200,24 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 11.0255032
+      Distance: 4.13029718
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.499801636
-        Y: -2.39836264
-        Z: 2.50238463e-05
+        X: 0.33741641
+        Y: 0.508789301
+        Z: 2.01612947e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.550203025
+      Pitch: 0.420202553
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 4.74356699
+      Yaw: 4.68855476
     Saved: ~
 Window Geometry:
   Camera:

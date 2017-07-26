@@ -78,9 +78,10 @@ class VideoDriver:
             saver.restore(sess, model_path)
 
             #Get the predicted angle from the model for each frame and publish the angle
-            for frame_id in range(0,frame_count+2):
+            for frame_id in xrange(frame_count):
                 ret, img = self.video_source.read() #Get the frame
-                assert ret #Make sure the frame exists
+                if not ret: #Make sure the frame exists
+                    return
 
                 self.publish_frame(img) #Publish the frame for viewing in RViz
 
@@ -88,11 +89,12 @@ class VideoDriver:
                 deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] #Predict the angle
                 deg = round(deg * 8) / 8 #Round the angle to the nearest eighth
 
-                twist.angular.z = (tempAngle - deg) * 2
+
+
 
                 #Create a twist message that determines if a turn is necessary and publish it
                 twist.linear.x = speed; twist.linear.y = 0; twist.linear.z = 0
-                twist.angular.x = 0; twist.angular.y = 0;
+                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 2;
                 self.twist_pub.publish(twist)
 
                 #Update the temporary angle value to the angle of the current frame
@@ -120,6 +122,6 @@ def signal_handler(signal, frame):
 if __name__ == "__main__":
     rospy.init_node('video_driver', anonymous=True)
     signal.signal(signal.SIGINT, signal_handler)
-    simulator = VideoDriver("../datasets/dataset4/out-mencoder.avi")
+    simulator = VideoDriver("../datasets/dataset3/out-mencoder.avi")
     simulator.publish_to_car()
     rospy.spin()
