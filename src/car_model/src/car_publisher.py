@@ -69,8 +69,6 @@ class Car_Publisher:
         self.current_time = rospy.Time.now(); self.last_time = rospy.Time.now();
 
 
-
-
     def receive_twist(self, msg):
         self.first_message = True; self.previous_angle = self.angle
         self.last_time = self.current_time; self.current_time = rospy.Time.now()
@@ -151,6 +149,86 @@ class Car_Publisher:
         self.publish_messages()
 
 
+    def receive_driver_twist(self, msg):
+        self.first_message = True; self.previous_angle = self.angle
+        self.last_time = self.current_time; self.current_time = rospy.Time.now()
+
+            # increment speed variables
+        if not abs(msg.linear.x) == abs(self.current_linx):
+            self.current_linx = msg.linear.x;
+            #self.vx = msg.linear.x; self.vy = self.vx;
+
+            # else, only a change in angular speed has been detected
+        if not abs(msg.angular.z) == abs(self.vth):
+            self.vth = msg.angular.z
+            self.turn = msg.angular.z / self.original_speed
+
+
+        if msg.linear.y == 0: # move
+
+            if msg.linear.x > 0: # if forward
+
+                if msg.angular.z > 0: # u
+                    self.f_left = 0.785; self.f_right = 0.393; self.back_wheels += 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+                elif msg.angular.z == 0: # i
+                    self.f_left = 0; self.f_right = 0; self.back_wheels += 3.14;
+
+                else: # o
+                    self.f_left = -0.393; self.f_right = -0.785; self.back_wheels += 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+
+            elif msg.linear.x == 0: # if rotate
+
+                if msg.angular.z > 0: # j
+                    self.f_left = 0.785; self.f_right = 0.393; self.angle = msg.angular.z + (math.pi/2);
+
+                elif msg.angular.z == 0: # k
+                    self.f_left = 0; self.f_right = 0;
+
+                else: # l
+                    self.f_left = -0.393; self.f_right = -0.785; self.angle = msg.angular.z + (math.pi/2);
+
+
+            else: # if reverse
+
+                if msg.angular.z < 0: # m
+                    self.f_left = 0.785; self.f_right = 0.393; self.back_wheels -= 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+                elif msg.angular.z == 0: # ,
+                    self.f_left = 0; self.f_right = 0; self.back_wheels -= 3.14;
+
+                else: # .
+                    self.f_left = -0.393; self.f_right = -0.785; self.back_wheels -= 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+
+        # variable for comparing angles?
+        self.comparison_angle = self.angle
+        while self.comparison_angle < 0:
+            self.comparison_angle += 2*math.pi
+        while self.comparison_angle > 2*math.pi:
+            self.comparison_angle -= 2*math.pi
+
+
+        if (self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5)):
+            self.turn_left = False; self.turn_right = False;
+        else:
+            self.turn_left = (self.previous_angle < self.angle)
+            self.turn_right = not self.turn_left
+
+        self.move_x = msg.linear.x * self.vx * math.cos(self.angle)
+        self.move_y = msg.linear.x * self.vy * math.sin(self.angle)
+        self.move_z = msg.linear.z
+
+        self.joint_state.position = [0, 0, 0, 0, self.f_left, self.f_right, self.back_wheels, self.back_wheels]
+
+        self.publish_messages()
+
+
     def publish_messages(self):
 
         quat_1 = tf.transformations.quaternion_from_euler(0,0, (self.angle - math.pi/2) )
@@ -204,6 +282,7 @@ class Car_Publisher:
 
     def listener(self):
         rospy.Subscriber("cmd_vel", Twist, self.receive_twist)
+        rospy.Subscriber("/Self_Driver/cmd_vel", Twist, self.receive_driver_twist)
         self.thr.start()
         rospy.spin()
 

@@ -20,7 +20,7 @@ class VideoDriver:
         self.video_location = video_location
         self.video_source = cv2.VideoCapture(video_location)
         self.stream_source = "http://devboard-picar-wifi:8080?action=snapshot"
-        self.twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
+        self.twist_pub = rospy.Publisher('/Self_Driver/cmd_vel', Twist, queue_size=1)
         self.image_pub = rospy.Publisher('/sensor_msgs/Image', Image, queue_size=1)
 
 
@@ -69,6 +69,8 @@ class VideoDriver:
             speed = 0.5
             frame_count = cm.frame_count(self.video_location)
             tempAngle = 0 #Hold the angle
+            turned_yet = False
+            angz = 0
 
             #Open the model
             sess = tf.InteractiveSession()
@@ -90,11 +92,15 @@ class VideoDriver:
                 deg = round(deg * 8) / 8 #Round the angle to the nearest eighth
 
 
-
+                old_angz = angz
+                angz = (tempAngle - deg) * 1.5
+                if (deg < tempAngle and deg < -tempAngle) or \
+                   (deg > tempAngle and deg > -tempAngle):
+                    angz = old_angz
 
                 #Create a twist message that determines if a turn is necessary and publish it
                 twist.linear.x = speed; twist.linear.y = 0; twist.linear.z = 0
-                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 2;
+                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = angz;
                 self.twist_pub.publish(twist)
 
                 #Update the temporary angle value to the angle of the current frame
@@ -122,6 +128,6 @@ def signal_handler(signal, frame):
 if __name__ == "__main__":
     rospy.init_node('video_driver', anonymous=True)
     signal.signal(signal.SIGINT, signal_handler)
-    simulator = VideoDriver("../datasets/dataset3/out-mencoder.avi")
+    simulator = VideoDriver("../datasets/dataset4/out-mencoder.avi")
     simulator.publish_to_car()
     rospy.spin()
