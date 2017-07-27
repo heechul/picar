@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 from __future__ import division
 
 import tensorflow as tf
@@ -26,14 +26,14 @@ model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 data_dir = params.data_dir
 
-epoch_ids = [23] #sorted(list(set(itertools.chain(*params.epochs.values()))))
+epoch_ids = [1,2,3,4] #sorted(list(set(itertools.chain(*params.epochs.values()))))
 
 for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
     if not os.path.exists(data_dir + "/dataset{}/out-mencoder2.avi".format(epoch_id)): #If the video used for visualization doesn't exist
         assert os.path.exists(data_dir + "/dataset{}/out-mencoder.avi".format(epoch_id)) #Make sure a video exists
-        os.system("ffmpeg -i " + data_dir + "/dataset%i/out-mencoder.avi -vf scale=1280:720 datasets/dataset%i/out-mencoder2.avi" % (epoch_id, epoch_id)) #Create a copy video that is resized to be 1280x720 so that it can be visualized
-    vid_path = data_dir + "/dataset{0}/out-mencoder2.avi".format(epoch_id) 
+        os.system("ffmpeg -i {0}/dataset{1}/out-mencoder.avi -vf scale=1280:720 {2}/dataset{3}/out-mencoder2.avi".format(data_dir, epoch_id, data_dir, epoch_id)) #Create a copy video that is resized to be 1280x720 so that it can be visualized
+    vid_path = data_dir + "/dataset{0}/out-mencoder2.avi".format(epoch_id)
     assert os.path.isfile(vid_path)
     frame_count = cm.frame_count(vid_path)
     cap = cv2.VideoCapture(vid_path)
@@ -50,7 +50,7 @@ for epoch_id in epoch_ids:
         img = preprocess.preprocess(img)
 
         frameTime = time.time() #Get the start time of the angle calculation
-        deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] 
+        deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
         timeArr.append(time.time() - frameTime) #Add angle calculation time to time array
 
         machine_steering.append(deg)
@@ -58,13 +58,11 @@ for epoch_id in epoch_ids:
     cap.release()
 
     fps = frame_count / (time.time() - time_start)
-    
+
     print 'completed inference, total frames: {}, average fps: {} Hz'.format(frame_count, round(fps, 1))
-    
+
     print 'performing visualization...'
     startTime = time.time()
     visualize.visualize(epoch_id, machine_steering, params.out_dir, timeArr,
                         verbose=True, frame_count_limit=None)
     print "Visualization took a total of %i seconds" % (time.time() - startTime)
-    
-    

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import roslib; roslib.load_manifest('car_model')
-import math, rospy, tf
+import math, os, rospy, signal, sys, tf
 from time import sleep
 from threading import Thread
 from std_msgs.msg import Header
-from geometry_msgs.msg import Point, Pose, Quaternion, Transform, TransformStamped, Twist, Vector3
+from geometry_msgs.msg import Quaternion, TransformStamped, Twist, Vector3
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import JointState
 
@@ -17,10 +17,10 @@ class Car_Publisher:
         self.joint_state = JointState()
         self.odom = Odometry()
         self.trans = TransformStamped()
-        self.joint_pub = rospy.Publisher("joint_states", JointState, queue_size=50)
-        self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
+        self.joint_pub = rospy.Publisher("joint_states", JointState, queue_size=1)
+        self.odom_pub = rospy.Publisher("odom", Odometry, queue_size=1)
         self.broadcaster = tf.TransformBroadcaster()
-        self.thr = Thread(target = self.publish_messages)
+        self.thr = Thread(target = self.thread_publish)
 
 
         self.joint_state.header = Header()
@@ -67,8 +67,6 @@ class Car_Publisher:
         self.move_x = 0; self.move_y = 0; self.move_z = 0;
         self.vx = 0.1; self.vy = 0.1; self.vth = self.angle;
         self.current_time = rospy.Time.now(); self.last_time = rospy.Time.now();
-
-
 
 
     def receive_twist(self, msg):
@@ -148,101 +146,157 @@ class Car_Publisher:
 
         self.joint_state.position = [0, 0, 0, 0, self.f_left, self.f_right, self.back_wheels, self.back_wheels]
 
+        self.publish_messages()
 
+
+    def receive_driver_twist(self, msg):
+        self.first_message = True; self.previous_angle = self.angle
+        self.last_time = self.current_time; self.current_time = rospy.Time.now()
+
+            # increment speed variables
+        if not abs(msg.linear.x) == abs(self.current_linx):
+            self.current_linx = msg.linear.x;
+            #self.vx = msg.linear.x; self.vy = self.vx;
+
+            # else, only a change in angular speed has been detected
+        if not abs(msg.angular.z) == abs(self.vth):
+            self.vth = msg.angular.z
+            self.turn = msg.angular.z / self.original_speed
+
+
+        if msg.linear.y == 0: # move
+
+            if msg.linear.x > 0: # if forward
+
+                if msg.angular.z > 0: # u
+                    self.f_left = 0.785; self.f_right = 0.393; self.back_wheels += 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+                elif msg.angular.z == 0: # i
+                    self.f_left = 0; self.f_right = 0; self.back_wheels += 3.14;
+
+                else: # o
+                    self.f_left = -0.393; self.f_right = -0.785; self.back_wheels += 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+
+            elif msg.linear.x == 0: # if rotate
+
+                if msg.angular.z > 0: # j
+                    self.f_left = 0.785; self.f_right = 0.393; self.angle = msg.angular.z + (math.pi/2);
+
+                elif msg.angular.z == 0: # k
+                    self.f_left = 0; self.f_right = 0;
+
+                else: # l
+                    self.f_left = -0.393; self.f_right = -0.785; self.angle = msg.angular.z + (math.pi/2);
+
+
+            else: # if reverse
+
+                if msg.angular.z < 0: # m
+                    self.f_left = 0.785; self.f_right = 0.393; self.back_wheels -= 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+                elif msg.angular.z == 0: # ,
+                    self.f_left = 0; self.f_right = 0; self.back_wheels -= 3.14;
+
+                else: # .
+                    self.f_left = -0.393; self.f_right = -0.785; self.back_wheels -= 3.14;
+                    self.angle = msg.angular.z + (math.pi/2)
+
+
+        # variable for comparing angles?
+        self.comparison_angle = self.angle
+        while self.comparison_angle < 0:
+            self.comparison_angle += 2*math.pi
+        while self.comparison_angle > 2*math.pi:
+            self.comparison_angle -= 2*math.pi
+
+
+        if (self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5)):
+            self.turn_left = False; self.turn_right = False;
+        else:
+            self.turn_left = (self.previous_angle < self.angle)
+            self.turn_right = not self.turn_left
+
+        self.move_x = msg.linear.x * self.vx * math.cos(self.angle)
+        self.move_y = msg.linear.x * self.vy * math.sin(self.angle)
+        self.move_z = msg.linear.z
+
+        self.joint_state.position = [0, 0, 0, 0, self.f_left, self.f_right, self.back_wheels, self.back_wheels]
+
+        self.publish_messages()
 
 
     def publish_messages(self):
 
+        quat_1 = tf.transformations.quaternion_from_euler(0,0, (self.angle - math.pi/2) )
+        quat_2 = tf.transformations.quaternion_from_euler(0,0,self.angle)
+
+        self.last_time = self.current_time; self.current_time = rospy.Time.now()
+
+        self.joint_state.header = Header()
+        self.joint_state.header.frame_id = "base_footprint"
+        self.joint_state.header.stamp = self.current_time
+        self.joint_pub.publish(self.joint_state)
+
+        self.trans.header = Header()
+        self.trans.header.frame_id = "odom"
+        self.trans.child_frame_id = "base_footprint"
+        self.trans.header.stamp = self.current_time;
+        self.trans.transform.translation.x += self.move_x
+        self.trans.transform.translation.y += self.move_y
+        self.trans.transform.translation.z += self.move_z
+        self.trans.transform.rotation = quat_1
+        self.broadcaster.sendTransform(
+            (self.trans.transform.translation.x, self.trans.transform.translation.y, self.trans.transform.translation.z),
+            self.trans.transform.rotation,
+            self.current_time,
+            self.trans.child_frame_id,
+            self.trans.header.frame_id
+        )
+
+        self.odom.header = Header()
+        self.odom.header.frame_id = "odom";
+        self.odom.child_frame_id = "base_footprint"
+        self.odom.header.stamp = self.current_time
+        self.odom.pose.pose.position.x += self.move_x
+        self.odom.pose.pose.position.y += self.move_y
+        self.odom.pose.pose.position.z += self.move_z
+        self.odom.pose.pose.orientation.x = quat_2[0]
+        self.odom.pose.pose.orientation.y = quat_2[1]
+        self.odom.pose.pose.orientation.z = quat_2[2]
+        self.odom.pose.pose.orientation.w = quat_2[3]
+        self.odom_pub.publish(self.odom);
+
+
+    def thread_publish(self):
         while not rospy.is_shutdown():
-
-            if self.first_message and not (self.f_left == 0):
-
-                while self.comparison_angle < 0:
-                    self.comparison_angle += 2*math.pi
-                while self.comparison_angle > 2*math.pi:
-                    self.comparison_angle -= 2*math.pi
-
-                if self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5):
-                    self.turn_left = False; self.turn_right = False;
-
-                else:
-                    self.turn_left = self.previous_angle < self.angle
-                    self.turn_right = not self.turn_left
-
-                    self.previous_angle = self.angle
-                    if self.turn_left:
-                        self.angle += (math.pi/72)
-                    else:
-                        self.angle -= (math.pi/72)
-
-                    self.comparison_angle = self.angle
-
-                self.move_x = self.move_x * math.cos(self.angle) / math.cos(self.previous_angle)
-                self.move_y = self.move_y * math.sin(self.angle) / math.sin(self.previous_angle)
-
-            quat_1 = tf.transformations.quaternion_from_euler(0,0, (self.angle - math.pi/2) )
-            quat_2 = tf.transformations.quaternion_from_euler(0,0,self.angle)
-
-            self.last_time = self.current_time; self.current_time = rospy.Time.now()
-
-            self.joint_state.header = Header()
-            self.joint_state.header.frame_id = "base_footprint"
-            self.joint_state.header.stamp = self.current_time
-            self.joint_pub.publish(self.joint_state)
-
-            self.trans.header = Header()
-            self.trans.header.frame_id = "odom"
-            self.trans.child_frame_id = "base_footprint"
-            self.trans.header.stamp = self.current_time;
-            self.trans.transform.translation.x += self.move_x
-            self.trans.transform.translation.y += self.move_y
-            self.trans.transform.translation.z += self.move_z
-            self.trans.transform.rotation = quat_1
-            self.broadcaster.sendTransform(
-                (self.trans.transform.translation.x, self.trans.transform.translation.y, self.trans.transform.translation.z),
-                self.trans.transform.rotation,
-                self.current_time,
-                self.trans.child_frame_id,
-                self.trans.header.frame_id
-            )
-
-            self.odom.header = Header()
-            self.odom.header.frame_id = "odom";
-            self.odom.child_frame_id = "base_footprint"
-            self.odom.header.stamp = self.current_time
-            self.odom.pose.pose.position.x += self.move_x
-            self.odom.pose.pose.position.y += self.move_y
-            self.odom.pose.pose.position.z += self.move_z
-            self.odom.pose.pose.orientation.x = quat_2[0]
-            self.odom.pose.pose.orientation.y = quat_2[1]
-            self.odom.pose.pose.orientation.z = quat_2[2]
-            self.odom.pose.pose.orientation.w = quat_2[3]
-            self.odom_pub.publish(self.odom);
-
-            """
-            rospy.loginfo("Angle: %f"%(self.angle))
-            rospy.loginfo("Move: [%f , %f]"%(self.move_x, self.move_y))
-            rospy.loginfo("Transform: [%f, %f, %f]"%(
-                self.trans.transform.translation.x, self.trans.transform.translation.y,
-                self.trans.transform.translation.z)
-            )
-            """
-            sleep(0.1)
-
-
+            if not self.first_message:
+                self.publish_messages()
+                sleep(1.0)
+            else:
+                return
 
 
     def listener(self):
         rospy.Subscriber("cmd_vel", Twist, self.receive_twist)
+        rospy.Subscriber("/Self_Driver/cmd_vel", Twist, self.receive_driver_twist)
         self.thr.start()
         rospy.spin()
 
 
 
+def signal_handler(signal, frame):
+    rospy.signal_shutdown("Shutting down")
+    sys.exit(0)
+
 
 if __name__ == '__main__':
     rospy.init_node("car_publisher", anonymous=True)
     car_pub = Car_Publisher()
+    signal.signal(signal.SIGINT, signal_handler)
 
     try:
         car_pub.listener()

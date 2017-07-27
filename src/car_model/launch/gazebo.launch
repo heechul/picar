@@ -21,12 +21,6 @@
 
   <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
-  <!--
-  <rosparam command="load"
-          file="$(find car_model)/config/diffdrive.yaml"
-          ns="car_model_diff_drive_controller" />
-  -->
-
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher" required="true" >
           <param name="publish_frequency" type="double" value="30.0" />
