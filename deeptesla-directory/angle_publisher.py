@@ -14,12 +14,12 @@ import time
 import rospy
 from geometry_msgs.msg import Twist
 
-TARGET_SPEED = 0
+TARGET_SPEED = 0.5
 
 #Stop source warnings from appearing
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-epoch_id = 23
+epoch_id = 4
 
 #Create a node that publishes to cmd_vel
 pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
@@ -73,7 +73,7 @@ for frame_id in xrange(frame_count):
 	#Create a twist message that determines if a turn is necessary and publish it
     twist = Twist()
     twist.linear.x = TARGET_SPEED; twist.linear.y = 0; twist.linear.z = 0
-    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 2
+    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 5
     pub.publish(twist)
 
 	#Update the temporary angle value to the angle of the current frame
