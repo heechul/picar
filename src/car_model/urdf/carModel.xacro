@@ -39,7 +39,7 @@
                                 <geometry>
                                         <box size="0.001 0.001 0.001"/>
                                 </geometry>
-                                <origin rpy="0 0 0" xyz="0 0 0"/>
+                                <origin rpy="0 0 0" xyz="0.001 0.001 0.001"/>
                         </visual>
                         <collision>
                                 <geometry>
@@ -127,15 +127,17 @@
                 </link>
                 <joint name="front_${leftright}_wheel_to_front_axle" type="continuous">
                         <axis xyz="0 0 1" />
+                        <!--
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                        -->
                         <parent link="base_footprint" />
                         <child link="front_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
                 </joint>
                 <gazebo reference="front_${leftright}_wheel">
-                        <mu1 value="20.0"/>
-                        <mu2 value="10.0"/>
-                        <kp value="10000.0" />
+                        <mu1 value="200.0"/>
+                        <mu2 value="100.0"/>
+                        <kp value="100000.0" />
                         <kd value="1.0" />
                         <material>Gazebo/White</material>
                 </gazebo>
@@ -160,15 +162,17 @@
 
                 <joint name="back_${leftright}_wheel_to_back_axle" type="continuous">
                         <axis xyz="0 0 1" />
+                        <!--
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
+                        -->
                         <parent link="base_footprint" />
                         <child link="back_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
                 </joint>
                 <gazebo reference="back_${leftright}_wheel">
-                        <mu1 value="20.0"/>
-                        <mu2 value="10.0"/>
-                        <kp value="10000.0" />
+                        <mu1 value="200.0"/>
+                        <mu2 value="100.0"/>
+                        <kp value="100000.0" />
                         <kd value="1.0" />
                         <material>Gazebo/White</material>
                 </gazebo>
@@ -268,16 +272,15 @@
                         <commandTopic>cmd_vel</commandTopic>
                         <legacyMode>false</legacyMode>
                         <odometryFrame>odom</odometryFrame>
-                        <odometrySource>odom</odometrySource>
                         <odometryTopic>odom</odometryTopic>
                         <publishTf>true</publishTf>
                         <publishWheelJointState>true</publishWheelJointState>
                         <publishWheelTF>true</publishWheelTF>
                         <robotBaseFrame>base_footprint</robotBaseFrame>
                         <rosDebugLevel>na</rosDebugLevel>
-                        <wheelTorque>5</wheelTorque>
+                        <wheelTorque>30</wheelTorque>
                         <updateRate>${update_rate}</updateRate>
-                        <wheelAcceleration>20</wheelAcceleration>
+                        <wheelAcceleration>2</wheelAcceleration>
                         <wheelDiameter>${wheelradius * 2}</wheelDiameter>
                         <wheelSeparation>${axlelength}</wheelSeparation>
                         <leftJoint>front_left_wheel_to_front_axle</leftJoint>
