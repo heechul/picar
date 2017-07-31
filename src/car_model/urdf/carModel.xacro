@@ -25,6 +25,14 @@
         <xacro:property name="wheel_mass" value="1e+0" />
         <xacro:property name="camera_mass" value="1e-2" />
 
+        <xacro:macro name="gazebo_wheel_elements" >
+                <mu1 value="2000.0"/>
+                <mu2 value="2000.0"/>
+                <kp value="1000.0" />
+                <kd value="1.0" />
+                <material>Gazebo/White</material>
+        </xacro:macro>
+
 
         <xacro:macro name="default_inertial" params="mass">
                 <inertial>
@@ -125,21 +133,15 @@
                         </collision>
                         <xacro:default_inertial mass="${wheel_mass}"/>
                 </link>
-                <joint name="front_${leftright}_wheel_to_front_axle" type="continuous">
-                        <axis xyz="0 0 1" />
-                        <!--
+                <joint name="front_${leftright}_wheel_to_front_axle" type="revolute">
+                        <axis xyz="1 0 0" />
                         <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
-                        -->
                         <parent link="base_footprint" />
                         <child link="front_${leftright}_wheel" />
                         <origin rpy="0 -1.57 0" xyz="${-lr} 0.3 ${baseheight}" />
                 </joint>
                 <gazebo reference="front_${leftright}_wheel">
-                        <mu1 value="200.0"/>
-                        <mu2 value="100.0"/>
-                        <kp value="100000.0" />
-                        <kd value="1.0" />
-                        <material>Gazebo/White</material>
+                        <xacro:gazebo_wheel_elements />
                 </gazebo>
         </xacro:macro>
 
@@ -170,11 +172,7 @@
                         <origin rpy="0 -1.57 0" xyz="${-lr} -0.3 ${baseheight}" />
                 </joint>
                 <gazebo reference="back_${leftright}_wheel">
-                        <mu1 value="200.0"/>
-                        <mu2 value="100.0"/>
-                        <kp value="100000.0" />
-                        <kd value="1.0" />
-                        <material>Gazebo/White</material>
+                        <xacro:gazebo_wheel_elements />
                 </gazebo>
         </xacro:macro>
 
@@ -246,16 +244,16 @@
         <xacro:car_axle frontback="front" position="1" upper="0.785" lower="-0.785" />
         <xacro:car_axle frontback="back" position="-1" upper="0.785" lower="-0.785" />
 
-        <!--
         <xacro:car_front_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="1"
                 position="1" upper="0.785" lower="-0.393" />
         <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1"
                 position="-1" upper="0.393" lower="-0.785" />
-        -->
+        <!--
         <xacro:car_front_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="1"
                 position="1" upper="3140" lower="-3140" />
         <xacro:car_front_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="1"
                 position="-1" upper="3140" lower="-3140" />
+        -->
         <xacro:car_back_wheel leftright="left" lr="${(axlelength/2) + 0.05}" axle="-1"
                 upper="${3.14*1000}" lower="${-3.14*1000}" />
         <xacro:car_back_wheel leftright="right" lr="${-(axlelength/2) - 0.05}" axle="-1"
