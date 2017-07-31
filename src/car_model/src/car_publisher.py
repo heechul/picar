@@ -138,7 +138,7 @@ class Car_Publisher:
             self.turn_left = False; self.turn_right = False;
         else:
             self.turn_left = (self.previous_angle < self.angle)
-            self.turn_right = not self.turn_left
+            self.turn_right = (self.previous_angle > self.angle)
 
         self.move_x = msg.linear.x * self.vx * math.cos(self.angle)
         self.move_y = msg.linear.x * self.vy * math.sin(self.angle)
@@ -201,7 +201,6 @@ class Car_Publisher:
 
 
     def listener(self):
-        rospy.Subscriber("cmd_vel", Twist, self.receive_twist)
         rospy.Subscriber("/Self_Driver/cmd_vel", Twist, self.receive_driver_twist)
         self.thr.start()
         rospy.spin()
