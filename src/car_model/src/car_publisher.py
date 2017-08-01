@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import roslib; roslib.load_manifest('car_model')
 import math, os, rospy, signal, sys, tf
 from time import sleep
@@ -23,6 +22,7 @@ class Car_Publisher:
         self.thr = Thread(target = self.thread_publish)
 
 
+        # for updating the car wheel's angles and spinning
         self.joint_state.header = Header()
         self.joint_state.header.frame_id = "base_footprint"
         self.joint_state.header.stamp = rospy.Time.now()
@@ -37,6 +37,7 @@ class Car_Publisher:
         quat_1 = tf.transformations.quaternion_from_euler(0,0,0)
         quat_2 = tf.transformations.quaternion_from_euler(0,0,(math.pi/2))
 
+        # used to move the car throughout RViz
         self.trans.header = Header()
         self.trans.header.frame_id = "odom"
         self.trans.child_frame_id = "base_footprint"
@@ -46,6 +47,7 @@ class Car_Publisher:
         self.trans.transform.translation.z = 0
         self.trans.transform.rotation = quat_1
 
+        # car will publish its own odometry
         self.odom.header = Header()
         self.odom.header.frame_id = "odom";
         self.odom.child_frame_id = "base_footprint"
@@ -59,6 +61,7 @@ class Car_Publisher:
         self.odom.pose.pose.orientation.w = quat_2[3]
         self.odom.twist.twist = Twist(Vector3(0,0,0), Vector3(0,0,0))
 
+        # helper variables
         self.f_left = 0; self.f_right = 0; self.back_wheels = 0;
         self.original_speed = 0.5; self.current_linx = 0.5; self.turn = 1;
         self.angle = (math.pi/2); self.previous_angle = (math.pi/2);
@@ -76,14 +79,13 @@ class Car_Publisher:
             # increment speed variables
         if not abs(msg.linear.x) == abs(self.current_linx):
             self.current_linx = msg.linear.x;
-            #self.vx = msg.linear.x; self.vy = self.vx;
 
             # else, only a change in angular speed has been detected
         if not abs(msg.angular.z) == abs(self.vth):
             self.vth = msg.angular.z
             self.turn = msg.angular.z / self.original_speed
 
-
+            # based on input from the teleop_twist_keyboard python code
         if msg.linear.y == 0: # move
 
             if msg.linear.x > 0: # if forward
@@ -126,24 +128,22 @@ class Car_Publisher:
                     self.angle = msg.angular.z + (math.pi/2)
 
 
-        # variable for comparing angles?
         self.comparison_angle = self.angle
         while self.comparison_angle < 0:
             self.comparison_angle += 2*math.pi
         while self.comparison_angle > 2*math.pi:
             self.comparison_angle -= 2*math.pi
 
+            # determines whether the car has changed direction
+        self.turn_left = (self.previous_angle < self.angle)
+        self.turn_right = (self.previous_angle > self.angle)
 
-        if (self.comparison_angle == 0 or self.comparison_angle == (math.pi/2) or self.comparison_angle == (math.pi*1.5)):
-            self.turn_left = False; self.turn_right = False;
-        else:
-            self.turn_left = (self.previous_angle < self.angle)
-            self.turn_right = (self.previous_angle > self.angle)
-
+            # the new location for the car to be moved
         self.move_x = msg.linear.x * self.vx * math.cos(self.angle)
         self.move_y = msg.linear.x * self.vy * math.sin(self.angle)
         self.move_z = msg.linear.z
 
+            # updates the car joint information
         self.joint_state.position = [0, 0, 0, 0, self.f_left, self.f_right, self.back_wheels, self.back_wheels]
 
         self.publish_messages()
@@ -156,11 +156,13 @@ class Car_Publisher:
 
         self.last_time = self.current_time; self.current_time = rospy.Time.now()
 
+            # publish joint message
         self.joint_state.header = Header()
         self.joint_state.header.frame_id = "base_footprint"
         self.joint_state.header.stamp = self.current_time
         self.joint_pub.publish(self.joint_state)
 
+            # publish TF
         self.trans.header = Header()
         self.trans.header.frame_id = "odom"
         self.trans.child_frame_id = "base_footprint"
@@ -177,6 +179,7 @@ class Car_Publisher:
             self.trans.header.frame_id
         )
 
+            # publish odometry
         self.odom.header = Header()
         self.odom.header.frame_id = "odom";
         self.odom.child_frame_id = "base_footprint"
@@ -192,6 +195,8 @@ class Car_Publisher:
 
 
     def thread_publish(self):
+            # until the user has provided a Twist message input, the car_publisher will
+            # continually send default values into RViz
         while not rospy.is_shutdown():
             if not self.first_message:
                 self.publish_messages()

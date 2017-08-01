@@ -24,6 +24,7 @@ class StreamDriver:
 
     def publish_snapshot(self, snapshot):
         try:
+                # converts the OpenCV image into an ROS-type image for publishing
             pub_image = self.bridge.cv2_to_imgmsg(snapshot, "bgr8")
             pub_image.header = Header()
             pub_image.header.frame_id = "odom"
@@ -42,43 +43,43 @@ class StreamDriver:
         twist = Twist()
 
         try:
-            """adapted from angle_publisher.py"""
-            speed = 2
+            speed = 0.5
             tempAngle = 0 #Hold the angle
 
             #Open the model
-            """
             sess = tf.InteractiveSession()
             saver = tf.train.Saver()
             model_name = 'model.ckpt'
             model_path = cm.jn(params.save_dir, model_name)
             saver.restore(sess, model_path)
-            """
 
             while True:
                 snapshot = urllib2.urlopen(self.stream_source)
                 original_frame = snapshot.read()
-                #assert frame #Make sure the frame exists
 
                 frame = np.asarray(bytearray(original_frame), dtype="uint8")
                 frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
                 self.publish_snapshot(frame) #Publish the frame for viewing in RViz
 
-
                 img = preprocess.preprocess(img) #Process the image
                 deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] #Predict the angle
                 deg = round(deg * 8) / 8 #Round the angle to the nearest eighth
 
+
+                old_angz = angz
+                angz = (tempAngle - deg) * 1.5
+                if (deg < tempAngle and deg < -tempAngle) or \
+                   (deg > tempAngle and deg > -tempAngle):
+                    angz = old_angz
+
                 #Create a twist message that determines if a turn is necessary and publish it
                 twist.linear.x = speed; twist.linear.y = 0; twist.linear.z = 0
-                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = (tempAngle - deg) * 2;
+                twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = angz;
                 self.twist_pub.publish(twist)
 
                 #Update the temporary angle value to the angle of the current frame
                 tempAngle = deg
                 time.sleep(0.06)
-
-            """end of code section"""
 
 
         except (KeyboardInterrupt, urllib2.URLError, BadStatusLine) as e:

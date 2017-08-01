@@ -19,32 +19,11 @@ class VideoDriver:
         self.bridge = CvBridge()
         self.video_location = video_location
         self.video_source = cv2.VideoCapture(video_location)
-        self.stream_source = "http://devboard-picar-wifi:8080?action=snapshot"
         self.twist_pub = rospy.Publisher('/Self_Driver/cmd_vel', Twist, queue_size=1)
         self.image_pub = rospy.Publisher('/sensor_msgs/Image', Image, queue_size=1)
 
 
-    def get_stream_snapshot(self):
-        try:
-            snapshot = urllib2.urlopen(self.stream_source)
-            frame = np.asarray(bytearray(snapshot.read()), dtype="uint8")
-            frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-
-            pub_frame = self.bridge.cv2_to_imgmsg(frame, "bgr8")
-            pub_frame.header = Header()
-            pub_frame.header.frame_id = "odom"
-            pub_frame.header.stamp = rospy.Time.now()
-
-            try:
-                self.frame_pub.publish(pub_frame)
-            except CvBridgeError as e:
-                rospy.loginfo(e)
-
-        except (KeyboardInterrupt, urllib2.URLError, BadStatusLine) as e:
-            rospy.loginfo(e)
-            return
-
-
+        # publish the video frame for viewing in RViz, etc.
     def publish_frame(self, frame):
         try:
             pub_image = self.bridge.cv2_to_imgmsg(frame, "bgr8")
@@ -65,7 +44,6 @@ class VideoDriver:
         twist = Twist()
 
         try:
-            """adapted from angle_publisher.py"""
             speed = 0.5
             frame_count = cm.frame_count(self.video_location)
             tempAngle = 0 #Hold the angle
