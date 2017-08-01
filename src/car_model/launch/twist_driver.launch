@@ -1,17 +1,15 @@
 <?xml version="1.0"?>
 <launch>
+        <arg name="gui" default="false" />
         <arg name="model" default="$(find car_model)/urdf/carModel.xacro" />
-        <arg name="rvizconfig" default="$(find car_model)/rviz/urdf.rviz" />
+        <arg name="rvizconfig" default="$(find car_model)/rviz/twist.rviz" />
         <arg name="use_sim_time" default="false"/>
-        <arg name="gui" default="true" />
 
         <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
-        <param name="use_sim_time" value="$(arg use_sim_time)"/>
         <param name="use_gui" value="$(arg gui)" />
+        <param name="use_sim_time" value="$(arg use_sim_time)"/>
 
         <node name="robot_state" pkg="robot_state_publisher" type="robot_state_publisher" />
-        <!--
--->
-        <node name="twist_driver" pkg="car_model" type="twist_driver.py" clear_params="true" required="true" />
         <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+        <node name="twist_driver" pkg="car_model" type="twist_driver.py" clear_params="true" required="true" />
 </launch>
