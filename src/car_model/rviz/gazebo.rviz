@@ -123,12 +123,12 @@ Visualization Manager:
           Frame: Local
           Offset: 1
           Scale: 1
-          Value: true
+          Value: false
         Position:
           Alpha: 0.300000012
           Color: 204; 51; 204
           Scale: 1
-          Value: true
+          Value: false
         Value: false
       Enabled: true
       Keep: 200
@@ -150,7 +150,7 @@ Visualization Manager:
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /car_model_camera/image_raw
+      Image Topic: /car_model/car_model_camera/image_raw
       Name: Camera
       Overlay Alpha: 0.5
       Queue Size: 2
@@ -187,24 +187,24 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 29.5399113
+      Distance: 9.08143806
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 3.59982228
-        Y: -3.03075004
-        Z: 2.01612947e-05
+        X: 0.385978818
+        Y: -5.10547924
+        Z: 1.7777109e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.245202541
+      Pitch: 0.510202289
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 4.5635519
+      Yaw: 4.87855148
     Saved: ~
 Window Geometry:
   Camera:

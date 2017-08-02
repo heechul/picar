@@ -20,8 +20,8 @@
         <xacro:property name="axlelength" value="0.4" />
         <xacro:property name="update_rate" value="5.0" />
 
-        <xacro:property name="base_mass" value="1e-1" />
-        <xacro:property name="axle_mass" value="${0.5*1e-1}" />
+        <xacro:property name="base_mass" value="1e+0" />
+        <xacro:property name="axle_mass" value="1e-1" />
         <xacro:property name="wheel_mass" value="1e+0" />
         <xacro:property name="camera_mass" value="1e-2" />
 
@@ -54,7 +54,7 @@
                                         <box size="0.001 0.001 0.001"/>
                                 </geometry>
                         </collision>
-                        <xacro:default_inertial mass="${base_mass/100}"/>
+                        <xacro:default_inertial mass="${base_mass/1000}"/>
                 </link>
                 <gazebo reference="base_footprint">
                         <material>Gazebo/Green</material>
@@ -89,7 +89,7 @@
         </xacro:macro>
 
 
-        <xacro:macro name="car_axle" params="frontback position upper lower">
+        <xacro:macro name="car_axle" params="frontback position">
                <link name="${frontback}_axle">
                        <visual>
                                <geometry>
@@ -106,7 +106,6 @@
                </link>
                <joint name="${frontback}_axle_to_base" type="fixed">
                        <axis xyz="1 0 0" />
-                       <limit lower="${lower}" upper="${upper}" effort="1000.0" velocity="1.0"/>
                        <mimic joint="base_footprint_joint" multiplier="1"/>
                        <parent link="base_footprint" />
                        <child link="${frontback}_axle" />
@@ -187,17 +186,18 @@
                                 </camera>
                                 <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
                                         <alwaysOn>true</alwaysOn>
-                                        <updateRate>0.00</updateRate>
-                                        <cameraName>car_model_camera</cameraName>
-                                        <imageTopicName>image_raw</imageTopicName>
                                         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-                                        <frameName>odom</frameName>
-                                        <hackBaseline>0.07</hackBaseline>
+                                        <cameraName>car_model_camera</cameraName>
                                         <distortionK1>0.0</distortionK1>
                                         <distortionK2>0.0</distortionK2>
                                         <distortionK3>0.0</distortionK3>
                                         <distortionT1>0.0</distortionT1>
                                         <distortionT2>0.0</distortionT2>
+                                        <frameName>/odom</frameName>
+                                        <hackBaseline>0.07</hackBaseline>
+                                        <imageTopicName>image_raw</imageTopicName>
+                                        <robotNamespace>car_model</robotNamespace>
+                                        <updateRate>0.00</updateRate>
                                 </plugin>
                         </sensor>
                 </gazebo>
@@ -208,8 +208,8 @@
         <xacro:world_link />
         <xacro:car_base />
         <xacro:camera_link height="240" width="320" />
-        <xacro:car_axle frontback="front" position="1" upper="0.785" lower="-0.785" />
-        <xacro:car_axle frontback="back" position="-1" upper="0.785" lower="-0.785" />
+        <xacro:car_axle frontback="front" position="1" />
+        <xacro:car_axle frontback="back" position="-1" />
         <xacro:car_wheel frontback="front" leftright="left" fb="0.3" lr="${(axlelength/2) + 0.05}" />
         <xacro:car_wheel frontback="front" leftright="right" fb="0.3" lr="${-(axlelength/2) - 0.05}" />
         <xacro:car_wheel frontback="back" leftright="left" fb="-0.3" lr="${(axlelength/2) + 0.05}" />
@@ -219,25 +219,27 @@
         <gazebo>
                 <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
                         <broadcastTF>true</broadcastTF>
-                        <commandTopic>cmd_vel</commandTopic>
+                        <commandTopic>/cmd_vel</commandTopic>
                         <covariance_x>0.000100</covariance_x>
                         <covariance_y>0.000100</covariance_y>
-                        <covariance_yaw>0.010000</covariance_yaw>
+                        <covariance_yaw>1.57</covariance_yaw>
                         <leftFrontJoint>front_left_wheel_to_front_axle</leftFrontJoint>
                         <leftRearJoint>back_left_wheel_to_back_axle</leftRearJoint>
                         <odometryFrame>odom</odometryFrame>
-                        <odometryTopic>odom</odometryTopic>
+                        <odometryTopic>/odom</odometryTopic>
                         <rightFrontJoint>front_right_wheel_to_front_axle</rightFrontJoint>
                         <rightRearJoint>back_right_wheel_to_back_axle</rightRearJoint>
                         <robotBaseFrame>base_footprint</robotBaseFrame>
-                        <robotNamespace>/</robotNamespace>
-                        <topicName>cmd_vel</topicName>
-                        <torque>18</torque>
+                        <robotNamespace>car_model</robotNamespace>
+                        <topicName>/cmd_vel</topicName>
+                        <torque>20</torque>
                         <updateRate>100.0</updateRate>
                         <wheelDiameter>${wheelradius * 2}</wheelDiameter>
                         <wheelSeparation>${axlelength}</wheelSeparation>
                 </plugin>
-                <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so" />
+                <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                        <robotNamespace>car_model</robotNamespace>
+                </plugin>
         </gazebo>
 
 </robot>

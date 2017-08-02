@@ -29,11 +29,11 @@
         </node>
 
         <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-          args="-z 1.0 -unpause -urdf -model robot -param robot_description"
+          args="-z 1.0 -unpause -urdf -model car_model -param robot_description"
           respawn="false" output="screen" required="false" />
 
         <!--
         <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="false"/>
-        -->
+-->
 
 </launch>
