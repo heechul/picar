@@ -21,6 +21,9 @@ import numpy as np
 
 import threading
 
+import Image
+import ImageDraw
+
 #Stop source warnings from appearing
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -152,6 +155,10 @@ def getExpertInput():
 		print key
 		if key == 's':
 			break
+		elif key == 'a': #accelerate
+			ffw(10)
+		elif key == 'z': #decelerate
+			rew(10)
 
 #Open the model
 sess = tf.InteractiveSession()
@@ -189,7 +196,12 @@ while(True):
 	img = preprocess.preprocess(img) #Process the image
 	deg_m = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0] #Predict the angle
 	deg_m = round(deg_m * 8) / 8 #Round the angle to the nearest eighth
-	deg_m = deg_m - tempAngle 
+	if deg_m < tempAngle:
+		deg_m = -.125
+	elif deg_m > tempAngle:
+		deg_m = .125
+	elif deg_m == tempAngle:
+		deg_m = 0
 	degMArray.append(deg_m)
 	
 	deg_h = 0 #Initialize human angle to 0
@@ -200,10 +212,6 @@ while(True):
 			deg_h = .125
 		elif key == 'k': #right
 			deg_h = -.125
-		elif key == 'a': #accelerate
-			ffw(10)
-		elif key == 'z': #decelerate
-			rew(10)
 		elif key == 's': #stop
 			break
 			
@@ -220,15 +228,17 @@ while(True):
 	#Turn left or right if necessary based on chosen angle
 	if deg < 0: #right
 		right(MAX_STEERING, .1)
-		deg = -.125
 	elif deg > 0: #left
 		left(MAX_STEERING, .1)
-		deg = .125
 		
 	degChosen.append(deg) #Add the chosen angle to the appropriate array
 	
 	print round((time.time() - startTime) * 1000) #Print the total time it took for that frame to be processed
 	tempAngle += deg #Update the angle
+	if tempAngle > 1:
+		tempAngle = 1
+	elif tempAngle < -1:
+		tempAngle = -1
 	
 	actualDeg.append(tempAngle) #Add the actual angle to the appropriate array
 	
@@ -244,6 +254,18 @@ with open("../datasets/dataset_dagger/data.csv", 'wb') as file: #Open the csv fi
 #Remove the last frame in the case that there aren't enought angles recorded
 if not len(frameArray) == len(actualDeg):
 	frameArray.pop()
+	
+textColor = (255,255,255) #Declare the color for the new image background
+bgColor = (0,0,0) #Declare the color for the new image text
+
+#Add the frame number and state variable value to each frame
+for i in xrange(len(frameArray)):
+	newImage = Image.new('RGBA', (100, 20), bgColor) #Create blank canvas for metrics
+	drawer = ImageDraw.Draw(newImage) #Create ImageDraw for drawing the metrics
+	drawer.text((0, 0), "Frame #{}".format(i), fill=textColor) #Print the frame number
+	drawer.text((0, 10), "State Var:{}".format(actualDeg[i]), fill=textColor) #Print the value of the state variable
+	newImage = cv2.cvtColor(np.array(newImage), cv2.COLOR_BGR2RGBA) #Change the new image to cv2 format
+	frameArray[i] = cm.overlay_image(frameArray[i], newImage, x_offset = 0, y_offset = 0) #Add the new image to the frame
 
 #Create a video using the frames collected
 clip = ImageSequenceClip(frameArray, fps=15) 

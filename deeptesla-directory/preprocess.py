@@ -21,8 +21,9 @@ def preprocess(img):
 
     y1, y2 = 350, 553
     w = (y2-y1) / ratio
+    img = cv2.resize(img, (1280,720))
     padding = int(round((img.shape[1] - w) / 2))
-    #img = img[y1:y2, padding:-padding]
+    img = img[y1:y2, padding:-padding]
     img = cv2.resize(img, (img_width, img_height))
     img = img / 255.
     return img
