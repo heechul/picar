@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\School_Files\\picar\\deeptesla-directory\\HallModelWhy\\model.ckpt"
+all_model_checkpoint_paths: "C:\\School_Files\\picar\\deeptesla-directory\\HallModelWhy\\model.ckpt"
