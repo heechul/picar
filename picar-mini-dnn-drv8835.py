@@ -86,7 +86,7 @@ beta  = 1.0
 
 ## human input variables
 angle = 0.0
-btn   = ''
+btn   = ord('k')  # 107 - center
 
 while (True):
     # 0. read a image frame
