@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 batch_size = 100
 # save_dir = os.path.abspath('models')
-save_dir = os.path.abspath('../picar/models-dagger')
+save_dir = os.path.abspath('../picar/models-dagger-btn')
 training_steps = 2000
 img_height = 66
 img_width = 200
