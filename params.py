@@ -27,8 +27,12 @@ if not os.path.isdir(out_dir):
 
 epochs = OrderedDict()
 
-epochs['train'] = [100, 102, 104, 106, 108, 110, 112, 114] 
-epochs['val'] =   [101, 103, 105, 107, 109, 111, 113, 115] 
+# epochs['train'] = [100]
+# epochs['val'] =   [101]
+
+epochs['train'] = [100, 102, 104, 106, 108, 110, 112, 114, 103, 105, 107, 109, 113, 115] 
+epochs['val'] =   [101, 111]
+
 # step   10 of 2000, train loss 0.177199780941,   val loss 0.183928459883
 # step 1000 of 2000, train loss 0.00693200016394, val loss 0.0959444642067
 # step 2000 of 2000, train loss 0.00296380673535, val loss 0.0754969492555

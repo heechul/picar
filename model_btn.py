@@ -17,6 +17,9 @@ def conv2d(x, W, stride):
 
 x = tf.placeholder(tf.float32, shape=[None, params.img_height, params.img_width, params.img_channels])
 y_ = tf.placeholder(tf.int32, shape=[None, 1]) # 106 - left, 107 - center, 108 - right
+yy_ = y_ - 106
+y_oh_yy_ = tf.one_hot(yy_, 3)
+y_oh_ = tf.reshape(y_oh_yy_, [-1, 3])
 
 x_image = x
 
@@ -91,7 +94,5 @@ b_fc5 = bias_variable([3])
 # y = tf.multiply(tf.atan(tf.matmul(h_fc4_drop, W_fc5) + b_fc5), 2) #scale the atan output
 
 y_lg  = tf.matmul(h_fc4_drop, W_fc5) + b_fc5
-y     = tf.nn.softmax(y_lg)
+# y     = tf.nn.softmax(y_lg)
 
-y_oh_ = tf.one_hot(y_, 3)
-y_oh_ = tf.reshape(y_oh_, [-1, 3])
