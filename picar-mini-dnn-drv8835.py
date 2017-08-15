@@ -82,7 +82,8 @@ null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
 
 ## dagger parameter
-beta  = 1.0
+DEFAULT_BETA = 1.0
+beta  = DEFAULT_BETA
 
 ## human input variables
 angle = 0.0
@@ -110,7 +111,14 @@ while (True):
         btn = ch                
     elif ch == ord('l'):
         angle = deg2rad(30)
-        btn = ch              
+        btn = ch
+    elif ch == ord('m'):
+        if beta == DEFAULT_BETA:
+            print "manual mode"
+            beta = 0.0
+        else:
+            print "auto mode"
+            beta = DEFAULT_BETA
     elif ch == ord('a'):
         ffw()
         print "accel"
