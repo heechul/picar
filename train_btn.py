@@ -4,7 +4,7 @@ from __future__ import division
 import os
 import tensorflow as tf
 import model_btn as model
-import params
+import params_btn as params
 import time
 
 if params.shuffle_training:

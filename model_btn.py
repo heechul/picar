@@ -2,7 +2,7 @@
 from __future__ import division
 
 import tensorflow as tf
-import params
+import params_btn as params
 
 def weight_variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
