@@ -1,8 +1,8 @@
 #!/usr/bin/python
 from __future__ import division
 import tensorflow as tf
-import model
-import params
+import model_btn as model
+import params_btn as params
 import local_common as cm
 import preprocess
 
@@ -42,7 +42,7 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED/2 + 2*MAX_SPEED/10
+SET_SPEED = MAX_SPEED # /2 + 2*MAX_SPEED/10
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
 
@@ -100,7 +100,7 @@ while (True):
     # 1. machine input
     img = preprocess.preprocess(frame)
     pred = tf.argmax(model.y_lg, 1)
-    btn_dnn = 106 + pred.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+    btn_dnn = 106 + pred.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0]
 
     # 2. human input
     ch = cv2.waitKey(50) & 0xFF
@@ -148,7 +148,7 @@ while (True):
     # 3. decision: human or machine
     #   angle_dnn <- machine input angle
     #   angle     <- human input angle
-    print "%.1f (DNN) <-> %.1f (Expert)" % btn_dnn, btn)        
+    print "%d (DNN) <-> %d (Expert)" % (btn_dnn, btn)
     if random.random() <= beta:
         btn_out = btn_dnn
         print "choose dnn input"
