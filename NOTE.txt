@@ -1,3 +1,24 @@
+8/15/2017
+
+btn model
+
+step 1930 of 2000, train loss 0.000477208319353, val loss 0.199691697955
+step 1940 of 2000, train loss 5.4560485296e-05, val loss 0.599819481373
+step 1950 of 2000, train loss 0.00156429770868, val loss 0.53919839859
+step 1960 of 2000, train loss 0.00117544317618, val loss 0.361430972815
+step 1970 of 2000, train loss 2.61894947471e-05, val loss 0.543541789055
+step 1980 of 2000, train loss 0.000329648493789, val loss 0.470055699348
+step 1990 of 2000, train loss 0.000159062867169, val loss 0.680700659752
+step 2000 of 2000, train loss 9.58305899985e-05, val loss 0.417998790741
+Model saved. Time passed: 00 hours 03 mins 10 secs 000 msecs. Time left: 00 hours 00 mins 00 secs 000 msecs
+('Accuracy:', 0.89000005)
+('Prediction: ', array([2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 2, 2, 1, 2, 2,
+       2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2,
+       2, 2, 2, 1, 1, 1, 2, 1, 2, 2, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 2, 2, 2,
+       2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 1, 2, 2, 1, 2, 1, 2, 2,
+       2, 2, 2, 2, 2, 2, 1, 2]))
+
+
 8/14/2017
 
 - normal initialization

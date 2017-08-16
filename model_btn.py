@@ -94,5 +94,5 @@ b_fc5 = bias_variable([3])
 # y = tf.multiply(tf.atan(tf.matmul(h_fc4_drop, W_fc5) + b_fc5), 2) #scale the atan output
 
 y_lg  = tf.matmul(h_fc4_drop, W_fc5) + b_fc5
-# y     = tf.nn.softmax(y_lg)
+y     = tf.nn.softmax(y_lg)
 

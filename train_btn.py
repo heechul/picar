@@ -80,7 +80,7 @@ for i in xrange(params.training_steps):
 # Let's see if we can predict
 vxx, vyy = data.load_batch('val')
 
-prediction = tf.argmax(model.y_lg, 1) + 106
+prediction = tf.argmax(model.y_lg, 1) 
 correct_prediction = tf.equal(prediction, tf.argmax(model.y_oh_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
