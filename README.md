@@ -25,14 +25,13 @@ epoch_id 	condition	time(s)		note
 114		morning		4
 115		morning		4
 
-117		night		200 frames (best)
-118		night		200 frames
-119		night		200 frames
+117		night,right		200 frames (best)
+118		night,right		200 frames
+119		night,right		200 frames
 
 120		night,left	200 frames
 121		night,left	200 frames
 122		night,left	200 frames
-
 123 		night,left	200 frames
 124		night,left	200 frames
 
@@ -51,7 +50,6 @@ epoch_id 	condition	time(s)		note
 134		morning,left,new battery,pwr=9,center	200 frames, not so good control
 135		morning,left,new battery,pwr=9,center	200 frames, 
 146		morning,left,new battery,pwr=9,center	200 frames, 
-
 
 136		morning,right,new battery,pwr=9,center	200 frames, 
 137		morning,right,new battery,pwr=9,center	200 frames, 
