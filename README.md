@@ -25,6 +25,11 @@ epoch_id 	condition	time(s)		note
 114		morning		4
 115		morning		4
 
+117		night		200 frames (best)
+118		night		200 frames
+119		night		200 frames
 
-
+120		night,left	200 frames
+121		night,left	200 frames
+122		night,left	200 frames
 

@@ -42,7 +42,7 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED # /2 + 2*MAX_SPEED/10
+SET_SPEED = MAX_SPEED * 9 / 10 #  /2 + 2*MAX_SPEED/10
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
 
