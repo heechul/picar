@@ -35,3 +35,34 @@ epoch_id 	condition	time(s)		note
 
 123 		night,left	200 frames
 124		night,left	200 frames
+
+125		morning,left,new battery,pwr=10	200 frames
+126		morning,left,new battery,pwr=10	200 frames
+127		morning,left,new battery,pwr=7	200 frames
+
+128		morning,left,new battery,pwr=7,center	200 frames
+129		morning,left,new battery,pwr=7,center	200 frames
+130		morning,left,new battery,pwr=7,center	200 frames
+131		morning,left,new battery,pwr=8,center	200 frames, 14pct accuracy!
+132		morning,left,new battery,pwr=8,center	200 frames, 10pct accuracy!
+
+132		morning,left,new battery,pwr=9,center	200 frames, 29pct accuracy!, good control
+133		morning,left,new battery,pwr=9,center	200 frames, 
+134		morning,left,new battery,pwr=9,center	200 frames, not so good control
+135		morning,left,new battery,pwr=9,center	200 frames, 
+146		morning,left,new battery,pwr=9,center	200 frames, 
+
+
+136		morning,right,new battery,pwr=9,center	200 frames, 
+137		morning,right,new battery,pwr=9,center	200 frames, 
+138		morning,right,new battery,pwr=9,center	200 frames, 
+139		morning,right,new battery,pwr=9,center	200 frames, 
+140		morning,right,new battery,pwr=9,center	200 frames, 
+
+141		morning,right,new battery,pwr=9,center	200 frames, 
+142		morning,right,new battery,pwr=9,center	200 frames, 
+143		morning,right,new battery,pwr=9,center	200 frames, 
+144		morning,right,new battery,pwr=9,center	200 frames, 
+145		morning,right,new battery,pwr=9,center	200 frames, 
+
+

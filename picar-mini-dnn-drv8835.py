@@ -70,6 +70,14 @@ def left():
 def right():
     motors.motor1.setSpeed(-MAX_SPEED)
 
+def get_control(degree):
+    if degree < 15 and degree > -15:
+        return 0
+    elif degree >= 15:
+        return 1
+    elif degree <= -15:
+        return -1
+    
 def turnOff():
     stop()
     center()
@@ -89,6 +97,10 @@ beta  = DEFAULT_BETA
 angle = 0.0
 btn   = ord('k')  # 107 - center
 
+match_cnt = 0 # increase if both human dnn agrees.
+total_cnt = 0
+deg = 0
+
 while (True):
     # 0. read a image frame
     ret, frame = cap.read()
@@ -97,6 +109,8 @@ while (True):
     if view_video == True:
         cv2.imshow('frame', frame)
 
+    total_cnt = total_cnt + 1
+    
     # 1. machine input
     img = preprocess.preprocess(frame)
     angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
@@ -154,15 +168,20 @@ while (True):
     else:
         deg = rad2deg(angle)
         print "choose human input"
+
+    if get_control(rad2deg(angle_dnn)) == get_control(rad2deg(angle)):
+        print "match"
+        match_cnt = match_cnt + 1
         
     # 4. control
-    if deg < 15 and deg > -15:
+    ctrl = get_control(deg)
+    if ctrl == 0:
         center()
         print "center"
-    elif deg >= 15:
+    elif ctrl == 1:
         right()
         print "right"
-    elif deg <= -15:
+    elif ctrl == -1:
         left()
         print "left"      
         
@@ -187,7 +206,12 @@ while (True):
         if frame_id >= 200:
             print "recorded 200 frames"
             break
-                
+
+
+print 'Matched frames:', match_cnt
+print 'Total frames:', total_cnt
+print 'Accuracy:', match_cnt * 100 / total_cnt, "pct"
+
 cap.release()
 keyfile.close()
 keyfile_btn.close()
