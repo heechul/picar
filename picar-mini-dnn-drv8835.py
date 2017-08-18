@@ -42,7 +42,7 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED * 9 / 10 #  /2 + 2*MAX_SPEED/10
+SET_SPEED = MAX_SPEED * 7 / 10 #  /2 + 2*MAX_SPEED/10
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
 
@@ -77,7 +77,7 @@ def get_control(degree):
         return 1
     elif degree <= -15:
         return -1
-    
+
 def turnOff():
     stop()
     center()
@@ -97,9 +97,7 @@ beta  = DEFAULT_BETA
 angle = 0.0
 btn   = ord('k')  # 107 - center
 
-match_cnt = 0 # increase if both human dnn agrees.
 total_cnt = 0
-deg = 0
 
 while (True):
     # 0. read a image frame
@@ -114,26 +112,14 @@ while (True):
     # 1. machine input
     img = preprocess.preprocess(frame)
     angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+    m_ctrl = get_control(rad2deg(angle_dnn)) # default is to use machine control output
 
-    # 2. human input
+    # 2. human input (safety backup)
+    h_ctrl = -99
     ch = cv2.waitKey(50) & 0xFF
-    if ch == ord('j'):
-        angle = deg2rad(-30)
-        btn = ch
-    elif ch == ord('k'):
-        angle = deg2rad(0)
-        btn = ch                
-    elif ch == ord('l'):
-        angle = deg2rad(30)
-        btn = ch
-    elif ch == ord('m'):
-        if beta == DEFAULT_BETA:
-            print "manual mode"
-            beta = 0.0
-        else:
-            print "auto mode"
-            beta = DEFAULT_BETA
-    elif ch == ord('a'):
+
+    # 2.1. service task
+    if ch == ord('a'):
         ffw()
         print "accel"
     elif ch == ord('s'):
@@ -157,24 +143,34 @@ while (True):
             view_video = True
         else:
             view_video = False
-        
-    # 3. decision: human or machine
-    #   angle_dnn <- machine input angle
-    #   angle     <- human input angle
-    print "%.1f (DNN) <-> %.1f (Expert)" % (rad2deg(angle_dnn), rad2deg(angle))        
-    if random.random() <= beta:
-        deg = rad2deg(angle_dnn)
-        print "choose dnn input"
-    else:
-        deg = rad2deg(angle)
-        print "choose human input"
+    # 2.2. steering key
+    elif ch == ord('j'):
+        # left 
+        angle = deg2rad(-30)
+        btn = ch
+        h_ctrl = -1
+    elif ch == ord('k'):
+        # center
+        angle = deg2rad(0)
+        btn = ch
+        h_ctrl = 0
+    elif ch == ord('l'):
+        # right
+        angle = deg2rad(30)
+        btn = ch
+        h_ctrl = 1
 
-    if get_control(rad2deg(angle_dnn)) == get_control(rad2deg(angle)):
-        print "match"
-        match_cnt = match_cnt + 1
+    # 3. decision
+    if h_ctrl == m_ctrl or h_ctrl == -99:
+        # machine == human or there's no human input 
+        ctrl = m_ctrl
+        print "machine: ", 
+    else:
+        # if there's human input, use it.
+        ctrl = h_ctrl
+        print "human:   ",
         
     # 4. control
-    ctrl = get_control(deg)
     if ctrl == 0:
         center()
         print "center"
@@ -186,7 +182,8 @@ while (True):
         print "left"      
         
     # 5. record data
-    if rec_start_time > 0:
+    if ctrl == h_ctrl:
+        # human intervened for recovery. must be interesting to record.
         # increase frame_id
         frame_id = frame_id + 1
         
@@ -201,16 +198,11 @@ while (True):
         # write video stream
         vidfile.write(frame)
         
-	print ts, frame_id, angle, btn
+	# print ts, frame_id, angle, btn
 
         if frame_id >= 200:
             print "recorded 200 frames"
             break
-
-
-print 'Matched frames:', match_cnt
-print 'Total frames:', total_cnt
-print 'Accuracy:', match_cnt * 100 / total_cnt, "pct"
 
 cap.release()
 keyfile.close()
