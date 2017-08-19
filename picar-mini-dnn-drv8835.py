@@ -16,6 +16,7 @@ import math
 import numpy as np
 import pygame
 from pololu_drv8835_rpi import motors, MAX_SPEED
+import sys
 
 def deg2rad(deg):
     return deg * math.pi / 180.0
@@ -42,7 +43,7 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED * 7 / 10 #  /2 + 2*MAX_SPEED/10
+SET_SPEED = MAX_SPEED * 8 / 10 #  /2 + 2*MAX_SPEED/10
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
 
@@ -98,6 +99,10 @@ angle = 0.0
 btn   = ord('k')  # 107 - center
 
 total_cnt = 0
+
+if len(sys.argv) == 2:
+    cur_speed = int(sys.argv[1])
+    print "Set new speed: ", cur_speed
 
 while (True):
     # 0. read a image frame

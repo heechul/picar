@@ -64,3 +64,8 @@ epoch_id 	condition	time(s)		note
 145		morning,right,new battery,pwr=9,center	200 frames, 
 
 
+200		night,right,error only,pwr=8,1xxframes
+201		night,right,error only,pwr=8,1xxframes
+202		night,right,error only,pwr=7,200frames
+
+

@@ -7,6 +7,8 @@ import cv2
 import math
 import numpy as np
 import pygame
+import sys
+
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
 def deg2rad(deg):
@@ -31,6 +33,7 @@ rec_start_time = 0
 SET_SPEED = MAX_SPEED/2 + 2*MAX_SPEED/10
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
+print "cur speed:", cur_speed
 
 def stop():
     global cur_speed
@@ -70,6 +73,10 @@ cv2.imshow('frame', null_frame)
 angle = 0.0
 btn   = ''
 
+if len(sys.argv) == 2:
+    cur_speed = int(sys.argv[1])
+    print "Set new speed: ", cur_speed
+    
 while (True):
     # read a frame
     ret, frame = cap.read()
