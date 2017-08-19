@@ -47,7 +47,7 @@ def rew():
     global cur_speed        
     # cur_speed = max(-MAX_SPEED, cur_speed - MAX_SPEED/10)
     cur_speed = SET_SPEED
-    motors.motor2.setSpeed(int(cur_speed))
+    motors.motor2.setSpeed(-int(cur_speed))
 
 def center():
     motors.motor1.setSpeed(0)
