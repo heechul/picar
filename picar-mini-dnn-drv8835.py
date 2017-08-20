@@ -43,9 +43,10 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED * 8 / 10 #  /2 + 2*MAX_SPEED/10
+SET_SPEED = MAX_SPEED * 5 / 10 
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
+print "cur speed:", cur_speed
 
 def stop():
     global cur_speed
@@ -101,8 +102,8 @@ btn   = ord('k')  # 107 - center
 total_cnt = 0
 
 if len(sys.argv) == 2:
-    cur_speed = int(sys.argv[1])
-    print "Set new speed: ", cur_speed
+    SET_SPEED = int(sys.argv[1])
+    print "Set new speed: ", SET_SPEED
 
 while (True):
     # 0. read a image frame
