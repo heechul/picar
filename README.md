@@ -69,3 +69,18 @@ epoch_id 	condition	time(s)		note
 202		night,right,error only,pwr=7,200frames
 
 
+300		picar-v2.0, nichols, straight
+301		picar-v2.0, nichols, corner
+
+302		picar-v2.0, home, left turn
+303
+304
+305
+306
+
+307		picar-v2.0, home, right turn
+308
+309
+310
+311
+
