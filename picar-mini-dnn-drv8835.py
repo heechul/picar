@@ -17,6 +17,7 @@ import numpy as np
 import pygame
 from pololu_drv8835_rpi import motors, MAX_SPEED
 import sys
+import rospy
 
 def deg2rad(deg):
     return deg * math.pi / 180.0
@@ -105,10 +106,16 @@ if len(sys.argv) == 2:
     SET_SPEED = int(sys.argv[1])
     print "Set new speed: ", SET_SPEED
 
-while (True):
+rospy.init_node('picar_dnn')
+r = rospy.Rate(20) # 10hz
+
+prev_ts = int(time.time() * 1000)
+
+while not rospy.is_shutdown():
+    ts = int(time.time() * 1000)
+    
     # 0. read a image frame
     ret, frame = cap.read()
-    ts = int(time.time() * 1000000)
 
     if view_video == True:
         cv2.imshow('frame', frame)
@@ -210,6 +217,10 @@ while (True):
             print "recorded 200 frames"
             break
 
+    print ts, frame_id, angle, btn, (ts - prev_ts)        
+    prev_ts = ts
+    r.sleep()    
+        
 cap.release()
 keyfile.close()
 keyfile_btn.close()
