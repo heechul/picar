@@ -122,7 +122,7 @@ while (True):
 
     # 2. human input (safety backup)
     h_ctrl = -99
-    ch = cv2.waitKey(50) & 0xFF
+    ch = cv2.waitKey(1) & 0xFF
 
     # 2.1. service task
     if ch == ord('a'):

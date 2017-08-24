@@ -8,6 +8,7 @@ import math
 import numpy as np
 import pygame
 import sys
+import rospy
 
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
@@ -71,21 +72,28 @@ null_frame = np.zeros((160,120,3), np.uint8)
 cv2.imshow('frame', null_frame)
 
 angle = 0.0
-btn   = ''
+btn   = 107
+period = 50 # ms
 
 if len(sys.argv) == 2:
     SET_SPEED = int(sys.argv[1])
     print "Set new speed: ", SET_SPEED
+
+rospy.init_node('my_node_name')
+r = rospy.Rate(20) # 10hz
+
+prev_ts = int(time.time() * 1000)
+
+while not rospy.is_shutdown():
+    ts = int(time.time() * 1000)
     
-while (True):
     # read a frame
     ret, frame = cap.read()
-    ts = int(time.time() * 1000000)
-    
+
     if view_video == True:
         cv2.imshow('frame', frame)
 
-    ch = cv2.waitKey(50) & 0xFF
+    ch = cv2.waitKey(1) & 0xFF
 
     if ch == ord('j'):
         left()
@@ -143,11 +151,13 @@ while (True):
         # write video stream
         vidfile.write(frame)
         
-	print ts, frame_id, angle, btn
-        
-        if frame_id >= 200:
-            print "recorded 200 frames"
+        if frame_id >= 400:
+            print "recorded 400 frames"
             break
+
+    print ts, frame_id, angle, btn, (ts - prev_ts)            
+    prev_ts = ts
+    r.sleep()    
         
 cap.release()
 keyfile.close()

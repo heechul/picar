@@ -84,3 +84,4 @@ epoch_id 	condition	time(s)		note
 310
 311
 
+400		picar-v2.0, 50ms period enforced, right turn
