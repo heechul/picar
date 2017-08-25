@@ -158,7 +158,8 @@ while not rospy.is_shutdown():
     print ts, frame_id, angle, btn, (ts - prev_ts)            
     prev_ts = ts
     r.sleep()    
-        
+
+stop()
 cap.release()
 keyfile.close()
 keyfile_btn.close()
