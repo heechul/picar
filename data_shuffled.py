@@ -8,7 +8,6 @@ from collections import OrderedDict
 import cv2
 import params
 import preprocess
-
 import local_common as cm
 
 ################ parameters ###############
@@ -25,6 +24,16 @@ for purpose in purposes:
     imgs[purpose] = []
     wheels[purpose] = []
 
+categories = ['center', 'curve']    
+imgs_cat = OrderedDict()
+wheels_cat = OrderedDict()
+for p in purposes:
+    imgs_cat[p] = OrderedDict()
+    wheels_cat[p] = OrderedDict()
+    for c in categories:
+        imgs_cat[p][c] = []
+        wheels_cat[p][c] = []
+    
 # load all preprocessed training images into memory
 def load_imgs():
     global imgs
@@ -43,7 +52,6 @@ def load_imgs():
             print "DBG:", vid_path
             frame_count = cm.frame_count(vid_path)
             cap = cv2.VideoCapture(vid_path)
-
             print "DBG:", frame_count
 
             # csv_path = cm.jn(data_dir, 'epoch{:0>2}_steering.csv'.format(epoch_id))
@@ -84,7 +92,44 @@ def load_batch(purpose):
         yy.append(wheels[p][i])
 
     return xx, yy
-    
+
+def categorize_imgs():
+    global imgs
+    global wheels
+    global imgs_cat
+    global wheels_cat
+
+    for p in purposes:
+        n = len(imgs[p])
+
+        for i in range(n):
+            # print 'wheels[{}][{}]:{}'.format(p, i, wheels[p][i])
+            if abs(wheels[p][i][0]) < 0.001:
+                imgs_cat[p]['center'].append(imgs[p][i])
+                wheels_cat[p]['center'].append(wheels[p][i])
+            else:
+                imgs_cat[p]['curve'].append(imgs[p][i])
+                wheels_cat[p]['curve'].append(wheels[p][i])
+
+        print '---< {} >---'.format(p)
+        for c in categories:
+            print '# {} imgs: {}'.format(c, len(imgs_cat[p][c]))
+
+def load_batch_category_normal(purpose):
+    p = purpose
+    xx, yy = [], []
+    nc = len(categories)
+    for c in categories:
+        n = len(imgs_cat[p][c])
+        assert n > 0
+        ii = random.sample(xrange(0, n), int(params.batch_size/nc))
+        assert len(ii) == int(params.batch_size/nc)
+        for i in ii:
+            xx.append(imgs_cat[p][c][i])
+            yy.append(wheels_cat[p][c][i])
+
+    return xx, yy
+
 if __name__ == '__main__':
     load_imgs()
 
