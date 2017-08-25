@@ -85,3 +85,10 @@ epoch_id 	condition	time(s)		note
 311
 
 400		picar-v2.0, 50ms period enforced, right turn
+401		picar-v2.0, 50ms period enforced, right turn
+402		picar-v2.0, 50ms period enforced, right turn
+403		picar-v2.0, 50ms period enforced, right turn
+404		picar-v2.0, 50ms period enforced, right turn
+405		picar-v2.0, 50ms period enforced, right turn
+
+406		picar-v2.0, dagger

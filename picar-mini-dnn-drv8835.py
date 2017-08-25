@@ -217,7 +217,7 @@ while not rospy.is_shutdown():
             print "recorded 200 frames"
             break
 
-    print ts, frame_id, angle, btn, (ts - prev_ts)        
+    print ts, frame_id, (ts - prev_ts)        
     prev_ts = ts
     r.sleep()    
         

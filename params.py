@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 batch_size = 100
 # save_dir = os.path.abspath('models')
-save_dir = os.path.abspath('../picar/models-v21-lr-normal')
+save_dir = os.path.abspath('../picar/models-v21-lr')
 training_steps = 2000
 img_height = 66
 img_width = 200
@@ -15,7 +15,7 @@ write_summary = True
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
-out_dir = os.path.abspath('../picar/output-v21-lr-normal')
+out_dir = os.path.abspath('../picar/output-v21-lr')
 
 # data_dir = os.path.abspath('epochs')
 # out_dir = os.path.abspath('.output')
