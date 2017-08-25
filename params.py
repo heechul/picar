@@ -12,6 +12,7 @@ img_height = 66
 img_width = 200
 img_channels = 3
 write_summary = True
+category_normal = False # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
@@ -29,7 +30,7 @@ if not os.path.isdir(out_dir):
 epochs = OrderedDict()
 # 8/23 picar-v2.0, 50ms fix
 
-epochs['train'] = [401, 402, 403, 404]
+epochs['train'] = [401, 402, 403, 404, 406, 407, 408]
 epochs['val'] = [400, 405] 
 
 # 8/21 picar-v2.0
