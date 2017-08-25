@@ -31,8 +31,11 @@ epochs = OrderedDict()
 # 8/23 picar-v2.0, 50ms fix
 
 epochs['train'] = [401, 402, 403, 404, 409, 410, 411, 412]
-# epochs['train'].append([406, 407, 408])
 epochs['val'] = [405, 413]
+# epochs['train'] += [406, 407, 408] # dagger
+
+# epochs['train'] += [414, 415, 416, 417, 419, 420, 421, 422]
+# epochs['val'] += [418, 423]
 
 # 8/21 picar-v2.0
 # left = 302 - 306
