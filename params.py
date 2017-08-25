@@ -6,17 +6,17 @@ from collections import OrderedDict
 
 batch_size = 100
 # save_dir = os.path.abspath('models')
-save_dir = os.path.abspath('../picar/models-v22-lr')
+save_dir = os.path.abspath('../picar/models-v22-lr-normal')
 training_steps = 2000
 img_height = 66
 img_width = 200
 img_channels = 3
 write_summary = True
-use_category_normal = False # if ture, center/curve images are equally selected.
+use_category_normal = True # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
-out_dir = os.path.abspath('../picar/output-v22-lr')
+out_dir = os.path.abspath('../picar/output-v22-lr-normal')
 
 # data_dir = os.path.abspath('epochs')
 # out_dir = os.path.abspath('.output')
