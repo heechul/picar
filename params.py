@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 batch_size = 100
 # save_dir = os.path.abspath('models')
-save_dir = os.path.abspath('../picar/models-v21-lr')
+save_dir = os.path.abspath('../picar/models-v21-lr-dagger')
 training_steps = 2000
 img_height = 66
 img_width = 200
@@ -16,7 +16,7 @@ use_category_normal = False # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
-out_dir = os.path.abspath('../picar/output-v21-lr')
+out_dir = os.path.abspath('../picar/output-v21-lr-dagger')
 
 # data_dir = os.path.abspath('epochs')
 # out_dir = os.path.abspath('.output')
@@ -31,8 +31,8 @@ epochs = OrderedDict()
 # 8/23 picar-v2.0, 50ms fix
 
 epochs['train'] = [401, 402, 403, 404, 409, 410, 411, 412]
+epochs['train'] += [406, 407, 408] # dagger
 epochs['val'] = [405, 413]
-# epochs['train'] += [406, 407, 408] # dagger
 
 # epochs['train'] += [414, 415, 416, 417, 419, 420, 421, 422]
 # epochs['val'] += [418, 423]

@@ -102,6 +102,21 @@ epoch_id 	condition	time(s)		note
 412		picar-v2.0, 50ms period, right turn
 413		picar-v2.0, 50ms period, right turn
 
+v21-lr
+step 1910 of 2000, train loss 0.0177803561091, val loss 0.0149959046394
+step 1920 of 2000, train loss 0.0244188532233, val loss 0.0281038507819
+step 1930 of 2000, train loss 0.0102092605084, val loss 0.0185218639672
+step 1940 of 2000, train loss 0.0208307709545, val loss 0.0316582620144
+step 1950 of 2000, train loss 0.0245116297156, val loss 0.0195544585586
+step 1960 of 2000, train loss 0.0227737389505, val loss 0.0161729454994
+step 1970 of 2000, train loss 0.0165685266256, val loss 0.0339949466288
+step 1980 of 2000, train loss 0.0140980947763, val loss 0.021081674844
+step 1990 of 2000, train loss 0.0129678808153, val loss 0.0287531558424
+step 2000 of 2000, train loss 0.0142127275467, val loss 0.0353326648474
+Model saved. Time passed: 00 hours 03 mins 40 secs 000 msecs. Time left: 00 hours 00 mins 00 secs 000 msecs
+
+v21-lr-dagger
+
 414		picar-v2.0, 50ms period, left turn
 415		picar-v2.0, 50ms period, left turn
 416		picar-v2.0, 50ms period, left turn
@@ -114,4 +129,4 @@ epoch_id 	condition	time(s)		note
 422		picar-v2.0, 50ms period, left turn
 423		picar-v2.0, 50ms period, left turn
 
-
+v22-lr
