@@ -12,7 +12,11 @@ img_height = 66
 img_width = 200
 img_channels = 3
 write_summary = True
+<<<<<<< HEAD
 use_category_normal = False # if ture, center/curve images are equally selected.
+=======
+category_normal = False # if ture, center/curve images are equally selected.
+>>>>>>> 2b42b75c8dd6993aa70ff2efeecd5a767ee5e385
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
