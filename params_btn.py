@@ -28,8 +28,8 @@ if not os.path.isdir(out_dir):
 epochs = OrderedDict()
 
 # right only
-epochs['train'] = [100, 101, 110, 111, 117, 118]
-epochs['val'] =   [112, 119]
+epochs['train'] = [302, 303, 304, 305, 307, 308, 309, 310]
+epochs['val'] = [306, 311]
 
 #epochs['train'] = [100, 102, 104, 106, 108, 110, 112, 114, 103, 105, 107, 109, 113, 115] 
 #epochs['val'] =   [101, 111]

@@ -45,8 +45,14 @@ if write_summary:
 if params.shuffle_training:
     data.load_imgs()
 
+# center, curve 50:50%
+data.categorize_imgs()
+
 for i in xrange(params.training_steps):
-    txx, tyy = data.load_batch('train')
+    if params.use_category_normal:
+        txx, tyy = data.load_batch_category_normal('train')
+    else:
+        txx, tyy = data.load_batch('train')
         
     train_step.run(feed_dict={model.x: txx, model.y_: tyy, model.keep_prob: 0.8})
 
@@ -56,7 +62,11 @@ for i in xrange(params.training_steps):
         summary_writer.add_summary(summary, i)
 
     if (i+1) % 10 == 0:
-        vxx, vyy = data.load_batch('val')
+        if params.use_category_normal:
+            vxx, vyy = data.load_batch_category_normal('val')
+        else:
+            vxx, vyy = data.load_batch('val')
+
         t_loss = loss.eval(feed_dict={model.x: txx, model.y_: tyy, model.keep_prob: 1.0})
         v_loss = loss.eval(feed_dict={model.x: vxx, model.y_: vyy, model.keep_prob: 1.0})
         print "step {} of {}, train loss {}, val loss {}".format(i+1, params.training_steps, t_loss, v_loss)

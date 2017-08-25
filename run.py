@@ -40,6 +40,7 @@ for epoch_id in epoch_ids:
         vid_path = cm.jn(params.data_dir, 'out-video-{}.avi'.format(epoch_id))
         assert os.path.isfile(vid_path)
         os.system("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
+        print("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
     vid_path = vid_scaled_path
     frame_count = cm.frame_count(vid_path)
     cap = cv2.VideoCapture(vid_path)

@@ -47,7 +47,7 @@ def load_imgs():
             csv_path = cm.jn(data_dir, 'out-key-btn-{}.csv'.format(epoch_id))
             assert os.path.isfile(csv_path)
 
-            # print "DBG:", csv_path
+            print "DBG:", csv_path
             rows = cm.fetch_csv_data(csv_path)
             print len(rows), frame_count
             assert frame_count == len(rows)
