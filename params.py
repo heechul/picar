@@ -30,8 +30,9 @@ if not os.path.isdir(out_dir):
 epochs = OrderedDict()
 # 8/23 picar-v2.0, 50ms fix
 
-epochs['train'] = [401, 402, 403, 404, 406, 407, 408]
-epochs['val'] = [400, 405] 
+epochs['train'] = [401, 402, 403, 404, 409, 410, 411, 412]
+# epochs['train'].append([406, 407, 408])
+epochs['val'] = [405, 413]
 
 # 8/21 picar-v2.0
 # left = 302 - 306

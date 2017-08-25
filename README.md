@@ -84,11 +84,34 @@ epoch_id 	condition	time(s)		note
 310
 311
 
-400		picar-v2.0, 50ms period enforced, right turn
-401		picar-v2.0, 50ms period enforced, right turn
-402		picar-v2.0, 50ms period enforced, right turn
-403		picar-v2.0, 50ms period enforced, right turn
-404		picar-v2.0, 50ms period enforced, right turn
-405		picar-v2.0, 50ms period enforced, right turn
+400		picar-v2.0, 50ms period, right turn
+
+401		picar-v2.0, 50ms period, right turn
+402		picar-v2.0, 50ms period, right turn
+403		picar-v2.0, 50ms period, right turn
+404		picar-v2.0, 50ms period, right turn
+405		picar-v2.0, 50ms period, right turn
 
 406		picar-v2.0, dagger
+407		picar-v2.0, dagger
+408		picar-v2.0, dagger
+
+409		picar-v2.0, 50ms period, right turn
+410		picar-v2.0, 50ms period, right turn
+411		picar-v2.0, 50ms period, right turn
+412		picar-v2.0, 50ms period, right turn
+413		picar-v2.0, 50ms period, right turn
+
+414		picar-v2.0, 50ms period, left turn
+415		picar-v2.0, 50ms period, left turn
+416		picar-v2.0, 50ms period, left turn
+417		picar-v2.0, 50ms period, left turn
+418		picar-v2.0, 50ms period, left turn
+
+419		picar-v2.0, 50ms period, left turn
+420		picar-v2.0, 50ms period, left turn
+421		picar-v2.0, 50ms period, left turn
+422		picar-v2.0, 50ms period, left turn
+423		picar-v2.0, 50ms period, left turn
+
+
