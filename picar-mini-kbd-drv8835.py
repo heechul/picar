@@ -82,7 +82,6 @@ if len(sys.argv) == 2:
 # rospy.init_node('my_node_name')
 # r = rospy.Rate(20) # 10hz
 
-period = 0.2
 def g_tick():
     t = time.time()
     count = 0

@@ -99,6 +99,7 @@ beta  = DEFAULT_BETA
 ## human input variables
 angle = 0.0
 btn   = ord('k')  # 107 - center
+period = 0.05 # sec (=50ms)
 
 total_cnt = 0
 
@@ -106,13 +107,18 @@ if len(sys.argv) == 2:
     SET_SPEED = int(sys.argv[1])
     print "Set new speed: ", SET_SPEED
 
-rospy.init_node('picar_dnn')
-r = rospy.Rate(20) # 10hz
+def g_tick():
+    t = time.time()
+    count = 0
+    while True:
+        count += 1
+        yield max(t + count*period - time.time(),0)
+        
+g = g_tick()
 
-prev_ts = int(time.time() * 1000)
-
-while not rospy.is_shutdown():
-    ts = int(time.time() * 1000)
+while True:
+    time.sleep(next(g))    
+    ts = time.time()
     
     # 0. read a image frame
     ret, frame = cap.read()
@@ -177,22 +183,18 @@ while not rospy.is_shutdown():
     if h_ctrl == m_ctrl or h_ctrl == -99:
         # machine == human or there's no human input 
         ctrl = m_ctrl
-        print "machine: ", 
     else:
         # if there's human input, use it.
         ctrl = h_ctrl
-        print "human:   ",
+        print '[M]',
         
     # 4. control
     if ctrl == 0:
         center()
-        print "center"
     elif ctrl == 1:
         right()
-        print "right"
     elif ctrl == -1:
         left()
-        print "left"      
         
     # 5. record data
     if ctrl == h_ctrl:
@@ -201,11 +203,11 @@ while not rospy.is_shutdown():
         frame_id = frame_id + 1
         
         # write input (angle)
-        str = "{},{},{}\n".format(ts, frame_id, angle)
+        str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
         keyfile.write(str)
         
         # write input (button: left, center, stop, speed)
-        str = "{},{},{},{}\n".format(ts, frame_id, btn, cur_speed)
+        str = "{},{},{},{}\n".format(int(ts*1000), frame_id, btn, cur_speed)
         keyfile_btn.write(str)
         
         # write video stream
@@ -217,10 +219,8 @@ while not rospy.is_shutdown():
             print "recorded 200 frames"
             break
 
-    print ts, frame_id, (ts - prev_ts)        
-    prev_ts = ts
-    r.sleep()    
-        
+    print ts, frame_id, ctrl, int((time.time() - ts)*1000)
+    
 cap.release()
 keyfile.close()
 keyfile_btn.close()
