@@ -8,7 +8,7 @@ import math
 import numpy as np
 import pygame
 import sys
-import rospy
+# import rospy
 
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
@@ -73,19 +73,27 @@ cv2.imshow('frame', null_frame)
 
 angle = 0.0
 btn   = 107
-period = 50 # ms
+period = 0.05 # sec (=50ms)
 
 if len(sys.argv) == 2:
     SET_SPEED = int(sys.argv[1])
     print "Set new speed: ", SET_SPEED
 
-rospy.init_node('my_node_name')
-r = rospy.Rate(20) # 10hz
+# rospy.init_node('my_node_name')
+# r = rospy.Rate(20) # 10hz
 
-prev_ts = int(time.time() * 1000)
-
-while not rospy.is_shutdown():
-    ts = int(time.time() * 1000)
+period = 0.2
+def g_tick():
+    t = time.time()
+    count = 0
+    while True:
+        count += 1
+        yield max(t + count*period - time.time(),0)
+        
+g = g_tick()
+while True:
+    time.sleep(next(g))    
+    ts = time.time()
     
     # read a frame
     ret, frame = cap.read()
@@ -141,11 +149,11 @@ while not rospy.is_shutdown():
         frame_id = frame_id + 1
         
         # write input (angle)
-        str = "{},{},{}\n".format(ts, frame_id, angle)
+        str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
         keyfile.write(str)
         
         # write input (button: left, center, stop, speed)
-        str = "{},{},{},{}\n".format(ts, frame_id, btn, cur_speed)
+        str = "{},{},{},{}\n".format(int(ts*1000), frame_id, btn, cur_speed)
         keyfile_btn.write(str)
         
         # write video stream
@@ -155,10 +163,8 @@ while not rospy.is_shutdown():
             print "recorded 400 frames"
             break
 
-    print ts, frame_id, angle, btn, (ts - prev_ts)            
-    prev_ts = ts
-    r.sleep()    
-
+    print ts, frame_id, angle, btn, int((time.time() - ts)*1000)
+    
 stop()
 cap.release()
 keyfile.close()
