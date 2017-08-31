@@ -52,7 +52,6 @@ def load_imgs():
             print len(rows), frame_count
             assert frame_count == len(rows)
             yy = [[int(row['btn'])] for row in rows]
-
             while True:
                 ret, img = cap.read()
                 if not ret:
