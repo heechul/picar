@@ -15,7 +15,7 @@ cap = cv2.VideoCapture(0)
 cap.set(3,320)
 cap.set(4,240)
 # ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
-ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=None)
 # fourcc = cv2.VideoWriter_fourcc(*'XVID')
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
@@ -38,15 +38,16 @@ atexit.register(turnOffMotors)
 view_video = False
 frame_id = 0
 null_frame = np.zeros((160,120,3), np.uint8)
-cv2.imshow('frame', null_frame)
+# cv2.imshow('frame', null_frame)
 
 angle = 0.0
-period = 0.05 # sec (=50ms)
+period = 0.02 # sec (=50ms)
 
-str_motor = mh.getMotor(1)
-thr_motor = mh.getMotor(2)
 
 def control_motor(str_rc, thr_rc):
+    str_motor = mh.getMotor(1)
+    thr_motor = mh.getMotor(2)
+    
     if thr_rc > 1350:
         thr_motor.run(Adafruit_MotorHAT.FORWARD)
         thr_motor.setSpeed(int((thr_rc - 1350)*256/450))
@@ -60,7 +61,30 @@ def control_motor(str_rc, thr_rc):
     else:
         str_motor.run(Adafruit_MotorHAT.BACKWARD)
         str_motor.setSpeed(int(-(str_rc - 1350)*256/450))
-        
+
+def control_motor_differential(str_rc, thr_rc):
+    left_motor = mh.getMotor(1)
+    right_motor = mh.getMotor(2)
+    
+    throttle = (thr_rc - 1350) * 256 / 450
+    angle = (str_rc - 1350) * 180 / 450 # degree
+
+    l_speed = throttle + angle / 5
+    r_speed = throttle - angle / 5
+
+    if l_speed > 0:
+        left_motor.run(Adafruit_MotorHAT.FORWARD)
+    else:
+        left_motor.run(Adafruit_MotorHAT.BACKWARD)        
+
+    if r_speed > 0:
+        right_motor.run(Adafruit_MotorHAT.FORWARD)
+    else:
+        right_motor.run(Adafruit_MotorHAT.BACKWARD)        
+
+    left_motor.setSpeed(abs(l_speed))
+    right_motor.setSpeed(abs(r_speed))    
+    
 if len(sys.argv) == 2:
     SET_SPEED = int(sys.argv[1])
     print "Set new speed: ", SET_SPEED
@@ -82,10 +106,11 @@ while True:
     ret, frame = cap.read()
     line = ser.readline()
     rc1, rc2 = string.split(line[:-1])
+    print "TS:", ts, "rc values:", rc1, rc2
     rc1 = int(rc1)
     rc2 = int(rc2)
-    control_motor(rc1, rc2)
-    print "rc values:", rc1, rc2
+    # control_motor(rc1, rc2)
+    control_motor_differential(rc1, rc2)
     
     if rc1 == 0 and rc2 == 0:
         break

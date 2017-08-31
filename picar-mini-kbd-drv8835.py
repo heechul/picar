@@ -24,7 +24,9 @@ cap.set(4,480)
 
 # ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 # ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fourcc = cv2.cv.CV_FOURCC(*'XVID')
+
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (640,480))
 keyfile = open('out-key.csv', 'w+')
 keyfile_btn = open('out-key-btn.csv', 'w+')
