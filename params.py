@@ -4,10 +4,10 @@ from __future__ import division
 import os
 from collections import OrderedDict
 
-batch_size = 100
+batch_size = 255
 # save_dir = os.path.abspath('models')
-save_dir = os.path.abspath('../picar/models-v22-lr')
-training_steps = 2000
+save_dir = os.path.abspath('../picar/models')
+training_steps = 20000
 img_height = 66
 img_width = 200
 img_channels = 3
@@ -16,7 +16,7 @@ use_category_normal = True # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
-out_dir = os.path.abspath('../picar/output-v22-lr')
+out_dir = os.path.abspath('../picar/output')
 
 # data_dir = os.path.abspath('epochs')
 # out_dir = os.path.abspath('.output')
@@ -30,9 +30,8 @@ if not os.path.isdir(out_dir):
 epochs = OrderedDict()
 # 8/23 picar-v2.0, 50ms fix
 
-epochs['train'] = [401, 402, 403, 404, 409, 410, 411, 412]
-# epochs['train'] += [406, 407, 408] # dagger
-epochs['val'] = [405, 413]
+epochs['train'] = range(400,420)
+epochs['val'] = range(420,425)
 
 #epochs['train'] += [414, 415, 416, 417, 419, 420, 421, 422]
 #epochs['val'] += [418, 423]

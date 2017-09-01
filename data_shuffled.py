@@ -24,7 +24,7 @@ for purpose in purposes:
     imgs[purpose] = []
     wheels[purpose] = []
 
-categories = ['center', 'curve']    
+categories = ['center', 'left', 'right']    
 imgs_cat = OrderedDict()
 wheels_cat = OrderedDict()
 for p in purposes:
@@ -47,7 +47,8 @@ def load_imgs():
             # vid_path = cm.jn(data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
             vid_path = cm.jn(data_dir, 'out-video-{}.avi'.format(epoch_id))
 
-            assert os.path.isfile(vid_path)
+            if not os.path.isfile(vid_path):
+                continue
 
             print "DBG:", vid_path
             frame_count = cm.frame_count(vid_path)
@@ -107,9 +108,12 @@ def categorize_imgs():
             if abs(wheels[p][i][0]) < 0.001:
                 imgs_cat[p]['center'].append(imgs[p][i])
                 wheels_cat[p]['center'].append(wheels[p][i])
+            elif wheels[p][i][0] < 0:
+                imgs_cat[p]['left'].append(imgs[p][i])
+                wheels_cat[p]['left'].append(wheels[p][i])                
             else:
-                imgs_cat[p]['curve'].append(imgs[p][i])
-                wheels_cat[p]['curve'].append(wheels[p][i])
+                imgs_cat[p]['right'].append(imgs[p][i])
+                wheels_cat[p]['right'].append(wheels[p][i])                
 
         print '---< {} >---'.format(p)
         for c in categories:

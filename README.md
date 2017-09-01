@@ -96,7 +96,7 @@ epoch_id 	condition	time(s)		note
 407		picar-v2.0, dagger
 408		picar-v2.0, dagger
 
-409		picar-v2.0, 50ms period, right turn
+09		picar-v2.0, 50ms period, right turn
 410		picar-v2.0, 50ms period, right turn
 411		picar-v2.0, 50ms period, right turn
 412		picar-v2.0, 50ms period, right turn
