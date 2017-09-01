@@ -10,13 +10,17 @@ void setup()
 
 void loop()
 {
-  ch1 = pulseIn(4, HIGH, 25000); // Read the pulse width of 
-  ch3 = pulseIn(3, HIGH, 25000);
+  if(Serial.available() > 0) {
+    String str = Serial.readStringUntil('\n');
 
-  Serial.print(ch1);
-  Serial.print(' ');
-  Serial.print(ch3);
-  Serial.print('\n');
-  
-  delay(50);
+    if (str == "getrc" ) {
+      ch1 = pulseIn(4, HIGH, 25000); // Read the pulse width of 
+      ch3 = pulseIn(3, HIGH, 25000);
+
+      Serial.print(ch1);
+      Serial.print(' ');
+      Serial.print(ch3);
+      Serial.print('\n');
+    }
+  }
 }
