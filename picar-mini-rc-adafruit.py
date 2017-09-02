@@ -1,11 +1,4 @@
 #!/usr/bin/python
-from __future__ import division
-import tensorflow as tf
-import model
-import params
-import local_common as cm
-import preprocess
-
 import random
 import os
 import time
@@ -19,12 +12,42 @@ import sys
 import string
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
+from __future__ import division
+import tensorflow as tf
+import model
+import params
+import local_common as cm
+import preprocess
+
+# recommended for auto-disabling motors on shutdown!
+def turn_off_motors():
+    mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+
+def term_all():
+    turn_off_motors()
+    
+atexit.register(term_all)
+
+# motor
+#  create a default object, no changes to I2C address or frequency
+mh = Adafruit_MotorHAT(addr=0x60)
+left_motor = mh.getMotor(1)
+right_motor = mh.getMotor(2)
+
+# camera
 cap = cv2.VideoCapture(0)
 cap.set(3,320)
 cap.set(4,240)
-# ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+
+# arduino connection
+#  ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=None)
-# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+
+# recording files
+#  fourcc = cv2.VideoWriter_fourcc(*'XVID')
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (320,240))
 
@@ -34,33 +57,24 @@ keyfile_rc.write("ts_micro,frame,s_pwm,t_pwm\n")
 keyfile = open('out-key.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 
-rec_start_time = 0
+# open tensorflow model
+sess = tf.InteractiveSession()
+saver = tf.train.Saver()
+model_name = 'model.ckpt'
+model_path = cm.jn(params.save_dir, model_name)
+saver.restore(sess, model_path)
 
-# create a default object, no changes to I2C address or frequency
-mh = Adafruit_MotorHAT(addr=0x60)
-
-# recommended for auto-disabling motors on shutdown!
-def turnOffMotors():
-    mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-    mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-    mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-    mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
-
-atexit.register(turnOffMotors)
-
+# user configuration parameters
 use_dnn = False
 view_video = False
-frame_id = 0
-null_frame = np.zeros((160,120,3), np.uint8)
-# cv2.imshow('frame', null_frame)
+period = 0.02 # sec (=50ms)
 
+# global variables
+frame_id = 0
 angle = 0.0
 throttle = 0
-period = 0.02 # sec (=50ms)
-SET_SPEED = 0
-
-left_motor = mh.getMotor(1)
-right_motor = mh.getMotor(2)
+rec_start_time = 0
+null_frame = np.zeros((160,120,3), np.uint8)
 
 def deg2rad(deg):
     return deg * math.pi / 180.0
@@ -91,13 +105,6 @@ def control_motor_differential(th, an):
 
     return l_speed, r_speed
 
-if use_dnn:
-    sess = tf.InteractiveSession()
-    saver = tf.train.Saver()
-    model_name = 'model.ckpt'
-    model_path = cm.jn(params.save_dir, model_name)
-    saver.restore(sess, model_path)
-
 if len(sys.argv) == 2:
     SET_SPEED = int(sys.argv[1])
     print "Set new speed: ", SET_SPEED
@@ -109,38 +116,42 @@ def g_tick():
         count += 1
         yield max(t + count*period - time.time(),0)
         
-g = g_tick()
 
 ser.flush()
 print "start loop"
-
 frame_id = 0
-
+g = g_tick()
 while True:
     time.sleep(next(g))    
     ts = time.time()
-    
-    ret, frame = cap.read()
 
-    line = ser.readline()
+    # 0. read sensors. (arduino, camera)
+    ser.writeline("getrc")
+    ret, frame = cap.read()
+        
+    # 1. machine input
+    img = preprocess.preprocess(frame)
+    angle_rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+    angle_dnn = rad2deg(angle_rad)
+
+    # 2. human input (RC)
+    line = ser.readline()    
     rc1, rc2 = string.split(line[:-1])
     rc1 = int(rc1)
     rc2 = int(rc2)
+    throttle, angle_rc = rc_to_throttle_angle(rc1, rc2)
     
-    if not use_dnn:
-        # 1. human input (RC) 
-        throttle, angle = rc_to_throttle_angle(rc1, rc2)
+    # 3. make a decision
+    if use_dnn:
+        angle = angle_dnn
     else:
-        # 2. machine input
-        img = preprocess.preprocess(frame)
-        angle_rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
-        angle = rad2deg(angle_rad)
+        angle = angle_rc
         
-    # 3. control_motor(rc1, rc2)
+    # 4. control actuators
     l_speed, r_speed = control_motor_differential(throttle, angle)
 
+    # 5. record
     print ts, frame_id, angle, throttle, rc1, rc2
-    
     if rec_start_time > 0:
         # increase frame_id
         frame_id = frame_id + 1
