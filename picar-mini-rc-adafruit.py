@@ -1,4 +1,11 @@
 #!/usr/bin/python
+from __future__ import division
+import tensorflow as tf
+import model
+import params
+import local_common as cm
+import preprocess
+
 import random
 import os
 import time
@@ -11,13 +18,6 @@ import pygame
 import sys
 import string
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
-
-from __future__ import division
-import tensorflow as tf
-import model
-import params
-import local_common as cm
-import preprocess
 
 # recommended for auto-disabling motors on shutdown!
 def turn_off_motors():
@@ -65,7 +65,7 @@ model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 
 # user configuration parameters
-use_dnn = False
+use_dnn = True
 view_video = False
 period = 0.02 # sec (=50ms)
 
@@ -82,8 +82,10 @@ def rad2deg(rad):
     return 180.0 * rad / math.pi
 
 def rc_to_throttle_angle(str_rc, thr_rc):
-    th = (thr_rc - 1355) * 256 / 450
-    an = (str_rc - 1355) * 180 / 450 # degree
+    if str_rc < 800 or thr_rc < 800:
+        return 0, 0
+    th = (thr_rc - 1400) * 256 / 450
+    an = (str_rc - 1400) * 180 / 450 # degree
     return th, an
     
 def control_motor_differential(th, an):    
@@ -126,7 +128,7 @@ while True:
     ts = time.time()
 
     # 0. read sensors. (arduino, camera)
-    ser.writeline("getrc")
+    ser.write("getrc\n")
     ret, frame = cap.read()
         
     # 1. machine input
@@ -137,8 +139,8 @@ while True:
     # 2. human input (RC)
     line = ser.readline()    
     rc1, rc2 = string.split(line[:-1])
-    rc1 = int(rc1)
-    rc2 = int(rc2)
+    rc1 = int(rc1) # str
+    rc2 = int(rc2) # throttle
     throttle, angle_rc = rc_to_throttle_angle(rc1, rc2)
     
     # 3. make a decision
@@ -151,7 +153,9 @@ while True:
     l_speed, r_speed = control_motor_differential(throttle, angle)
 
     # 5. record
-    print ts, frame_id, angle, throttle, rc1, rc2
+    if throttle > 128:
+        rec_start_time = ts
+    
     if rec_start_time > 0:
         # increase frame_id
         frame_id = frame_id + 1
@@ -170,6 +174,7 @@ while True:
         # if frame_id >= 400:
         #     print "recorded 400 frames"
         #     break
+        print ts, frame_id, angle, throttle, rc1, rc2
         
 cap.release()
 keyfile.close()
