@@ -1,0 +1,114 @@
+%
+%  $Author: ienne $
+%  $Date: 1995/09/15 15:20:59 $
+%  $Revision: 1.4 $
+%
+
+% \documentclass[10pt,journal,cspaper,compsoc]{IEEEtran}   %%%tc version
+\documentclass[10pt, conference]{IEEEtran}
+%\documentclass[conference,compsoc]{IEEEtran}
+%\documentclass[10pt, conference]{IEEEtran}
+%\documentclass[times, 10pt,onecolumn]{article}
+\usepackage{amsmath, amssymb, enumerate}
+
+%%%%%%%%%%%%%%%% page control%%%%%%%%%%%%%%%%%
+%\usepackage[margin=0.75in]{geometry}
+
+%\linespread{0.991}  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this is really useful
+%\usepackage{cite}
+\usepackage{fancybox}
+\usepackage{amsfonts}
+%\usepackage{algorithm}
+%\usepackage[noend]{algorithmic}
+\usepackage[usenames]{color}
+%\usepackage{colortbl}
+%\usepackage[ figure, boxed, vlined]{algorithm2e}
+%\usepackage[linesnumbered,vlined]{algorithm2e}
+%\usepackage[lined,boxed]{algorithm2e}
+\usepackage{listings}
+
+\usepackage[linesnumbered,vlined]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{psfrag}
+\usepackage{subfigure}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{multirow}
+%\usepackage{setspace}
+%\usepackage{listings}
+\usepackage{epsfig}
+%\usepackage{epstopdf}
+%\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{url}
+
+\usepackage{color}
+\def\fixme#1{\typeout{FIXED in page \thepage : {#1}}
+%\bgroup \color{red}{} \egroup}
+\bgroup \color{red}{[FIXME: {#1}]} \egroup}
+
+
+%\usepackage[pdftex]{hyperref}
+\usepackage{rotating,tabularx}
+
+\interfootnotelinepenalty=10000
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+
+%\documentstyle[times,art10,twocolumn,latex8]{article}
+
+%-------------------------------------------------------------------------
+% take the % away on next line to produce the final camera-ready version
+\pagestyle{plain}
+%\thispagestyle{empty}
+%\pagestyle{empty}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+%% remaining budget share, used in task stall section.
+\newcommand{\bottomrule}{\hline}
+\newcommand{\toprule}{\hline}
+\newcommand{\midrule}{\hline}
+%-------------------------------------------------------------------------
+\begin{document}
+
+\title{Title of Your Paper}
+\author{Author One, Author Two\\
+\{author1,author2\}@ku.edu\\
+University of Kansas, USA\\ 
+}
+
+\maketitle
+\thispagestyle{empty}
+\begin{abstract}
+
+Abstract goes here.
+
+\end{abstract}
+
+%-------------------------------------------------------------------------
+
+\section{Introduction}
+Introduction goes here.
+
+\section{Background}
+Cite a paper \cite{barroso2009datacenter}.
+
+Cite multiple papers \cite{banga99resourcecontainers,barroso2009datacenter}
+
+\section{Your System}
+...
+\section{Evaluation}
+...
+\section{Conclusion}
+...
+%-------------------------------------------------------------------------
+
+\bibliographystyle{plain}
+\bibliography{reference}
+\end{document}
