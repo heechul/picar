@@ -7,12 +7,12 @@ from collections import OrderedDict
 batch_size = 255
 # save_dir = os.path.abspath('models')
 save_dir = os.path.abspath('../picar/models')
-training_steps = 20000
+training_steps = 4000
 img_height = 66
 img_width = 200
 img_channels = 3
 write_summary = True
-use_category_normal = True # if ture, center/curve images are equally selected.
+use_category_normal = False # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
 data_dir = os.path.abspath('../picar/epochs')
@@ -30,8 +30,8 @@ if not os.path.isdir(out_dir):
 epochs = OrderedDict()
 # 8/23 picar-v2.0, 50ms fix
 
-epochs['train'] = range(400,420)
-epochs['val'] = range(420,425)
+epochs['train'] = [501, 502, 503, 504] 
+epochs['val'] = [500, 505]
 
 #epochs['train'] += [414, 415, 416, 417, 419, 420, 421, 422]
 #epochs['val'] += [418, 423]
