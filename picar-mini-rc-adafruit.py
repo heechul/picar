@@ -76,21 +76,17 @@ throttle = 0
 rec_start_time = 0
 null_frame = np.zeros((160,120,3), np.uint8)
 
-def deg2rad(deg):
-    return deg * math.pi / 180.0
-def rad2deg(rad):
-    return 180.0 * rad / math.pi
-
 def rc_to_throttle_angle(str_rc, thr_rc):
     if str_rc < 800 or thr_rc < 800:
         return 0, 0
-    th = (thr_rc - 1400) * 256 / 450
-    an = (str_rc - 1400) * 180 / 450 # degree
+    th = float(thr_rc - 1350) * 256 / 450
+    an = float(str_rc - 1350) * 180 / 450 # degree
     return th, an
     
 def control_motor_differential(th, an):    
-    l_speed = th - an / 5
-    r_speed = th + an / 5
+    an_adj = an - 41.6
+    l_speed = th - an_adj / 5
+    r_speed = th + an_adj / 5
 
     if l_speed > 0:
         left_motor.run(Adafruit_MotorHAT.BACKWARD)
@@ -133,30 +129,34 @@ while True:
         
     # 1. machine input
     img = preprocess.preprocess(frame)
-    angle_rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
-    angle_dnn = rad2deg(angle_rad)
+    angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
 
     # 2. human input (RC)
     line = ser.readline()    
-    rc1, rc2 = string.split(line[:-1])
-    rc1 = int(rc1) # str
+    rc1, rc2, rc3, rc4 = string.split(line[:-1])
+    rc1 = int(rc1) # steering
     rc2 = int(rc2) # throttle
+    rc3 = int(rc3) # swa: >1000 = dnn, <1000 = human
+    rc4 = int(rc4) # swb: >1000 = start record, <1000 = stop record
+
+    # print "DBG:", rc1, rc2, rc3, rc4
+    
     throttle, angle_rc = rc_to_throttle_angle(rc1, rc2)
     
     # 3. make a decision
-    if use_dnn:
+    if rc3 > 1000:
+        print "DNN:",
         angle = angle_dnn
     else:
+        print "MAN:",
         angle = angle_rc
         
     # 4. control actuators
     l_speed, r_speed = control_motor_differential(throttle, angle)
 
+    print ("throttle: %.1f angle: %.1f" % (throttle, angle))
     # 5. record
-    if throttle > 128:
-        rec_start_time = ts
-    
-    if rec_start_time > 0:
+    if rc4 > 1000:
         # increase frame_id
         frame_id = frame_id + 1
         
@@ -174,8 +174,11 @@ while True:
         # if frame_id >= 400:
         #     print "recorded 400 frames"
         #     break
-        print ts, frame_id, angle, throttle, rc1, rc2
-        
+        print ts, frame_id, angle, throttle, rc1, rc2, rc3
+
+    if (rc1 < 950 and rc2 > 1340 and rc2 < 1370) or frame_id > 800:
+        break
+    
 cap.release()
 keyfile.close()
 keyfile_rc.close()
