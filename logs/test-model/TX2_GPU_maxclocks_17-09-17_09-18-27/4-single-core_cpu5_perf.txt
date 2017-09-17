@@ -1,0 +1,14 @@
+# started on Sun Sep 17 09:19:24 2017
+
+
+ Performance counter stats for 'taskset -c 5 python test-model.py 1':
+
+       112,483,123      cache-misses              #    3.442 % of all cache refs    
+     3,268,296,692      cache-references                                            
+   <not supported>      LLC-loads                
+   <not supported>      LLC-load-misses          
+   <not supported>      LLC-stores               
+   <not supported>      LLC-store-misses         
+
+       8.696021696 seconds time elapsed
+
