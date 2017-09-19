@@ -13,7 +13,7 @@ import preprocess
 # import visualize
 import time
 import math
-
+import numpy as np
 import local_common as cm
 
 def deg2rad(deg):
@@ -21,7 +21,12 @@ def deg2rad(deg):
 def rad2deg(rad):
         return 180.0 * rad / math.pi
 
-sess = tf.InteractiveSession()
+NCPU=1
+config = tf.ConfigProto(intra_op_parallelism_threads=NCPU, inter_op_parallelism_threads=NCPU, \
+                        allow_soft_placement=True, device_count = {'CPU': 1})
+# sess = tf.Session(config=config)
+
+sess = tf.InteractiveSession(config=config)
 saver = tf.train.Saver()
 model_name = 'model.ckpt'
 model_path = cm.jn(params.save_dir, model_name)
@@ -29,7 +34,9 @@ saver.restore(sess, model_path)
 
 epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
 
-# epoch_ids = [6] # DBG - heechul
+epoch_ids = [6] # DBG - heechul
+
+tot_time_list = []
 
 for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
@@ -45,6 +52,7 @@ for epoch_id in epoch_ids:
     print 'performing inference...'
     time_start = time.time()
     for frame_id in xrange(frame_count):
+        cam_start = time.time()
         ret, img = cap.read()
         assert ret
 
@@ -56,12 +64,15 @@ for epoch_id in epoch_ids:
         deg = rad2deg(rad)
         pred_end   = time.time()
 
-        prep_time = pred_start - prep_start
-        pred_time = pred_end - pred_start
+        cam_time  = (prep_start - cam_start)*1000
+        prep_time = (pred_start - prep_start)*1000
+        pred_time = (pred_end - pred_start)*1000
+        tot_time  = (pred_end - cam_start)*1000
 
-        print 'pred: {} deg. took {} ms'.format(deg, pred_time * 1000)
+        print 'pred: {:0.2f} deg. took: {:0.2f} ms | cam={:0.2f} prep={:0.2f} pred={:0.2f}'.format(deg, tot_time, cam_time, prep_time, pred_time)
         # print 'pred: {} deg (rad={})'.format(deg, rad)
-
+        if frame_id > 0:
+	    tot_time_list.append(tot_time)
         machine_steering.append(deg)
 
     cap.release()
@@ -70,10 +81,19 @@ for epoch_id in epoch_ids:
     
     print 'completed inference, total frames: {}, average fps: {} Hz'.format(frame_count, round(fps, 1))
 
-    print "Machine Steering:", machine_steering
+    # print "Machine Steering:", machine_steering
 
     # print 'performing visualization...'
     # visualize.visualize(epoch_id, machine_steering, params.out_dir,
     #                     verbose=True, frame_count_limit=None)
     
-    
+print "count:", len(tot_time_list)
+print "mean:", np.mean(tot_time_list)
+print "max:", np.max(tot_time_list)
+print "99.999pct:", np.percentile(tot_time_list, 99.999)
+print "99.99pct:", np.percentile(tot_time_list, 99.99)
+print "99.9pct:", np.percentile(tot_time_list, 99.9)
+print "99pct:", np.percentile(tot_time_list, 99)
+print "min:", np.min(tot_time_list)
+print "median:", np.median(tot_time_list)
+print "stdev:", np.std(tot_time_list)    
