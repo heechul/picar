@@ -126,21 +126,49 @@ operations.
 In this paper, we present DeepPicar, a low-cost autonomous car
 platform for research and education. From hardware perspective, 
 DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
-computer, a web camera and a RC car, all of which are very
-affordable. The DeepPicar, however, employs state-of-the-art AI
+computer, a web camera and a RC car, all of which are affordable
+components (less than \$200 in total).
+The DeepPicar, however, employs state-of-the-art AI
 techonologies, including a vision-based end-to-end control system that
-utilizes a deep convolutional nueral network (CNN), which has 9
-layers, about 27 million connections and 250 thousand parameters
-(weights). The network architecture is in fact identifical to the one
+utilizes a deep convolutional nueral network (CNN).
+The network receives an image frame from a single forward
+looking camera, as input and generates a predicted steering angle
+value as output at each control period in \emph{real-time}. 
+The network is deep as it has 9 layers, about 27 million connections
+and 250 thousand parameters (weights).
+The network architecture is in fact identifical to the one
 used in Nvidia's DAVE-2 self-driving car~\cite{Bojarski2016}. Other
-than the obvious difference in scale (RC car vs. real car), from the 
-perspective of computing systems, the only differences between
-our system and Nvidia's DAVE-2 are that our system is implemented in
+than the obvious difference in scale (RC car vs. real car), from the
+computing perspective, the only differences between
+the two systems are that our system is implemented in
 TensorFlow~\cite{abadi2016tensorflow} and runs on a 
 Raspberry Pi 3 whereas Nvidia's DAVE-2 systems is implemented in Torch
-7~\cite{collobert2011torch7} and runs on a Drive PX self-driving car
-computer~\cite{drivepx}, which is much more powerful but also a lot more
-expensive.
+7~\cite{collobert2011torch7} and runs on a Drive PX computer (NVIDIA's
+automotive specialized computing system~\cite{drivepx}), which is more
+powerful but also more expensive.
+
+We follow the standard supervised learning methodology to train the
+system with a goal of following lanes on the ground, mimicking real
+roads. We first collected data for taining and validation by manually 
+controlling the RC car and recording the vision (from the webcam
+mounted on the RC-car) and the human control inputs. We then train the
+network offline using the collected data on a desktop computer, which
+equips a Nvidia GTX 1060 GPU. Finally, the trained network is copied
+back to the Raspberry Pi, which is then used to perform interference
+operations---locally on the Pi---in the car's main control loop in
+real-time. For real-time control, each \emph{inference} operation must
+be completed within the desired control period. (e.g., 50ms period for
+20Hz control frequency.)
+
+The primary {\bf contributions} of this paper are as follows:
+\begin{itemize}
+  \item We present the design, implementation, and case-study of a low-cost
+    autonomous vehicle that utilizes the state-of-the-art aritificial 
+    intelligence techniques.
+  \item We systematically analyze real-time characteristics of
+    multiple embedded computing platform, including the Raspberry Pi 3
+    Model B, in the contex of a vision-based autnomous driving.
+\end{itemize}
 
 %% We chose to use a Raspberry Pi 3 not only because of its
 %% affordability and availability but also because it is representative
@@ -149,22 +177,23 @@ expensive.
 %% The DeepPicar is comprised of a Raspberry
 %% Pi 3 Model B, a camera and a low cost RC car.
 
-By creating and using the Picar platform, we seek to accomplish the
-following three goals. First, the significant reduction of the overall cost required
-would make autonomous driving research more accessible to interested
-individuals/parties. Furthermore, it would remove the concerns of
-creating replacement platforms as each part, or the entire system,
-could be replaced relatively inexpensively. Second, the utilization of
-a more cost-efficient platform would allow for a better understanding
-of the performance requirements necessary for efficiently operating
-autonomous vehicles. Finally, we strive to achieve the ability to
-compare the real-time performance of multiple embedded computing
-platforms. 
+%% By creating and using the Picar platform, we seek to accomplish the 
+%% following three goals. First, the significant reduction of the overall
+%% cost required 
+%% would make autonomous driving research more accessible to interested
+%% individuals/parties. Furthermore, it would remove the concerns of
+%% creating replacement platforms as each part, or the entire system,
+%% could be replaced relatively inexpensively. Second, the utilization of
+%% a more cost-efficient platform would allow for a better understanding
+%% of the performance requirements necessary for efficiently operating
+%% autonomous vehicles. Finally, we strive to achieve the ability to
+%% compare the real-time performance of multiple embedded computing
+%% platforms. 
 
-We display the efficacy of the Picar by training and testing the
-DeepTesla DNN \cite{} in a custom-made environment. We find that the
-Picar is capable of consistently accomplishing all real-time
-operations required for autonomous driving in a 50 millisecond frame. 
+%% We display the efficacy of the Picar by training and testing the
+%% DeepTesla DNN \cite{} in a custom-made environment. We find that the
+%% Picar is capable of consistently accomplishing all real-time
+%% operations required for autonomous driving in a 50 millisecond frame. 
 
 The remaining sections of the paper are as follows: Section II gives
 an overview of the platform, including the high-level system and the
