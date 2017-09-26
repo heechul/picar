@@ -21,7 +21,7 @@ def deg2rad(deg):
 def rad2deg(rad):
         return 180.0 * rad / math.pi
 
-NCPU=1
+NCPU=int(sys.argv[1])
 config = tf.ConfigProto(intra_op_parallelism_threads=NCPU, inter_op_parallelism_threads=NCPU, \
                         allow_soft_placement=True, device_count = {'CPU': 1})
 # sess = tf.Session(config=config)
