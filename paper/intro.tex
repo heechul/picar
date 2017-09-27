@@ -1,7 +1,32 @@
 \section{Introduction} \label{sec:intro}
 
-Autonomous vehicles have been a topic of increasing interest in many
-disciplines in recent years. Due to the nature of autonomous vehicles,
+% broad context:
+% - advance in ai sparked interests in the robotics application, such as
+%   self-driving cars.
+% - in particular, deep neural network models are increasingly used
+%   for perception and control of a vehicle. say. AI workloads.
+%
+% 
+Self-driving cars have been a topic of increasing interest in recent
+years as multiple companies are actively developing related
+technologies. One of the key technologies is the use of deep neural
+network (DNNs) models for preception and control of the vehicle.
+
+% requirements:
+%   (1) real-time processing.
+%   (2) cost
+%   (3) safety
+%   (4) SWaP
+%
+% our goals:
+%   (1) build a safe and low cost testbed but utilizing the
+%       state-of-the-art AI technologies: DNN based end-to-end control
+%   (2) analyze real-time issues in DNN based end-to-end control.
+%   (3) evalute popular embedded platforms for the AI workloads
+%       (end-to-end control, perception).
+%       - Can apsberry pi handle AI workloads?
+%       - Can embedded GPU do better? How much?
+\fixme{TBD: requirements and goals reivison}
 it is necessary that all real-time operations are successfully
 performed prior to their deadlines. This requires that the AV platform
 be capable of completing all necessary computations in a timely
@@ -22,7 +47,8 @@ may be overwhelming. Toward this end, we explore the possibility of
 developing a low-cost system that still employs state-of-the-art AI
 technologies and is capable of executing real-time autonomous vehicle
 operations. 
-	
+
+% DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
 platform for research and education. From hardware perspective, 
 DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
@@ -47,6 +73,7 @@ Raspberry Pi 3 whereas Nvidia's DAVE-2 systems is implemented in Torch
 automotive specialized computing system~\cite{drivepx}), which is more
 powerful but also more expensive.
 
+% how we trained and tested (in terms of network performance)
 We follow the standard supervised learning methodology to train the
 system with a goal of following lanes on the ground, mimicking real
 roads. We first collected data for taining and validation by manually 
@@ -60,6 +87,10 @@ real-time. For real-time control, each \emph{inference} operation must
 be completed within the desired control period. (e.g., 50ms period for
 20Hz control frequency.)
 
+% how we evaluated (in terms real-time performance)
+% what are our findings?
+
+% contributions
 The {\bf contributions} of this paper are as follows:
 \begin{itemize}
   \item We present the design and implementation of a
