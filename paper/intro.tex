@@ -6,11 +6,20 @@
 % - in particular, deep neural network models are increasingly used
 %   for perception and control of a vehicle. say. AI workloads.
 %
-% 
-Self-driving cars have been a topic of increasing interest in recent
-years as multiple companies are actively developing related
-technologies. One of the key technologies is the use of deep neural
-network (DNNs) models for preception and control of the vehicle.
+%
+Autonomous cars have been a topic of increasing interest in recent
+years as many companies are actively developing related hardware
+and software technologies for ever more autonomous decision making
+capabilities---ultimately fully autonomous driving capability without
+any human intervention. One of the key technologies for increased
+autonomy of a vehicle is deep neural network (DNN) models, which have
+been sucessfully applied in various perception and control tasks in
+recent years. Already, DNN models are used in commercial
+semi-autonomous vehicles such as Tesla Model S, which includes a poweful
+computer and accelerators (e.g., MobileEye EyeQ) to execute various
+DNN models, espeically for (vision-based) real-time perception
+tasks. DNN based end-to-end control of a vehicle is also actively
+explored in recent years~\cite{Bojarski2016}.
 
 % requirements:
 %   (1) real-time processing.
@@ -26,7 +35,8 @@ network (DNNs) models for preception and control of the vehicle.
 %       (end-to-end control, perception).
 %       - Can apsberry pi handle AI workloads?
 %       - Can embedded GPU do better? How much?
-\fixme{TBD: requirements and goals reivison}
+There are several challenges in studying autonomous vehicles.
+
 it is necessary that all real-time operations are successfully
 performed prior to their deadlines. This requires that the AV platform
 be capable of completing all necessary computations in a timely
@@ -58,17 +68,17 @@ The DeepPicar, however, employs state-of-the-art AI
 techonologies, including a vision-based end-to-end control system that
 utilizes a deep convolutional nueral network (CNN).
 The network receives an image frame from a single forward
-looking camera, as input and generates a predicted steering angle
+looking camera as input and generates a predicted steering angle
 value as output at each control period in \emph{real-time}. 
-The network is deep as it has 9 layers, about 27 million connections
+The network is \emph{deep} as it has 9 layers, about 27 million connections
 and 250 thousand parameters (weights).
 The network architecture is in fact identifical to the one
-used in Nvidia's DAVE-2 self-driving car~\cite{Bojarski2016}. Other
-than the obvious difference in scale (RC car vs. real car), from the
-computing perspective, the only differences between
-the two systems are that our system is implemented in
+used in NVIDIA's DAVE-2 self-driving car~\cite{Bojarski2016}. Other
+than the obvious difference in scale (RC car vs. real car) the only
+differences between the two systems---from the computing
+perspective---are that our system is implemented in 
 TensorFlow~\cite{abadi2016tensorflow} and runs on a 
-Raspberry Pi 3 whereas Nvidia's DAVE-2 systems is implemented in Torch
+Raspberry Pi 3 whereas NVIDIA's DAVE-2 systems is implemented in Torch
 7~\cite{collobert2011torch7} and runs on a Drive PX computer (NVIDIA's
 automotive specialized computing system~\cite{drivepx}), which is more
 powerful but also more expensive.
@@ -80,7 +90,7 @@ roads. We first collected data for taining and validation by manually
 controlling the RC car and recording the vision (from the webcam
 mounted on the RC-car) and the human control inputs. We then train the
 network offline using the collected data on a desktop computer, which
-equips a Nvidia GTX 1060 GPU. Finally, the trained network is copied
+equips a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
 back to the Raspberry Pi, which is then used to perform interference
 operations---locally on the Pi---in the car's main control loop in
 real-time. For real-time control, each \emph{inference} operation must
