@@ -11,22 +11,33 @@ Autonomous cars have been a topic of increasing interest in recent
 years as many companies are actively developing related hardware
 and software technologies for ever more autonomous decision making
 capabilities---ultimately fully autonomous driving capability without
-any human intervention. One of the key technologies for increased
-autonomy of a vehicle is deep neural network (DNN) models, which have
-been sucessfully applied in various perception and control tasks in
-recent years. Already, DNN models are used in commercial
-semi-autonomous vehicles such as Tesla Model S, which includes a poweful
-computer and accelerators (e.g., MobileEye EyeQ) to execute various
-DNN models, espeically for (vision-based) real-time perception
-tasks. DNN based end-to-end control of a vehicle is also actively
-explored in recent years~\cite{Bojarski2016}.
+any human intervention. Deep neural networks (DNNs) have been
+sucessfully applied in various perception and control tasks in 
+recent years, and they are important workloads for autonomous vehicles
+as well. For example, Tesla Model S was known to use a specialized SoC
+(MobileEye EyeQ), which uses a deep neural network for vision-based
+real-time obstacle detection and avoidance. More recently, researchers
+are investigating DNN based end-to-end control of
+cars~\cite{Bojarski2016} and other robots. It is expected that more
+DNNs based Artifical Intelligence workloads may be used in future
+autonomous vehicles.
 
-% requirements:
-%   (1) real-time processing.
-%   (2) cost
-%   (3) safety
-%   (4) SWaP
-%
+% need testbeds.
+% but challenges 
+%   (1) real-time processing (2) cost (3) safety (4) SWaP
+Developing and testing DNN models for autonomous vehicles is
+however, challenging for a variety of reasons. The first challegen is
+finding a suitable computing platform. It is generally known that DNN
+models are computationally demainding. Furtheremore, because many of
+the AI workloads, such as models for end-to-end control or perception,
+have strict real-time requirements as cars have to interact with the
+physical world in real-time. On the other, the computing platform must
+also satisfy cost, size, weight, and power constraints. 
+The second challenge is preparing a
+physical car platform to collect data and test the software. While
+instrumenting a real-car would be most realistic, as many
+companies such as google and uber are doing, but doing it is costly
+and would pose safety concerns. 
 % our goals:
 %   (1) build a safe and low cost testbed but utilizing the
 %       state-of-the-art AI technologies: DNN based end-to-end control
@@ -35,28 +46,31 @@ explored in recent years~\cite{Bojarski2016}.
 %       (end-to-end control, perception).
 %       - Can apsberry pi handle AI workloads?
 %       - Can embedded GPU do better? How much?
-There are several challenges in studying autonomous vehicles.
+Therefore, there is a strong need for low-cost testbeds that still
+employs state-of-the-art AI technologies and are capable of executing
+real-time autonomous vehicle operations.
 
-it is necessary that all real-time operations are successfully
-performed prior to their deadlines. This requires that the AV platform
-be capable of completing all necessary computations in a timely
-manner, while maintaining a high level of accuracy. Consequently, the
-cost of creating a platform capable of self-driving can be relatively
-high, especially in the current cost-sensitive climate of the
-automotive industry \cite{}. The overall price for an autonomous
-vehicle platform currently acts as a bottleneck, especially from an
-academic standpoint, where cost is an important factor. For many
-researchers and students, the charge associated with autonomous
-vehicle research is a significant barrier. These same parties may also
-be deterred from participating in autonomous vehicle research due to
-the potential for their developed platforms to break in the
-experimental process. The idea of building one relatively expensive
-platform may not be too daunting for some, but the notion of
-potentially making multiple identical platforms in case of accidents
-may be overwhelming. Toward this end, we explore the possibility of
-developing a low-cost system that still employs state-of-the-art AI
-technologies and is capable of executing real-time autonomous vehicle
-operations. 
+%% it is necessary that all real-time operations are successfully
+%% performed prior to their deadlines. This requires that the AV platform
+%% be capable of completing all necessary computations in a timely
+%% manner, while maintaining a high level of accuracy. Consequently, the
+%% cost of creating a platform capable of self-driving can be relatively
+%% high, especially in the current cost-sensitive climate of the
+%% automotive industry \cite{}. The overall price for an autonomous
+%% vehicle platform currently acts as a bottleneck, especially from an
+%% academic standpoint, where cost is an important factor. For many
+%% researchers and students, the charge associated with autonomous
+%% vehicle research is a significant barrier. These same parties may also
+%% be deterred from participating in autonomous vehicle research due to
+%% the potential for their developed platforms to break in the
+%% experimental process. The idea of building one relatively expensive
+%% platform may not be too daunting for some, but the notion of
+%% potentially making multiple identical platforms in case of accidents
+%% may be overwhelming.
+%% Toward this end, we explore the possibility of
+%% developing a low-cost system that still employs state-of-the-art AI
+%% technologies and is capable of executing real-time autonomous vehicle
+%% operations. 
 
 % DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
