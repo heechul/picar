@@ -59,8 +59,8 @@ convolutional neural network (CNN) based end-to-end control system,
 which was developed for a real self-driving car, NVIDIA
 DAVE-2~\cite{Bojarski2016}, and use the same moethodology on a
 smaller, safer and less costly setup. In developing the testbed, our
-goals are (1) analyze real-time issues in DNN based end-to-end
-control; (2) evalute real-time performance of contemporarly embedded
+goals are (1) to analyze real-time issues in DNN based end-to-end
+control; (2) to evalute real-time performance of contemporarly embedded
 multicore platforms for the AI workloads.
 
 % DeepPicar introduction
@@ -68,7 +68,7 @@ In this paper, we present DeepPicar, a low-cost autonomous car
 platform for research and education. From hardware perspective, 
 DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
 computer, a web camera and a RC car, all of which are affordable
-components (less than \$200 in total).
+components (less than \$100 in total).
 The DeepPicar, however, employs state-of-the-art AI
 techonologies, including a vision-based end-to-end control system that
 utilizes a deep convolutional nueral network (CNN).
@@ -79,9 +79,8 @@ The network has 9 layers, about 27 million connections
 and 250 thousand parameters (weights).
 The network architecture is identifical to that of NVIDIA's DAVE-2
 self-driving car~\cite{Bojarski2016}, which uses much more powerful
-computer (NVIDIA's automotive specialized DRIV-PX
-computer~\cite{drivepx}) than the Raspberry Pi~3.
-We chose to use the Pi 3 not only because of its
+computer (Drive PX computer~\cite{drivepx}) than Raspberry Pi~3.
+We chose to use Pi 3 not only because of its
 affordability but also because it is representative
 of today's mainstream low-end embedded multicore platforms, found in
 smartphones and other embedded devices.
@@ -96,8 +95,8 @@ smartphones and other embedded devices.
 %% powerful but also more expensive.
 
 % how we trained (maybe moved to a later section)
-We follow the standard supervised learning methodology to train the
-system to follow tracks on the ground. We collect data for
+We apply a standard imitation learning methodology to train the cat to
+follow tracks on the ground. We collect data for 
 taining and validation by manually  
 controlling the RC car and recording the vision (from the webcam
 mounted on the RC-car) and the human control inputs. We then train the
