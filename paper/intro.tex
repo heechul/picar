@@ -9,68 +9,59 @@
 %
 Autonomous cars have been a topic of increasing interest in recent
 years as many companies are actively developing related hardware
-and software technologies for ever more autonomous decision making
-capabilities---ultimately fully autonomous driving capability without
+and software technologies toward fully autonomous driving capability without
 any human intervention. Deep neural networks (DNNs) have been
 sucessfully applied in various perception and control tasks in 
 recent years, and they are important workloads for autonomous vehicles
-as well. For example, Tesla Model S was known to use a specialized SoC
-(MobileEye EyeQ), which uses a deep neural network for vision-based
+as well. For example, Tesla Model S was known to use a specialized
+chip (MobileEye EyeQ), which uses a deep neural network for vision-based
 real-time obstacle detection and avoidance. More recently, researchers
 are investigating DNN based end-to-end control of
 cars~\cite{Bojarski2016} and other robots. It is expected that more
-DNNs based Artifical Intelligence workloads may be used in future
+DNN based Artifical Intelligence workloads may be used in future
 autonomous vehicles.
 
-% need testbeds.
-% but challenges 
-%   (1) real-time processing (2) cost (3) safety (4) SWaP
-Developing and testing DNN models for autonomous vehicles is
-however, challenging for a variety of reasons. The first challegen is
-finding a suitable computing platform. It is generally known that DNN
-models are computationally demainding. Furtheremore, because many of
-the AI workloads, such as models for end-to-end control or perception,
-have strict real-time requirements as cars have to interact with the
-physical world in real-time. On the other, the computing platform must
-also satisfy cost, size, weight, and power constraints. 
-The second challenge is preparing a
-physical car platform to collect data and test the software. While
-instrumenting a real-car would be most realistic, as many
-companies such as google and uber are doing, but doing it is costly
-and would pose safety concerns. 
-% our goals:
-%   (1) build a safe and low cost testbed but utilizing the
-%       state-of-the-art AI technologies: DNN based end-to-end control
-%   (2) analyze real-time issues in DNN based end-to-end control.
-%   (3) evalute popular embedded platforms for the AI workloads
-%       (end-to-end control, perception).
-%       - Can apsberry pi handle AI workloads?
-%       - Can embedded GPU do better? How much?
-Therefore, there is a strong need for low-cost testbeds that still
-employs state-of-the-art AI technologies and are capable of executing
-real-time autonomous vehicle operations.
+% big problem
+Executing these AI workloads on a embedded computing platform that can
+be used in a car poses several additional challenges. First, many AI
+workloads in vehicles are computationaly demanding and have strict
+real-time requirements. For example, latency in a vision-based object
+detection task may directly linked to safety of the vehicle. This
+requires a high computing capacity as well as means to guaranteeing
+the timings. On the other hand, the computing hardware platform must
+also satisfy cost, size, weight, and power constraints, which require
+highly efficient computing platform. These two conflicting
+requirements  complicate the platform selection process as observed in
+~\cite{Otterness2017}, which evaluated vision workloads on
+NVIDIA's Tegra TX1 platform.
+%% For example, while today's self-driving car
+%% prototype equip more \$100,000 
+%% of computers and sensors~\cite{juliussen2014emerging}, a study
+%% found that aveage consumers are willing to pay much less amount of
+%% extra cost for a self-driving capability~\cite{Daziano2017}.
+%% https://qz.com/924212/what-it-really-costs-to-turn-a-car-into-a-self-driving-vehicle/ 
 
-%% it is necessary that all real-time operations are successfully
-%% performed prior to their deadlines. This requires that the AV platform
-%% be capable of completing all necessary computations in a timely
-%% manner, while maintaining a high level of accuracy. Consequently, the
-%% cost of creating a platform capable of self-driving can be relatively
-%% high, especially in the current cost-sensitive climate of the
-%% automotive industry \cite{}. The overall price for an autonomous
-%% vehicle platform currently acts as a bottleneck, especially from an
-%% academic standpoint, where cost is an important factor. For many
-%% researchers and students, the charge associated with autonomous
-%% vehicle research is a significant barrier. These same parties may also
-%% be deterred from participating in autonomous vehicle research due to
-%% the potential for their developed platforms to break in the
-%% experimental process. The idea of building one relatively expensive
-%% platform may not be too daunting for some, but the notion of
-%% potentially making multiple identical platforms in case of accidents
-%% may be overwhelming.
-%% Toward this end, we explore the possibility of
-%% developing a low-cost system that still employs state-of-the-art AI
-%% technologies and is capable of executing real-time autonomous vehicle
-%% operations. 
+% related work and remaing problems
+To understand what kind of computing hardware is needed for AI
+workloads, we need a testbed and realistic workloads. While a real car
+testbed would be most ideal, it is not only highly expensive but also
+poses serious safety concerns that hinder development and exploration.
+Therefore, there is a strong need for safer and less costly testbeds
+that still employ state-of-the-art AI technologies. There are already
+several relatively inexpensive RC-car based testbeds, such as MIT
+RaceCar~\cite{shin2017project} and UPenn's F1$/$10 racecar~\cite{upennf1tenth}.
+However, these RC-car testbeds still cost more than \$3,000.
+
+% our goals
+Instead, we want to build a low cost testbed that still employs the
+state-of-the art AI technologies. Specifically, we focus on a deep
+convolutional neural network (CNN) based end-to-end control system,
+which was developed for a real self-driving car, NVIDIA
+DAVE-2~\cite{Bojarski2016}, and use the same moethodology on a
+smaller, safer and less costly setup. In developing the testbed, our
+goals are (1) analyze real-time issues in DNN based end-to-end
+control; (2) evalute real-time performance of contemporarly embedded
+multicore platforms for the AI workloads.
 
 % DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
@@ -84,35 +75,43 @@ utilizes a deep convolutional nueral network (CNN).
 The network receives an image frame from a single forward
 looking camera as input and generates a predicted steering angle
 value as output at each control period in \emph{real-time}. 
-The network is \emph{deep} as it has 9 layers, about 27 million connections
+The network has 9 layers, about 27 million connections
 and 250 thousand parameters (weights).
-The network architecture is in fact identifical to the one
-used in NVIDIA's DAVE-2 self-driving car~\cite{Bojarski2016}. Other
-than the obvious difference in scale (RC car vs. real car) the only
-differences between the two systems---from the computing
-perspective---are that our system is implemented in 
-TensorFlow~\cite{abadi2016tensorflow} and runs on a 
-Raspberry Pi 3 whereas NVIDIA's DAVE-2 systems is implemented in Torch
-7~\cite{collobert2011torch7} and runs on a Drive PX computer (NVIDIA's
-automotive specialized computing system~\cite{drivepx}), which is more
-powerful but also more expensive.
+The network architecture is identifical to that of NVIDIA's DAVE-2
+self-driving car~\cite{Bojarski2016}, which uses much more powerful
+computer (NVIDIA's automotive specialized DRIV-PX
+computer~\cite{drivepx}) than the Raspberry Pi~3.
+We chose to use the Pi 3 not only because of its
+affordability but also because it is representative
+of today's mainstream low-end multicore platforms, found in
+smartphones and other embedded devices.
 
-% how we trained and tested (in terms of network performance)
+%% Other than the difference in scale (RC car vs. real car), the only other
+%% differences between the two systems---from the computing
+%% perspective---are that our system is implemented in
+%% TensorFlow~\cite{abadi2016tensorflow} and runs on a Raspberry Pi 3
+%% whereas NVIDIA's DAVE-2 systems is implemented in Torch
+%% 7~\cite{collobert2011torch7} and runs on a Drive PX computer (NVIDIA's
+%% automotive specialized computing system~\cite{drivepx}), which is more
+%% powerful but also more expensive.
+
+% how we trained (maybe moved to a later section)
 We follow the standard supervised learning methodology to train the
-system with a goal of following lanes on the ground, mimicking real
-roads. We first collected data for taining and validation by manually 
+system to follow tracks on the ground. We collect data for
+taining and validation by manually  
 controlling the RC car and recording the vision (from the webcam
 mounted on the RC-car) and the human control inputs. We then train the
 network offline using the collected data on a desktop computer, which
 equips a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
 back to the Raspberry Pi, which is then used to perform interference
 operations---locally on the Pi---in the car's main control loop in
-real-time. For real-time control, each \emph{inference} operation must
+real-time. For real-time control, each inference operation must
 be completed within the desired control period. (e.g., 50ms period for
 20Hz control frequency.)
-
 % how we evaluated (in terms real-time performance)
+
 % what are our findings?
+\fixme{TBD: Summary of our findings}
 
 % contributions
 The {\bf contributions} of this paper are as follows:
@@ -127,10 +126,6 @@ The {\bf contributions} of this paper are as follows:
     vision-based autnomous driving.
 \end{itemize}
 
-%% We chose to use a Raspberry Pi 3 not only because of its
-%% affordability and availability but also because it is representative
-%% of today's mainstream low-end multicore processors, found in
-%% smartphones, tables and other embedded devices.
 %% The DeepPicar is comprised of a Raspberry
 %% Pi 3 Model B, a camera and a low cost RC car.
 
@@ -161,3 +156,27 @@ DNN inferencing in Section V. Section VI reviews the online/offline
 training done with the platform, with an evaluation given in Section
 VII. Section VIII gives a discussion of related works, and the paper
 finishes with conclusions in Section IX. 
+
+
+%% it is necessary that all real-time operations are successfully
+%% performed prior to their deadlines. This requires that the AV platform
+%% be capable of completing all necessary computations in a timely
+%% manner, while maintaining a high level of accuracy. Consequently, the
+%% cost of creating a platform capable of self-driving can be relatively
+%% high, especially in the current cost-sensitive climate of the
+%% automotive industry \cite{}. The overall price for an autonomous
+%% vehicle platform currently acts as a bottleneck, especially from an
+%% academic standpoint, where cost is an important factor. For many
+%% researchers and students, the charge associated with autonomous
+%% vehicle research is a significant barrier. These same parties may also
+%% be deterred from participating in autonomous vehicle research due to
+%% the potential for their developed platforms to break in the
+%% experimental process. The idea of building one relatively expensive
+%% platform may not be too daunting for some, but the notion of
+%% potentially making multiple identical platforms in case of accidents
+%% may be overwhelming.
+%% Toward this end, we explore the possibility of
+%% developing a low-cost system that still employs state-of-the-art AI
+%% technologies and is capable of executing real-time autonomous vehicle
+%% operations. 
+
