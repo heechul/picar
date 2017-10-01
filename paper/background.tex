@@ -3,7 +3,7 @@
 In this section, we provide background on the application of deep
 learning in robotics, particularly autonomous vehicles.
 
-\subsection{Deep End-to-End Learning in Autonomous Vehicles}
+\subsection{End-to-End Deep Learning for Autonomous Vehicles}
 
 %% - explosion of AI
 %% - in particular, application of DNN in perception and control of robotics systems.
@@ -42,10 +42,13 @@ produce steering control commands bypassing all intermediary steps and
 hand-written rules in conventional robotics control approach. The
 NVIDIA's latest effort reports that their trained CNN successfully
 self-drive their modified cars in public roads without human
-intervention~\cite{Bojarski2016}.
+intervention~\cite{Bojarski2016}. 
+\fixme{Discuss the differences between Inferencing and
+  Training. Real-time is most needed for inferencing operations.}
 
 %% \cite{Levine2016}: ``In this paper, we aim to answer
-%% the following question: does training the perception and control systems jointly end-toend
+%% the following question: does training the perception and control
+%% systems jointly end-toend 
 %% provide better performance than training each component separately?''
 
 %% \cite{Bojarski2016} nvidia paper
@@ -63,7 +66,7 @@ intervention~\cite{Bojarski2016}.
 %% https://github.com/mit-racecar
 %% https://mit-racecar.github.io/
 
-\subsection{Embedded Multicore Single-Board-Computers}
+\subsection{Embedded Computing Platforms for Real-Time Inferencing}
 
 Recent successes in AI, including NVIDIA's DAVE-2 showing, are due
 in large part to the increased computing performance,
@@ -77,8 +80,8 @@ Because of these reasons, finding a right computing platform is non-trivial
 task, one that requires deep understanding of the workloads and their
 characteristics as well as the hardware platform that executes the
 workloads. It is further complicated by the heterogeneity of available
-computing hardware resources---multicore, GPU, DSP and other specialized
-hardware accelerators.
+computing hardware resources---multicore, GPU, DSP, specialized
+hardware accelerators, etc.
 
 The primary objective of this study are (1) to understand the necessary
 computing performance for applying AI technology based robotics systems, and
