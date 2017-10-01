@@ -1,7 +1,7 @@
 \section{Background} \label{sec:background}
 
 In this section, we provide background on the application of deep
-learning in robotics, particulary autonomous vehicles.
+learning in robotics, particularly autonomous vehicles.
 
 \subsection{Deep End-to-End Learning in Autonomous Vehicles}
 
@@ -20,7 +20,7 @@ Recently, researchers are exploring another approach that dramatically
 simplifies the standard control pipeline by applying deep neural
 networks to directly produce control outputs from senor
 inputs~\cite{Levine2016}. Figure~\ref{fig:end-to-end-control}
-shows the differences between two two approaches.
+shows the differences between two approaches.
 
 \begin{figure}[h]
   \centering
@@ -40,7 +40,7 @@ project~\cite{Bojarski2016}, using 9 layer CNN. In all these projects,
 the neural network models take raw image pixels as input and directly
 produce steering control commands bypassing all intermediary steps and
 hand-written rules in conventional robotics control approach. The
-NVIDIA's latest effort reports that their trained CNN successfully 
+NVIDIA's latest effort reports that their trained CNN successfully
 self-drive their modified cars in public roads without human
 intervention~\cite{Bojarski2016}.
 
@@ -56,7 +56,7 @@ intervention~\cite{Bojarski2016}.
 %% marking detec- tion, path planning, and control, our end-to-end system
 %% optimizes all processing steps simultaneously. We''
 
-%% UPenn's f1/10 BOM: $3,628.37	
+%% UPenn's f1/10 BOM: $3,628.37
 %% http://f1tenth.org/
 %% http://selfdrivingcars.mit.edu/
 %% http://fast.scripts.mit.edu/racecar/
@@ -65,24 +65,25 @@ intervention~\cite{Bojarski2016}.
 
 \subsection{Embedded Multicore Single-Board-Computers}
 
-Recent successes in AI, including the NVIDIA's DAVE-2 showing, are due
-in large part to the increased computing capability of computers,
-which affored researchers to train ever deeper networks with high
-accuracy. In automotive systems, 
+Recent successes in AI, including NVIDIA's DAVE-2 showing, are due
+in large part to the increased computing performance,
+which afforded researchers to train and use ever deeper neural networks with
+high accuracy. For practical, a computer platform in an automotive vehicle must
+satisfy two often conflicting goals. One the one hand, the platform must provide
+enough computing capacity for real-time processing of computationally expensive
+AI workloads. On the other hand, the platform must also satisfy various
+constrains such as cost, size, weight, and power consumption limits.
+Because of these reasons, finding a right computing platform is non-trivial
+task, one that requires deep understanding of the workloads and their
+characteristics as well as the hardware platform that executes the
+workloads. It is further complicated by the heterogeneity of available
+computing hardware resources---multicore, GPU, DSP and other specialized
+hardware accelerators.
 
-- computing has been a obstacle.
-- performance, but also constraints size, weight, and power as well as
-cost senstive nature of industries including automtive.
-- many new embeded computing platforms emerged: affordable and
-powerful. raspberry pi, nvidia's embedded platforms tout their
-superiority in GPU based acceleration of the AI tasks.
-
-Our primary objective of this study are
-- to understand the necessary computing performance for applying AI
-technology based robotics systems, and 
-- what kind of computing architecture and runtime supports
+The primary objective of this study are (1) to understand the necessary
+computing performance for applying AI technology based robotics systems, and
+(2) what kind of computing architecture and runtime supports
 are most appropriate for such workload.
-
 Toward to achieve the two goals, we implement a low-cost autonomous
 car platform as a case study, as we will explain in the following
-section. 
+section.
