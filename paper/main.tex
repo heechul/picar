@@ -106,6 +106,22 @@ Abstract goes here.
 \end{figure}
 
 \subsection{Platform Components}
+
+\begin{table*}[h]
+  \centering
+  \begin{tabular} {| l | l | l | l | l |}
+    \hline
+    \textbf{Platform} & \textbf{Picar} & \textbf{F1/10} & \textbf{NVIDIA DAVE-2}\\ \hline 
+    Car & Mini RC Car (\$10) & Traxxas 1/10th car platform (\$299.97) & TBD\\ \hline
+    Embedded system & Raspberry Pi 3 Model B (\$35.00) & NVIDIA Jetson TK1 (\$192.99) & NVIDIA DRIVE PX \\ \hline
+    CPU & Cortex A-53 quad core & Cortex A-15 quad core & 8x Cortex A-57 quad core, 8x Cortex A-53 quad core \\ \hline
+    Camera & Playstation Eye camera (\$6.99) & ZED camera (\$449.00) & 3x cameras\\ \hline
+    Power Supply & Mobile battery (\$5.99) & Energizer battery pack (\$159.00) & TBD\\
+    \hline
+  \end{tabular}
+  \caption{Comparison of components used in autonomous vehicle platforms.}
+\end{table*}
+
 We employ a small and relatively inexpensive RC car that is capable of performing basic automotive 
 operations. However, the car we use doesn't replicate the capabilities of other autonomous vehicle 
 platforms, as it is more simplistic in nature. Notably, the RC car we use only has three possible 
@@ -122,6 +138,13 @@ platform. While humans are able to see environmental changes in real-time, the s
 cameras since there is a delay between when frame capture by the camera, and when it is read by the 
 Raspberry Pi 3. As a result, it is possible for the model to be given an input frame that is different 
 from the real world, thus impacting the performance of the Picar.
+
+Compared to other existing autonomous vehicle platforms, such as the F1/10 and NVIDIA DAVE-2, the Picar 
+platform is capable of performing the same operations while using more cost inexpensive components. As 
+shown by Table 1, the components selected for the Picar all cost considerably less than the other 
+platforms when focusing on the common components (camera, power supply, etc.). Including the other 
+components used in the F1/10 and DAVE-2, such as the additional sensors employed by both, the difference 
+in cost would be even greater.
 
 \subsection{Model Training}
 In order to operate the Picar as an autonomous vehicle, we utilize the DeepTesla library, which is 
