@@ -138,6 +138,42 @@ multimodel tests. On average, the 2 model test saw models miss their deadline by
 model test was worse as each model went over their deadlines by 27-29 ms. As a result, it can be 
 ascertained that, if a WCET of 50 ms is required, DeepPicar would not be able to perform as necessary.
 
+\subsection{Benchmark Performance}
+In order to determine how cache misses affects the performance of the DeepPicar, we test its ability by 
+running synthetic benchmarks concurrently with the model. In each experiment, we run a single model on a 
+number of cores, and a synthetic benchmark on the remaining idle cores. The results of each test can be 
+seen in Table VII.
+
+\begin{table}[h]
+\centering
+  \begin{tabular} {| l | l | l | l | l | l |}
+  \hline
+  \textbf{num cores} & 1 & 2 & 3 \\ \hline
+  \textbf{mean} & 562.33 & 391.98 & 98.05 \\ \hline
+  \textbf{L1 refs} & 3.16E+10 & 3.17E+10 & 3.06E+10 \\ \hline
+  \textbf{L1 misses} & 5.41E+08 & 5.35E+08 & 4.98E+08 \\ \hline
+  \textbf{L1 miss \%} & 1.71 & 1.69 & 1.62 \\ \hline
+  \textbf{L2 refs} & 3.49E+09 & 3.23E+09 & 3.21E+09 \\ \hline
+  \textbf{L2 misses} & 8.05E+08 & 7.54E+08 & 4.98E+08 \\ \hline
+  \textbf{L2 miss \%} & 23.05 & 23.37 & 15.51 \\ 
+  \hline
+  \end{tabular}
+  \caption{Real-time performance of the DeepPicar when benchmarks are run concurrently with the model.}
+\end{table}
+
+The presence of the benchmark(s) had a noticable effect on the DeepPicar, with all tests showing 
+increases in inferencing operations. The least change happened when the model was run on 3 cores, and a 
+single benchmark was run on the final core. Even with a slight increase in the number of L2 cache 
+misses, inferencing was able to be completed in under 100 ms. The other tests, however, showed dramatic 
+changes when the model was run on 1 and 2 cores. In both instances, L2 misses rise to $\sim$23\% of all 
+references. The additional benchmark in the 1 core test was even more detrimental as the average 
+inferencing time was at least 150 ms longer than when the model used 2 cores. 
+
+With the introduction of synthetic benchmarks, the DeepPicar failed to comply with the 50 ms WCET across 
+all tests run. Even in the best case, inferencing operations take twice as long as the deadline to 
+complete. As a result, if benchmarks were required to run during autonomous operation, the DeepPicar 
+wouldn't be capable of meeting its deadlines.
+
 \subsection{Summary}
 We found that the DeepPicar is capable of successfully completing all necessary inferencing 
 operations within a given deadline of 50 ms. Between these operations, it was discovered that the 
@@ -155,7 +191,8 @@ However, the DeepPicar was shown to be capable of handling other potential WCETs
 deadline, the capabilities of DeepPicar as an autonomous vehicle platform would be greatly increased. 
 For example, if tested with a deadline of 66.67 ms, or 15 fps, the platform would have passed several 
 of the experiments performed. In actuality, the DeepPicar would have only been unsatisfactory in the 
-4 model test where it would have missed the deadlines by $\sim$10 ms.
+4 model test where it would have missed the deadlines by $\sim$10 ms, and the benchmark tests, where 
+it would still miss by $\sim$33 ms at best.
 
 \subsection{Performance Requirements}
 In the utilization of the Raspberry Pi 3 in our platform, there are a few factors that need to be 
