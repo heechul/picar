@@ -7,7 +7,7 @@ identification=$board
 identification+="_"
 identification+=$timestamp
 
-mkdir -p logs/test-model/test-model/$identification
+mkdir -p logs/test-model/$identification
 echo "This test will take approximately 45 minutes to complete"
 echo "The output files can be found in: logs/test-model/$identification"
 
@@ -48,20 +48,20 @@ echo end dual-core
 sleep 300
 
 echo 2-parallel-dual-core
-perf stat -o logs/test-model/$timestamp/2-dual-core_cpu01_perf.txt taskset -c 0,1 python test-model.py 2 > logs/test-model/$timestamp/2-dual-core_cpu01.txt &
-perf stat -o logs/test-model/$timestamp/2-dual-core_cpu23_perf.txt taskset -c 2,3 python test-model.py 2 > logs/test-model/$timestamp/2-dual-core_cpu23.txt &
+perf stat -o logs/test-model/$identification/2-dual-core_cpu01_perf.txt taskset -c 0,1 python test-model.py 2 > logs/test-model/$identification/2-dual-core_cpu01.txt &
+perf stat -o logs/test-model/$identification/2-dual-core_cpu23_perf.txt taskset -c 2,3 python test-model.py 2 > logs/test-model/$identification/2-dual-core_cpu23.txt &
 wait
 echo end 2-parallel-dual-core
 sleep 300
 
 echo tri-core
-perf stat -o logs/test-model/$timestamp/tri-core_perf.txt taskset -c 0,1,2 python test-model.py 3 > logs/test-model/$timestamp/tri-core.txt &
+perf stat -o logs/test-model/$identification/tri-core_perf.txt taskset -c 0,1,2 python test-model.py 3 > logs/test-model/$identification/tri-core.txt &
 wait
 echo end tri-core
 sleep 300
 
 echo quad-core
-perf stat -o logs/test-model/$timestamp/quad-core_perf.txt taskset -c 0,1,2,3 python test-model.py 4 > logs/test-model/$timestamp/quad-core.txt &
+perf stat -o logs/test-model/$identification/quad-core_perf.txt taskset -c 0,1,2,3 python test-model.py 4 > logs/test-model/$identification/quad-core.txt &
 wait
 echo end quad-core
 sleep 300

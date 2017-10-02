@@ -36,7 +36,7 @@ sleep 300
 
 echo 1-single-core_1-dual-core
 ./bandwidth -a write -m 16384 -t 10000 -c 2 &
-perf stat -o logs/test-model-and-benchmark/$timestamp/1-sc-bench_1-dc-model_cpu01_perf.txt taskset -c 0,1 python test-model.py 2 > logs/test-model-and-benchmark/$timestamp/1-sc-bench_1-dc-model_cpu01.txt
+perf stat -o logs/test-model-and-benchmark/$identification/1-sc-bench_1-dc-model_cpu01_perf.txt taskset -c 0,1 python test-model.py 2 > logs/test-model-and-benchmark/$identification/1-sc-bench_1-dc-model_cpu01.txt
 jobs -p | xargs kill
 echo end 2-parallel-dual-core
 sleep 300
@@ -44,14 +44,14 @@ sleep 300
 echo 2-parallel-dual-core
 ./bandwidth -a write -m 16384 -t 10000 -c 2 &
 ./bandwidth -a write -m 16384 -t 10000 -c 3 &
-perf stat -o logs/test-model-and-benchmark/$timestamp/2-sc-bench_1-dc-model_cpu01_perf.txt taskset -c 0,1 python test-model.py 2 > logs/test-model-and-benchmark/$timestamp/2-sc-bench_1-dc-model_cpu01.txt
+perf stat -o logs/test-model-and-benchmark/$identification/2-sc-bench_1-dc-model_cpu01_perf.txt taskset -c 0,1 python test-model.py 2 > logs/test-model-and-benchmark/$identification/2-sc-bench_1-dc-model_cpu01.txt
 jobs -p | xargs kill
 echo end 2-parallel-dual-core
 sleep 300
 
 echo tri-core
 ./bandwidth -a write -m 16384 -t 10000 -c 3 &
-perf stat -o logs/test-model-and-benchmark/$timestamp/1-sc-bench_1-tc-model_cpu012_perf.txt taskset -c 0,1,2 python test-model.py 3 > logs/test-model-and-benchmark/$timestamp/1-sc-bench_1-dc-model_cpu012.txt
+perf stat -o logs/test-model-and-benchmark/$identifcation/1-sc-bench_1-tc-model_cpu012_perf.txt taskset -c 0,1,2 python test-model.py 3 > logs/test-model-and-benchmark/$identification/1-sc-bench_1-dc-model_cpu012.txt
 jobs -p | xargs kill
 echo end tri-core
 
