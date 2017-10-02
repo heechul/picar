@@ -26,7 +26,7 @@ shows the differences between two approaches.
   \centering
   \includegraphics[width=.5\textwidth]{figs/endtoend_redrawn}
   \caption{Standard robotics control vs. DNN based end-to-end
-    control. \fixme{figure must be redrawn}}
+    control. Adopted from ~\cite{Levine2017cs294}.}
   \label{fig:end-to-end-control}
 \end{figure}
 
@@ -42,9 +42,23 @@ produce steering control commands bypassing all intermediary steps and
 hand-written rules in conventional robotics control approach. The
 NVIDIA's latest effort reports that their trained CNN successfully
 self-drive their modified cars in public roads without human
-intervention~\cite{Bojarski2016}. 
-\fixme{Discuss the differences between Inferencing and
-  Training. Real-time is most needed for inferencing operations.}
+intervention~\cite{Bojarski2016}.
+
+Using deep nueral networks involves two distinct
+phases~\cite{NVIDIA2015}. The first
+phase is \emph{training} during which the weights of the network is
+incrementally updated by backpropating errors it sees from the
+training examples. Once the network is trained---i.e., the weights of
+the network minimize errors in the training examples---the next phase
+is \emph{inferencing} during which unseen data is fed to the network
+as input to produce predicted output (e.g., predicted image
+classification). In general, the training phase is most compute
+intensive and requires high throughput, which is generally not
+available on embedded platforms. The inferencing phase, on the
+other hand, is relatively less compute intensive and latency becomes
+as important, if not more, as compute throughput because many
+use-cases have strict real-time requirements (e.g., search query
+latency).
 
 %% \cite{Levine2016}: ``In this paper, we aim to answer
 %% the following question: does training the perception and control
@@ -67,26 +81,41 @@ intervention~\cite{Bojarski2016}.
 %% https://mit-racecar.github.io/
 
 \subsection{Embedded Computing Platforms for Real-Time Inferencing}
-
-Recent successes in AI, including NVIDIA's DAVE-2 showing, are due
-in large part to the increased computing performance,
-which afforded researchers to train and use ever deeper neural networks with
-high accuracy. For practical, a computer platform in an automotive vehicle must
-satisfy two often conflicting goals. One the one hand, the platform must provide
-enough computing capacity for real-time processing of computationally expensive
-AI workloads. On the other hand, the platform must also satisfy various
+Real-time embedded systems, such as an autonomous vehicle, present
+unique challenges for deep learning as the computing platforms of such
+systems must satisfy two often conflicting goals~\cite{Otterness2017}:
+%% Recent successes in AI, including NVIDIA's DAVE-2 showing, are due
+%% in large part to the increased computing performance,
+%% which afforded researchers to train and use ever deeper neural networks with
+%% high accuracy.
+%% For practical applications, the computer platform in an
+%% autonomous vehicle must satisfy two often conflicting goals:
+On the one hand, the platform must provide 
+enough computing capacity for real-time processing of computationally
+expensive AI workloads (deep neural networks);
+On the other hand, the platform must also satisfy various
 constrains such as cost, size, weight, and power consumption limits.
-Because of these reasons, finding a right computing platform is non-trivial
-task, one that requires deep understanding of the workloads and their
-characteristics as well as the hardware platform that executes the
-workloads. It is further complicated by the heterogeneity of available
-computing hardware resources---multicore, GPU, DSP, specialized
-hardware accelerators, etc.
 
-The primary objective of this study are (1) to understand the necessary
-computing performance for applying AI technology based robotics systems, and
-(2) what kind of computing architecture and runtime supports
-are most appropriate for such workload.
-Toward to achieve the two goals, we implement a low-cost autonomous
-car platform as a case study, as we will explain in the following
-section.
+Accelerating AI workloads, especially inferencing
+operations, has gotten a lot of attentions from academia and industry
+in recent years as applications of deep learning are broadening to
+areas real-time embedded systems such as autonomous vehicles. These
+efforts include development of various heterogeneous architecture
+based system-on-a-chips (SOCs) that may include multiple cores, GPU,
+DSP, FPGA and neural network optimized ASIC hardware~\cite{Jouppi2017}.
+Consolidating multiple tasks on SoCs with lots of shared hardware
+resources while guaranteeing real-time performance is also an active
+research area, which is orthogonal to improving raw
+performance. Consolidation is necessary for efficiency but unmanaged 
+interference can nullify the benefits of consolidation~\cite{Kim2016}.
+Because of these reasons, finding a right computing platform is
+non-trivial task, one that requires deep understanding of the
+workloads and the hardware platform that executes the workloads.
+
+The primary objectives of this study are (1) to understand the
+necessary computing performance for applying AI technology based
+robotics systems, and (2) what kind of computing architecture and
+runtime supports are most appropriate for such workload. Toward to
+achieve these goals, we implement a low-cost autonomous car platform
+as a case-study and systematically conduct experiments, as we will 
+describe in the subsequent sections.
