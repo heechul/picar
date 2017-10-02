@@ -86,92 +86,17 @@ University of Kansas, USA\\
 \maketitle
 \thispagestyle{empty}
 \begin{abstract}
-
 Abstract goes here.
-
 \end{abstract}
 
 %-------------------------------------------------------------------------
-
-\section{Introduction}
-Autonomous vehicles have been a topic of increasing interest in many
-disciplines in recent years. Due to the nature of autonomous vehicles,
-it is necessary that all real-time operations are successfully
-performed prior to their deadlines. This requires that the AV platform
-be capable of completing all necessary computations in a timely
-manner, while maintaining a high level of accuracy. Consequently, the
-cost of creating a platform capable of self-driving can be relatively
-high, especially in the current cost-sensitive climate of the
-automotive industry \cite{}. The overall price for an autonomous
-vehicle platform currently acts as a bottleneck, especially from an
-academic standpoint, where cost is an important factor. For many
-researchers and students, the charge associated with autonomous
-vehicle research is a significant barrier. These same parties may also
-be deterred from participating in autonomous vehicle research due to
-the potential for their developed platforms to break in the
-experimental process. The idea of building one relatively expensive
-platform may not be too daunting for some, but the notion of
-potentially making multiple identical platforms in case of accidents
-may be overwhelming. Toward this end, we explore the possibility of
-developing a low-cost system that still employs state-of-the-art AI
-technologies and is capable of executing real-time autonomous vehicle
-operations. 
-	
-In this paper, we present DeepPicar, or Picar for short, a low-cost
-autonomous car platform that can be utilized in research and
-education. We follow the same methodology found in other platforms,
-such as NVIDIA’s end-to-end vision based control \cite{}, but
-implement it on a smaller scale. The Picar is comprised of a Raspberry
-Pi 3 Model B, a camera and a low cost RC car. By creating and using
-the Picar platform, we seek to accomplish the following three
-goals. First, the significant reduction of the overall cost required
-would make autonomous driving research more accessible to interested
-individuals/parties. Furthermore, it would remove the concerns of
-creating replacement platforms as each part, or the entire system,
-could be replaced relatively inexpensively. Second, the utilization of
-a more cost-efficient platform would allow for a better understanding
-of the performance requirements necessary for efficiently operating
-autonomous vehicles. Finally, we strive to achieve the ability to
-compare the real-time performance of multiple embedded computing
-platforms. 
-
-We display the efficacy of the Picar by training and testing the
-DeepTesla DNN \cite{} in a custom-made environment. We find that the
-Picar is capable of consistently accomplishing all real-time
-operations required for autonomous driving in a 50 millisecond frame. 
-
-The remaining sections of the paper are as follows: Section II gives
-an overview of the platform, including the high-level system and the
-methods used for training and inference. Section III discusses the
-ways/methodologies in which training data was collected. Section IV
-outlines the network architecture. This is followed by the real-time
-DNN inferencing in Section V. Section VI reviews the online/offline
-training done with the platform, with an evaluation given in Section
-VII. Section VIII gives a discussion of related works, and the paper
-finishes with conclusions in Section IX. 
-
-\section{Background}
-Cite a paper \cite{barroso2009datacenter}.
-
-Cite multiple papers \cite{banga99resourcecontainers,barroso2009datacenter}
-
-\section{Platform Overview}
-...
-\section{Data Collection}
-...
-\section{Network Architecture}
-...
-\section{Real-Time DNN Inferencing}
-...
-\section{Online/Offline Training}
-...
-\section{Evaluation}
-...
-\section{Related Work}
-...
-\section{Conclusion}
+\input{intro}
+\input{background}
+\input{overview}
+\input{evaluation}
+\input{related}
+\input{conclusion}
 %-------------------------------------------------------------------------
-
 \bibliographystyle{plain}
 \bibliography{reference}
 \end{document}
