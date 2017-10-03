@@ -86,11 +86,13 @@ desktop computer using the GTX 1060 GPU.
 % inferencing on pi3
 Once the network is trained on the desktop computer, the trained model
 is copied back to the Raspberry Pi computer. The network is then used
-by the car's main controller, which feeds an image frame the web
+by the car's main controller, which feeds a image frame from the web
 camera as input to the network. The produced steering angle output is
 then converted as the PWM value of the steering motor of the
 car. Figure~\ref{fig:controlloop} shows simplified psuedo code of the
-controller's main loop.
+controller's main loop. Among the five steps, step 3---network
+inferencing---is most computationally intensive and dominates the
+execution time.
 
 \begin{figure}[t]
    \lstset{language=python,
@@ -104,11 +106,25 @@ controller's main loop.
   \label{fig:controlloop}
 \end{figure}
 
-\fixme{Discuss the limitation of the RC car platform: discrete
-  control, web camera latency}
+Note that although the steering angle output of the network $angle$ is
+a continuous real value, the RC car platform we used unfortunately
+only supports three discrete angles---left (-30$^{\circ}$), center
+(0$^{\circ}$), and right (+30$^{\circ}$)---as control
+inputs. Currently, we approximate the network generated real-valued
+angle to the closest one of the three angles. Although this may
+introduce inaccuracy in control.
+In the future, we plan to use different (more expensive) RC car
+platforms that can precisely control the car's steering angle. We
+would like to stress, however, that the use of different RC car
+platforms has no impact in terms of computational 
+aspects of the system, and that our main focus of this study is
+not in improving network accuracy but in closely replicating the
+DAVE-2's network architecture and its real-time characteristics.
 
-%% Although the steering angle output of the network is a continuous
-%% real value,
+Nevertheless, the trained model was still able to achieve reasonable a
+degree of accuracy, successfully navigating several different tracks 
+we trained. A collection of self-driving videos of the DeepPicar can
+be found at: \url{https://github.com/heechul/picar/videos}.
 
 %% We employ a small and relatively inexpensive RC car that is capable of
 %% performing basic automotive operations. However, the car we use
