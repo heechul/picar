@@ -291,7 +291,10 @@ models. Rather, the Pi seems to be better suited for running in set periods, aft
 off or made idle so that the cpu is allowed time to cool down.
 
 \subsection{System Comparisons}
-We compare the real time performance of the Raspberry Pi 3 to two other embedded computing platforms, the Intel UP Board the NVIDIA Tegra TX2, to evaluate their efficacy in vision-based autonomous vehicles. We conduct the same experiments done on the DeepPicar with each platform, and analyze the results.
+We compare the real time performance of the Raspberry Pi 3 to two other embedded computing platforms, 
+the Intel UP Board the NVIDIA Tegra TX2, to evaluate their efficacy in vision-based autonomous 
+vehicles. We conduct the same experiments done on the DeepPicar with each platform, and analyze the 
+results.
 
 \begin{figure}[h]
   \centering
@@ -300,9 +303,18 @@ We compare the real time performance of the Raspberry Pi 3 to two other embedded
   \label{fig:sys_core}
 \end{figure}
 
-The results of the multicore tests can be seen in Figure~\ref{fig:sys_core}. It was found that the Intel UP Board performed better in all experiments. On average, it was able to perform inferencing operations, at least, twice as fast as the Raspberry Pi 3. As a result, the UP Board was able to satisfy the 50 ms WCET by a very clear margin (in the worst case, it would still meet it by $\sim$20 ms), and, thus, demonstrates that it is more capable of autonomous driving than the Raspberry Pi 3.
+The results of the multicore tests can be seen in Figure~\ref{fig:sys_core}. It was found that the 
+Intel UP Board performed better in all experiments. On average, it was able to perform inferencing 
+operations, at least, twice as fast as the Raspberry Pi 3. As a result, the UP Board was able to 
+satisfy the 50 ms WCET by a very clear margin (in the worst case, it would still meet it by $\sim$20 
+ms), and, thus, demonstrates that it is more capable of autonomous driving than the Raspberry Pi 3.
 
-The Intel UP Board also performed better in the multimodel tests, as is shown in Figure~\ref{fig:sys_model}. Once again, the UP was able to complete inferecing operations in half the time when compared to the Pi. Furthermore, the Intel UP Board was capable of satisfying the 50 ms WCET, while the Raspberry Pi 3 was unable to do so. As such, the Intel UP Board displays greater potential for the simultaneous execution of multiple models during self-driving operation, while the Raspberry Pi 3 would struggle to do so.
+The Intel UP Board also performed better in the multimodel tests, as is shown in 
+Figure~\ref{fig:sys_model}. Once again, the UP was able to complete inferecing operations in half the 
+time when compared to the Pi. Furthermore, the Intel UP Board was capable of satisfying the 50 ms 
+WCET, while the Raspberry Pi 3 was unable to do so. As such, the Intel UP Board displays greater 
+potential for the simultaneous execution of multiple models during self-driving operation, while the 
+Raspberry Pi 3 would struggle to do so.
 
 \begin{figure}[h]
   \centering
@@ -311,7 +323,15 @@ The Intel UP Board also performed better in the multimodel tests, as is shown in
   \label{fig:sys_model}
 \end{figure}
 
-Finally, we examined if the performance of the Intel UP Board and Tegra TX2 would be affected by the addition of the synthetic benchmarks. As summarized in Figure~\ref{fig;sys_bench}, the Intel UP Board did experience a change in its inferencing times, but the increase was not as drastic as is seen by the Raspberry Pi 3. in the worst case, the Intel UP Board produced times that were over two times as large, whereas the Raspberry Pi 3 output times that were around 10 times greater. The Intel UP Board was successful in completing inferencing operations in under 50 ms when benchmarks were run on a maximum of 2 cores, while the Raspberry Pi 3 failed to do so when any benchmark was introduced. As such, it can be concluded that the Intel UP Board would be more capable of running computationally heavy processes during autonomous driving, and that the Pi wouldn't be able to do the same.
+Finally, we examined if the performance of the Intel UP Board and Tegra TX2 would be affected by the 
+addition of the synthetic benchmarks. As summarized in Figure~\ref{fig;sys_bench}, the Intel UP Board 
+did experience a change in its inferencing times, but the increase was not as drastic as is seen by 
+the Raspberry Pi 3. in the worst case, the Intel UP Board produced times that were over two times as 
+large, whereas the Raspberry Pi 3 output times that were around 10 times greater. The Intel UP Board 
+was successful in completing inferencing operations in under 50 ms when benchmarks were run on a 
+maximum of 2 cores, while the Raspberry Pi 3 failed to do so when any benchmark was introduced. As 
+such, it can be concluded that the Intel UP Board would be more capable of running computationally 
+heavy processes during autonomous driving, and that the Pi wouldn't be able to do the same.
 
 \begin{figure}[h]
   \centering
@@ -320,4 +340,8 @@ Finally, we examined if the performance of the Intel UP Board and Tegra TX2 woul
   \label{fig:sys_bench}
 \end{figure} 
 
-In the comparison of the real-time capabilities of three embedded computing platforms, we found that the Raspberry Pi 3 performed the worst. When compared to the Intel UP Board, inferencing on the Pi took twice as long across all multicore and multimodel experiments. The difference was even more noticeable in the the addition of computationally heavy synthetic benchmarks that had a much more dire effect on the Pi.
+In the comparison of the real-time capabilities of three embedded computing platforms, we found that 
+the Raspberry Pi 3 performed the worst. When compared to the Intel UP Board, inferencing on the Pi 
+took twice as long across all multicore and multimodel experiments. The difference was even more 
+noticeable in the the addition of computationally heavy synthetic benchmarks that had a much more 
+dire effect on the Pi.
