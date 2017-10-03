@@ -1,0 +1,18 @@
+# started on Tue Oct  3 01:10:50 2017
+
+
+ Performance counter stats for 'taskset -c 0,1,2 python test-model.py 3':
+
+      37926.247952      task-clock (msec)         #    1.405 CPUs utilized          
+           185,295      context-switches          #    0.005 M/sec                  
+             4,763      cpu-migrations            #    0.126 K/sec                  
+            63,496      page-faults               #    0.002 M/sec                  
+    63,057,175,449      cycles                    #    1.663 GHz                      (50.18%)
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+    41,128,236,297      instructions              #    0.65  insns per cycle          (75.26%)
+     3,268,239,063      branches                  #   86.174 M/sec                    (74.78%)
+       105,955,304      branch-misses             #    3.24% of all branches          (75.15%)
+
+      26.999823088 seconds time elapsed
+
