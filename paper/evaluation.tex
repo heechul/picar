@@ -20,7 +20,7 @@ was unable to do so for very few frames.
 \begin{figure}[h]
   \centering
   \includegraphics[width=.5\textwidth]{Total_Processing_Time}
-  \caption{ Real-time performance of the Raspberry Pi 3 in processing 1000 frames.}
+  \caption{ Real-time performance of the DeepPicar in processing 1000 frames.}
 \end{figure}
 
 In our platform, three main real-time tasks are performed during autonomous operation. In order, these 
@@ -63,8 +63,8 @@ vehicle platform.
     \hline
     \textbf{num cores} & \textbf{mean} & \textbf{max} & \textbf{99pct} & \textbf{stdev} \\ \hline 
     1 & 61.96 & 66.00 & 63.31 & 0.51\\ \hline
-    2 & 50.49 & 71.55 & 70.03 & 4.18 \\ \hline
-    3 & 48.11 & 72.22 & 58.45 & 2.80 \\ \hline
+    2 & 50.49 & 71.55 & 70.03 & 3.16 \\ \hline
+    3 & 48.11 & 72.22 & 58.45 & 4.18 \\ \hline
     4 & 42.67 & 56.37 & 50.70 & 2.80 \\
     \hline
   \end{tabular}
@@ -87,22 +87,30 @@ model can successfully perform within the given deadline. Specifically, the plat
 cases of running 2 and 4 models simultaneously. For each case, all models are allocated an equal number 
 of cores. That is, 2 models are given 2 cores each and 4 models are given 1 core each.
 
-\begin{table*}
+\begin{figure}[h]
   \centering
-  \begin{tabular} {| l | l | l | l | l | l | l | l | l |}
-  \hline
-  \textbf{num models} & \textbf{cores} & \textbf{mean} & \textbf{L1 refs} & \textbf{L1 
-    misses} & \textbf{L1 miss \%} & \textbf{L2 refs} & \textbf{L2 misses} & \textbf{L2 miss \%} \\ \hline
-  1 & 0,1 & 51.35 & 3.04E+10 & 4.78E+08 & 1.58 & 3.31E+09 & 3.68E+08 & 11.12\\ \hline
-  2 & 0,1 & 58.03 & 3.04E+10 & 4.91E+08 & 1.61 & 3.91E+09 & 4.26E+08 & 10.88 \\ \hline
-  2 & 2,3 & 56.40 & 3.04E+10 & 4.80E+08 & 1.58 & 3.88E+09 & 4.21E+08 & 10.87 \\ \hline
-  \end{tabular}
-  \caption{Real-time performance of the DeepPicar when 2 models are running simultaneously.}
-\end{table*}
+  \includegraphics[width=.5\textwidth]{figs/2ModelChart}
+  \caption{ Change in inferencing time when 2 models are run concurrently. }
+\end{figure}
 
-The results for the 2 model test are outlined in Table IV, and the 4 model test is summarized in Table 
-V. In the the 2 model test, both of the models showed average inference time increases of around 5-7 
-ms, $\sim$10\%, when compared to a baseline of 1 model running on two cores. The difference was even 
+\begin{table}[h]
+\centering
+  \begin{tabular} {| l | l | l |}
+  \hline
+  \textbf{num models} & 1 & 2 \\ \hline
+  \textbf{L1 refs} &  3.04E+10 &  3.04E+10 \\ \hline
+  \textbf{L1 misses} & 4.78E+08 & 4.91E+08 \\ \hline
+  \textbf{L1 miss \%} & 1.58 & 1.61 \\ \hline
+  \textbf{L2 refs} & 3.31E+09 &  3.91E+09 \\ \hline
+  \textbf{L2 misses} & 3.68E+08 & 4.62E+08 \\ \hline
+  \textbf{L2 miss \%} & 11.12 & 10.88 \\ \hline
+  \end{tabular}
+  \caption{ Effect of 2 simulatneous models on cache accesses. }
+\end{table}
+
+The results for the 2 model test are outlined in Figure 3 and Table IV, and the 4 model test is summarized in 
+Figure 4 Table V. In the the 2 model test, both of the models showed average inference time increases of around 
+5-7 ms, $\sim$10\%, when compared to a baseline of 1 model running on two cores. The difference was even 
 greater in the 4 model test, as each model displayed an average inference time increase of 
 approximately 15 ms, $\sim$30\%, when compared to a single model running on 1 core.
 
@@ -111,20 +119,28 @@ additional accesses. For all models, the number of L1 misses was always $\sim$1.
 references. In the 2 model test, L2 cache misses remained at $\sim$11\% of all references, and each 
 model in the 4 model test missed $\sim$13\% of all L2 references.
 
-\begin{table*}
+\begin{figure}[h]
   \centering
-  \begin{tabular} {| l | l | l | l | l | l | l | l | l |}
+  \includegraphics[width=.5\textwidth]{figs/4ModelChart}
+  \caption{Change in inferencing time when 4 models are run simultaneously. }
+\end{figure}
+
+
+\begin{table}[h]
+\centering
+  \begin{tabular} {| l | l | l |}
   \hline
-  \textbf{num models} & \textbf{core} & \textbf{mean} & \textbf{L1 refs} & \textbf{L1 
-    misses} & \textbf{L1 miss \%} & \textbf{L2 refs} & \textbf{L2 misses} & \textbf{L2 miss \%} \\ \hline
-    1 & 0 & 62.48 & 2.78E+10 & 4.36E+08 & 1.57 & 2.83E+09 & 3.59E+08 & 12.68 \\ \hline
-    4 & 0 & 77.90 & 2.79E+10 & 4.53E+08 & 1.63 & 3.36E+09 & 4.43E+08 & 13.19 \\ \hline
-    4 & 1 & 78.89 & 2.79E+10 & 4.64E+08 & 1.67 & 3.42E+09 & 4.38E+08 & 12.82 \\ \hline
-    4 & 2 & 77.81 & 2.78E+10 & 4.45E+08 & 1.60 & 3.45E+09 & 4.41E+08 & 12.77 \\ \hline
-    4 & 3 & 77.87 & 2.79E+10 & 4.45E+08 & 1.60 & 3.41E+09 & 4.39E+08 & 12.88 \\ \hline
+  \textbf{num models} & 1 & 4 \\  \hline
+  \textbf{L1 refs} & 2.78E+10 & 2.79E+10 \\ \hline
+  \textbf{L1 misses} & 4.36E+08 & 4.53E+08 \\ \hline
+  \textbf{L1 miss \%} & 1.57 & 1.63 \\ \hline
+  \textbf{L2 refs} & 2.83E+09 & 3.36E+09 \\ \hline 
+  \textbf{L2 misses} & 3.59E+08 & 4.43E+08 \\ \hline
+  \textbf{L2 miss \%} & 12.68 & 13.19 \\ 
+\hline
   \end{tabular}
-  \caption{Real-time performance of the DeepPicar when 4 models are running simultaneously.}
-\end{table*}
+  \caption{ Effect of 4 concurrent models on cache accesses. }
+\end{table}
 
 In all multimodel tests, it was found that a greater number of models run simultaneously resulted in 
 interference that led to a noticable increase in the average inferencing time that wasn't 
@@ -141,15 +157,20 @@ ascertained that, if a WCET of 50 ms is required, DeepPicar would not be able to
 \subsection{Benchmark Performance}
 In order to determine how cache misses affects the performance of the DeepPicar, we test its ability by 
 running synthetic benchmarks concurrently with the model. In each experiment, we run a single model on a 
-number of cores, and a synthetic benchmark on the remaining idle cores. The results of each test can be 
-seen in Table VII.
+number of cores, and a synthetic benchmark on the remaining idle cores. The effects of the benchmarks can
+seen in Figure 9 and Table VI.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.5\textwidth]{figs/BenchmarkChart}
+  \caption{ Effect of benchmarks on inferencing time. }
+\end{figure}
 
 \begin{table}[h]
 \centering
   \begin{tabular} {| l | l | l | l | l | l |}
   \hline
   \textbf{num cores} & 1 & 2 & 3 \\ \hline
-  \textbf{mean} & 562.33 & 391.98 & 98.05 \\ \hline
   \textbf{L1 refs} & 3.16E+10 & 3.17E+10 & 3.06E+10 \\ \hline
   \textbf{L1 misses} & 5.41E+08 & 5.35E+08 & 4.98E+08 \\ \hline
   \textbf{L1 miss \%} & 1.71 & 1.69 & 1.62 \\ \hline
@@ -158,7 +179,7 @@ seen in Table VII.
   \textbf{L2 miss \%} & 23.05 & 23.37 & 15.51 \\ 
   \hline
   \end{tabular}
-  \caption{Real-time performance of the DeepPicar when benchmarks are run concurrently with the model.}
+  \caption{ Effect of benchmarks on cache accesses. }
 \end{table}
 
 The presence of the benchmark(s) had a noticable effect on the DeepPicar, with all tests showing 
