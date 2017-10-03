@@ -54,7 +54,7 @@ and are relatively more consistent in their times, at 2 ms and 3 ms, respectivel
 \subsection{Multicore Performance}
 It may not always be the case that all four cores of the Raspberry Pi 3's Cortex A-53 CPU can be used 
 solely for the purpose of operating an autonomous vehicle. Thus, we test how the number of cores 
-utilized for real-time operations affects the Pi's overall ability to function as an autonomous 
+utilized for real-time operations affects the DeepPicar's overall ability to function as an autonomous 
 vehicle platform.
 
 \begin{table}[h]
@@ -186,7 +186,7 @@ The presence of the benchmark(s) had a noticable effect on the DeepPicar, with a
 increases in inferencing operations. The least change happened when the model was run on 3 cores, and a 
 single benchmark was run on the final core. Even with a slight increase in the number of L2 cache 
 misses, inferencing was able to be completed in under 100 ms. The other tests, however, showed dramatic 
-changes when the model was run on 1 and 2 cores. In both instances, L2 misses rise to $\sim$23\% of all 
+changes when the model was run on 1 and 2 cores. In both instances, L2 misses rose to $\sim$23\% of all 
 references. The additional benchmark in the 1 core test was even more detrimental as the average 
 inferencing time was at least 150 ms longer than when the model used 2 cores. 
 
