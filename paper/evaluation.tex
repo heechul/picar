@@ -144,11 +144,19 @@ surprising.
 %% other hand, both the frame capture and preprocessing operations take substantially less time 
 %% and are relatively more consistent in their times, at 2 ms and 3 ms, respectively. 
 
-\subsection{Multicore Performance}
+\subsection{Effect of the Core Count to Inference Timing}
 It may not always be the case that all four cores of the Raspberry Pi 3's Cortex A-53 CPU can be used 
 solely for the purpose of operating an autonomous vehicle. Thus, we test how the number of cores 
 utilized for real-time operations affects the DeepPicar's overall ability to function as an autonomous 
 vehicle platform.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.5\textwidth]{figs/perf_vs_corecnt}
+  \caption{Average control loop execution time vs. \#of CPU cores used
+    for inferencing by Tensorflow.}
+  \label{fig:perf-vs-corecnt}
+\end{figure}
 
 \begin{table}[h]
   \centering
