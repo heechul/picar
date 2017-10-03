@@ -1,4 +1,4 @@
-timestamp=$(date +%y-%m-%d_%H:%M:%S)
+timestamp=$(date +%y-%m-%d_%H-%M-%S)
 
 echo "Which board is this test being run on?  Input a string and press [ENTER]"
 read board
