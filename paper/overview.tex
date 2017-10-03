@@ -23,13 +23,13 @@ computer.
 
 Figure~\ref{fig:overview} shows the DeepPicar, which is comprised of a
 set of inexpensive components: a Raspberry Pi 3 Single Board Computer
-(SBC), a Pololu DRV8835 motor driver, a Playstation Eye Webcam, a
+(SBC), a Pololu DRV8835 motor driver, a Playstation Eye webcam, a
 battery, and a 1:24 scale RC car. Table~\ref{tbl:carbom} shows
 estimated cost of the system.
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{|l|l|}
+  \begin{tabular}{|r|r|}
     \hline
     Item                    & cost (\$) \\
     \hline
@@ -37,7 +37,7 @@ estimated cost of the system.
     New Bright 1:24 scale RC car       & 10 \\
     Playstation Eye camera  &  7 \\
     Pololu DRV8835 motor hat&  8 \\
-    External battery pack   & 10 \\
+    External battery pack \& misc.   & 10 \\
     \hline
     Total                   & 70 \\
     \hline
@@ -59,8 +59,9 @@ connections.
   \centering
   \includegraphics[width=.4\textwidth]{figs/architecture}
   \caption{DeepPicar's neural network architecture: 9 layers (5
-    convolutional, 4 fully-connected layers), 250K
-    parameters. Adopted from ~\cite{Bojarski2016}.}
+    convolutional, 4 fully-connected layers), 27 million connections,
+    250K parameters. The architecture is identical to the one used
+    in NVIDIA's real self-driving car~\cite{Bojarski2016}.}
   \label{fig:architecture}
 \end{figure}
 
@@ -76,8 +77,8 @@ desktop computer using the GTX 1060 GPU.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.4\textwidth, angle=270]{figs/track_new}
-  \caption{A track for training/testing.\fixme{replace this}}
+  \includegraphics[width=.4\textwidth]{figs/track_new2}
+  \caption{One of the custom tracks used for training/testing.}
   \label{fig:track}
 \end{figure}
 
@@ -85,11 +86,13 @@ desktop computer using the GTX 1060 GPU.
 % inferencing on pi3
 Once the network is trained on the desktop computer, the trained model
 is copied back to the Raspberry Pi computer. The network is then used
-by the car's main controller, which feeds an image frame the web
+by the car's main controller, which feeds a image frame from the web
 camera as input to the network. The produced steering angle output is
 then converted as the PWM value of the steering motor of the
 car. Figure~\ref{fig:controlloop} shows simplified psuedo code of the
-controller's main loop.
+controller's main loop. Among the five steps, step 3---network
+inferencing---is most computationally intensive and dominates the
+execution time.
 
 \begin{figure}[t]
    \lstset{language=python,
@@ -103,11 +106,28 @@ controller's main loop.
   \label{fig:controlloop}
 \end{figure}
 
-\fixme{Discuss the limitation of the RC car platform: discrete
-  control, web camera latency}
+Note that although the steering angle output of the network $angle$ is
+a continuous real value, the RC car platform we used unfortunately
+only supports three discrete angles---left (-30$^{\circ}$), center
+(0$^{\circ}$), and right (+30$^{\circ}$)---as control
+inputs. Currently, we approximate the network generated real-valued
+angle to the closest one of the three angles, which may
+introduce inaccuracy in control.
+In the future, we plan to use different (more expensive) RC car
+platforms that can precisely control the car's steering angle. We
+would like to stress, however, that the use of different RC car
+platforms has no impact in terms of computational 
+aspects of the system, and that our main focus of this study is
+not in improving network accuracy but in closely replicating the
+DAVE-2's network architecture and its real-time characteristics.
 
-%% Although the steering angle output of the network is a continuous
-%% real value,
+Nevertheless, the trained models were still able to achieve reasonable
+a degree of accuracy, successfully navigating several different tracks 
+we trained. The source code, build instruction, and a collection of
+self-driving videos of the DeepPicar can be found at:
+\url{https://github.com/heechul/picar}.
+%% \begin{center}
+%% \end{center}
 
 %% We employ a small and relatively inexpensive RC car that is capable of
 %% performing basic automotive operations. However, the car we use
