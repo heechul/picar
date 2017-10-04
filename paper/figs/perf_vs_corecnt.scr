@@ -3,9 +3,9 @@ set yrange [0.0:100.0]
 set auto x
 set xtics nomirror scale 0
 set xlabel "#of cores" 
-set ylabel "time (ms)" offset 2.5
+set ylabel "Avg. processing time (ms)" offset 2.5
 set nokey
-set boxwidth 0.8
+set boxwidth 0.5
 plot  "perf_vs_corecnt.dat"  u 1:2:xticlabel(1) with boxes fs solid 0.2,\
       ""		     	 u 1:2:2 with labels offset char 0,1
       

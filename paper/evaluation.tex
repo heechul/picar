@@ -176,17 +176,31 @@ feasibility of such a scenario.
 %% beneficial in terms of reducing the time it takes to complete
 %% inference operations, but may result in times that are more volatile.
 
-\subsection{Multimodel Performance}
-We also test the capability of the DeepPicar to run multiple models at the same time, and whether each 
-model can successfully perform within the given deadline. Specifically, the platform is tested in the 
-cases of running 2 and 4 models simultaneously. For each case, all models are allocated an equal number 
-of cores. That is, 2 models are given 2 cores each and 4 models are given 1 core each.
+\subsection{Effect of Co-scheduling Multiple DNN Models}
+
+We also test the capability of the DeepPicar to run multiple models at
+the same time, and whether each model can successfully perform within
+the given deadline. Specifically, the platform is tested in the cases
+of running 2 and 4 models simultaneously. For each case, all models
+are allocated an equal number of cores. That is, 2 models are given 2
+cores each and 4 models are given 1 core each.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/2ModelChart}
-  \caption{ Change in inferencing time when 2 models are run concurrently. }
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_modelcnt}
+  \caption{Timing impact of co-scheduling multiple DNNs. X-axis shows
+    the system configuration: \#of DNN models x \#of CPU cores\/DNN. For
+    example, '4x1' means running four DNN models each of which is
+    assigned to run on one CPU core, where as '2x2' means running two DNN
+    models, each of which is assigned to run on two CPU cores.}
+  \label{fig:perf-vs-multimodel}
 \end{figure}
+
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=.5\textwidth]{figs/2ModelChart}
+%%   \caption{ Change in inferencing time when 2 models are run concurrently. }
+%% \end{figure}
 
 \begin{table}[h]
 \centering
