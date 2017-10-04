@@ -297,7 +297,7 @@ provide uncore hardware counters that can measure average memory
 access latency~\cite{ye2016maracas}, we were not able to identify
 whether such hardware counters exist in the BCM2837 processor of
 Raspberry Pi 3 due to the lack of documentation. Instead, in the next
-experiment, we use memory intensive synthetic benchmark to test the
+experiment, we use memory intensive synthetic benchmarks to test the
 hypothesis.
 
 %% The increase in inference times, however, was not the result of
@@ -324,11 +324,17 @@ hypothesis.
 %% by 27-29 ms. As a result, it can be ascertained that, if a WCET of 50
 %% ms is required, DeepPicar would not be able to perform as necessary.
 
-\subsection{Benchmark Performance}
-In order to determine how cache misses affects the performance of the DeepPicar, we test its ability by 
-running synthetic benchmarks concurrently with the model. In each experiment, we run a single model on a 
-number of cores, and a synthetic benchmark on the remaining idle cores. The effects of the benchmarks can
-seen in Figure 9 and Table VI.
+\subsection{Effect of Co-scheduling Memory Performance Hogs}
+
+In order to determine how contended DRAM requests affect the DNN
+inference timing of the DeepPicar, we use a synthetic memory
+intensive benchmark from the IsolBench suite~\cite{Valsan2016}.
+
+we test its ability by  running synthetic benchmarks
+concurrently with the model. In each experiment, we run a single model
+on a  number of cores, and a synthetic benchmark on the remaining idle
+cores. The effects of the benchmarks can seen in Figure 9 and Table
+VI. 
 
 \begin{figure}[h]
   \centering
