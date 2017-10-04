@@ -178,21 +178,24 @@ feasibility of such a scenario.
 
 \subsection{Effect of Co-scheduling Multiple DNN Models}
 
-We also test the capability of the DeepPicar to run multiple models at
-the same time, and whether each model can successfully perform within
-the given deadline. Specifically, the platform is tested in the cases
-of running 2 and 4 models simultaneously. For each case, all models
-are allocated an equal number of cores. That is, 2 models are given 2
-cores each and 4 models are given 1 core each.
+In this experiment, we launch multiple instances of DeepPicar's DNN
+model at the same time and measure its impact to their inference
+timings.
+
+%% We also test the capability of the DeepPicar to run multiple models at
+%% the same time, and whether each model can successfully perform within
+%% the given deadline. Specifically, the platform is tested in the cases
+%% of running 2 and 4 models simultaneously. For each case, all models
+%% are allocated an equal number of cores. That is, 2 models are given 2
+%% cores each and 4 models are given 1 core each.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/perf_vs_modelcnt}
-  \caption{Timing impact of co-scheduling multiple DNNs. X-axis shows
-    the system configuration: \#of DNN models x \#of CPU cores\/DNN. For
-    example, '4x1' means running four DNN models each of which is
-    assigned to run on one CPU core, where as '2x2' means running two DNN
-    models, each of which is assigned to run on two CPU cores.}
+  \caption{Timing impact of co-scheduling multiple DNNs. 1x1: one DNN
+    model using one CPU core; 4x1: four DNN models each using one CPU;
+    1x2: one DNN model using two CPU cores; 2x2: two DNN models each
+    using two CPU cores.} 
   \label{fig:perf-vs-multimodel}
 \end{figure}
 
@@ -201,6 +204,27 @@ cores each and 4 models are given 1 core each.
 %%   \includegraphics[width=.5\textwidth]{figs/2ModelChart}
 %%   \caption{ Change in inferencing time when 2 models are run concurrently. }
 %% \end{figure}
+
+Figure~\ref{fig:perf-vs-multimodel} shows the results. In the figure,
+X-axis shows the system configuration: \#of DNN models x \#of CPU
+cores\/DNN. For example, '4x1' means running four DNN models each of
+which is assigned to run on one CPU core, whereas '2x2' means running
+two DNN models, each of which is assigned to run on two CPU
+cores. The Y-axis shows the average inference timing.
+Two bars in the left show the impact of co-scheduling four DNN
+models. Compared to executing a single DNN model on one CPU core
+(1x1), when four DNN models are co-scheduled (4x1), each model
+suffers an average inference time increase of approximately 15 ms,
+$\sim$24\%. On the other hand, when two DNN models, each using two CPU
+cores, are co-scheduled, the average inference timing is increased by
+about 7 ms, or 10\%, comapred to the baseline of running one model
+using two CPU cores. 
+
+%% The results for the 2 model test are outlined in Figure 3 and Table
+%% IV, and the 4 model test is summarized in  Figure 4 Table V. In the
+%% the 2 model test, both of the models showed average inference time
+%% increases of around  5-7 ms, $\sim$10\%, when compared to a baseline
+%% of 1 model running on two cores.
 
 \begin{table}[h]
 \centering
@@ -217,16 +241,12 @@ cores each and 4 models are given 1 core each.
   \caption{ Effect of 2 simulatneous models on cache accesses. }
 \end{table}
 
-The results for the 2 model test are outlined in Figure 3 and Table IV, and the 4 model test is summarized in 
-Figure 4 Table V. In the the 2 model test, both of the models showed average inference time increases of around 
-5-7 ms, $\sim$10\%, when compared to a baseline of 1 model running on two cores. The difference was even 
-greater in the 4 model test, as each model displayed an average inference time increase of 
-approximately 15 ms, $\sim$30\%, when compared to a single model running on 1 core.
-
-The increase in inference times, however, was not the result of increased cache misses due to 
-additional accesses. For all models, the number of L1 misses was always $\sim$1.6\% of all 
-references. In the 2 model test, L2 cache misses remained at $\sim$11\% of all references, and each 
-model in the 4 model test missed $\sim$13\% of all L2 references.
+The increase in inference times, however, was not the result of
+increased cache misses due to additional accesses. For all models, the
+number of L1 misses was always $\sim$1.6\% of all  references. In the
+2 model test, L2 cache misses remained at $\sim$11\% of all
+references, and each model in the 4 model test missed $\sim$13\% of
+all L2 references. 
 
 \begin{figure}[h]
   \centering
