@@ -332,91 +332,134 @@ intensive benchmark from the IsolBench suite~\cite{Valsan2016}.
 
 In each experiment, we run a single DNN model one core, and
 co-scheduled an increasing number of the memory intensive synthetic
-benchmark on the remaining idle cores.
-Figure~\ref{fig:}
-The effects of the benchmarks can seen in Figure 9 and Table VI. 
+benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
+  IsolBench suite, with the following command line parameters: \texttt{\$
+  bandwdith -a write -m 16384}}, on the remaining idle cores.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/BenchmarkChart}
-  \caption{Effect of benchmarks on inferencing time.}
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth}
+  \caption{Effect of memory performance hogs on the DNN
+    inferencing. The DNN model uses Core 0 and memory-hog co-runnes
+    use the rest of the cores.}
   \label{fig:}
 \end{figure}
 
-\begin{table}[h]
-\centering
-  \begin{tabular} {| l | l | l | l | l | l |}
-  \hline
-  \textbf{num cores} & 1 & 2 & 3 \\ \hline
-  \textbf{L1 refs} & 3.16E+10 & 3.17E+10 & 3.06E+10 \\ \hline
-  \textbf{L1 misses} & 5.41E+08 & 5.35E+08 & 4.98E+08 \\ \hline
-  \textbf{L1 miss \%} & 1.71 & 1.69 & 1.62 \\ \hline
-  \textbf{L2 refs} & 3.49E+09 & 3.23E+09 & 3.21E+09 \\ \hline
-  \textbf{L2 misses} & 8.05E+08 & 7.54E+08 & 4.98E+08 \\ \hline
-  \textbf{L2 miss \%} & 23.05 & 23.37 & 15.51 \\ 
-  \hline
-  \end{tabular}
-  \caption{ Effect of benchmarks on cache accesses. }
-\end{table}
+%% \begin{table}[h]
+%% \centering
+%%   \begin{tabular} {| l | l | l | l | l | l |}
+%%   \hline
+%%   \textbf{num cores} & 1 & 2 & 3 \\ \hline
+%%   \textbf{L1 refs} & 3.16E+10 & 3.17E+10 & 3.06E+10 \\ \hline
+%%   \textbf{L1 misses} & 5.41E+08 & 5.35E+08 & 4.98E+08 \\ \hline
+%%   \textbf{L1 miss \%} & 1.71 & 1.69 & 1.62 \\ \hline
+%%   \textbf{L2 refs} & 3.49E+09 & 3.23E+09 & 3.21E+09 \\ \hline
+%%   \textbf{L2 misses} & 8.05E+08 & 7.54E+08 & 4.98E+08 \\ \hline
+%%   \textbf{L2 miss \%} & 23.05 & 23.37 & 15.51 \\ 
+%%   \hline
+%%   \end{tabular}
+%%   \caption{ Effect of benchmarks on cache accesses. }
+%% \end{table}
 
+Figure~\ref{fig:} shows the normalized execution time and L2 miss-rate
+of the DNN model running on the Core 0 as a function of the number of
+co-scheduled memory intensive synthetic benchmarks. First, as we
+increase the number of co-runners, the DNN model's execution times are
+increased---by up to 9.6X---even though the DNN model is running on a
+dedicated core (Core0). On the other hand, the DNN model's L2
+cache-miss rates are not increase as much. This suggests that
+the DNN model's exeuction increase cannot be fully explained by
+increased L2 cache-misses. Instead, as we hypothesized in the previous
+experiment, the increased memory pressure from the co-scheduled memory
+intensive benchmarks is the primary cause of the DNN model's execution
+time increase. Therefore, we conclude that DeepPicar's DNN model is
+more senstive to DRAM access latency than L2 cache space.
 
-The presence of the benchmark(s) had a noticable effect on the DeepPicar, with all tests showing 
-increases in inferencing operations. The least change happened when the model was run on 3 cores, and a 
-single benchmark was run on the final core. Even with a slight increase in the number of L2 cache 
-misses, inferencing was able to be completed in under 100 ms. The other tests, however, showed dramatic 
-changes when the model was run on 1 and 2 cores. In both instances, L2 misses rose to $\sim$23\% of all 
-references. The additional benchmark in the 1 core test was even more detrimental as the average 
-inferencing time was at least 150 ms longer than when the model used 2 cores. 
+This observation suggests that shared cache partitioning
+techniques~\cite{Gracioli2015,Kim2016} may not be effective isolation
+solutions for DeepPicar as its AI workload is more sensitive to memory
+performance. Instead, memory controller focused isolation solutions,
+either hardware or software-based ones (e.g.,~\cite{Guo2017,Yun2013}),
+may be more important. Although our observation is made on a single
+hardware platform running on a single DNN workload, we suspect that
+many AI workloads may exhibit similar characteristics.
 
-With the introduction of synthetic benchmarks, the DeepPicar failed to comply with the 50 ms WCET across 
-all tests run. Even in the best case, inferencing operations take twice as long as the deadline to 
-complete. As a result, if benchmarks were required to run during autonomous operation, the DeepPicar 
-wouldn't be capable of meeting its deadlines.
+%% The presence of the benchmark(s) had a noticable effect on the
+%% DeepPicar, with all tests showing increases in inferencing
+%% operations. The least change happened when the model was run on 3
+%% cores, and a single benchmark was run on the final core. Even with a
+%% slight increase in the number of L2 cache misses, inferencing was able
+%% to be completed in under 100 ms. The other tests, however, showed
+%% dramatic changes when the model was run on 1 and 2 cores. In both
+%% instances, L2 misses rose to $\sim$23\% of all references. The
+%% additional benchmark in the 1 core test was even more detrimental as
+%% the average inferencing time was at least 150 ms longer than when the
+%% model used 2 cores.  
+
+%% With the introduction of synthetic benchmarks, the DeepPicar failed to
+%% comply with the 50 ms WCET across all tests run. Even in the best
+%% case, inferencing operations take twice as long as the deadline to
+%% complete. As a result, if benchmarks were required to run during
+%% autonomous operation, the DeepPicar wouldn't be capable of meeting its
+%% deadlines.
 
 \subsection{Summary}
-We found that the DeepPicar is capable of successfully completing all necessary inferencing 
-operations within a given deadline of 50 ms. Between these operations, it was discovered that the 
-angle prediction time of the model was the dominating step in the processing time of a single frame. 
-The other operations were found to execute in very little time, with either one taking 5 ms at most.
-
-When running a single model, DeepPicar performed the best when it used all 4 cpu cores, as it was 
-able to process a frame in 43 ms on average. This feat can still be accomplished when running a 
-single model on 3 cpu cores, and is also possible when using 2 cores. The only time in which the Pi 
-can't run a single model under 50 ms is when only 1 core is used. This was also the case when 
-multiple models were run concurrently as no models were able to consistently complete inference 
-operations in under 50 ms.
-
-However, the DeepPicar was shown to be capable of handling other potential WCETs. If given a larger 
-deadline, the capabilities of DeepPicar as an autonomous vehicle platform would be greatly increased. 
-For example, if tested with a deadline of 66.67 ms, or 15 fps, the platform would have passed several 
-of the experiments performed. In actuality, the DeepPicar would have only been unsatisfactory in the 
-4 model test where it would have missed the deadlines by $\sim$10 ms, and the benchmark tests, where 
+We found that the DeepPicar is capable of successfully completing all
+necessary inferencing operations within a given deadline of 50
+ms. Between these operations, it was discovered that the angle
+prediction time of the model was the dominating step in the processing
+time of a single frame. The other operations were found to execute in
+very little time, with either one taking 5 ms at most. When running a
+single model, DeepPicar performed the best when it used all 4 cpu
+cores, as it was able to process a frame in 43 ms on average. This
+feat can still be accomplished when running a single model on 3 cpu
+cores, and is also possible when using 2 cores. The only time in which
+the Pi can't run a single model under 50 ms is when only 1 core is
+used. This was also the case when multiple models were run
+concurrently as no models were able to consistently complete inference
+operations in under 50 ms. 
+However, the DeepPicar was shown to be capable of handling other
+potential WCETs. If given a larger deadline, the capabilities of
+DeepPicar as an autonomous vehicle platform would be greatly
+increased. For example, if tested with a deadline of 66.67 ms, or 15
+fps, the platform would have passed several of the experiments
+performed. In actuality, the DeepPicar would have only been
+unsatisfactory in the 4 model test where it would have missed the
+deadlines by $\sim$10 ms, and the benchmark tests, where  
 it would still miss by $\sim$33 ms at best.
 
 \subsection{Performance Requirements}
-In the utilization of the Raspberry Pi 3 in our platform, there are a few factors that need to be 
-considered and/or enforced in order to guarantee that the Pi is able to consistently perform at a 
-desired level. Specifically, these issues all have the potential to negatively affect the cpu clock 
-speed/frequency, which would result in decreased performance. While, in the above experiments, the cpu 
-operated at a preferred clock speed of 1.2 GHz, it is entirely possible for the cpu to operate at a 
-lower frequency if the following problems are not taken into account.
+In the utilization of the Raspberry Pi 3 in our platform, there are a
+few factors that need to be considered and/or enforced in order to
+guarantee that the Pi is able to consistently perform at a desired
+level. Specifically, these issues all have the potential to negatively
+affect the cpu clock speed/frequency, which would result in decreased
+performance. While, in the above experiments, the cpu operated at a
+preferred clock speed of 1.2 GHz, it is entirely possible for the cpu
+to operate at a lower frequency if the following problems are not
+taken into account. 
 
-The most notable issue that can affect the cpu clock speed is that of the power supplied to the 
-Raspberry Pi. In essence, it is necessary that the Pi be supplied with 2 Amps, as any less could 
-hinder the Pi's ability to maintain a 1.2 GHz frequency. In experiments conducted with a power supply that 
-only provided 1 Amp, the Pi was unable to sustain a 1.2 GHz clock speed and, instead, fluctuated 
-between operating at 600 MHz and 1.2 GHz. As a result, it is necessary, or at least highly 
-recommended, that the power supply used for the Raspberry Pi 3 be capable of outputting 2 Amps, 
-otherwise optimal performance isn't guaranteed.
-
-Another factor that can affect clock speed is that of the cpu's temperature. Some model operations can 
-be computationally intensive, thus it is possible for the temperature of the cpu to become relatively 
-high. This can be especially problematic in situations where multiple models are running 
-simultaneously on the Pi. Consequently, thermal throttling may be used to decrease the clock 
-speed so that the cpu temperature stays at a safe level. Thus the Raspberry Pi may not be suited 
-for prolonged use, especially in cases where the workload is relatively larger, such as running multiple 
-models. Rather, the Pi seems to be better suited for running in set periods, after which it is turned 
-off or made idle so that the cpu is allowed time to cool down.
+The most notable issue that can affect the cpu clock speed is that of
+the power supplied to the Raspberry Pi. In essence, it is necessary
+that the Pi be supplied with 2 Amps, as any less could hinder the Pi's
+ability to maintain a 1.2 GHz frequency. In experiments conducted with
+a power supply that only provided 1 Amp, the Pi was unable to sustain
+a 1.2 GHz clock speed and, instead, fluctuated between operating at
+600 MHz and 1.2 GHz. As a result, it is necessary, or at least highly
+recommended, that the power supply used for the Raspberry Pi 3 be
+capable of outputting 2 Amps, otherwise optimal performance isn't
+guaranteed.  Another factor that can affect clock speed is that of the
+cpu's temperature. Some model operations can be computationally
+intensive, thus it is possible for the temperature of the cpu to
+become relatively high. This can be especially problematic in
+situations where multiple models are running  simultaneously on the
+Pi. Consequently, thermal throttling may be used to decrease the clock
+speed so that the cpu temperature stays at a safe level. Thus the
+Raspberry Pi may not be suited for prolonged use, especially in cases
+where the workload is relatively larger, such as running multiple
+models. Rather, the Pi seems to be better suited for running in set
+periods, after which it is turned  off or made idle so that the cpu is
+allowed time to cool down. 
 
 \subsection{System Comparisons}
 We compare the real time performance of the Raspberry Pi 3 to two other embedded computing platforms, 
