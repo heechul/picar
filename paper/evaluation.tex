@@ -99,88 +99,82 @@ Section~\ref{sec:eval-platforms}), the fact that the low-cost
 Raspberry Pi 3 can achieve similar real-time control performance is
 surprising.
 
-%% In our platform, three main real-time tasks are performed during autonomous operation. In order, these 
-%% operations are: (1) capturing and reading the input frame from the designated camera or video stream, 
-%% (2) preprocessing the acquired frame so that it is compatible with the DNN, and (3) feeding the frame 
-%% to, and getting the angle prediction from, the model. We aim to determine which operation(s), if any, 
-%% require the most time to be performed.
-
-%% In order to determine which operation(s) take the longest to execute, we measured the time it 
-%% took for each step to be completed. For this experiment, all four of the Pi's cpu cores were utilized, 
-%% and only one model was run. As is shown in Table II, the angle prediction operation consumes the 
-%% majority of the processing for each frame. Furthermore, the time it takes for the operation to 
-%% complete is volatile, and can range anywhere between 30 ms and 50 ms for any particular frame. On the 
-%% other hand, both the frame capture and preprocessing operations take substantially less time 
-%% and are relatively more consistent in their times, at 2 ms and 3 ms, respectively. 
-
-
-%% In evaluating the real-time efficacy of the DeepPicar, the methodology is consistent across all 
-%% experiments. The performance of the platform is measured over a set of 1001 video frames that are 
-%% each individually fed to the model. The processing time for the first frame is omitted as, due to 
-%% cache warmup, it is uncharacteristically high and doesn't
-%% accurately represent the Picar's capabilities.  
-%% A WCET of 50 ms, or 20 Hz, is used as a baseline to assess the platform's ability to complete all 
-%% necessary real-time operations in a timely manner.
-
-%% We seek to determine if the DeepPicar is capable of consistently executing all necessary functions 
-%% before their given deadlines. In the case of our platform, it has to process every given frame and get 
-%% the predicted angles from the model within a WCET of 50 ms. In order to determine if this was achievable, 
-%% we tested the platform by running a single model that utilized all 4 cpu cores and measured the time it 
-%% took for each frame to be processed. The performance of the DeepPicar can be seen in Figure 6. We found 
-%% that DeepPicar was able to completely process the vast majority of the provided frames within 50 ms, and 
-%% was unable to do so for very few frames.
-
-%% In our platform, three main real-time tasks are performed during autonomous operation. In order, these 
-%% operations are: (1) capturing and reading the input frame from the designated camera or video stream, 
-%% (2) preprocessing the acquired frame so that it is compatible with the DNN, and (3) feeding the frame 
-%% to, and getting the angle prediction from, the model. We aim to determine which operation(s), if any, 
-%% require the most time to be performed.
-
-%% In order to determine which operation(s) take the longest to execute, we measured the time it 
-%% took for each step to be completed. For this experiment, all four of the Pi's cpu cores were utilized, 
-%% and only one model was run. As is shown in Table II, the angle prediction operation consumes the 
-%% majority of the processing for each frame. Furthermore, the time it takes for the operation to 
-%% complete is volatile, and can range anywhere between 30 ms and 50 ms for any particular frame. On the 
-%% other hand, both the frame capture and preprocessing operations take substantially less time 
-%% and are relatively more consistent in their times, at 2 ms and 3 ms, respectively. 
-
 \subsection{Effect of the Core Count to Inference Timing}
-It may not always be the case that all four cores of the Raspberry Pi 3's Cortex A-53 CPU can be used 
-solely for the purpose of operating an autonomous vehicle. Thus, we test how the number of cores 
-utilized for real-time operations affects the DeepPicar's overall ability to function as an autonomous 
-vehicle platform.
+
+In this experiment, we investigate the scalability of performing
+inference operation of DeepPicar's nueral network with respect to the
+number of cores. As noted earlier, the Raspberry Pi 3 platform has
+four Cortex-A53 cores and the Tensorflow 
+provides a programmable mechanism to to adjust how many cores to be
+used by the library. Leveraging this feature, we repeat the
+same experiment described in the previous subsection with varying
+number of CPU cores---from one to four.
+
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/perf_vs_corecnt}
-  \caption{Average control loop execution time vs. \#of CPU cores used
-    for inferencing by Tensorflow.}
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_corecnt}
+  \caption{Average control loop execution time vs. \#of CPU
+    cores. \fixme{instead of the total control loop time, use the
+      average of DNN inferencing time.}}
   \label{fig:perf-vs-corecnt}
 \end{figure}
 
-\begin{table}[h]
-  \centering
-  \begin{tabular} {| l | l | l | l | l | l | l | l | l | l |}
-    \hline
-    \textbf{num cores} & \textbf{mean} & \textbf{max} & \textbf{99pct} & \textbf{stdev} \\ \hline 
-    1 & 61.96 & 66.00 & 63.31 & 0.51\\ \hline
-    2 & 50.49 & 71.55 & 70.03 & 3.16 \\ \hline
-    3 & 48.11 & 72.22 & 58.45 & 4.18 \\ \hline
-    4 & 42.67 & 56.37 & 50.70 & 2.80 \\
-    \hline
-  \end{tabular}
-  \caption{Real-time performance of DeepPicar depending on the number of cores used.}
-\end{table}
+%% \begin{table}[h]
+%%   \centering
+%%   \begin{tabular} {| c | l | l | l | l | l | l | l | l | l |}
+%%     \hline
+%%     \textbf{\#of cores} & \textbf{Mean} & \textbf{Max} & \textbf{99pct} & \textbf{Stdev} \\ \hline 
+%%     1 & 61.96 & 66.00 & 63.31 & 0.51\\ \hline
+%%     2 & 50.49 & 71.55 & 70.03 & 3.16 \\ \hline
+%%     3 & 48.11 & 72.22 & 58.45 & 4.18 \\ \hline
+%%     4 & 42.67 & 56.37 & 50.70 & 2.80 \\
+%%     \hline
+%%   \end{tabular}
+%%   \caption{Execution time statistics vs. \#of CPU cores.}
+%% \end{table}
 
-The performance of the DeepPicar is summarized in Table III. The DeepPicar performed better, on average, 
-when it utilized more cores. With 4 cores, it was able to meet the vast majority of its deadlines, doing 
-so in almost 99\% of the input frames. The platform performed the worst when using only 1 core, 
-as it was unable to meet any of its deadlines.  On average, using 3 cores instead of 2 only had a 
-performance increase of approximately 2 ms, so the addition of one core in that specific case offers 
-relatively little improvement. One important observation is that the performance was more consistent 
-when only 1 core was used. As a result, the use of multiple cores is very beneficial in terms of 
-reducing the time it takes to complete inference operations, but may result in times that are more 
-volatile.
+Figure~\ref{fig:perf-vs-corecnt} shows the average execution times of
+the control loop as we vary the number of cores used by the
+Tensorflow. As expected as we assign more cores, the average execution
+time decreases---from 61.96 ms on a single core to 42.67 ms on four
+cores. However, the improvement is far from being ideal as we expected
+linear scaling. In particular, from 2 cores to 3 cores, the
+improvement is mere 2.38ms (or 4\%). In short, we find that the
+scalability of DeepPicar's deep neural network is not ideal on the
+platform. We do not know whether it is due to the limitations of
+Tensorflow's multicore implementation or it's the model's inherent
+characteristics. 
+
+The poor scalability opens up the possibility of consolidating
+multiple different tasks or different nueral network models rather
+than allocating all cores for a single nueral network model. For
+example, it is conceivable to use four cameras and four different
+neural network models, each of which is trained seperately and
+executed on a single dedicated core. Assuming we use the same network
+architecture for all models, then one might exepct to achieve up to
+15 Hz using one core (given 1 core can deliver 62ms average
+execution time). In the next experiment, we investigate the
+feasibility of such a scenario.
+
+%% It may not always be the case that all four cores of the Raspberry Pi
+%% 3's Cortex A-53 CPU can be used solely for the purpose of operating an
+%% autonomous vehicle. Thus, we test how the number of cores utilized for
+%% real-time operations affects the DeepPicar's overall ability to
+%% function as an autonomous vehicle platform.
+
+%% The performance of the DeepPicar is summarized in Table III. The
+%% DeepPicar performed better, on average, when it utilized more
+%% cores. With 4 cores, it was able to meet the vast majority of its
+%% deadlines, doing so in almost 99\% of the input frames. The platform
+%% performed the worst when using only 1 core, as it was unable to meet
+%% any of its deadlines.  On average, using 3 cores instead of 2 only had
+%% a performance increase of approximately 2 ms, so the addition of one
+%% core in that specific case offers  relatively little improvement. One
+%% important observation is that the performance was more consistent when
+%% only 1 core was used. As a result, the use of multiple cores is very
+%% beneficial in terms of reducing the time it takes to complete
+%% inference operations, but may result in times that are more volatile.
 
 \subsection{Multimodel Performance}
 We also test the capability of the DeepPicar to run multiple models at the same time, and whether each 
@@ -396,3 +390,51 @@ the Raspberry Pi 3 performed the worst. When compared to the Intel UP Board, inf
 took twice as long across all multicore and multimodel experiments. The difference was even more 
 noticeable in the the addition of computationally heavy synthetic benchmarks that had a much more 
 dire effect on the Pi.
+
+
+
+
+%% In our platform, three main real-time tasks are performed during autonomous operation. In order, these 
+%% operations are: (1) capturing and reading the input frame from the designated camera or video stream, 
+%% (2) preprocessing the acquired frame so that it is compatible with the DNN, and (3) feeding the frame 
+%% to, and getting the angle prediction from, the model. We aim to determine which operation(s), if any, 
+%% require the most time to be performed.
+
+%% In order to determine which operation(s) take the longest to execute, we measured the time it 
+%% took for each step to be completed. For this experiment, all four of the Pi's cpu cores were utilized, 
+%% and only one model was run. As is shown in Table II, the angle prediction operation consumes the 
+%% majority of the processing for each frame. Furthermore, the time it takes for the operation to 
+%% complete is volatile, and can range anywhere between 30 ms and 50 ms for any particular frame. On the 
+%% other hand, both the frame capture and preprocessing operations take substantially less time 
+%% and are relatively more consistent in their times, at 2 ms and 3 ms, respectively. 
+
+
+%% In evaluating the real-time efficacy of the DeepPicar, the methodology is consistent across all 
+%% experiments. The performance of the platform is measured over a set of 1001 video frames that are 
+%% each individually fed to the model. The processing time for the first frame is omitted as, due to 
+%% cache warmup, it is uncharacteristically high and doesn't
+%% accurately represent the Picar's capabilities.  
+%% A WCET of 50 ms, or 20 Hz, is used as a baseline to assess the platform's ability to complete all 
+%% necessary real-time operations in a timely manner.
+
+%% We seek to determine if the DeepPicar is capable of consistently executing all necessary functions 
+%% before their given deadlines. In the case of our platform, it has to process every given frame and get 
+%% the predicted angles from the model within a WCET of 50 ms. In order to determine if this was achievable, 
+%% we tested the platform by running a single model that utilized all 4 cpu cores and measured the time it 
+%% took for each frame to be processed. The performance of the DeepPicar can be seen in Figure 6. We found 
+%% that DeepPicar was able to completely process the vast majority of the provided frames within 50 ms, and 
+%% was unable to do so for very few frames.
+
+%% In our platform, three main real-time tasks are performed during autonomous operation. In order, these 
+%% operations are: (1) capturing and reading the input frame from the designated camera or video stream, 
+%% (2) preprocessing the acquired frame so that it is compatible with the DNN, and (3) feeding the frame 
+%% to, and getting the angle prediction from, the model. We aim to determine which operation(s), if any, 
+%% require the most time to be performed.
+
+%% In order to determine which operation(s) take the longest to execute, we measured the time it 
+%% took for each step to be completed. For this experiment, all four of the Pi's cpu cores were utilized, 
+%% and only one model was run. As is shown in Table II, the angle prediction operation consumes the 
+%% majority of the processing for each frame. Furthermore, the time it takes for the operation to 
+%% complete is volatile, and can range anywhere between 30 ms and 50 ms for any particular frame. On the 
+%% other hand, both the frame capture and preprocessing operations take substantially less time 
+%% and are relatively more consistent in their times, at 2 ms and 3 ms, respectively. 

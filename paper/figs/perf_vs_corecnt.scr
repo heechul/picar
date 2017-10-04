@@ -1,17 +1,13 @@
-set terminal postscript eps enhanced mono "Times-Roman" 32
+set terminal postscript eps enhanced mono "Times-Roman" 26
 set yrange [0.0:100.0]
 set auto x
-# set xtics nomirror scale 0
+set xtics nomirror scale 0
 set xlabel "#of cores" 
 set ylabel "time (ms)" offset 2.5
-set style data histogram
-binwidth=4
-binstart=-2
-# set key above width -8
-# set key samplen 1 width 2
-set key autotitle columnhead
-set boxwidth 1
-plot  "perf_vs_corecnt.dat"  using 2:xticlabel(1) fs solid 0.2
-#      '' 		     using 3:xticlabel(1) fs solid 0.3
+set nokey
+set boxwidth 0.8
+plot  "perf_vs_corecnt.dat"  u 1:2:xticlabel(1) with boxes fs solid 0.2,\
+      ""		     	 u 1:2:2 with labels offset char 0,1
+      
 #      '' 		     using 4:xticlabel(1) fs solid 0.5, \
 #      '' 		     using 5:xticlabel(1) fs solid 0.9
