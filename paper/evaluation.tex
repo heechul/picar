@@ -97,7 +97,7 @@ just a bit faster than the DeepPicar. Although we believe it was not
 limited by their computing platform (we will experimentally compare
 performance differences among multiple embedded computing platforms,
 including NVIDIA's Jetson TK2, later in
-Section~\ref{sec:eval-platforms}), the fact that the low-cost
+Section~\ref{sec:comparison}), the fact that the low-cost
 Raspberry Pi 3 can achieve similar real-time control performance is
 surprising.
 
@@ -404,32 +404,32 @@ many AI workloads may exhibit similar characteristics.
 %% deadlines.
 
 \subsection{Summary}
-So far, we have systematically evaluated DeepPicar's real-time
+So far, we have evaluated DeepPicar's real-time
 characteristics from the perspective of end-to-end deep learning based
-real-time control and made several observations.
+real-time control, and made several observations.
 
 First, we find that DeepPicar's computing platform,
 the Raspberry Pi 3 Model B, offers adquate computing capacity to
-to perform real-time control of the RC car at 20 Hz frequency (or
-50ms per control loop). Given the complexity of the DNN we use, we are
-pleasantly suprised by this finding. The time breakdown has shown that
-the DNN inferencing operation, perforemd by the Tensorflow library, is
-dominating the execution time, which is expected.
+perform real-time control of the RC car at 20 Hz frequency (or
+50ms per control loop). Given the complexity of the DNN we use, we
+were pleasantly suprised by this finding. The time breakdown shows that
+the DNN inferencing operation, perforemd by the Tensorflow library,
+dominates the execution time, which is expected.
 
-Second, we find that the scalability of Tensorflow's DNN inference 
-implementation is not ideal: We find that using all four cores are 
+Second, we find that scalability of Tensorflow's DNN inference 
+implementation is limited: We find that using all four cores are 
 only about 30\% better than using just a single core.
 
 Third, we find that consolidating multiple DNN models---on different CPU
-cores---is feasible based on the following two observations: (1)
-DNN performance on a single is not much worse than on multicore; (2)
-multiple DNN models running simultaneously do not cause severe
-interference with each other.
+cores---is feasible as we find: (1) DNN performance using a single
+core is not much worse than using multiple cores; (2) multiple DNN
+models running simultaneously do not cause severe interference with
+each other.
 
-Lastly, we however find that consolidating memory (DRAM) intensive
-applications could jeopadize DNN performance because DNN performance
-appear very sensitive to memory performance; we observe up to 9.6X
-slowdown in DNN performance by co-scheduling synthetic memory
+Lastly, we however find that consolidating memory (DRAM) performance
+intensive applications could jeopadize DNN performance because DNN
+performance appear very sensitive to memory performance; we observe up
+to 9.6X slowdown in DNN performance by co-scheduling synthetic memory 
 bandwidth intensive applications on idle cores.
 
 %% is capable of successfully completing all
@@ -458,97 +458,6 @@ bandwidth intensive applications on idle cores.
 %% unsatisfactory in the 4 model test where it would have missed the
 %% deadlines by $\sim$10 ms, and the benchmark tests, where  
 %% it would still miss by $\sim$33 ms at best.
-
-\subsection{Performance Requirements}
-In the utilization of the Raspberry Pi 3 in our platform, there are a
-few factors that need to be considered and/or enforced in order to
-guarantee that the Pi is able to consistently perform at a desired
-level. Specifically, these issues all have the potential to negatively
-affect the cpu clock speed/frequency, which would result in decreased
-performance. While, in the above experiments, the cpu operated at a
-preferred clock speed of 1.2 GHz, it is entirely possible for the cpu
-to operate at a lower frequency if the following problems are not
-taken into account. 
-
-The most notable issue that can affect the cpu clock speed is that of
-the power supplied to the Raspberry Pi. In essence, it is necessary
-that the Pi be supplied with 2 Amps, as any less could hinder the Pi's
-ability to maintain a 1.2 GHz frequency. In experiments conducted with
-a power supply that only provided 1 Amp, the Pi was unable to sustain
-a 1.2 GHz clock speed and, instead, fluctuated between operating at
-600 MHz and 1.2 GHz. As a result, it is necessary, or at least highly
-recommended, that the power supply used for the Raspberry Pi 3 be
-capable of outputting 2 Amps, otherwise optimal performance isn't
-guaranteed.  Another factor that can affect clock speed is that of the
-cpu's temperature. Some model operations can be computationally
-intensive, thus it is possible for the temperature of the cpu to
-become relatively high. This can be especially problematic in
-situations where multiple models are running  simultaneously on the
-Pi. Consequently, thermal throttling may be used to decrease the clock
-speed so that the cpu temperature stays at a safe level. Thus the
-Raspberry Pi may not be suited for prolonged use, especially in cases
-where the workload is relatively larger, such as running multiple
-models. Rather, the Pi seems to be better suited for running in set
-periods, after which it is turned  off or made idle so that the cpu is
-allowed time to cool down. 
-
-\subsection{System Comparisons}
-We compare the real time performance of the Raspberry Pi 3 to two other embedded computing platforms, 
-the Intel UP Board the NVIDIA Tegra TX2, to evaluate their efficacy in vision-based autonomous 
-vehicles. We conduct the same experiments done on the DeepPicar with each platform, and analyze the 
-results.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.5\textwidth]{figs/system_multicore}
-  \caption{Inferencing time across platforms based on number of cores used.}
-  \label{fig:sys_core}
-\end{figure}
-
-The results of the multicore tests can be seen in Figure~\ref{fig:sys_core}. It was found that the 
-Intel UP Board performed better in all experiments. On average, it was able to perform inferencing 
-operations, at least, twice as fast as the Raspberry Pi 3. As a result, the UP Board was able to 
-satisfy the 50 ms WCET by a very clear margin (in the worst case, it would still meet it by $\sim$20 
-ms), and, thus, demonstrates that it is more capable of autonomous driving than the Raspberry Pi 3.
-
-The Intel UP Board also performed better in the multimodel tests, as is shown in 
-Figure~\ref{fig:sys_model}. Once again, the UP was able to complete inferecing operations in half the 
-time when compared to the Pi. Furthermore, the Intel UP Board was capable of satisfying the 50 ms 
-WCET, while the Raspberry Pi 3 was unable to do so. As such, the Intel UP Board displays greater 
-potential for the simultaneous execution of multiple models during self-driving operation, while the 
-Raspberry Pi 3 would struggle to do so.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.5\textwidth]{figs/system_multimodel}
-  \caption{Inferencing time across platforms based on number of models run concurrently.}
-  \label{fig:sys_model}
-\end{figure}
-
-Finally, we examined if the performance of the Intel UP Board and Tegra TX2 would be affected by the 
-addition of the synthetic benchmarks. As summarized in Figure~\ref{fig;sys_bench}, the Intel UP Board 
-did experience a change in its inferencing times, but the increase was not as drastic as is seen by 
-the Raspberry Pi 3. in the worst case, the Intel UP Board produced times that were over two times as 
-large, whereas the Raspberry Pi 3 output times that were around 10 times greater. The Intel UP Board 
-was successful in completing inferencing operations in under 50 ms when benchmarks were run on a 
-maximum of 2 cores, while the Raspberry Pi 3 failed to do so when any benchmark was introduced. As 
-such, it can be concluded that the Intel UP Board would be more capable of running computationally 
-heavy processes during autonomous driving, and that the Pi wouldn't be able to do the same.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.5\textwidth]{figs/system_benchmark}
-  \caption{Inferencing time across platforms based on number of cores used.}
-  \label{fig:sys_bench}
-\end{figure} 
-
-In the comparison of the real-time capabilities of three embedded computing platforms, we found that 
-the Raspberry Pi 3 performed the worst. When compared to the Intel UP Board, inferencing on the Pi 
-took twice as long across all multicore and multimodel experiments. The difference was even more 
-noticeable in the the addition of computationally heavy synthetic benchmarks that had a much more 
-dire effect on the Pi.
-
-
 
 
 %% In our platform, three main real-time tasks are performed during autonomous operation. In order, these 
