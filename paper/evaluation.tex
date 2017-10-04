@@ -14,7 +14,9 @@ and
 
 The Raspberry Pi 3 Model B platform used in DeepPicar equip a Boardcom
 BCM2837 SoC, which has a quad-core 64bit ARM Cortex-A53 cluster,
-running at up to 1.2GHz. The chip also includes Broadcom's Videocore IV
+running at up to 1.2GHz. Each core has 16K private I\&D caches, and all
+cores share a 512KB L2 cache.
+The chip also includes Broadcom's Videocore IV
 GPU, although we did not use the GPU in our evaluation due to the lack
 of sofware support (Tensorflow is not compatible with the GPU).
 For software, we use Ubuntu MATE 16.04, Tensorflow 1.1 and python
@@ -180,7 +182,8 @@ feasibility of such a scenario.
 
 In this experiment, we launch multiple instances of DeepPicar's DNN
 model at the same time and measure its impact to their inference
-timings.
+timings. In particular, we are interested in how shared resource
+contention affect inference timing.
 
 %% We also test the capability of the DeepPicar to run multiple models at
 %% the same time, and whether each model can successfully perform within
@@ -196,7 +199,7 @@ timings.
     model using one CPU core; 4x1: four DNN models each using one CPU;
     1x2: one DNN model using two CPU cores; 2x2: two DNN models each
     using two CPU cores.} 
-  \label{fig:perf-vs-multimodel}
+  \label{fig:perf-vs-modelcnt}
 \end{figure}
 
 %% \begin{figure}[h]
@@ -204,8 +207,14 @@ timings.
 %%   \includegraphics[width=.5\textwidth]{figs/2ModelChart}
 %%   \caption{ Change in inferencing time when 2 models are run concurrently. }
 %% \end{figure}
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=.5\textwidth]{figs/4ModelChart}
+%%   \caption{Change in inferencing time when 4 models are run simultaneously. }
+%% \end{figure}
 
-Figure~\ref{fig:perf-vs-multimodel} shows the results. In the figure,
+
+Figure~\ref{fig:perf-vs-modelcnt} shows the results. In the figure,
 X-axis shows the system configuration: \#of DNN models x \#of CPU
 cores\/DNN. For example, '4x1' means running four DNN models each of
 which is assigned to run on one CPU core, whereas '2x2' means running
@@ -226,62 +235,94 @@ using two CPU cores.
 %% increases of around  5-7 ms, $\sim$10\%, when compared to a baseline
 %% of 1 model running on two cores.
 
-\begin{table}[h]
-\centering
-  \begin{tabular} {| l | l | l |}
-  \hline
-  \textbf{num models} & 1 & 2 \\ \hline
-  \textbf{L1 refs} &  3.04E+10 &  3.04E+10 \\ \hline
-  \textbf{L1 misses} & 4.78E+08 & 4.91E+08 \\ \hline
-  \textbf{L1 miss \%} & 1.58 & 1.61 \\ \hline
-  \textbf{L2 refs} & 3.31E+09 &  3.91E+09 \\ \hline
-  \textbf{L2 misses} & 3.68E+08 & 4.62E+08 \\ \hline
-  \textbf{L2 miss \%} & 11.12 & 10.88 \\ \hline
-  \end{tabular}
-  \caption{ Effect of 2 simulatneous models on cache accesses. }
-\end{table}
+%% \begin{table}[h]
+%% \centering
+%%   \begin{tabular} {| l | l | l |}
+%%   \hline
+%%   \textbf{num models} & 1 & 2 \\ \hline
+%%   \textbf{L1 refs} &  3.04E+10 &  3.04E+10 \\ \hline
+%%   \textbf{L1 misses} & 4.78E+08 & 4.91E+08 \\ \hline
+%%   \textbf{L1 miss \%} & 1.58 & 1.61 \\ \hline
+%%   \textbf{L2 refs} & 3.31E+09 &  3.91E+09 \\ \hline
+%%   \textbf{L2 misses} & 3.68E+08 & 4.62E+08 \\ \hline
+%%   \textbf{L2 miss \%} & 11.12 & 10.88 \\ \hline
+%%   \end{tabular}
+%%   \caption{ Effect of 2 simulatneous models on cache accesses. }
+%% \end{table}
 
-The increase in inference times, however, was not the result of
-increased cache misses due to additional accesses. For all models, the
-number of L1 misses was always $\sim$1.6\% of all  references. In the
-2 model test, L2 cache misses remained at $\sim$11\% of all
-references, and each model in the 4 model test missed $\sim$13\% of
-all L2 references. 
+%% \begin{table}[h]
+%% \centering
+%%   \begin{tabular} {| l | l | l |}
+%%   \hline
+%%   \textbf{num models} & 1 & 4 \\  \hline
+%%   \textbf{L1 refs} & 2.78E+10 & 2.79E+10 \\ \hline
+%%   \textbf{L1 misses} & 4.36E+08 & 4.53E+08 \\ \hline
+%%   \textbf{L1 miss \%} & 1.57 & 1.63 \\ \hline
+%%   \textbf{L2 refs} & 2.83E+09 & 3.36E+09 \\ \hline 
+%%   \textbf{L2 misses} & 3.59E+08 & 4.43E+08 \\ \hline
+%%   \textbf{L2 miss \%} & 12.68 & 13.19 \\ 
+%% \hline
+%%   \end{tabular}
+%%   \caption{ Effect of 4 concurrent models on cache accesses. }
+%% \end{table}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/4ModelChart}
-  \caption{Change in inferencing time when 4 models are run simultaneously. }
+  \includegraphics[width=.45\textwidth]{figs/l2missrate_vs_modelcnt}
+  \caption{L2 cache miss rates of different neural network and core
+    assignments. X-axis is the same as Figure~\ref{fig:perf-vs-modelcnt}.} 
+  \label{fig:l2missrate-vs-modelcnt}
 \end{figure}
 
+These increases in inference times in the co-scheduled scenarios are
+expected and likely caused by contention in the shared hardware
+resources such as the shared L2 cache and/or the DRAM controller.
+To further analyze the source of contention, we use hardwawre
+performance counters of the processor. Specifically, we measure L2
+miss rates of the DNN models first in isolation and then after
+co-scheduling another models. If the shared L2 cache is the primary
+source of inteference, then the measured L2 miss rates would
+increase. Figure~\ref{fig:l2missrate-vs-modelcnt} shows the results.
+As can be see in the figure, L2 miss rates are largely unchanged
+regardless whether multiple models are co-scheduled or not. This
+suggests that the shared L2 cache is not the bottleneck that caused
+execution time increases. In other words, DNN models appear to be not
+sensitive to the shared L2 cache space. % L2 partitioning is probably
+                                % not going to be useful.
+Instead, we hypothesize that it is likely caused by the memory
+controller---the only other major shared hardware source---where
+memory requests from different CPU cores contend, which would result
+in increased memory access latency. While some Intel processors
+provide uncore hardware counters that can measure average memory
+access latency~\cite{ye2016maracas}, we were not able to identify
+whether such hardware counters exist in the BCM2837 processor of
+Raspberry Pi 3 due to the lack of documentation. Instead, in the next
+experiment, we use memory intensive synthetic benchmark to test the
+hypothesis.
 
-\begin{table}[h]
-\centering
-  \begin{tabular} {| l | l | l |}
-  \hline
-  \textbf{num models} & 1 & 4 \\  \hline
-  \textbf{L1 refs} & 2.78E+10 & 2.79E+10 \\ \hline
-  \textbf{L1 misses} & 4.36E+08 & 4.53E+08 \\ \hline
-  \textbf{L1 miss \%} & 1.57 & 1.63 \\ \hline
-  \textbf{L2 refs} & 2.83E+09 & 3.36E+09 \\ \hline 
-  \textbf{L2 misses} & 3.59E+08 & 4.43E+08 \\ \hline
-  \textbf{L2 miss \%} & 12.68 & 13.19 \\ 
-\hline
-  \end{tabular}
-  \caption{ Effect of 4 concurrent models on cache accesses. }
-\end{table}
+%% The increase in inference times, however, was not the result of
+%% increased cache misses due to additional accesses. For all models, the
+%% number of L1 misses was always $\sim$1.6\% of all  references. In the
+%% 2 model test, L2 cache misses remained at $\sim$11\% of all
+%% references, and each model in the 4 model test missed $\sim$13\% of
+%% all L2 references. 
 
-In all multimodel tests, it was found that a greater number of models run simultaneously resulted in 
-interference that led to a noticable increase in the average inferencing time that wasn't 
-attributable to a change in cache misses. Instead, the overall time increases can most likely be 
-traced to an increase in cache latency. Even if the models had a consistent number of cache hits, it 
-is highly probable that the contention for the cache increased the access time for each model, 
-consequently increasing the time it took for the models to execute their operations.
+%% In all multimodel tests, it was found that a greater number of models
+%% run simultaneously resulted in interference that led to a noticable
+%% increase in the average inferencing time that wasn't attributable to a
+%% change in cache misses. Instead, the overall time increases can most
+%% likely be traced to an increase in cache latency. Even if the models
+%% had a consistent number of cache hits, it is highly probable that the
+%% contention for the cache increased the access time for each model,
+%% consequently increasing the time it took for the models to execute
+%% their operations.
 
-In terms of real-time performance under a WCET of 50 ms, the DeepPicar was unsatisfactory in all 
-multimodel tests. On average, the 2 model test saw models miss their deadline by 6-8 ms, and the 4 
-model test was worse as each model went over their deadlines by 27-29 ms. As a result, it can be 
-ascertained that, if a WCET of 50 ms is required, DeepPicar would not be able to perform as necessary.
+%% In terms of real-time performance under a WCET of 50
+%% ms, the DeepPicar was unsatisfactory in all multimodel tests. On
+%% average, the 2 model test saw models miss their deadline by 6-8 ms,
+%% and the 4 model test was worse as each model went over their deadlines
+%% by 27-29 ms. As a result, it can be ascertained that, if a WCET of 50
+%% ms is required, DeepPicar would not be able to perform as necessary.
 
 \subsection{Benchmark Performance}
 In order to determine how cache misses affects the performance of the DeepPicar, we test its ability by 
