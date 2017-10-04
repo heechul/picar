@@ -3,7 +3,7 @@ set yrange [0.0:100]
 # set xtics nomirror scale 0
 # unset xlabel 
 set ylabel "Avg. processing time (ms)" offset 2
-set xlabel "(#of DNNs) x (Cores/DNN)"
+set xlabel "(#of DNNs) x (#of cores/DNN)"
 set nokey
 set boxwidth 0.5
 set termoption dash
