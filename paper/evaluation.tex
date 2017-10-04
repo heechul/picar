@@ -330,16 +330,17 @@ In order to determine how contended DRAM requests affect the DNN
 inference timing of the DeepPicar, we use a synthetic memory
 intensive benchmark from the IsolBench suite~\cite{Valsan2016}.
 
-we test its ability by  running synthetic benchmarks
-concurrently with the model. In each experiment, we run a single model
-on a  number of cores, and a synthetic benchmark on the remaining idle
-cores. The effects of the benchmarks can seen in Figure 9 and Table
-VI. 
+In each experiment, we run a single DNN model one core, and
+co-scheduled an increasing number of the memory intensive synthetic
+benchmark on the remaining idle cores.
+Figure~\ref{fig:}
+The effects of the benchmarks can seen in Figure 9 and Table VI. 
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.5\textwidth]{figs/BenchmarkChart}
-  \caption{ Effect of benchmarks on inferencing time. }
+  \caption{Effect of benchmarks on inferencing time.}
+  \label{fig:}
 \end{figure}
 
 \begin{table}[h]
@@ -357,6 +358,7 @@ VI.
   \end{tabular}
   \caption{ Effect of benchmarks on cache accesses. }
 \end{table}
+
 
 The presence of the benchmark(s) had a noticable effect on the DeepPicar, with all tests showing 
 increases in inferencing operations. The least change happened when the model was run on 3 cores, and a 
