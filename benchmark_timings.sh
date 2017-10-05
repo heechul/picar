@@ -8,7 +8,7 @@ identification+="_"
 identification+=$timestamp
 
 mkdir -p logs/test-model-and-benchmark/$identification
-echo "This test will take approximately 45 minutes to complete"
+echo "This test will take approximately 30 minutes to complete"
 echo "The output files can be found in: logs/test-model/$identification"
 
 echo 2-parallel-single-core
