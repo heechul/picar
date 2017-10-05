@@ -111,7 +111,20 @@ be completed within the desired control period. (e.g., 50ms period for
 % how we evaluated (in terms real-time performance)
 
 % what are our findings?
-\fixme{TBD: Summary of our findings}
+From our experiments, we discover that the DeepPicar is capable of 
+completing control loops in under 50 ms, or 20 hz, and can do so 
+almost 99\% of the time. The number of cores used by the platform has 
+an unexpectedly low impact on its performance, only decreasing the 
+control loop times by 30\% when using 4 cores instead of 1.  Our 
+platform shows the potential to run multiple neural network models 
+simultaneously, as there are no indications of direct interference 
+between them. Instead, we show that memory intensive co-runners can 
+be detrimental to the real-time performance of the DeepPicar. 
+Finally, while we find that the Raspberry Pi 3 takes longer to 
+complete control loops when compared to other embedded computing 
+platforms, namely the Intel UP Board and the NVIDIA Tegra TX2, we 
+still conclude that the Pi 3 is a viable option for autonomous 
+vehicle research.
 
 % contributions
 The {\bf contributions} of this paper are as follows:
