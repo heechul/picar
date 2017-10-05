@@ -1,0 +1,36 @@
+
+\subsection{System-level Factors Affecting Real-Time Performance}
+In the utilization of the Raspberry Pi 3 in our platform, there are a
+few factors that need to be considered and/or enforced in order to
+guarantee that the Pi is able to consistently perform at a desired
+level. Specifically, these issues all have the potential to negatively
+affect the cpu clock speed/frequency, which would result in decreased
+performance. While, in the above experiments, the cpu operated at a
+preferred clock speed of 1.2 GHz, it is entirely possible for the cpu
+to operate at a lower frequency if the following problems are not
+taken into account. 
+
+The most notable issue that can affect the cpu clock speed is that of
+the power supplied to the Raspberry Pi. In essence, it is necessary
+that the Pi be supplied with 2 Amps, as any less could hinder the Pi's
+ability to maintain a 1.2 GHz frequency. In experiments conducted with
+a power supply that only provided 1 Amp, the Pi was unable to sustain
+a 1.2 GHz clock speed and, instead, fluctuated between operating at
+600 MHz and 1.2 GHz. As a result, it is necessary, or at least highly
+recommended, that the power supply used for the Raspberry Pi 3 be
+capable of outputting 2 Amps, otherwise optimal performance isn't
+guaranteed.
+
+Another factor that can affect clock speed is that of the
+cpu's temperature. Some model operations can be computationally
+intensive, thus it is possible for the temperature of the cpu to
+become relatively high. This can be especially problematic in
+situations where multiple models are running  simultaneously on the
+Pi. Consequently, thermal throttling may be used to decrease the clock
+speed so that the cpu temperature stays at a safe level. Thus the
+Raspberry Pi may not be suited for prolonged use, especially in cases
+where the workload is relatively larger, such as running multiple
+models. Rather, the Pi seems to be better suited for running in set
+periods, after which it is turned  off or made idle so that the cpu is
+allowed time to cool down. 
+
