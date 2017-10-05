@@ -1,0 +1,19 @@
+Fig. 6/TABLE II:
+    Pi_1model4core.txt: model execution log.
+    Pi_1model4core_stats: statistics used for Table II.
+    Pi_1model4core_times: individual operations times for each frame in experiment.
+
+Fig. 7:
+    Pi_multicore_1core.txt: model execution when using 1 core.
+    Pi_multicore_2core.txt: model execution when using 2 cores.
+    Pi_multicore_3core.txt: model execution when using 3 cores.
+    Pi_multicore_4core.txt: model execution when using 4 cores.
+    *Note: the average control loop times seen in the figure can be found towards the bottom of each file above.
+
+Fig. 8/Fig. 9:
+    Pi_multimodel_1Nx1C.txt: model execution when running 1 model on 1 core.
+    Pi_multimodel_1Nx4C.txt: model execution when running 4 models on 1 core each.
+    Pi_multimodel_2Nx1C.txt: model execution when running 2 models on 1 core each.
+    Pi_multimodel_2Nx2C.txt: model execution when running 2 models on 2 core each.
+    *Note: the average control loop times from Fig. 8 and L2 cache miss percents from Fig. 9 can be found at the bottom of each of the above files.
+    
