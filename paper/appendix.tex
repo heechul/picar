@@ -1,3 +1,33 @@
+\subsection{DNN Training and Testing}
+We train a neural network model across a set of 30 completed runs on 
+the track seen in Figure~\ref{fig:track} by a human pilot. Half of 
+the runs saw the car driving one way along the track, while the 
+remaining half were of the car driving in the opposite direction on 
+the track. In total, we collected 2,556 frames for training and 2,609 
+frames for validation. In each training step, we use a batch size of 
+100 frames which are used to further develop the model. We do this 
+across 2,000 training steps. When a model was trained with the 
+aformentioned data, the training loss was 0.0188 and the validation 
+loss was 0.0132. 
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=.55\textwidth]{figs/TrainingLoss}
+  \caption{DeepPicar's control loop processing times over 1000 input 
+image frames.}
+  \label{fig:modelloss}
+\end{figure}
+
+We also trained models where center frames (where the car was going 
+straight) and curve frames (where the car was turning) were equally 
+selected in each batch, and were pleasantly surprised at the change 
+in the car's performance. With the second model, the car displayed a 
+greater ability to stay in the center of the track (on the white 
+tape). This was problematic, however, as the loss values changed with 
+the training loss being 0.009 and the validation loss becoming 
+0.0869, indicating that overfitting had become a problem. We believe, 
+though, that this can be rectified through the collection of 
+additional data for training and validation.
 
 \subsection{System-level Factors Affecting Real-Time Performance}
 In the utilization of the Raspberry Pi 3 in our platform, there are a
