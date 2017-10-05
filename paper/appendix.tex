@@ -10,7 +10,7 @@ across 2,000 training steps. When a model was trained with the
 aformentioned data, the training loss was 0.0188 and the validation 
 loss was 0.0132. 
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[width=.55\textwidth]{figs/TrainingLoss}
   \caption{DeepPicar's control loop processing times over 1000 input 
@@ -21,7 +21,7 @@ image frames.}
 We also trained models where center frames (where the car was going 
 straight) and curve frames (where the car was turning) were equally 
 selected in each batch, and were pleasantly surprised at the change 
-in the car's performance. With the second model, the car displayed a 
+in the car's performance. With the second method, the car displayed a 
 greater ability to stay in the center of the track (on the white 
 tape). This was problematic, however, as the loss values changed with 
 the training loss being 0.009 and the validation loss becoming 
