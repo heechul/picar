@@ -1,0 +1,21 @@
+set terminal pdf
+set output "compare_core.pdf"
+set yrange [0.0:*]
+# set xtics nomirror scale 0
+# unset xlabel 
+set ylabel "Avg. processing time (ms)" offset 2
+set xlabel "(#of cores)"
+
+set style data histogram
+set style histogram cluster gap 1
+set style fill pattern border
+
+set boxwidth 1
+plot  "compare_core.dat"  using 2:xticlabel(1) title "Raspberry Pi 3" lt -1,\
+      ""                  using 3 title "Intel UP Board" lt -1,\
+      ""                  using 4 title "Tegra TX2 CPU Only" lt -1,\
+      ""                  using 5 title "Tegra TX2 GPU" lt -1
+      
+
+      
+
