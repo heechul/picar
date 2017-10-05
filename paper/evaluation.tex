@@ -403,7 +403,30 @@ many AI workloads may exhibit similar characteristics.
 %% autonomous operation, the DeepPicar wouldn't be capable of meeting its
 %% deadlines.
 
-\subsection{Summary}
+\begin{table*}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    Item    & Raspberry Pi 3 (B)   & Intel UP                  & NVIDIA Jetson TX2\\
+    \hline
+            & BCM2837              & X5-Z8350 (Cherry Trail)   & Tegra TX2 \\
+    CPU     & 4x Cortex-A53@1.2GHz/512KB L2  &
+              4x Atom@1.92GHz/2MB L2 &
+              4x Cortex-A57@2GHz/2MB L2 \\
+            &              &              & 2x Denver@2.0GHz/2MB L2 (not used)  \\
+    \hline
+    GPU     &  VideoCore IV (not used)    &
+               Intel HD 400 Graphics (not used) &
+               Pascal 256 CUDA cores   \\
+    \hline
+    Memory  & 1GB LPDDR2   &  2GB DDR3L     & 8GB LPDDR4              \\
+    \hline
+  \end{tabular}
+  \caption{Compared embedded computing platforms}
+  \label{tbl:patforms}
+\end{table*}
+
+\subsection{Summary of the Findings}
 So far, we have evaluated DeepPicar's real-time
 characteristics from the perspective of end-to-end deep learning based
 real-time control, and made several observations.
