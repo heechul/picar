@@ -80,39 +80,72 @@ used.}
   \label{fig:sys_bench}
 \end{figure} 
 
-Finally, we compare the effect of co-scheduling memory intensive
-synthetic benchmarks on the DNN control loop timing.
-Figure~\ref{fig:sys_bench} shows the results. 
-experienced a change in their inferencing times, but the increases 
-were not as drastic as is seen by the Raspberry Pi 3. in the worst 
-case, both the UP Board and TX2 (CPU only and GPU) produced times 
-that were over two times as large, whereas the Raspberry Pi 3 output 
-times that were around 10 times greater. The Intel UP Board was 
-successful in completing inferencing operations in under 50 ms when 
-benchmarks were run on a maximum of 2 cores, and the TX2 was 
-successful in all experiments irrespective of the computing resources 
-utilized. Comparetively, both performed better than the Raspberry Pi 
-3 which failed to meet its deadlines when any benchmark was 
-introduced. As such, it can be concluded that the Intel UP Board 
-would be more capable of running computationally heavy processes 
-during autonomous driving, and that the Pi wouldn't be able to do the 
-same.
+Finally, we compare the effect of co-scheduling memory bandwidth
+intensive synthetic benchmarks on the DNN control loop timing. 
+Figure~\ref{fig:sys_bench} shows the results.
+As discussed in 
+Section~\ref{sec:eval-memhog}, we observe dramatic execution time
+increase, up to 9.4X, in Raspberry Pi 3 as we increase the number of
+co-scheduled tasks. We also observe increased control loop execution
+timing in Intel Up and TX2, but the degree of the increase is not as
+dramatic as the Pi3. Compared to their respective solo timing (i.e.,
+the model runs on a single core in isolation), Intel UP suffers up to
+2.3X execution time increase; TX2 (CPU) and TX2 (GPU) suffer up to
+2.2X and 2.5X increase, respectively. This is somewhat suprising
+because Raspberry Pi 3's cores are in-oder architecture based while
+the cores in Intel Up and NVIDIA TX2 are out-of-order architecture
+based and that the memory intensive tasks on out-of-order cores can
+generate more memory traffic. We suspect that this is because the
+memory subsystems in the Intel UP and TX2 platforms provide higher
+bandwidth and fairness than the memory subsystem of the Pi 3.
 
-In the comparison of the real-time capabilities of three embedded 
-computing platforms, we found that the Raspberry Pi 3 performed the 
-worst. When compared to the Intel UP Board and the NVIDIA Tegra TX2, 
-control loops on the Pi were shown to take noticably longer to 
-complete, regardless of the number of cores utilized or the number of 
-neural network models run simultaneoulsy. The difference was even 
-more noticeable in the the addition of computationally heavy 
-synthetic benchmarks that had a much more dire effect on the Pi. In 
-the worst case, an average control loop on the Pi took an abnormally 
-long amount of time to finish. Compared to the TX2 with GPU support, 
-those times were 34.8X times greater. From this, we find that the UP 
-Board and Tegra TX2 are superior platforms for real-time CNN 
-operations. However, due to the Pi's ability to satisfy the 50 ms 
-WCET in some experiments, we conclude that the Raspberry Pi 3 is 
-feasible for autonomous research.
+Another intersting observation is that TX2 (GPU) also suffers
+considerable execution time increase (2.5X) despite the fact that the
+co-scheduled synthetic tasks do not utilize the GPU. In other words,
+the DNN model has dedicated access to the GPU. This is, however, a
+known characteristic of integrated CPU-GPU architectue based
+platforms that both CPU and GPU share the same memory
+subsystem~\cite{Ali2017}.
+
+%% experienced a change in their inferencing times, but the increases 
+%% were not as drastic as is seen by the Raspberry Pi 3. in the worst 
+%% case, both the UP Board and TX2 (CPU only and GPU) produced times 
+%% that were over two times as large, whereas the Raspberry Pi 3 output 
+%% times that were around 10 times greater. The Intel UP Board was 
+%% successful in completing inferencing operations in under 50 ms when 
+%% benchmarks were run on a maximum of 2 cores, and the TX2 was 
+%% successful in all experiments irrespective of the computing resources 
+%% utilized. Comparetively, both performed better than the Raspberry Pi 
+%% 3 which failed to meet its deadlines when any benchmark was 
+%% introduced. As such, it can be concluded that the Intel UP Board 
+%% would be more capable of running computationally heavy processes 
+%% during autonomous driving, and that the Pi wouldn't be able to do the 
+%% same.
+
+In summary, we find that today's embedded computing platforms, even as
+inexpensive as a Raspberry Pi 3, are powerful enough to support
+vision and end-to-end deep learning based real-time control
+applications. Furthermore, availability of CPU cores and GPU on these
+platforms allow consolidating mutiple deep neural network based AI
+workloads. However, shared resource contention among these diverse
+computing resources remain an important issue that must be understood
+and controlled especially for safety-critical applications.
+
+%% the comparison of the real-time capabilities of three embedded 
+%% computing platforms, we found that the Raspberry Pi 3 performed the 
+%% worst. When compared to the Intel UP Board and the NVIDIA Tegra TX2, 
+%% control loops on the Pi were shown to take noticably longer to 
+%% complete, regardless of the number of cores utilized or the number of 
+%% neural network models run simultaneoulsy. The difference was even 
+%% more noticeable in the the addition of computationally heavy 
+%% synthetic benchmarks that had a much more dire effect on the Pi. In 
+%% the worst case, an average control loop on the Pi took an abnormally 
+%% long amount of time to finish. Compared to the TX2 with GPU support, 
+%% those times were 34.8X times greater. From this, we find that the UP 
+%% Board and Tegra TX2 are superior platforms for real-time CNN 
+%% operations. However, due to the Pi's ability to satisfy the 50 ms 
+%% WCET in some experiments, we conclude that the Raspberry Pi 3 is 
+%% feasible for autonomous research.
 
 
 
