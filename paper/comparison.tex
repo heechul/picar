@@ -9,15 +9,20 @@ Pi 3, the Intel UP~\footnote{http://www.up-board.org/up/} and NVIDIA
 Jetson
 TX2~\footnote{http://www.nvidia.com/object/embedded-systems-dev-kits-modules.html}---from
 the point of view of supporting vision-based end-to-end deep learning
-based autonomous vehicles.
-
-Table~\ref{tbl:platforms}
+based autonomous vehicles. 
+Table~\ref{tbl:platforms} shows architectural features of the three
+platforms~\footnote{Note that the GPUs of the Raspberry Pi 3 and Intel
+  Up are not used in evaluation due to lack of software (TensorFlow)
+support. Also, the two Denvor cores in Tegra TX2 are not used in
+evaluation due to TensorFlow issues.}.
   
-Our basic approach is to use the same DeepPicar's software, and repeat
+Our basic approach is to use the same DeepPicar software, and repeat
 the experiments in Section~\ref{sec:evaluation} on each hardware
-platform and compare the results.
-
-
+platform and compare the results. 
+For Tegra TX2, we have two different system configurations,
+which differ in whether TensorFlow is configured to use its GPU or
+only the CPU cores. Thus, the total four system configurations are
+compared.
 
 \begin{figure}[h]
   \centering
@@ -27,8 +32,10 @@ used.}
   \label{fig:sys_core}
 \end{figure}
 
-The results of the multicore tests can be seen in 
-Figure~\ref{fig:sys_core}. It was found that the both the Tegra TX2 
+Figure~\ref{fig:sys_core} shows the average control loop completion
+timing as a function of the number of CPU cores on each of the four
+system configurations.
+It was found that the both the Tegra TX2 
 and the Intel UP Board performed better than the Raspberry Pi 3 in 
 all experiments. On average, the UP was able to perform inferencing 
 operations, at least, twice as fast as the Raspberry Pi 3. The 
