@@ -5,6 +5,11 @@ set xtics nomirror scale 0
 set xlabel "#of cores" 
 set ylabel "Avg. processing time (ms)" offset 2.5
 set nokey
+
+set arrow from 0.5,50 to 4.5,50 nohead dt "."
+set label  "20" at 4.55,53 
+set label  "Hz" at 4.55,45
+
 set boxwidth 0.5
 plot  "perf_vs_corecnt.dat"  u 1:2:xticlabel(1) with boxes fs solid 0.2,\
       ""		     	 u 1:2:2 with labels offset char 0,1
