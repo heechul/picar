@@ -105,7 +105,9 @@ co-scheduled synthetic tasks do not utilize the GPU. In other words,
 the DNN model has dedicated access to the GPU. This is, however, a
 known characteristic of integrated CPU-GPU architectue based
 platforms that both CPU and GPU share the same memory
-subsystem~\cite{Ali2017}.
+subsystem~\cite{Ali2017}. As a result, TX2 (GPU) fails to meet the
+10ms deadline for 100 Hz control that would have been feasible if
+there is no contention between the CPU cores and the GPU.
 
 %% experienced a change in their inferencing times, but the increases 
 %% were not as drastic as is seen by the Raspberry Pi 3. in the worst 

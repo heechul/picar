@@ -1,10 +1,43 @@
 \section{Conclusion}\label{sec:conclusion}
+We presented DeepPicar, a low cost autonomous car platform that is
+inexpensive to build but is based on a state-of-the art AI technology:
+End-to-end deep learning based real-time control.
+Specifically, DeepPicar uses a deep convolutional neural network to
+predict steering angles of the car directly from a camera input data
+in real-time. Importantly, DeepPicar's neural network architecture is
+identical to that of NVIDIA's real self-driving car. 
 
-We present a low cost autonomous vehicle platform that uses state-of-the art AI techniques and 
-technologies. It employs a deep convolutional neural network (CNN) that is trained to effectively 
-navigate the car by predicting the steering angle given an input frame. We have tested the real time 
-efficacy of our platform and found that it is capable of performing inferencing operations within a WCET 
-of 50 ms, or 20 fps, when a single model is run on more than one core. Further studies should be 
-conducted on the interference that occurs between cores to allow for improved performance in utilizing 
-multiple models for autonomous vehicles. With minimal further research, the DeepPicar can 
-become a valudable, reliable and inexpensive tool in the continued research of autonomous vehicles.
+Despite the complexity of the neural network, DeepPicar uses a
+low-cost Raspberry Pi 3 quad-core computer as a sole computing
+resource. We systematically analyzed the real-time characteristics of
+the Pi3 platform in the context of deep-learning based real-time
+control appilcations, with a special emphasis on real-time deep neural
+network inferencing.
+We also evaluated other more powerful embedded computing
+platforms to better understand achievable real-time performance of
+DeepPicar's deep-learning based control system and the impact of
+computing hardware architectures.
+We find all tested embedded platforms, including the Pi3, are capable
+of supporting deep-learning based real-time control, from 20 Hz up to
+100 Hz, depending on the platform and its system
+configuration. However, shared resource contention remains an
+important issue that must be considered in applying deep-learning
+models on shared memory based embedded computing platforms.
+
+%% We evaluated the real time efficacy of our platform and found
+%% that it is capable of performing inferencing operations within a WCET
+%% of 50 ms, or 20 fps, when a single model is run on more than one
+%% core.
+
+As future work, we plan to apply shared resource management
+techniques~\cite{Yun2013,yun2014rtas} on the DeepPicar platform and
+evaluate their impact to the real-time performance of the system. We
+also plan to improve the prediction accuracy by feeding more data and
+upgrade the RC car hardware platform to enable more precise steering
+angle control.
+
+%% Further studies should be conducted on the interference that
+%% occurs between cores to allow for improved performance in utilizing
+%% multiple models for autonomous vehicles. With minimal further
+%% research, the DeepPicar can become a valudable, reliable and
+%% inexpensive tool in the continued research of autonomous vehicles.

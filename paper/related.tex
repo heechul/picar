@@ -1,9 +1,57 @@
 \section{Related Work}\label{sec:related}
 
-Autonomous vehicles are becoming an increasingly interesting research topic as computing platforms capable of safely processing sensor input into safe vehicle controls become smaller and more affordable.  The model proposed in End-To-End Learning for Self-Driving Cars \cite{Bojarski2016} is viable on a platform as simple as a Raspberry Pi.
+%  NN for autonomous systems
+\cite{Bojarski2016}
 
-Given smaller, affordable platforms with multiple cores and even GPU based parallel processing such as the Tegra X1 \cite{NVIDIA2015} and the recently released Tegra X2 \cite{Amert2017}, allocation and management of available shared CPU and GPU resources \cite{Kim2016} becomes increasingly important.  Research on improving the performance of neural networks \cite{Jouppi2017} also attributes to the viability of using these models in small systems.  With less powerful onboard computing devices, it was necessary for these kinds of robotics systems to use an external computer for the algorithm such as is used in \cite{LeCun:2005}.
+% open testbed
+\cite{Kato:2015}
+~\cite{shin2017project}
+~\cite{upennf1tenth}
 
-Together with hardware and platform improvements, there have been significant improvements in the algorithms such as a neural network algorithm capable of surpassing human level control at Atari games \cite{DBLP}.  A popular technique had been to take sensor input and determine a depth map, such as the model used in \cite{Michels:2005}. End-to-end models such as the one used in \cite{Bojarski2016} can improve the efficiency of the model.  Improving the flexibility of the model and it ability to adapt to different situations and avoiding overfitting to training data continues to be an important topic in autonomous driving \cite{Pomerleau1989}.
+% real-time performance evaluation of embedded computing platforms
+~\cite{Otterness2017} vision workload
+\cite{Amert2017} TX2 scheduling algorithm
+\cite{NVIDIA2015} dnn workload real-time inference
 
-Producing large platforms such as DAVE \cite{LeCun:04} has often been the approach to developing the technology for self-driving vehicles.  This approach, while certainly effective, presents a higher barrier to entry for research groups.  Recently, there has been a movement to make research towards autonomous driving more accessible.  \cite{Kato:2015} have provided an open platform for developing autonomous vehicles using publicly available vehicles and sensors.  Smaller, more focused platforms, such as the one found in \cite{Michels:2005} also present an accessible way forward.
+% acceleration
+\cite{Jouppi2017} TPU
+
+Autonomous vehicles are becoming an increasingly interesting research
+topic as computing platforms capable of safely processing sensor input
+into safe vehicle controls become smaller and more affordable.  The
+model proposed in End-To-End Learning for Self-Driving Cars
+\cite{Bojarski2016} is viable on a platform as simple as a Raspberry
+Pi. 
+
+Given smaller, affordable platforms with multiple cores and even GPU
+based parallel processing such as the Tegra X1 \cite{NVIDIA2015} and
+the recently released Tegra X2 \cite{Amert2017}, allocation and
+management of available shared CPU and GPU resources \cite{Kim2016}
+becomes increasingly important.  Research on improving the performance
+of neural networks \cite{Jouppi2017} also attributes to the viability
+of using these models in small systems.  With less powerful onboard
+computing devices, it was necessary for these kinds of robotics
+systems to use an external computer for the algorithm such as is used
+in \cite{LeCun:2005}. 
+
+Together with hardware and platform improvements, there have been
+significant improvements in the algorithms such as a neural network
+algorithm capable of surpassing human level control at Atari games
+\cite{DBLP}.  A popular technique had been to take sensor input and
+determine a depth map, such as the model used in
+\cite{Michels:2005}. End-to-end models such as the one used in
+\cite{Bojarski2016} can improve the efficiency of the model.
+Improving the flexibility of the model and it ability to adapt to
+different situations and avoiding overfitting to training data
+continues to be an important topic in autonomous driving
+\cite{Pomerleau1989}. 
+
+Producing large platforms such as DAVE \cite{LeCun:04} has often been
+the approach to developing the technology for self-driving vehicles.
+This approach, while certainly effective, presents a higher barrier to
+entry for research groups.  Recently, there has been a movement to
+make research towards autonomous driving more accessible.
+\cite{Kato:2015} have provided an open platform for developing
+autonomous vehicles using publicly available vehicles and sensors.
+Smaller, more focused platforms, such as the one found in
+\cite{Michels:2005} also present an accessible way forward. 
