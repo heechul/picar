@@ -1,6 +1,6 @@
 set terminal pdf font "Times-Roman,14"
 set output "compare_core.pdf"
-set yrange [0.0:*]
+set yrange [0.0:70]
 # set xtics nomirror scale 0
 # unset xlabel 
 set ylabel "Avg. processing time (ms)" offset 1.5

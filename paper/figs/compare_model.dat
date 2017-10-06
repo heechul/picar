@@ -1,5 +1,6 @@
-"Raspberry Pi 3" 58.01 78.36
-"IntelUP Board" 23.81 39.35
-"Tegra TX2 CPU" 16 24.48
-"Tegra TX2 GPU" 7.33 8.81
+"Raspberry Pi3" 0	78.36    58.01	    0
+"Intel UP" 	0 	39.35	 23.81 	    0
+"TX2 (CPU)" 	0 	24.48	 16.00	    0
+"TX2 (GPU)" 	0 	 8.81	  7.33	    0
+# config.	1Nx1C	 4Nx1C	  1Nx2C	    2Nx2C
 	

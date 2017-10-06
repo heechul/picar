@@ -1,13 +1,27 @@
-set terminal pdf
+set terminal pdf font "Times-Roman,14"
 set output "compare_model.pdf"
-set yrange [0.0:*]
-set ylabel "Avg. processing time (ms)" offset 2
-set xlabel "(#of models)"
+set yrange [0.0:100]
+set ylabel "Avg. processing time (ms)" offset 1.5
+
 
 set style data histogram
-set style histogram cluster gap 1
+set style histogram cluster gap 1.5
 set style fill pattern border
 
+set label "(#of {/Times:Bold N}Ns) x (#of {/Times:Bold C}ores/NN)" at 1.8,70
+
+set arrow from -1,50 to 4,50 nohead dt "."
+set label  "20 Hz" at 3.5,48 font "Times-Roman,14"
+
+set arrow from -1,20 to 4,20 nohead dt "."
+set label  "50 Hz" at 3.5,18 font "Times-Roman,14"
+
+set arrow from -1,10 to 4,10 nohead dt "."
+set label  "100 Hz" at 3.42,8 font "Times-Roman,14"
+
 set boxwidth 1
-plot  "compare_model.dat"  using 2:xticlabel(1) title "2 models" lt -1,\
-      ""                  using 3 title "4 models" lt -1
+plot  "compare_model.dat"  using 2:xticlabel(1) title "1Nx1C" lt -1,\
+      ""  		   using 3 title "4Nx1C" lt -1,\
+      ""                   using 4 title "1Nx2C" lt -1,\
+      ""                   using 5 title "2Nx2C" lt -1      
+      
