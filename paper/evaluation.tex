@@ -331,8 +331,8 @@ In order to determine how contended DRAM requests affect the DNN
 inference timing of the DeepPicar, we use a synthetic memory
 intensive benchmark from the IsolBench suite~\cite{Valsan2016}.
 
-In each experiment, we run a single DNN model one core, and
-co-scheduled an increasing number of the memory intensive synthetic
+We run a single DNN model one core, and
+co-schedule an increasing number of the memory intensive synthetic
 benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
   IsolBench suite, with the following command line parameters: \texttt{\$
   bandwdith -a write -m 16384}}, on the remaining idle cores.
