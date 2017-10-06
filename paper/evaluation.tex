@@ -196,9 +196,9 @@ contention affect inference timing.
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/perf_vs_modelcnt}
-  \caption{Timing impact of co-scheduling multiple DNNs. 1x1: one DNN
-    model using one CPU core; 4x1: four DNN models each using one CPU;
-    1x2: one DNN model using two CPU cores; 2x2: two DNN models each
+  \caption{Timing impact of co-scheduling multiple DNNs. 1Nx1C: one DNN
+    model using one CPU core; 4Nx1C: four DNN models each using one CPU;
+    1Nx2C: one DNN model using two CPU cores; 2Nx2C: two DNN models each
     using two CPU cores.} 
   \label{fig:perf-vs-modelcnt}
 \end{figure}
@@ -410,7 +410,7 @@ many AI workloads may exhibit similar characteristics.
     \hline
     Item    & Raspberry Pi 3 (B)   & Intel UP                  & NVIDIA Jetson TX2\\
     \hline
-            & BCM2837              & X5-Z8350 (Cherry Trail)   & Tegra TX2 \\
+            & BCM2837              & X5-Z8350 (Cherry Trail)   & Tegra X2 \\
     CPU     & 4x Cortex-A53@1.2GHz/512KB L2  &
               4x Atom@1.92GHz/2MB L2 &
               4x Cortex-A57@2GHz/2MB L2 \\

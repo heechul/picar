@@ -11,9 +11,9 @@ TX2~\footnote{http://www.nvidia.com/object/embedded-systems-dev-kits-modules.htm
 the point of view of supporting vision-based end-to-end deep learning
 based autonomous vehicles. 
 Table~\ref{tbl:platforms} shows architectural features of the three
-platforms~\footnote{Note that the GPUs of the Raspberry Pi 3 and Intel
+platforms~\footnote{The GPUs of the Raspberry Pi 3 and Intel
   Up are not used in evaluation due to the lack of software (TensorFlow)
-support. Also, the two Denvor cores in Tegra TX2 are not used in
+support. Also, the two Denver cores in Tegra TX2 are not used in
 evaluation due to TensorFlow issues.}.
   
 Our basic approach is to use the same DeepPicar software, and repeat
@@ -26,7 +26,7 @@ compared.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/compare_core}
+  \includegraphics[width=.45\textwidth]{figs/compare_core}
   \caption{Average control loop execution time.} 
   \label{fig:sys_core}
 \end{figure}
@@ -44,29 +44,45 @@ WCET by a clear margin
 %%  (in the worst case, the UP Board would 
 %% still meet it by $\sim$20 ms) --> where's the data showing this?
 , and, in case of TX2, 50 Hz or even 100 Hz real-time control is
-feasible with the help of its GPU.
-
-
-The UP Board and TX2 also performed better in the multimodel tests, 
-as is shown in Figure~\ref{fig:sys_model}. Once again, they were able 
-to complete control loops in a fraction of the time when compared to 
-the Pi. Furthermore, both of the platforms satisfied the 50 ms WCET 
-in all experiments, while the Raspberry Pi 3 was unable to do so. As 
-such, the UP Board and TX2 display greater potential for the 
-simultaneous execution of multiple models during self-driving 
-operation, while the Raspberry Pi 3 would struggle to do so.
+feasible with the help of its GPU. Another observation is that TX2
+(GPU) does not change much as most of the neural network computation
+is done at the GPU.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/compare_model}
-  \caption{Inferencing time across platforms based on number of 
-models run concurrently.}
+  \includegraphics[width=.45\textwidth]{figs/compare_model}
+  \caption{Average control loop execution time when multiple DNN
+    models are co-scheduled. }
   \label{fig:sys_model}
 \end{figure}
 
-Finally, we examined if the performance of the Intel UP Board and 
-Tegra TX2 would be affected by the addition of the synthetic 
-benchmarks. As summarized in Figure~\ref{fig;sys_bench}, the both 
+The UP Board and TX2 also perform much better when multiple DNN models
+are co-scheduled. Figure~\ref{fig:sys_model} shows the results of the
+multi-model co-scheduling experiment. Once again, they can comfortably
+20 Hz real-time performance for all of the co-scheduled DNN control
+loops, and in case of TX 2 (GPU), 100 Hz real-time control is still
+feasible. Given that the GPU must be shared among the co-scheduled DNN
+models, the result suggests that TX2's GPU has sufficient capacity to
+accomodate multiple instances of the DNN model we tested.
+
+%% to complete control loops in a fraction of the time when compared to 
+%% the Pi. Furthermore, both of the platforms satisfied the 50 ms WCET 
+%% in all experiments, while the Raspberry Pi 3 was unable to do so. As 
+%% such, the UP Board and TX2 display greater potential for the 
+%% simultaneous execution of multiple models during self-driving 
+%% operation, while the Raspberry Pi 3 would struggle to do so.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/compare_benchmark}
+  \caption{Inferencing time across platforms based on number of cores 
+used.}
+  \label{fig:sys_bench}
+\end{figure} 
+
+Finally, we compare the effect of co-scheduling memory intensive
+synthetic benchmarks on the DNN control loop timing.
+Figure~\ref{fig:sys_bench} shows the results. 
 experienced a change in their inferencing times, but the increases 
 were not as drastic as is seen by the Raspberry Pi 3. in the worst 
 case, both the UP Board and TX2 (CPU only and GPU) produced times 
@@ -81,14 +97,6 @@ introduced. As such, it can be concluded that the Intel UP Board
 would be more capable of running computationally heavy processes 
 during autonomous driving, and that the Pi wouldn't be able to do the 
 same.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.5\textwidth]{figs/compare_benchmark}
-  \caption{Inferencing time across platforms based on number of cores 
-used.}
-  \label{fig:sys_bench}
-\end{figure} 
 
 In the comparison of the real-time capabilities of three embedded 
 computing platforms, we found that the Raspberry Pi 3 performed the 
