@@ -1,0 +1,2020 @@
+---------- processing video for epoch 6 ----------
+performing inference...
+pred: 2.42 deg. took: 1516.78 ms | cam=183.14 prep=33.12 pred=1300.52 frequency(45)=1200000000
+ 
+pred: 2.44 deg. took: 612.65 ms | cam=42.10 prep=36.55 pred=533.99 frequency(45)=1200000000
+ 
+pred: 2.39 deg. took: 588.86 ms | cam=39.43 prep=31.55 pred=517.88 frequency(45)=1200000000
+ 
+pred: 2.35 deg. took: 606.48 ms | cam=39.02 prep=36.38 pred=531.09 frequency(45)=1200000000
+ 
+pred: 2.31 deg. took: 584.50 ms | cam=42.38 prep=28.86 pred=513.25 frequency(45)=1200000000
+ 
+pred: 2.27 deg. took: 579.60 ms | cam=41.82 prep=28.23 pred=509.55 frequency(45)=1200000000
+ 
+pred: 2.26 deg. took: 586.86 ms | cam=40.47 prep=29.86 pred=516.53 frequency(45)=1200000000
+ 
+pred: 2.28 deg. took: 568.36 ms | cam=35.99 prep=36.67 pred=495.69 frequency(45)=1200000000
+ 
+pred: 2.29 deg. took: 597.50 ms | cam=38.39 prep=35.25 pred=523.86 frequency(45)=1200000000
+ 
+pred: 2.29 deg. took: 583.57 ms | cam=24.14 prep=37.55 pred=521.88 frequency(45)=1200000000
+ 
+pred: 2.29 deg. took: 605.07 ms | cam=41.67 prep=30.44 pred=532.96 frequency(45)=1200000000
+ 
+pred: 2.33 deg. took: 595.52 ms | cam=36.98 prep=37.57 pred=520.97 frequency(45)=1200000000
+ 
+pred: 2.35 deg. took: 567.57 ms | cam=40.96 prep=34.02 pred=492.59 frequency(45)=1200000000
+ 
+pred: 2.39 deg. took: 601.84 ms | cam=41.93 prep=37.25 pred=522.65 frequency(45)=1200000000
+ 
+pred: 2.43 deg. took: 585.89 ms | cam=39.57 prep=29.94 pred=516.39 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 598.24 ms | cam=37.02 prep=43.67 pred=517.55 frequency(45)=1200000000
+ 
+pred: 2.44 deg. took: 657.86 ms | cam=37.89 prep=42.39 pred=577.57 frequency(45)=1200000000
+ 
+pred: 2.43 deg. took: 584.40 ms | cam=38.45 prep=36.35 pred=509.60 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 586.41 ms | cam=44.29 prep=27.83 pred=514.29 frequency(45)=1200000000
+ 
+pred: 2.44 deg. took: 575.31 ms | cam=36.83 prep=38.70 pred=499.77 frequency(45)=1200000000
+ 
+pred: 2.35 deg. took: 607.17 ms | cam=40.77 prep=34.54 pred=531.86 frequency(45)=1200002000
+ 
+pred: 2.50 deg. took: 594.29 ms | cam=33.49 prep=28.18 pred=532.62 frequency(45)=1200000000
+ 
+pred: 2.32 deg. took: 597.06 ms | cam=37.13 prep=37.96 pred=521.97 frequency(45)=1200000000
+ 
+pred: 2.53 deg. took: 588.41 ms | cam=40.10 prep=38.13 pred=510.19 frequency(45)=1200000000
+ 
+pred: 2.40 deg. took: 585.40 ms | cam=41.46 prep=30.27 pred=513.67 frequency(45)=1200000000
+ 
+pred: 2.46 deg. took: 533.11 ms | cam=36.99 prep=38.29 pred=457.82 frequency(45)=1200002000
+ 
+pred: 2.38 deg. took: 585.04 ms | cam=37.13 prep=34.61 pred=513.31 frequency(45)=1200000000
+ 
+pred: 2.36 deg. took: 592.89 ms | cam=43.35 prep=31.74 pred=517.80 frequency(45)=1200000000
+ 
+pred: 2.41 deg. took: 577.98 ms | cam=35.50 prep=36.81 pred=505.67 frequency(45)=1200000000
+ 
+pred: 2.38 deg. took: 605.46 ms | cam=38.34 prep=34.32 pred=532.80 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 603.41 ms | cam=43.20 prep=32.12 pred=528.10 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 588.69 ms | cam=40.05 prep=38.57 pred=510.07 frequency(45)=1200000000
+ 
+pred: 2.54 deg. took: 588.23 ms | cam=48.07 prep=35.07 pred=505.09 frequency(45)=1200000000
+ 
+pred: 2.75 deg. took: 566.09 ms | cam=36.49 prep=33.83 pred=495.76 frequency(45)=1200000000
+ 
+pred: 2.74 deg. took: 600.33 ms | cam=43.00 prep=33.57 pred=523.75 frequency(45)=1200000000
+ 
+pred: 2.03 deg. took: 615.47 ms | cam=41.60 prep=40.52 pred=533.34 frequency(45)=1200000000
+ 
+pred: 2.26 deg. took: 600.82 ms | cam=39.28 prep=45.58 pred=515.96 frequency(45)=1200000000
+ 
+pred: 2.05 deg. took: 607.91 ms | cam=48.43 prep=43.06 pred=516.42 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 584.22 ms | cam=42.67 prep=42.43 pred=499.12 frequency(45)=1200000000
+ 
+pred: 0.54 deg. took: 599.97 ms | cam=39.62 prep=38.12 pred=522.23 frequency(45)=1200000000
+ 
+pred: 0.86 deg. took: 604.83 ms | cam=36.21 prep=37.44 pred=531.19 frequency(45)=1200002000
+ 
+pred: 1.17 deg. took: 586.79 ms | cam=42.43 prep=50.11 pred=494.25 frequency(45)=1200000000
+ 
+pred: 0.90 deg. took: 603.97 ms | cam=38.98 prep=44.76 pred=520.23 frequency(45)=1200000000
+ 
+pred: 0.46 deg. took: 586.54 ms | cam=44.85 prep=41.17 pred=500.52 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 602.48 ms | cam=45.42 prep=33.83 pred=523.24 frequency(45)=1200000000
+ 
+pred: 1.26 deg. took: 579.72 ms | cam=44.34 prep=26.67 pred=508.71 frequency(45)=1200000000
+ 
+pred: 1.30 deg. took: 592.45 ms | cam=46.76 prep=33.41 pred=512.28 frequency(45)=1200000000
+ 
+pred: 1.17 deg. took: 607.24 ms | cam=39.16 prep=44.94 pred=523.14 frequency(45)=1200000000
+ 
+pred: 1.34 deg. took: 589.48 ms | cam=49.82 prep=40.63 pred=499.03 frequency(45)=1200000000
+ 
+pred: 1.57 deg. took: 601.88 ms | cam=46.75 prep=36.68 pred=518.45 frequency(45)=1200000000
+ 
+pred: 1.31 deg. took: 594.40 ms | cam=43.15 prep=37.59 pred=513.67 frequency(45)=1200000000
+ 
+pred: 1.41 deg. took: 592.72 ms | cam=39.93 prep=43.46 pred=509.33 frequency(45)=1200000000
+ 
+pred: 0.83 deg. took: 580.85 ms | cam=33.54 prep=49.73 pred=497.58 frequency(45)=1200002000
+ 
+pred: 1.66 deg. took: 599.88 ms | cam=44.42 prep=42.29 pred=513.17 frequency(45)=1200000000
+ 
+pred: 1.22 deg. took: 579.76 ms | cam=43.27 prep=34.80 pred=501.68 frequency(45)=1200002000
+ 
+pred: 1.33 deg. took: 594.27 ms | cam=46.40 prep=34.93 pred=512.94 frequency(45)=1200000000
+ 
+pred: 1.79 deg. took: 597.68 ms | cam=40.63 prep=41.34 pred=515.71 frequency(45)=1200000000
+ 
+pred: 0.82 deg. took: 572.72 ms | cam=41.94 prep=31.77 pred=499.01 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 606.58 ms | cam=50.35 prep=39.45 pred=516.78 frequency(45)=1200000000
+ 
+pred: 0.69 deg. took: 598.01 ms | cam=40.70 prep=46.02 pred=511.28 frequency(45)=1200000000
+ 
+pred: 0.67 deg. took: 592.75 ms | cam=41.29 prep=42.62 pred=508.84 frequency(45)=1200000000
+ 
+pred: 0.60 deg. took: 605.35 ms | cam=38.56 prep=45.41 pred=521.38 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 579.17 ms | cam=40.55 prep=48.51 pred=490.11 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 608.91 ms | cam=40.92 prep=51.47 pred=516.51 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 593.45 ms | cam=38.78 prep=36.00 pred=518.68 frequency(45)=1200002000
+ 
+pred: 0.48 deg. took: 593.33 ms | cam=45.79 prep=35.03 pred=512.51 frequency(45)=1200000000
+ 
+pred: 0.44 deg. took: 586.71 ms | cam=42.03 prep=39.70 pred=504.97 frequency(45)=1200002000
+ 
+pred: -0.13 deg. took: 587.67 ms | cam=44.94 prep=44.05 pred=498.68 frequency(45)=1200000000
+ 
+pred: 0.14 deg. took: 589.90 ms | cam=40.84 prep=45.31 pred=503.75 frequency(45)=1200000000
+ 
+pred: 0.39 deg. took: 602.06 ms | cam=43.96 prep=31.84 pred=526.26 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 596.20 ms | cam=49.85 prep=31.76 pred=514.60 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 598.37 ms | cam=42.30 prep=45.96 pred=510.10 frequency(45)=1200002000
+ 
+pred: 0.62 deg. took: 650.29 ms | cam=41.92 prep=63.42 pred=544.95 frequency(45)=1200000000
+ 
+pred: 0.15 deg. took: 638.23 ms | cam=40.21 prep=47.25 pred=550.77 frequency(45)=1200002000
+ 
+pred: -0.38 deg. took: 614.71 ms | cam=40.70 prep=39.66 pred=534.35 frequency(45)=1200000000
+ 
+pred: 0.09 deg. took: 600.87 ms | cam=36.22 prep=51.05 pred=513.59 frequency(45)=1200000000
+ 
+pred: -0.27 deg. took: 590.27 ms | cam=46.26 prep=37.74 pred=506.28 frequency(45)=1200000000
+ 
+pred: 0.68 deg. took: 608.34 ms | cam=34.54 prep=51.30 pred=522.51 frequency(45)=1200000000
+ 
+pred: 0.96 deg. took: 602.94 ms | cam=46.57 prep=36.40 pred=519.97 frequency(45)=1200000000
+ 
+pred: 1.07 deg. took: 585.29 ms | cam=44.71 prep=35.11 pred=505.47 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 596.60 ms | cam=39.59 prep=46.42 pred=510.59 frequency(45)=1200000000
+ 
+pred: 0.25 deg. took: 603.42 ms | cam=43.46 prep=19.89 pred=540.08 frequency(45)=1200002000
+ 
+pred: 0.44 deg. took: 592.61 ms | cam=40.91 prep=44.85 pred=506.84 frequency(45)=1200002000
+ 
+pred: 0.87 deg. took: 592.21 ms | cam=38.43 prep=47.08 pred=506.70 frequency(45)=1200000000
+ 
+pred: 1.15 deg. took: 590.51 ms | cam=44.64 prep=39.46 pred=506.42 frequency(45)=1200002000
+ 
+pred: 0.94 deg. took: 639.83 ms | cam=38.81 prep=55.34 pred=545.68 frequency(45)=1200000000
+ 
+pred: 1.23 deg. took: 578.26 ms | cam=48.86 prep=34.45 pred=494.96 frequency(45)=1199998000
+ 
+pred: 1.51 deg. took: 641.79 ms | cam=40.03 prep=58.32 pred=543.44 frequency(45)=1200000000
+ 
+pred: 0.66 deg. took: 601.91 ms | cam=48.45 prep=38.87 pred=514.59 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 582.77 ms | cam=38.53 prep=40.89 pred=503.35 frequency(45)=1200000000
+ 
+pred: 0.45 deg. took: 658.04 ms | cam=55.76 prep=43.01 pred=559.26 frequency(45)=1200000000
+ 
+pred: -0.06 deg. took: 589.28 ms | cam=40.68 prep=44.13 pred=504.47 frequency(45)=1200000000
+ 
+pred: -0.31 deg. took: 596.84 ms | cam=40.12 prep=45.04 pred=511.68 frequency(45)=1200000000
+ 
+pred: 0.65 deg. took: 591.56 ms | cam=41.07 prep=30.46 pred=520.03 frequency(45)=1200000000
+ 
+pred: 0.68 deg. took: 604.67 ms | cam=33.80 prep=42.23 pred=528.64 frequency(45)=1200002000
+ 
+pred: 0.74 deg. took: 587.11 ms | cam=40.09 prep=43.39 pred=503.63 frequency(45)=1200000000
+ 
+pred: 0.52 deg. took: 594.40 ms | cam=41.37 prep=44.13 pred=508.90 frequency(45)=1200000000
+ 
+pred: 0.58 deg. took: 600.99 ms | cam=46.05 prep=41.34 pred=513.60 frequency(45)=1200000000
+ 
+pred: 0.10 deg. took: 578.68 ms | cam=41.86 prep=42.21 pred=494.61 frequency(45)=1200000000
+ 
+pred: 0.35 deg. took: 592.70 ms | cam=40.92 prep=40.32 pred=511.46 frequency(45)=1200000000
+ 
+pred: 0.18 deg. took: 597.20 ms | cam=46.00 prep=40.35 pred=510.84 frequency(45)=1200000000
+ 
+pred: 0.86 deg. took: 592.09 ms | cam=47.67 prep=34.44 pred=509.98 frequency(45)=1200002000
+ 
+pred: 0.84 deg. took: 603.01 ms | cam=47.84 prep=38.80 pred=516.37 frequency(45)=1200000000
+ 
+pred: 0.77 deg. took: 593.36 ms | cam=47.06 prep=42.58 pred=503.72 frequency(45)=1200000000
+ 
+pred: 0.04 deg. took: 600.46 ms | cam=38.39 prep=46.40 pred=515.68 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 605.94 ms | cam=44.18 prep=28.80 pred=532.96 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 610.01 ms | cam=43.67 prep=50.09 pred=516.25 frequency(45)=1200002000
+ 
+pred: 0.76 deg. took: 598.90 ms | cam=42.00 prep=47.62 pred=509.28 frequency(45)=1199998000
+ 
+pred: 0.92 deg. took: 599.06 ms | cam=41.46 prep=48.31 pred=509.29 frequency(45)=1200000000
+ 
+pred: 1.23 deg. took: 619.33 ms | cam=43.19 prep=56.71 pred=519.43 frequency(45)=1200000000
+ 
+pred: 1.42 deg. took: 596.51 ms | cam=34.04 prep=42.81 pred=519.66 frequency(45)=1200000000
+ 
+pred: 1.34 deg. took: 603.83 ms | cam=47.10 prep=41.84 pred=514.89 frequency(45)=1200000000
+ 
+pred: 1.61 deg. took: 600.54 ms | cam=40.89 prep=47.72 pred=511.93 frequency(45)=1200000000
+ 
+pred: 0.79 deg. took: 579.75 ms | cam=42.72 prep=41.90 pred=495.13 frequency(45)=1200000000
+ 
+pred: 0.21 deg. took: 593.47 ms | cam=43.39 prep=37.04 pred=513.04 frequency(45)=1200000000
+ 
+pred: 1.02 deg. took: 596.85 ms | cam=39.62 prep=43.46 pred=513.77 frequency(45)=1200000000
+ 
+pred: 1.83 deg. took: 594.56 ms | cam=47.92 prep=36.77 pred=509.88 frequency(45)=1200000000
+ 
+pred: 1.55 deg. took: 583.46 ms | cam=43.36 prep=29.25 pred=510.86 frequency(45)=1200000000
+ 
+pred: 0.92 deg. took: 592.86 ms | cam=41.99 prep=40.41 pred=510.46 frequency(45)=1200000000
+ 
+pred: 1.37 deg. took: 602.85 ms | cam=39.95 prep=44.06 pred=518.85 frequency(45)=1200002000
+ 
+pred: 0.90 deg. took: 591.28 ms | cam=43.03 prep=48.34 pred=499.92 frequency(45)=1200000000
+ 
+pred: 1.04 deg. took: 619.13 ms | cam=43.20 prep=44.17 pred=531.76 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 599.90 ms | cam=47.71 prep=40.86 pred=511.33 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 604.13 ms | cam=45.44 prep=45.44 pred=513.24 frequency(45)=1200000000
+ 
+pred: 0.96 deg. took: 594.99 ms | cam=46.57 prep=40.41 pred=508.01 frequency(45)=1200000000
+ 
+pred: 0.50 deg. took: 575.01 ms | cam=46.91 prep=36.97 pred=491.13 frequency(45)=1200000000
+ 
+pred: 0.24 deg. took: 630.85 ms | cam=41.73 prep=42.28 pred=546.84 frequency(45)=1200000000
+ 
+pred: 0.41 deg. took: 600.85 ms | cam=49.60 prep=41.05 pred=510.20 frequency(45)=1200002000
+ 
+pred: 0.91 deg. took: 612.74 ms | cam=48.95 prep=40.53 pred=523.25 frequency(45)=1200002000
+ 
+pred: 1.25 deg. took: 595.53 ms | cam=42.10 prep=29.23 pred=524.20 frequency(45)=1200000000
+ 
+pred: 1.85 deg. took: 580.88 ms | cam=45.73 prep=33.06 pred=502.09 frequency(45)=1200000000
+ 
+pred: 2.23 deg. took: 594.72 ms | cam=44.96 prep=39.11 pred=510.65 frequency(45)=1200000000
+ 
+pred: 3.23 deg. took: 602.78 ms | cam=42.44 prep=49.69 pred=510.65 frequency(45)=1200002000
+ 
+pred: 4.16 deg. took: 604.43 ms | cam=41.49 prep=53.13 pred=509.81 frequency(45)=1200002000
+ 
+pred: 14.76 deg. took: 603.63 ms | cam=39.87 prep=41.82 pred=521.94 frequency(45)=1200000000
+ 
+pred: 23.90 deg. took: 601.94 ms | cam=43.93 prep=41.15 pred=516.86 frequency(45)=1200000000
+ 
+pred: 9.24 deg. took: 599.32 ms | cam=40.66 prep=44.25 pred=514.41 frequency(45)=1200000000
+ 
+pred: 4.38 deg. took: 593.74 ms | cam=41.95 prep=39.92 pred=511.86 frequency(45)=1200002000
+ 
+pred: 3.57 deg. took: 605.17 ms | cam=39.67 prep=41.05 pred=524.44 frequency(45)=1200000000
+ 
+pred: 2.95 deg. took: 593.20 ms | cam=43.60 prep=29.22 pred=520.38 frequency(45)=1200000000
+ 
+pred: 2.93 deg. took: 603.73 ms | cam=41.83 prep=41.99 pred=519.91 frequency(45)=1200000000
+ 
+pred: 2.01 deg. took: 605.44 ms | cam=40.94 prep=26.23 pred=538.28 frequency(45)=1200000000
+ 
+pred: 2.30 deg. took: 581.46 ms | cam=46.89 prep=37.80 pred=496.77 frequency(45)=1200000000
+ 
+pred: 2.41 deg. took: 623.50 ms | cam=44.87 prep=41.51 pred=537.12 frequency(45)=1200000000
+ 
+pred: 3.45 deg. took: 599.95 ms | cam=40.17 prep=46.99 pred=512.78 frequency(45)=1200000000
+ 
+pred: 4.73 deg. took: 604.65 ms | cam=41.06 prep=46.52 pred=517.07 frequency(45)=1200002000
+ 
+pred: 10.21 deg. took: 632.93 ms | cam=45.82 prep=35.44 pred=551.67 frequency(45)=1200000000
+ 
+pred: 4.45 deg. took: 590.03 ms | cam=42.19 prep=42.21 pred=505.62 frequency(45)=1200000000
+ 
+pred: 4.21 deg. took: 598.24 ms | cam=38.99 prep=50.15 pred=509.10 frequency(45)=1200000000
+ 
+pred: 3.73 deg. took: 596.84 ms | cam=38.48 prep=40.69 pred=517.68 frequency(45)=1200000000
+ 
+pred: 3.99 deg. took: 592.34 ms | cam=46.95 prep=38.47 pred=506.93 frequency(45)=1200000000
+ 
+pred: 8.47 deg. took: 591.47 ms | cam=44.83 prep=39.15 pred=507.50 frequency(45)=1200000000
+ 
+pred: 18.34 deg. took: 605.38 ms | cam=43.76 prep=45.07 pred=516.55 frequency(45)=1200000000
+ 
+pred: 23.69 deg. took: 614.38 ms | cam=45.61 prep=28.38 pred=540.39 frequency(45)=1200000000
+ 
+pred: 28.61 deg. took: 579.98 ms | cam=45.98 prep=30.61 pred=503.39 frequency(45)=1200000000
+ 
+pred: 28.79 deg. took: 597.22 ms | cam=38.82 prep=38.81 pred=519.59 frequency(45)=1200002000
+ 
+pred: 26.96 deg. took: 601.19 ms | cam=41.30 prep=33.63 pred=526.27 frequency(45)=1200000000
+ 
+pred: 26.96 deg. took: 602.91 ms | cam=39.80 prep=46.56 pred=516.55 frequency(45)=1200000000
+ 
+pred: 26.95 deg. took: 592.63 ms | cam=43.41 prep=37.31 pred=511.91 frequency(45)=1200000000
+ 
+pred: 29.03 deg. took: 571.05 ms | cam=41.57 prep=39.72 pred=489.76 frequency(45)=1200000000
+ 
+pred: 27.84 deg. took: 600.59 ms | cam=40.86 prep=45.59 pred=514.14 frequency(45)=1200000000
+ 
+pred: 25.60 deg. took: 600.96 ms | cam=56.56 prep=29.53 pred=514.87 frequency(45)=1200000000
+ 
+pred: 21.32 deg. took: 558.31 ms | cam=32.24 prep=28.01 pred=498.06 frequency(45)=1200000000
+ 
+pred: 12.53 deg. took: 622.06 ms | cam=58.18 prep=34.12 pred=529.76 frequency(45)=1200000000
+ 
+pred: 11.41 deg. took: 633.39 ms | cam=40.59 prep=40.44 pred=552.37 frequency(45)=1200000000
+ 
+pred: 14.53 deg. took: 588.75 ms | cam=42.58 prep=26.45 pred=519.71 frequency(45)=1200000000
+ 
+pred: 16.96 deg. took: 577.66 ms | cam=42.43 prep=38.96 pred=496.27 frequency(45)=1200000000
+ 
+pred: 18.09 deg. took: 648.91 ms | cam=49.04 prep=42.04 pred=557.83 frequency(45)=1199998000
+ 
+pred: 7.05 deg. took: 591.43 ms | cam=45.20 prep=40.58 pred=505.64 frequency(45)=1200000000
+ 
+pred: 10.07 deg. took: 600.89 ms | cam=41.38 prep=39.60 pred=519.91 frequency(45)=1200000000
+ 
+pred: 2.54 deg. took: 592.69 ms | cam=39.64 prep=41.46 pred=511.59 frequency(45)=1200000000
+ 
+pred: 2.18 deg. took: 584.67 ms | cam=46.96 prep=40.31 pred=497.40 frequency(45)=1200000000
+ 
+pred: 3.04 deg. took: 606.24 ms | cam=39.43 prep=47.46 pred=519.35 frequency(45)=1200000000
+ 
+pred: 2.81 deg. took: 582.63 ms | cam=42.22 prep=42.36 pred=498.05 frequency(45)=1200000000
+ 
+pred: 2.60 deg. took: 616.33 ms | cam=47.86 prep=55.30 pred=513.16 frequency(45)=1200000000
+ 
+pred: 2.99 deg. took: 639.52 ms | cam=48.28 prep=37.80 pred=553.44 frequency(45)=1200000000
+ 
+pred: 2.89 deg. took: 589.18 ms | cam=46.44 prep=37.27 pred=505.46 frequency(45)=1200000000
+ 
+pred: 3.07 deg. took: 601.80 ms | cam=54.92 prep=32.04 pred=514.84 frequency(45)=1200000000
+ 
+pred: 3.60 deg. took: 625.16 ms | cam=57.26 prep=30.86 pred=537.04 frequency(45)=1200000000
+ 
+pred: 7.33 deg. took: 600.04 ms | cam=38.04 prep=40.18 pred=521.82 frequency(45)=1200000000
+ 
+pred: 13.48 deg. took: 656.46 ms | cam=46.29 prep=39.35 pred=570.82 frequency(45)=1200000000
+ 
+pred: 7.07 deg. took: 633.37 ms | cam=40.33 prep=44.86 pred=548.18 frequency(45)=1200000000
+ 
+pred: 4.92 deg. took: 595.37 ms | cam=38.22 prep=44.51 pred=512.64 frequency(45)=1200000000
+ 
+pred: 4.88 deg. took: 592.65 ms | cam=47.23 prep=40.73 pred=504.69 frequency(45)=1200000000
+ 
+pred: 6.43 deg. took: 601.89 ms | cam=43.10 prep=39.67 pred=519.12 frequency(45)=1200002000
+ 
+pred: 21.53 deg. took: 593.50 ms | cam=41.19 prep=40.51 pred=511.79 frequency(45)=1200000000
+ 
+pred: 23.64 deg. took: 599.26 ms | cam=48.04 prep=32.77 pred=518.45 frequency(45)=1200000000
+ 
+pred: 21.81 deg. took: 604.24 ms | cam=42.71 prep=45.25 pred=516.29 frequency(45)=1200000000
+ 
+pred: 25.57 deg. took: 590.06 ms | cam=40.21 prep=48.01 pred=501.84 frequency(45)=1200000000
+ 
+pred: 23.21 deg. took: 594.60 ms | cam=43.00 prep=26.78 pred=524.82 frequency(45)=1200000000
+ 
+pred: 18.12 deg. took: 605.86 ms | cam=39.27 prep=40.82 pred=525.77 frequency(45)=1200000000
+ 
+pred: 3.73 deg. took: 605.63 ms | cam=45.37 prep=40.59 pred=519.68 frequency(45)=1200000000
+ 
+pred: 4.58 deg. took: 614.20 ms | cam=46.55 prep=47.73 pred=519.91 frequency(45)=1200000000
+ 
+pred: 3.54 deg. took: 590.09 ms | cam=40.35 prep=43.83 pred=505.91 frequency(45)=1200000000
+ 
+pred: 2.26 deg. took: 586.56 ms | cam=41.21 prep=40.54 pred=504.82 frequency(45)=1200000000
+ 
+pred: 2.75 deg. took: 589.01 ms | cam=41.15 prep=41.82 pred=506.04 frequency(45)=1200000000
+ 
+pred: 3.19 deg. took: 614.20 ms | cam=41.41 prep=46.02 pred=526.76 frequency(45)=1200000000
+ 
+pred: 2.78 deg. took: 594.01 ms | cam=46.14 prep=39.86 pred=508.01 frequency(45)=1200000000
+ 
+pred: 2.79 deg. took: 595.88 ms | cam=48.50 prep=37.86 pred=509.53 frequency(45)=1200000000
+ 
+pred: 2.56 deg. took: 611.28 ms | cam=47.17 prep=37.39 pred=526.71 frequency(45)=1200000000
+ 
+pred: 2.17 deg. took: 594.55 ms | cam=48.47 prep=42.52 pred=503.57 frequency(45)=1200000000
+ 
+pred: 2.46 deg. took: 590.33 ms | cam=42.46 prep=29.39 pred=518.47 frequency(45)=1200000000
+ 
+pred: 2.07 deg. took: 607.26 ms | cam=48.64 prep=39.42 pred=519.20 frequency(45)=1200002000
+ 
+pred: 2.42 deg. took: 589.95 ms | cam=47.49 prep=43.86 pred=498.60 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 618.81 ms | cam=52.89 prep=47.92 pred=518.00 frequency(45)=1200000000
+ 
+pred: 2.19 deg. took: 598.23 ms | cam=58.78 prep=34.53 pred=504.92 frequency(45)=1200000000
+ 
+pred: 2.20 deg. took: 604.00 ms | cam=39.01 prep=40.39 pred=524.59 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 599.99 ms | cam=47.00 prep=36.29 pred=516.70 frequency(45)=1200000000
+ 
+pred: 2.17 deg. took: 620.83 ms | cam=46.41 prep=48.57 pred=525.84 frequency(45)=1200000000
+ 
+pred: 2.10 deg. took: 590.58 ms | cam=40.54 prep=40.29 pred=509.74 frequency(45)=1200000000
+ 
+pred: 1.89 deg. took: 601.18 ms | cam=46.39 prep=36.38 pred=518.40 frequency(45)=1200000000
+ 
+pred: 2.04 deg. took: 594.18 ms | cam=44.79 prep=43.73 pred=505.66 frequency(45)=1200000000
+ 
+pred: 2.13 deg. took: 625.41 ms | cam=39.75 prep=63.01 pred=522.65 frequency(45)=1200000000
+ 
+pred: 2.39 deg. took: 601.40 ms | cam=44.88 prep=28.07 pred=528.45 frequency(45)=1200000000
+ 
+pred: 2.12 deg. took: 656.76 ms | cam=36.43 prep=60.20 pred=560.14 frequency(45)=1200000000
+ 
+pred: 2.79 deg. took: 591.17 ms | cam=63.83 prep=28.94 pred=498.40 frequency(45)=1200002000
+ 
+pred: 2.92 deg. took: 600.25 ms | cam=41.13 prep=50.54 pred=508.58 frequency(45)=1200000000
+ 
+pred: 3.15 deg. took: 585.15 ms | cam=41.57 prep=40.11 pred=503.47 frequency(45)=1200000000
+ 
+pred: 3.10 deg. took: 596.53 ms | cam=44.93 prep=40.85 pred=510.75 frequency(45)=1200000000
+ 
+pred: 2.78 deg. took: 598.49 ms | cam=47.45 prep=40.00 pred=511.04 frequency(45)=1200000000
+ 
+pred: 2.17 deg. took: 585.32 ms | cam=49.22 prep=37.33 pred=498.77 frequency(45)=1200000000
+ 
+pred: 2.30 deg. took: 594.74 ms | cam=44.10 prep=40.40 pred=510.24 frequency(45)=1200000000
+ 
+pred: 1.60 deg. took: 571.75 ms | cam=42.06 prep=41.07 pred=488.62 frequency(45)=1199998000
+ 
+pred: 2.01 deg. took: 605.98 ms | cam=48.08 prep=39.74 pred=518.15 frequency(45)=1200000000
+ 
+pred: 1.47 deg. took: 600.53 ms | cam=44.13 prep=43.70 pred=512.71 frequency(45)=1200000000
+ 
+pred: 1.97 deg. took: 575.16 ms | cam=43.41 prep=27.08 pred=504.68 frequency(45)=1200000000
+ 
+pred: 1.13 deg. took: 594.17 ms | cam=39.75 prep=42.05 pred=512.38 frequency(45)=1200000000
+ 
+pred: 1.23 deg. took: 609.24 ms | cam=46.75 prep=41.38 pred=521.11 frequency(45)=1200000000
+ 
+pred: 1.25 deg. took: 613.44 ms | cam=54.84 prep=38.82 pred=519.78 frequency(45)=1200000000
+ 
+pred: 1.22 deg. took: 606.89 ms | cam=41.88 prep=42.59 pred=522.42 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 648.65 ms | cam=42.81 prep=40.57 pred=565.27 frequency(45)=1200000000
+ 
+pred: 1.96 deg. took: 626.91 ms | cam=41.68 prep=53.29 pred=531.94 frequency(45)=1200002000
+ 
+pred: 1.95 deg. took: 586.42 ms | cam=47.76 prep=43.04 pred=495.62 frequency(45)=1200000000
+ 
+pred: 2.34 deg. took: 605.89 ms | cam=41.76 prep=44.47 pred=519.66 frequency(45)=1200002000
+ 
+pred: 1.82 deg. took: 587.20 ms | cam=49.52 prep=32.51 pred=505.18 frequency(45)=1200002000
+ 
+pred: 1.56 deg. took: 592.21 ms | cam=39.11 prep=43.91 pred=509.19 frequency(45)=1200000000
+ 
+pred: 1.51 deg. took: 597.08 ms | cam=40.35 prep=43.64 pred=513.08 frequency(45)=1200002000
+ 
+pred: 1.74 deg. took: 580.77 ms | cam=43.85 prep=30.65 pred=506.27 frequency(45)=1200000000
+ 
+pred: 1.59 deg. took: 608.57 ms | cam=40.40 prep=44.57 pred=523.60 frequency(45)=1200000000
+ 
+pred: 1.42 deg. took: 596.93 ms | cam=59.37 prep=34.46 pred=503.10 frequency(45)=1200000000
+ 
+pred: 1.17 deg. took: 605.94 ms | cam=47.42 prep=37.55 pred=520.97 frequency(45)=1200000000
+ 
+pred: 0.88 deg. took: 592.13 ms | cam=41.91 prep=44.47 pred=505.76 frequency(45)=1200000000
+ 
+pred: 0.88 deg. took: 608.06 ms | cam=49.07 prep=39.75 pred=519.25 frequency(45)=1200000000
+ 
+pred: 1.49 deg. took: 593.33 ms | cam=44.57 prep=42.94 pred=505.82 frequency(45)=1200000000
+ 
+pred: 1.28 deg. took: 586.35 ms | cam=38.21 prep=49.08 pred=499.06 frequency(45)=1200000000
+ 
+pred: 1.56 deg. took: 617.24 ms | cam=43.66 prep=47.54 pred=526.03 frequency(45)=1200000000
+ 
+pred: 1.74 deg. took: 588.00 ms | cam=45.25 prep=44.80 pred=497.94 frequency(45)=1200000000
+ 
+pred: 0.86 deg. took: 599.09 ms | cam=46.74 prep=43.94 pred=508.41 frequency(45)=1200000000
+ 
+pred: 0.90 deg. took: 623.73 ms | cam=43.94 prep=48.47 pred=531.32 frequency(45)=1200000000
+ 
+pred: 1.37 deg. took: 576.95 ms | cam=39.06 prep=32.24 pred=505.66 frequency(45)=1200000000
+ 
+pred: 1.52 deg. took: 638.97 ms | cam=45.36 prep=57.58 pred=536.03 frequency(45)=1200002000
+ 
+pred: 1.39 deg. took: 600.88 ms | cam=37.61 prep=49.40 pred=513.87 frequency(45)=1200000000
+ 
+pred: 0.92 deg. took: 610.11 ms | cam=43.75 prep=49.89 pred=516.47 frequency(45)=1200000000
+ 
+pred: 0.81 deg. took: 636.39 ms | cam=62.72 prep=47.12 pred=526.55 frequency(45)=1200002000
+ 
+pred: 0.34 deg. took: 624.40 ms | cam=59.99 prep=35.50 pred=528.91 frequency(45)=1200000000
+ 
+pred: 0.17 deg. took: 583.35 ms | cam=45.57 prep=38.28 pred=499.50 frequency(45)=1200000000
+ 
+pred: -0.19 deg. took: 584.23 ms | cam=47.11 prep=41.03 pred=496.09 frequency(45)=1200000000
+ 
+pred: 0.31 deg. took: 610.10 ms | cam=41.90 prep=47.41 pred=520.80 frequency(45)=1200000000
+ 
+pred: 0.25 deg. took: 598.32 ms | cam=38.13 prep=47.27 pred=512.91 frequency(45)=1200000000
+ 
+pred: 0.08 deg. took: 598.29 ms | cam=38.89 prep=44.48 pred=514.93 frequency(45)=1200000000
+ 
+pred: -0.49 deg. took: 598.38 ms | cam=48.73 prep=38.70 pred=510.95 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 563.38 ms | cam=44.93 prep=27.27 pred=491.19 frequency(45)=1200000000
+ 
+pred: 0.29 deg. took: 581.28 ms | cam=39.71 prep=47.60 pred=493.98 frequency(45)=1200000000
+ 
+pred: 0.42 deg. took: 584.69 ms | cam=48.04 prep=41.47 pred=495.17 frequency(45)=1200000000
+ 
+pred: 0.60 deg. took: 600.67 ms | cam=42.58 prep=47.02 pred=511.07 frequency(45)=1200000000
+ 
+pred: 1.13 deg. took: 591.54 ms | cam=40.76 prep=42.92 pred=507.86 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 591.37 ms | cam=38.92 prep=46.57 pred=505.88 frequency(45)=1200000000
+ 
+pred: 0.79 deg. took: 601.83 ms | cam=38.95 prep=49.87 pred=513.01 frequency(45)=1200000000
+ 
+pred: 1.16 deg. took: 585.81 ms | cam=43.88 prep=37.02 pred=504.91 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 588.36 ms | cam=47.41 prep=33.56 pred=507.38 frequency(45)=1200000000
+ 
+pred: 0.34 deg. took: 588.33 ms | cam=47.03 prep=32.89 pred=508.41 frequency(45)=1200000000
+ 
+pred: 0.22 deg. took: 596.52 ms | cam=48.27 prep=37.35 pred=510.90 frequency(45)=1200002000
+ 
+pred: 0.20 deg. took: 605.39 ms | cam=39.50 prep=48.61 pred=517.28 frequency(45)=1200000000
+ 
+pred: -0.14 deg. took: 596.65 ms | cam=42.42 prep=29.32 pred=524.90 frequency(45)=1200000000
+ 
+pred: -0.44 deg. took: 586.30 ms | cam=49.04 prep=30.77 pred=506.49 frequency(45)=1200000000
+ 
+pred: -0.88 deg. took: 590.77 ms | cam=45.15 prep=42.07 pred=503.55 frequency(45)=1200000000
+ 
+pred: -0.88 deg. took: 606.67 ms | cam=40.78 prep=45.26 pred=520.63 frequency(45)=1200000000
+ 
+pred: -1.15 deg. took: 588.68 ms | cam=48.60 prep=42.39 pred=497.69 frequency(45)=1200000000
+ 
+pred: -1.59 deg. took: 596.42 ms | cam=47.60 prep=36.41 pred=512.41 frequency(45)=1200002000
+ 
+pred: -1.29 deg. took: 604.42 ms | cam=41.68 prep=43.98 pred=518.75 frequency(45)=1200000000
+ 
+pred: -0.93 deg. took: 578.83 ms | cam=46.46 prep=37.14 pred=495.24 frequency(45)=1200000000
+ 
+pred: -0.50 deg. took: 595.65 ms | cam=44.51 prep=37.65 pred=513.49 frequency(45)=1200000000
+ 
+pred: -0.18 deg. took: 596.53 ms | cam=40.52 prep=43.99 pred=512.02 frequency(45)=1200000000
+ 
+pred: -0.02 deg. took: 644.81 ms | cam=84.75 prep=37.80 pred=522.26 frequency(45)=1200000000
+ 
+pred: -0.12 deg. took: 610.48 ms | cam=45.83 prep=38.26 pred=526.39 frequency(45)=1200000000
+ 
+pred: -0.58 deg. took: 568.32 ms | cam=43.09 prep=29.98 pred=495.25 frequency(45)=1200000000
+ 
+pred: -0.88 deg. took: 594.34 ms | cam=44.06 prep=36.43 pred=513.85 frequency(45)=1200000000
+ 
+pred: -0.19 deg. took: 598.42 ms | cam=39.12 prep=52.55 pred=506.74 frequency(45)=1200000000
+ 
+pred: -0.21 deg. took: 611.36 ms | cam=48.31 prep=36.72 pred=526.33 frequency(45)=1200000000
+ 
+pred: -0.27 deg. took: 592.41 ms | cam=42.50 prep=41.74 pred=508.17 frequency(45)=1200000000
+ 
+pred: 0.44 deg. took: 586.90 ms | cam=48.22 prep=32.96 pred=505.72 frequency(45)=1200000000
+ 
+pred: -0.42 deg. took: 595.51 ms | cam=45.23 prep=38.17 pred=512.12 frequency(45)=1200000000
+ 
+pred: -0.57 deg. took: 596.88 ms | cam=48.25 prep=37.33 pred=511.30 frequency(45)=1200000000
+ 
+pred: -0.57 deg. took: 590.93 ms | cam=40.90 prep=41.88 pred=508.14 frequency(45)=1200000000
+ 
+pred: -0.54 deg. took: 582.40 ms | cam=41.09 prep=25.48 pred=515.83 frequency(45)=1200002000
+ 
+pred: 0.29 deg. took: 646.37 ms | cam=46.64 prep=52.87 pred=546.87 frequency(45)=1200000000
+ 
+pred: 0.59 deg. took: 592.18 ms | cam=46.10 prep=37.08 pred=509.01 frequency(45)=1200000000
+ 
+pred: 0.48 deg. took: 617.72 ms | cam=43.46 prep=31.23 pred=543.03 frequency(45)=1200002000
+ 
+pred: 0.48 deg. took: 578.83 ms | cam=32.66 prep=33.52 pred=512.66 frequency(45)=1200000000
+ 
+pred: 0.58 deg. took: 596.74 ms | cam=39.33 prep=41.37 pred=516.03 frequency(45)=1200000000
+ 
+pred: 0.36 deg. took: 595.69 ms | cam=45.38 prep=38.17 pred=512.15 frequency(45)=1200000000
+ 
+pred: 0.47 deg. took: 575.32 ms | cam=39.73 prep=39.45 pred=496.14 frequency(45)=1200002000
+ 
+pred: 0.61 deg. took: 569.78 ms | cam=42.08 prep=37.39 pred=490.31 frequency(45)=1200000000
+ 
+pred: 0.29 deg. took: 586.72 ms | cam=41.65 prep=44.95 pred=500.12 frequency(45)=1200000000
+ 
+pred: 0.28 deg. took: 580.42 ms | cam=43.35 prep=35.95 pred=501.11 frequency(45)=1200000000
+ 
+pred: 0.67 deg. took: 591.84 ms | cam=44.36 prep=36.41 pred=511.07 frequency(45)=1200002000
+ 
+pred: 0.70 deg. took: 572.29 ms | cam=40.01 prep=29.87 pred=502.40 frequency(45)=1200000000
+ 
+pred: 0.50 deg. took: 604.01 ms | cam=42.09 prep=43.55 pred=518.37 frequency(45)=1200000000
+ 
+pred: 0.79 deg. took: 592.49 ms | cam=42.99 prep=34.82 pred=514.67 frequency(45)=1200000000
+ 
+pred: 1.31 deg. took: 571.01 ms | cam=43.77 prep=29.40 pred=497.84 frequency(45)=1200000000
+ 
+pred: 1.41 deg. took: 587.22 ms | cam=46.25 prep=35.96 pred=505.00 frequency(45)=1200000000
+ 
+pred: 1.64 deg. took: 589.55 ms | cam=46.45 prep=38.32 pred=504.78 frequency(45)=1200000000
+ 
+pred: 1.88 deg. took: 603.01 ms | cam=46.56 prep=42.06 pred=514.39 frequency(45)=1200002000
+ 
+pred: 2.11 deg. took: 678.06 ms | cam=42.84 prep=58.52 pred=576.70 frequency(45)=1200000000
+ 
+pred: 1.95 deg. took: 577.46 ms | cam=58.55 prep=51.06 pred=467.85 frequency(45)=1200000000
+ 
+pred: 2.34 deg. took: 598.61 ms | cam=40.48 prep=41.73 pred=516.40 frequency(45)=1200000000
+ 
+pred: 1.53 deg. took: 604.78 ms | cam=46.95 prep=38.70 pred=519.12 frequency(45)=1200000000
+ 
+pred: 1.76 deg. took: 598.45 ms | cam=49.63 prep=36.64 pred=512.18 frequency(45)=1200002000
+ 
+pred: 2.13 deg. took: 612.60 ms | cam=47.74 prep=47.27 pred=517.59 frequency(45)=1200000000
+ 
+pred: 2.45 deg. took: 593.51 ms | cam=46.42 prep=36.82 pred=510.28 frequency(45)=1200000000
+ 
+pred: 2.40 deg. took: 606.84 ms | cam=38.44 prep=52.19 pred=516.21 frequency(45)=1200000000
+ 
+pred: 1.94 deg. took: 590.89 ms | cam=39.61 prep=27.17 pred=524.11 frequency(45)=1200000000
+ 
+pred: 2.79 deg. took: 595.12 ms | cam=40.74 prep=40.78 pred=513.60 frequency(45)=1200000000
+ 
+pred: 2.56 deg. took: 616.62 ms | cam=45.03 prep=41.24 pred=530.34 frequency(45)=1200000000
+ 
+pred: 3.25 deg. took: 590.65 ms | cam=45.52 prep=38.79 pred=506.35 frequency(45)=1200000000
+ 
+pred: 2.70 deg. took: 597.08 ms | cam=50.42 prep=35.50 pred=511.16 frequency(45)=1200000000
+ 
+pred: 2.38 deg. took: 613.53 ms | cam=41.53 prep=39.23 pred=532.78 frequency(45)=1200000000
+ 
+pred: 2.22 deg. took: 592.98 ms | cam=43.98 prep=39.66 pred=509.35 frequency(45)=1200000000
+ 
+pred: 1.72 deg. took: 576.60 ms | cam=39.73 prep=44.50 pred=492.37 frequency(45)=1200000000
+ 
+pred: 1.89 deg. took: 587.31 ms | cam=38.46 prep=37.40 pred=511.45 frequency(45)=1200000000
+ 
+pred: 1.04 deg. took: 570.59 ms | cam=27.69 prep=44.56 pred=498.34 frequency(45)=1200000000
+ 
+pred: 0.71 deg. took: 587.28 ms | cam=45.06 prep=38.42 pred=503.79 frequency(45)=1200000000
+ 
+pred: 1.01 deg. took: 599.72 ms | cam=40.93 prep=45.49 pred=513.30 frequency(45)=1200000000
+ 
+pred: 2.28 deg. took: 562.73 ms | cam=41.89 prep=28.08 pred=492.76 frequency(45)=1200000000
+ 
+pred: 1.79 deg. took: 604.19 ms | cam=41.56 prep=36.40 pred=526.23 frequency(45)=1200000000
+ 
+pred: 0.77 deg. took: 571.26 ms | cam=40.78 prep=41.22 pred=489.26 frequency(45)=1200000000
+ 
+pred: 1.10 deg. took: 612.41 ms | cam=43.42 prep=60.96 pred=508.04 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 590.17 ms | cam=48.64 prep=38.29 pred=503.24 frequency(45)=1200000000
+ 
+pred: 1.02 deg. took: 593.40 ms | cam=39.18 prep=45.38 pred=508.84 frequency(45)=1200000000
+ 
+pred: 0.91 deg. took: 583.09 ms | cam=38.49 prep=41.83 pred=502.76 frequency(45)=1200000000
+ 
+pred: 1.19 deg. took: 599.16 ms | cam=46.50 prep=36.52 pred=516.15 frequency(45)=1200000000
+ 
+pred: 0.88 deg. took: 607.22 ms | cam=46.99 prep=33.91 pred=526.31 frequency(45)=1200000000
+ 
+pred: 0.74 deg. took: 572.48 ms | cam=47.08 prep=29.00 pred=496.41 frequency(45)=1200000000
+ 
+pred: 0.98 deg. took: 597.33 ms | cam=49.62 prep=39.94 pred=507.77 frequency(45)=1200000000
+ 
+pred: 0.91 deg. took: 605.88 ms | cam=40.32 prep=44.96 pred=520.61 frequency(45)=1200002000
+ 
+pred: 1.48 deg. took: 569.85 ms | cam=39.70 prep=30.15 pred=500.01 frequency(45)=1200000000
+ 
+pred: 1.91 deg. took: 599.01 ms | cam=45.31 prep=35.84 pred=517.86 frequency(45)=1200000000
+ 
+pred: 1.85 deg. took: 583.86 ms | cam=45.22 prep=39.99 pred=498.65 frequency(45)=1200000000
+ 
+pred: 1.17 deg. took: 585.02 ms | cam=41.54 prep=44.68 pred=498.80 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 596.99 ms | cam=38.76 prep=44.42 pred=513.81 frequency(45)=1200000000
+ 
+pred: 0.41 deg. took: 601.00 ms | cam=40.94 prep=44.73 pred=515.33 frequency(45)=1200000000
+ 
+pred: 1.69 deg. took: 647.20 ms | cam=48.53 prep=37.46 pred=561.21 frequency(45)=1200000000
+ 
+pred: 1.56 deg. took: 579.13 ms | cam=38.39 prep=49.04 pred=491.70 frequency(45)=1200000000
+ 
+pred: 1.26 deg. took: 596.24 ms | cam=41.49 prep=42.32 pred=512.43 frequency(45)=1200000000
+ 
+pred: 1.68 deg. took: 581.46 ms | cam=40.26 prep=36.89 pred=504.31 frequency(45)=1200000000
+ 
+pred: 2.01 deg. took: 612.59 ms | cam=46.65 prep=39.55 pred=526.39 frequency(45)=1200002000
+ 
+pred: 1.98 deg. took: 585.93 ms | cam=38.54 prep=46.04 pred=501.34 frequency(45)=1200000000
+ 
+pred: 1.85 deg. took: 566.93 ms | cam=43.80 prep=27.28 pred=495.84 frequency(45)=1200002000
+ 
+pred: 1.93 deg. took: 602.22 ms | cam=45.73 prep=35.18 pred=521.31 frequency(45)=1200002000
+ 
+pred: 2.03 deg. took: 575.31 ms | cam=46.76 prep=37.32 pred=491.23 frequency(45)=1200000000
+ 
+pred: 1.92 deg. took: 601.06 ms | cam=43.39 prep=41.64 pred=516.03 frequency(45)=1200000000
+ 
+pred: 3.20 deg. took: 571.02 ms | cam=26.63 prep=49.41 pred=494.98 frequency(45)=1200000000
+ 
+pred: 3.78 deg. took: 596.00 ms | cam=39.85 prep=45.21 pred=510.94 frequency(45)=1200000000
+ 
+pred: 3.72 deg. took: 586.08 ms | cam=45.67 prep=42.44 pred=497.97 frequency(45)=1200000000
+ 
+pred: 3.26 deg. took: 585.80 ms | cam=44.46 prep=42.46 pred=498.88 frequency(45)=1200002000
+ 
+pred: 2.45 deg. took: 584.55 ms | cam=41.13 prep=46.29 pred=497.14 frequency(45)=1200000000
+ 
+pred: 2.49 deg. took: 573.93 ms | cam=44.11 prep=43.10 pred=486.72 frequency(45)=1200000000
+ 
+pred: 2.15 deg. took: 631.36 ms | cam=46.40 prep=45.58 pred=539.38 frequency(45)=1200000000
+ 
+pred: 1.99 deg. took: 609.24 ms | cam=46.66 prep=47.96 pred=514.61 frequency(45)=1200000000
+ 
+pred: 2.73 deg. took: 588.29 ms | cam=42.05 prep=30.42 pred=515.82 frequency(45)=1200000000
+ 
+pred: 1.47 deg. took: 596.38 ms | cam=47.11 prep=34.45 pred=514.82 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 588.24 ms | cam=47.10 prep=39.48 pred=501.67 frequency(45)=1200000000
+ 
+pred: 0.54 deg. took: 596.97 ms | cam=47.96 prep=41.84 pred=507.17 frequency(45)=1200000000
+ 
+pred: 0.65 deg. took: 599.65 ms | cam=40.23 prep=47.13 pred=512.29 frequency(45)=1200000000
+ 
+pred: 1.01 deg. took: 586.80 ms | cam=41.13 prep=38.59 pred=507.07 frequency(45)=1200002000
+ 
+pred: 0.70 deg. took: 593.15 ms | cam=42.59 prep=45.74 pred=504.83 frequency(45)=1200000000
+ 
+pred: 1.27 deg. took: 604.70 ms | cam=46.36 prep=47.68 pred=510.66 frequency(45)=1200002000
+ 
+pred: 0.57 deg. took: 609.57 ms | cam=46.91 prep=38.62 pred=524.04 frequency(45)=1200000000
+ 
+pred: 0.71 deg. took: 594.65 ms | cam=46.83 prep=38.14 pred=509.67 frequency(45)=1200000000
+ 
+pred: 0.95 deg. took: 597.50 ms | cam=40.65 prep=41.75 pred=515.09 frequency(45)=1200000000
+ 
+pred: 0.62 deg. took: 597.45 ms | cam=48.40 prep=36.00 pred=513.05 frequency(45)=1199998000
+ 
+pred: 0.69 deg. took: 599.59 ms | cam=44.49 prep=30.89 pred=524.22 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 626.57 ms | cam=54.44 prep=41.80 pred=530.33 frequency(45)=1200000000
+ 
+pred: 0.36 deg. took: 586.31 ms | cam=48.13 prep=38.55 pred=499.63 frequency(45)=1200000000
+ 
+pred: 0.40 deg. took: 622.73 ms | cam=41.72 prep=42.87 pred=538.13 frequency(45)=1200000000
+ 
+pred: 0.41 deg. took: 589.20 ms | cam=40.60 prep=35.79 pred=512.81 frequency(45)=1200002000
+ 
+pred: 0.79 deg. took: 604.09 ms | cam=46.02 prep=35.66 pred=522.41 frequency(45)=1200000000
+ 
+pred: 0.89 deg. took: 602.84 ms | cam=41.40 prep=45.08 pred=516.36 frequency(45)=1200000000
+ 
+pred: 0.57 deg. took: 595.68 ms | cam=41.69 prep=50.83 pred=503.16 frequency(45)=1200000000
+ 
+pred: 1.39 deg. took: 597.80 ms | cam=45.58 prep=39.68 pred=512.53 frequency(45)=1200000000
+ 
+pred: 0.88 deg. took: 584.34 ms | cam=54.54 prep=29.91 pred=499.89 frequency(45)=1200000000
+ 
+pred: 0.67 deg. took: 600.99 ms | cam=47.04 prep=37.47 pred=516.47 frequency(45)=1200002000
+ 
+pred: 0.18 deg. took: 616.02 ms | cam=43.00 prep=45.97 pred=527.05 frequency(45)=1200000000
+ 
+pred: 0.36 deg. took: 591.28 ms | cam=43.97 prep=28.58 pred=518.72 frequency(45)=1200000000
+ 
+pred: 0.41 deg. took: 594.44 ms | cam=49.97 prep=30.36 pred=514.10 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 601.94 ms | cam=41.06 prep=41.25 pred=519.63 frequency(45)=1200000000
+ 
+pred: 0.65 deg. took: 599.76 ms | cam=41.25 prep=46.28 pred=512.23 frequency(45)=1200000000
+ 
+pred: 0.84 deg. took: 609.37 ms | cam=44.99 prep=42.32 pred=522.06 frequency(45)=1200000000
+ 
+pred: 0.94 deg. took: 651.91 ms | cam=55.31 prep=44.02 pred=552.58 frequency(45)=1200000000
+ 
+pred: 1.96 deg. took: 611.49 ms | cam=48.42 prep=34.20 pred=528.86 frequency(45)=1200000000
+ 
+pred: 2.09 deg. took: 595.12 ms | cam=47.44 prep=38.70 pred=508.98 frequency(45)=1200000000
+ 
+pred: 2.46 deg. took: 593.24 ms | cam=37.91 prep=41.04 pred=514.29 frequency(45)=1200000000
+ 
+pred: 4.45 deg. took: 595.42 ms | cam=42.78 prep=40.09 pred=512.55 frequency(45)=1200000000
+ 
+pred: 3.64 deg. took: 606.45 ms | cam=39.78 prep=46.06 pred=520.61 frequency(45)=1200000000
+ 
+pred: 3.74 deg. took: 596.26 ms | cam=43.89 prep=39.95 pred=512.42 frequency(45)=1200000000
+ 
+pred: 3.27 deg. took: 560.34 ms | cam=40.51 prep=27.96 pred=491.86 frequency(45)=1200000000
+ 
+pred: 2.40 deg. took: 600.50 ms | cam=46.04 prep=37.41 pred=517.05 frequency(45)=1200000000
+ 
+pred: 2.33 deg. took: 599.27 ms | cam=38.98 prep=39.96 pred=520.33 frequency(45)=1200000000
+ 
+pred: 3.47 deg. took: 613.11 ms | cam=48.22 prep=44.67 pred=520.22 frequency(45)=1200002000
+ 
+pred: 4.62 deg. took: 607.84 ms | cam=41.79 prep=42.56 pred=523.49 frequency(45)=1200000000
+ 
+pred: 17.79 deg. took: 594.40 ms | cam=48.74 prep=36.07 pred=509.59 frequency(45)=1200000000
+ 
+pred: 3.67 deg. took: 616.40 ms | cam=47.85 prep=44.16 pred=524.39 frequency(45)=1200000000
+ 
+pred: 2.37 deg. took: 597.23 ms | cam=48.57 prep=44.20 pred=504.46 frequency(45)=1200000000
+ 
+pred: 0.98 deg. took: 621.05 ms | cam=42.62 prep=52.63 pred=525.79 frequency(45)=1200000000
+ 
+pred: 0.67 deg. took: 602.47 ms | cam=43.26 prep=39.89 pred=519.32 frequency(45)=1200000000
+ 
+pred: 2.67 deg. took: 595.27 ms | cam=48.12 prep=36.49 pred=510.65 frequency(45)=1200000000
+ 
+pred: 4.56 deg. took: 602.81 ms | cam=41.27 prep=43.43 pred=518.12 frequency(45)=1200000000
+ 
+pred: 4.52 deg. took: 594.35 ms | cam=43.11 prep=28.64 pred=522.59 frequency(45)=1200000000
+ 
+pred: 2.65 deg. took: 617.85 ms | cam=44.13 prep=44.35 pred=529.38 frequency(45)=1200000000
+ 
+pred: 2.14 deg. took: 627.77 ms | cam=39.58 prep=49.46 pred=538.72 frequency(45)=1200000000
+ 
+pred: 1.81 deg. took: 639.47 ms | cam=41.15 prep=68.43 pred=529.88 frequency(45)=1200000000
+ 
+pred: 10.46 deg. took: 620.46 ms | cam=41.58 prep=47.17 pred=531.71 frequency(45)=1200000000
+ 
+pred: 2.38 deg. took: 625.69 ms | cam=46.31 prep=53.30 pred=526.08 frequency(45)=1200000000
+ 
+pred: 15.70 deg. took: 612.34 ms | cam=41.15 prep=49.36 pred=521.83 frequency(45)=1200000000
+ 
+pred: 21.43 deg. took: 614.56 ms | cam=41.03 prep=45.14 pred=528.39 frequency(45)=1200000000
+ 
+pred: 28.46 deg. took: 650.65 ms | cam=91.86 prep=44.06 pred=514.73 frequency(45)=1200000000
+ 
+pred: 2.61 deg. took: 597.78 ms | cam=45.68 prep=38.52 pred=513.58 frequency(45)=1200000000
+ 
+pred: 2.63 deg. took: 597.99 ms | cam=44.02 prep=44.04 pred=509.92 frequency(45)=1200000000
+ 
+pred: 3.73 deg. took: 603.96 ms | cam=44.18 prep=49.14 pred=510.64 frequency(45)=1200000000
+ 
+pred: 2.62 deg. took: 593.56 ms | cam=43.75 prep=28.93 pred=520.88 frequency(45)=1200002000
+ 
+pred: 2.14 deg. took: 595.77 ms | cam=44.42 prep=37.96 pred=513.40 frequency(45)=1200000000
+ 
+pred: 3.05 deg. took: 600.74 ms | cam=39.00 prep=45.79 pred=515.95 frequency(45)=1200000000
+ 
+pred: 3.00 deg. took: 601.04 ms | cam=47.85 prep=43.90 pred=509.29 frequency(45)=1200002000
+ 
+pred: 1.09 deg. took: 596.59 ms | cam=46.12 prep=43.42 pred=507.04 frequency(45)=1200000000
+ 
+pred: 1.39 deg. took: 520.28 ms | cam=45.93 prep=29.66 pred=444.69 frequency(45)=1200000000
+ 
+pred: 1.71 deg. took: 621.81 ms | cam=55.03 prep=40.14 pred=526.63 frequency(45)=1200000000
+ 
+pred: 1.15 deg. took: 608.81 ms | cam=44.97 prep=45.74 pred=518.09 frequency(45)=1200000000
+ 
+pred: 1.95 deg. took: 585.33 ms | cam=43.49 prep=46.86 pred=494.98 frequency(45)=1200000000
+ 
+pred: 1.84 deg. took: 611.30 ms | cam=47.40 prep=38.14 pred=525.76 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 600.75 ms | cam=46.74 prep=36.56 pred=517.45 frequency(45)=1200000000
+ 
+pred: 3.37 deg. took: 621.22 ms | cam=48.41 prep=37.65 pred=535.15 frequency(45)=1200000000
+ 
+pred: 1.84 deg. took: 589.34 ms | cam=43.33 prep=28.53 pred=517.48 frequency(45)=1200000000
+ 
+pred: 4.16 deg. took: 585.01 ms | cam=41.60 prep=41.14 pred=502.27 frequency(45)=1200000000
+ 
+pred: 12.01 deg. took: 601.82 ms | cam=45.41 prep=40.99 pred=515.41 frequency(45)=1200000000
+ 
+pred: 21.51 deg. took: 583.94 ms | cam=41.69 prep=46.35 pred=495.90 frequency(45)=1200000000
+ 
+pred: 25.21 deg. took: 614.75 ms | cam=48.19 prep=38.67 pred=527.89 frequency(45)=1199998000
+ 
+pred: 28.77 deg. took: 594.37 ms | cam=44.07 prep=31.80 pred=518.50 frequency(45)=1200002000
+ 
+pred: 23.30 deg. took: 618.54 ms | cam=40.98 prep=49.64 pred=527.92 frequency(45)=1200000000
+ 
+pred: 3.48 deg. took: 616.32 ms | cam=41.14 prep=48.11 pred=527.07 frequency(45)=1200000000
+ 
+pred: 2.65 deg. took: 639.12 ms | cam=43.10 prep=38.52 pred=557.50 frequency(45)=1200002000
+ 
+pred: 6.84 deg. took: 546.95 ms | cam=50.74 prep=37.82 pred=458.39 frequency(45)=1200000000
+ 
+pred: 4.93 deg. took: 599.03 ms | cam=42.65 prep=46.20 pred=510.17 frequency(45)=1200000000
+ 
+pred: 4.89 deg. took: 602.69 ms | cam=42.20 prep=39.40 pred=521.10 frequency(45)=1200000000
+ 
+pred: 2.24 deg. took: 590.91 ms | cam=43.35 prep=28.91 pred=518.66 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 600.05 ms | cam=44.33 prep=38.54 pred=517.18 frequency(45)=1200002000
+ 
+pred: 1.77 deg. took: 609.50 ms | cam=41.73 prep=42.53 pred=525.25 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 592.47 ms | cam=46.43 prep=41.12 pred=504.92 frequency(45)=1200000000
+ 
+pred: 1.11 deg. took: 622.94 ms | cam=49.38 prep=43.86 pred=529.70 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 601.82 ms | cam=39.19 prep=47.42 pred=515.20 frequency(45)=1200000000
+ 
+pred: 0.62 deg. took: 601.34 ms | cam=40.62 prep=45.47 pred=515.25 frequency(45)=1200000000
+ 
+pred: 1.38 deg. took: 595.13 ms | cam=47.09 prep=40.50 pred=507.55 frequency(45)=1200000000
+ 
+pred: 3.42 deg. took: 589.98 ms | cam=39.47 prep=44.35 pred=506.16 frequency(45)=1200000000
+ 
+pred: 3.42 deg. took: 593.84 ms | cam=47.47 prep=40.39 pred=505.97 frequency(45)=1200000000
+ 
+pred: 2.65 deg. took: 610.97 ms | cam=39.33 prep=39.52 pred=532.12 frequency(45)=1200000000
+ 
+pred: 2.91 deg. took: 592.87 ms | cam=41.93 prep=42.88 pred=508.06 frequency(45)=1200000000
+ 
+pred: 2.33 deg. took: 578.48 ms | cam=45.76 prep=27.67 pred=505.05 frequency(45)=1200000000
+ 
+pred: 2.27 deg. took: 590.37 ms | cam=45.84 prep=39.43 pred=505.10 frequency(45)=1200000000
+ 
+pred: 9.71 deg. took: 608.62 ms | cam=44.62 prep=43.34 pred=520.67 frequency(45)=1200000000
+ 
+pred: 16.13 deg. took: 610.44 ms | cam=41.79 prep=45.17 pred=523.49 frequency(45)=1200000000
+ 
+pred: 20.77 deg. took: 608.23 ms | cam=48.07 prep=40.26 pred=519.90 frequency(45)=1200000000
+ 
+pred: 17.55 deg. took: 591.41 ms | cam=48.27 prep=34.12 pred=509.02 frequency(45)=1200000000
+ 
+pred: 3.82 deg. took: 614.31 ms | cam=45.78 prep=43.47 pred=525.05 frequency(45)=1200000000
+ 
+pred: 3.74 deg. took: 620.43 ms | cam=68.79 prep=36.26 pred=515.38 frequency(45)=1200002000
+ 
+pred: 7.45 deg. took: 600.64 ms | cam=43.46 prep=41.96 pred=515.23 frequency(45)=1200000000
+ 
+pred: 27.91 deg. took: 595.84 ms | cam=42.40 prep=37.76 pred=515.69 frequency(45)=1200000000
+ 
+pred: 4.13 deg. took: 592.01 ms | cam=40.50 prep=41.75 pred=509.76 frequency(45)=1200000000
+ 
+pred: 3.19 deg. took: 607.47 ms | cam=46.52 prep=38.14 pred=522.81 frequency(45)=1200000000
+ 
+pred: 1.63 deg. took: 616.63 ms | cam=46.39 prep=29.19 pred=541.05 frequency(45)=1200000000
+ 
+pred: 1.08 deg. took: 583.25 ms | cam=48.69 prep=34.79 pred=499.78 frequency(45)=1200000000
+ 
+pred: 0.48 deg. took: 632.16 ms | cam=46.67 prep=39.01 pred=546.48 frequency(45)=1200000000
+ 
+pred: 0.61 deg. took: 636.21 ms | cam=39.23 prep=48.00 pred=548.97 frequency(45)=1200000000
+ 
+pred: 1.42 deg. took: 592.73 ms | cam=49.31 prep=37.93 pred=505.49 frequency(45)=1200000000
+ 
+pred: 1.36 deg. took: 590.83 ms | cam=45.82 prep=39.62 pred=505.40 frequency(45)=1200000000
+ 
+pred: 2.77 deg. took: 598.21 ms | cam=45.33 prep=44.67 pred=508.21 frequency(45)=1200002000
+ 
+pred: 2.70 deg. took: 611.79 ms | cam=44.47 prep=40.00 pred=527.32 frequency(45)=1200000000
+ 
+pred: 2.69 deg. took: 606.16 ms | cam=44.52 prep=29.12 pred=532.52 frequency(45)=1200000000
+ 
+pred: 2.16 deg. took: 602.45 ms | cam=39.79 prep=40.71 pred=521.95 frequency(45)=1200000000
+ 
+pred: 2.11 deg. took: 608.56 ms | cam=50.35 prep=39.82 pred=518.39 frequency(45)=1200000000
+ 
+pred: 2.12 deg. took: 588.93 ms | cam=42.25 prep=45.72 pred=500.97 frequency(45)=1200000000
+ 
+pred: 1.65 deg. took: 587.17 ms | cam=42.42 prep=31.36 pred=513.40 frequency(45)=1200000000
+ 
+pred: 1.80 deg. took: 591.96 ms | cam=44.98 prep=35.32 pred=511.67 frequency(45)=1200000000
+ 
+pred: 1.67 deg. took: 621.25 ms | cam=41.32 prep=46.55 pred=533.38 frequency(45)=1200000000
+ 
+pred: 1.96 deg. took: 620.30 ms | cam=42.88 prep=50.95 pred=526.46 frequency(45)=1200000000
+ 
+pred: 1.76 deg. took: 607.73 ms | cam=47.92 prep=42.66 pred=517.15 frequency(45)=1200000000
+ 
+pred: 1.40 deg. took: 593.26 ms | cam=45.85 prep=37.17 pred=510.25 frequency(45)=1200000000
+ 
+pred: 1.16 deg. took: 586.88 ms | cam=39.84 prep=46.67 pred=500.37 frequency(45)=1200000000
+ 
+pred: 1.46 deg. took: 600.51 ms | cam=41.88 prep=46.53 pred=512.10 frequency(45)=1200000000
+ 
+pred: 1.01 deg. took: 605.13 ms | cam=46.39 prep=37.09 pred=521.65 frequency(45)=1200000000
+ 
+pred: 1.17 deg. took: 606.92 ms | cam=39.45 prep=46.03 pred=521.44 frequency(45)=1200000000
+ 
+pred: 0.51 deg. took: 604.56 ms | cam=42.50 prep=39.72 pred=522.33 frequency(45)=1200000000
+ 
+pred: 0.58 deg. took: 603.42 ms | cam=46.66 prep=44.21 pred=512.55 frequency(45)=1200000000
+ 
+pred: 0.16 deg. took: 585.91 ms | cam=41.88 prep=30.57 pred=513.45 frequency(45)=1200000000
+ 
+pred: 0.48 deg. took: 503.50 ms | cam=43.24 prep=32.21 pred=428.05 frequency(45)=1200002000
+ 
+pred: 0.74 deg. took: 619.70 ms | cam=50.61 prep=35.41 pred=533.68 frequency(45)=1200000000
+ 
+pred: 0.91 deg. took: 605.91 ms | cam=45.44 prep=41.59 pred=518.89 frequency(45)=1200000000
+ 
+pred: 0.98 deg. took: 618.49 ms | cam=42.82 prep=61.30 pred=514.37 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 623.27 ms | cam=43.69 prep=40.40 pred=539.18 frequency(45)=1200000000
+ 
+pred: 0.12 deg. took: 626.73 ms | cam=63.06 prep=41.04 pred=522.63 frequency(45)=1200000000
+ 
+pred: 0.23 deg. took: 619.26 ms | cam=41.29 prep=48.76 pred=529.22 frequency(45)=1200000000
+ 
+pred: 0.50 deg. took: 633.46 ms | cam=47.70 prep=30.66 pred=555.09 frequency(45)=1200000000
+ 
+pred: 0.53 deg. took: 609.62 ms | cam=48.65 prep=46.74 pred=514.22 frequency(45)=1200002000
+ 
+pred: 0.97 deg. took: 616.94 ms | cam=47.13 prep=36.52 pred=533.28 frequency(45)=1200000000
+ 
+pred: 0.71 deg. took: 593.80 ms | cam=48.77 prep=43.49 pred=501.54 frequency(45)=1200000000
+ 
+pred: 1.45 deg. took: 583.86 ms | cam=42.07 prep=32.08 pred=509.71 frequency(45)=1200000000
+ 
+pred: 1.86 deg. took: 623.38 ms | cam=45.04 prep=39.31 pred=539.03 frequency(45)=1200000000
+ 
+pred: 1.69 deg. took: 585.36 ms | cam=43.03 prep=36.16 pred=506.17 frequency(45)=1200000000
+ 
+pred: 1.34 deg. took: 615.38 ms | cam=48.57 prep=39.13 pred=527.68 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 682.53 ms | cam=54.49 prep=58.30 pred=569.74 frequency(45)=1200002000
+ 
+pred: 1.34 deg. took: 631.62 ms | cam=43.98 prep=40.26 pred=547.37 frequency(45)=1200000000
+ 
+pred: 1.41 deg. took: 602.39 ms | cam=50.43 prep=35.37 pred=516.59 frequency(45)=1200000000
+ 
+pred: 0.98 deg. took: 595.39 ms | cam=39.23 prep=48.23 pred=507.94 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 594.34 ms | cam=46.10 prep=37.19 pred=511.04 frequency(45)=1200000000
+ 
+pred: 0.78 deg. took: 591.86 ms | cam=41.76 prep=44.11 pred=505.99 frequency(45)=1200000000
+ 
+pred: 0.81 deg. took: 607.02 ms | cam=50.33 prep=41.53 pred=515.16 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 618.00 ms | cam=41.33 prep=38.25 pred=538.41 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 589.82 ms | cam=45.16 prep=28.35 pred=516.31 frequency(45)=1200000000
+ 
+pred: 1.05 deg. took: 594.56 ms | cam=47.90 prep=32.65 pred=514.01 frequency(45)=1200000000
+ 
+pred: 0.28 deg. took: 584.49 ms | cam=42.32 prep=46.49 pred=495.68 frequency(45)=1200000000
+ 
+pred: 0.75 deg. took: 609.37 ms | cam=44.90 prep=46.68 pred=517.80 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 597.89 ms | cam=47.33 prep=35.75 pred=514.82 frequency(45)=1200002000
+ 
+pred: 0.86 deg. took: 604.80 ms | cam=47.45 prep=36.68 pred=520.67 frequency(45)=1200000000
+ 
+pred: 1.22 deg. took: 593.31 ms | cam=45.16 prep=41.03 pred=507.11 frequency(45)=1200000000
+ 
+pred: 1.20 deg. took: 600.68 ms | cam=41.60 prep=54.27 pred=504.80 frequency(45)=1200000000
+ 
+pred: 2.06 deg. took: 607.20 ms | cam=49.23 prep=37.80 pred=520.17 frequency(45)=1200000000
+ 
+pred: 1.31 deg. took: 585.44 ms | cam=41.61 prep=35.89 pred=507.95 frequency(45)=1200000000
+ 
+pred: 1.33 deg. took: 585.52 ms | cam=46.20 prep=30.29 pred=509.03 frequency(45)=1200000000
+ 
+pred: 1.43 deg. took: 598.59 ms | cam=47.99 prep=38.19 pred=512.41 frequency(45)=1200000000
+ 
+pred: 1.26 deg. took: 572.86 ms | cam=43.27 prep=26.73 pred=502.86 frequency(45)=1200002000
+ 
+pred: 1.14 deg. took: 600.71 ms | cam=48.26 prep=35.90 pred=516.56 frequency(45)=1200002000
+ 
+pred: 1.54 deg. took: 580.29 ms | cam=45.46 prep=36.94 pred=497.88 frequency(45)=1200000000
+ 
+pred: 0.91 deg. took: 594.48 ms | cam=45.80 prep=38.16 pred=510.52 frequency(45)=1200000000
+ 
+pred: 0.33 deg. took: 610.30 ms | cam=43.74 prep=40.59 pred=525.97 frequency(45)=1200000000
+ 
+pred: 0.65 deg. took: 598.84 ms | cam=40.51 prep=42.79 pred=515.54 frequency(45)=1200000000
+ 
+pred: 0.04 deg. took: 614.14 ms | cam=40.72 prep=44.90 pred=528.52 frequency(45)=1200000000
+ 
+pred: -0.15 deg. took: 584.06 ms | cam=48.49 prep=34.84 pred=500.74 frequency(45)=1200000000
+ 
+pred: -0.04 deg. took: 607.86 ms | cam=42.09 prep=41.21 pred=524.56 frequency(45)=1200002000
+ 
+pred: 0.05 deg. took: 597.33 ms | cam=46.59 prep=36.33 pred=514.41 frequency(45)=1200000000
+ 
+pred: -0.01 deg. took: 590.90 ms | cam=45.92 prep=39.53 pred=505.45 frequency(45)=1200000000
+ 
+pred: 0.39 deg. took: 594.48 ms | cam=39.71 prep=47.37 pred=507.39 frequency(45)=1200000000
+ 
+pred: -0.05 deg. took: 572.39 ms | cam=41.02 prep=28.00 pred=503.37 frequency(45)=1200000000
+ 
+pred: 0.05 deg. took: 607.96 ms | cam=49.30 prep=38.67 pred=519.99 frequency(45)=1200000000
+ 
+pred: 0.39 deg. took: 586.74 ms | cam=40.47 prep=42.25 pred=504.01 frequency(45)=1200000000
+ 
+pred: 0.64 deg. took: 603.48 ms | cam=46.56 prep=46.11 pred=510.81 frequency(45)=1200000000
+ 
+pred: 0.39 deg. took: 604.70 ms | cam=40.17 prep=40.05 pred=524.48 frequency(45)=1200000000
+ 
+pred: 0.51 deg. took: 598.91 ms | cam=42.70 prep=40.96 pred=515.25 frequency(45)=1200000000
+ 
+pred: 1.66 deg. took: 607.04 ms | cam=42.53 prep=42.62 pred=521.89 frequency(45)=1200000000
+ 
+pred: 2.25 deg. took: 594.30 ms | cam=49.04 prep=37.39 pred=507.87 frequency(45)=1200002000
+ 
+pred: 2.62 deg. took: 607.29 ms | cam=40.23 prep=44.87 pred=522.19 frequency(45)=1200000000
+ 
+pred: 3.32 deg. took: 602.26 ms | cam=43.16 prep=38.91 pred=520.19 frequency(45)=1200000000
+ 
+pred: 3.97 deg. took: 596.73 ms | cam=49.75 prep=28.69 pred=518.30 frequency(45)=1200000000
+ 
+pred: 6.32 deg. took: 598.66 ms | cam=48.50 prep=34.82 pred=515.34 frequency(45)=1200000000
+ 
+pred: 5.07 deg. took: 568.67 ms | cam=44.40 prep=26.00 pred=498.26 frequency(45)=1200002000
+ 
+pred: 5.93 deg. took: 599.55 ms | cam=48.91 prep=35.34 pred=515.30 frequency(45)=1200002000
+ 
+pred: 6.08 deg. took: 566.84 ms | cam=46.68 prep=38.80 pred=481.35 frequency(45)=1200000000
+ 
+pred: 3.69 deg. took: 596.86 ms | cam=38.97 prep=44.69 pred=513.20 frequency(45)=1200000000
+ 
+pred: 3.37 deg. took: 598.98 ms | cam=26.10 prep=50.66 pred=522.22 frequency(45)=1200000000
+ 
+pred: 3.34 deg. took: 589.84 ms | cam=41.99 prep=37.41 pred=510.44 frequency(45)=1200000000
+ 
+pred: 3.33 deg. took: 597.75 ms | cam=41.55 prep=46.82 pred=509.38 frequency(45)=1200000000
+ 
+pred: 2.12 deg. took: 588.50 ms | cam=41.97 prep=43.50 pred=503.02 frequency(45)=1200002000
+ 
+pred: 2.13 deg. took: 589.98 ms | cam=40.74 prep=40.77 pred=508.47 frequency(45)=1200000000
+ 
+pred: 1.72 deg. took: 491.11 ms | cam=41.19 prep=37.97 pred=411.94 frequency(45)=1199998000
+ 
+pred: 1.19 deg. took: 605.81 ms | cam=41.43 prep=51.95 pred=512.43 frequency(45)=1200000000
+ 
+pred: 0.60 deg. took: 596.97 ms | cam=47.72 prep=39.63 pred=509.62 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 593.82 ms | cam=41.27 prep=32.40 pred=520.15 frequency(45)=1200000000
+ 
+pred: 0.99 deg. took: 600.22 ms | cam=44.81 prep=32.70 pred=522.71 frequency(45)=1200000000
+ 
+pred: 2.13 deg. took: 582.59 ms | cam=43.63 prep=36.75 pred=502.22 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 594.27 ms | cam=42.11 prep=42.73 pred=509.43 frequency(45)=1200000000
+ 
+pred: 2.53 deg. took: 581.20 ms | cam=43.73 prep=41.72 pred=495.75 frequency(45)=1200000000
+ 
+pred: 3.93 deg. took: 596.61 ms | cam=39.73 prep=40.50 pred=516.38 frequency(45)=1200000000
+ 
+pred: 4.20 deg. took: 585.19 ms | cam=45.93 prep=35.68 pred=503.58 frequency(45)=1200000000
+ 
+pred: 6.45 deg. took: 597.37 ms | cam=42.59 prep=38.60 pred=516.19 frequency(45)=1200000000
+ 
+pred: 10.52 deg. took: 601.38 ms | cam=48.29 prep=39.11 pred=513.99 frequency(45)=1200000000
+ 
+pred: 8.36 deg. took: 583.11 ms | cam=44.41 prep=40.79 pred=497.92 frequency(45)=1200000000
+ 
+pred: 20.65 deg. took: 596.31 ms | cam=48.82 prep=38.25 pred=509.23 frequency(45)=1200000000
+ 
+pred: 23.76 deg. took: 588.75 ms | cam=38.51 prep=34.94 pred=515.30 frequency(45)=1200000000
+ 
+pred: 20.54 deg. took: 606.82 ms | cam=43.42 prep=28.81 pred=534.59 frequency(45)=1199998000
+ 
+pred: 22.63 deg. took: 570.45 ms | cam=36.56 prep=62.18 pred=471.72 frequency(45)=1200000000
+ 
+pred: 28.03 deg. took: 591.05 ms | cam=47.24 prep=41.45 pred=502.36 frequency(45)=1200000000
+ 
+pred: 16.42 deg. took: 607.77 ms | cam=46.98 prep=44.14 pred=516.65 frequency(45)=1200000000
+ 
+pred: 24.97 deg. took: 587.98 ms | cam=46.02 prep=35.83 pred=506.13 frequency(45)=1200002000
+ 
+pred: 26.73 deg. took: 607.67 ms | cam=48.72 prep=33.26 pred=525.68 frequency(45)=1200000000
+ 
+pred: 20.01 deg. took: 593.28 ms | cam=45.26 prep=40.07 pred=507.95 frequency(45)=1200000000
+ 
+pred: 14.08 deg. took: 613.63 ms | cam=47.21 prep=40.28 pred=526.14 frequency(45)=1200000000
+ 
+pred: 7.63 deg. took: 590.59 ms | cam=40.84 prep=40.16 pred=509.60 frequency(45)=1200000000
+ 
+pred: 13.38 deg. took: 591.47 ms | cam=49.76 prep=29.53 pred=512.18 frequency(45)=1199998000
+ 
+pred: 13.89 deg. took: 596.60 ms | cam=44.51 prep=38.46 pred=513.63 frequency(45)=1200000000
+ 
+pred: 5.46 deg. took: 597.56 ms | cam=37.79 prep=42.22 pred=517.55 frequency(45)=1200000000
+ 
+pred: 15.36 deg. took: 577.89 ms | cam=39.46 prep=30.76 pred=507.66 frequency(45)=1200000000
+ 
+pred: 7.77 deg. took: 599.52 ms | cam=41.83 prep=43.56 pred=514.14 frequency(45)=1200000000
+ 
+pred: 14.57 deg. took: 600.87 ms | cam=48.80 prep=34.22 pred=517.85 frequency(45)=1200000000
+ 
+pred: 6.35 deg. took: 592.26 ms | cam=42.39 prep=39.73 pred=510.14 frequency(45)=1200002000
+ 
+pred: 3.49 deg. took: 595.85 ms | cam=46.63 prep=40.62 pred=508.61 frequency(45)=1200000000
+ 
+pred: 3.74 deg. took: 599.79 ms | cam=44.01 prep=39.57 pred=516.21 frequency(45)=1200000000
+ 
+pred: 7.11 deg. took: 599.10 ms | cam=43.98 prep=42.82 pred=512.30 frequency(45)=1200002000
+ 
+pred: 4.18 deg. took: 592.53 ms | cam=51.44 prep=38.38 pred=502.72 frequency(45)=1200000000
+ 
+pred: 2.04 deg. took: 664.29 ms | cam=43.53 prep=38.36 pred=582.40 frequency(45)=1200000000
+ 
+pred: 2.38 deg. took: 592.69 ms | cam=41.97 prep=39.98 pred=510.75 frequency(45)=1200002000
+ 
+pred: 2.30 deg. took: 644.77 ms | cam=44.33 prep=63.25 pred=537.20 frequency(45)=1200000000
+ 
+pred: 3.30 deg. took: 623.13 ms | cam=48.71 prep=45.34 pred=529.08 frequency(45)=1200000000
+ 
+pred: 3.24 deg. took: 570.05 ms | cam=43.64 prep=27.77 pred=498.64 frequency(45)=1200000000
+ 
+pred: 3.29 deg. took: 603.41 ms | cam=44.97 prep=36.14 pred=522.30 frequency(45)=1199998000
+ 
+pred: 2.97 deg. took: 591.24 ms | cam=46.95 prep=36.78 pred=507.51 frequency(45)=1200000000
+ 
+pred: 13.48 deg. took: 673.94 ms | cam=45.84 prep=41.84 pred=586.26 frequency(45)=1200000000
+ 
+pred: 21.66 deg. took: 600.35 ms | cam=46.87 prep=38.08 pred=515.40 frequency(45)=1200000000
+ 
+pred: 4.31 deg. took: 584.87 ms | cam=41.10 prep=37.59 pred=506.18 frequency(45)=1200000000
+ 
+pred: 3.20 deg. took: 590.54 ms | cam=46.39 prep=37.41 pred=506.75 frequency(45)=1200000000
+ 
+pred: 16.88 deg. took: 582.62 ms | cam=46.39 prep=38.05 pred=498.18 frequency(45)=1200000000
+ 
+pred: 15.40 deg. took: 608.77 ms | cam=52.59 prep=32.91 pred=523.28 frequency(45)=1200000000
+ 
+pred: 5.87 deg. took: 586.42 ms | cam=36.14 prep=42.46 pred=507.82 frequency(45)=1200000000
+ 
+pred: 7.69 deg. took: 605.83 ms | cam=49.97 prep=34.18 pred=521.67 frequency(45)=1200000000
+ 
+pred: 5.73 deg. took: 604.46 ms | cam=47.65 prep=40.17 pred=516.64 frequency(45)=1200000000
+ 
+pred: 6.75 deg. took: 589.10 ms | cam=34.92 prep=42.55 pred=511.63 frequency(45)=1200000000
+ 
+pred: 5.58 deg. took: 606.84 ms | cam=48.34 prep=38.91 pred=519.59 frequency(45)=1200000000
+ 
+pred: 4.55 deg. took: 590.10 ms | cam=42.31 prep=43.47 pred=504.32 frequency(45)=1200000000
+ 
+pred: 2.49 deg. took: 607.48 ms | cam=40.87 prep=44.02 pred=522.59 frequency(45)=1200000000
+ 
+pred: 1.63 deg. took: 596.28 ms | cam=46.74 prep=35.21 pred=514.33 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 584.39 ms | cam=40.75 prep=40.35 pred=503.29 frequency(45)=1200000000
+ 
+pred: 2.02 deg. took: 589.83 ms | cam=43.81 prep=40.82 pred=505.21 frequency(45)=1200000000
+ 
+pred: 2.13 deg. took: 588.70 ms | cam=42.98 prep=42.26 pred=503.46 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 605.96 ms | cam=42.18 prep=36.63 pred=527.15 frequency(45)=1200000000
+ 
+pred: 2.22 deg. took: 597.35 ms | cam=41.64 prep=38.57 pred=517.14 frequency(45)=1200000000
+ 
+pred: 1.92 deg. took: 603.93 ms | cam=41.55 prep=42.02 pred=520.36 frequency(45)=1200000000
+ 
+pred: 2.07 deg. took: 609.56 ms | cam=40.45 prep=49.83 pred=519.28 frequency(45)=1200000000
+ 
+pred: 2.01 deg. took: 574.78 ms | cam=41.68 prep=28.78 pred=504.32 frequency(45)=1200000000
+ 
+pred: 2.03 deg. took: 594.17 ms | cam=46.04 prep=33.00 pred=515.13 frequency(45)=1200000000
+ 
+pred: 1.85 deg. took: 586.89 ms | cam=41.71 prep=37.98 pred=507.20 frequency(45)=1200000000
+ 
+pred: 1.87 deg. took: 610.21 ms | cam=47.54 prep=38.60 pred=524.08 frequency(45)=1200000000
+ 
+pred: 2.18 deg. took: 593.90 ms | cam=43.32 prep=42.41 pred=508.17 frequency(45)=1200000000
+ 
+pred: 1.72 deg. took: 569.07 ms | cam=39.32 prep=42.86 pred=486.90 frequency(45)=1200000000
+ 
+pred: 2.09 deg. took: 607.30 ms | cam=41.95 prep=38.55 pred=526.79 frequency(45)=1200000000
+ 
+pred: 1.69 deg. took: 607.72 ms | cam=45.11 prep=38.30 pred=524.31 frequency(45)=1200000000
+ 
+pred: 1.42 deg. took: 618.15 ms | cam=38.02 prep=48.96 pred=531.17 frequency(45)=1200000000
+ 
+pred: 2.18 deg. took: 597.77 ms | cam=43.88 prep=41.75 pred=512.14 frequency(45)=1200002000
+ 
+pred: 2.36 deg. took: 593.31 ms | cam=44.71 prep=39.84 pred=508.76 frequency(45)=1200000000
+ 
+pred: 2.04 deg. took: 606.90 ms | cam=43.55 prep=40.61 pred=522.74 frequency(45)=1200000000
+ 
+pred: 2.08 deg. took: 571.65 ms | cam=44.72 prep=26.69 pred=500.25 frequency(45)=1200000000
+ 
+pred: 2.18 deg. took: 604.43 ms | cam=44.06 prep=38.91 pred=521.47 frequency(45)=1200000000
+ 
+pred: 2.11 deg. took: 597.03 ms | cam=49.94 prep=38.98 pred=508.12 frequency(45)=1200000000
+ 
+pred: 2.77 deg. took: 634.19 ms | cam=41.28 prep=55.48 pred=537.43 frequency(45)=1200000000
+ 
+pred: 2.69 deg. took: 598.22 ms | cam=41.88 prep=37.23 pred=519.11 frequency(45)=1200000000
+ 
+pred: 2.37 deg. took: 598.30 ms | cam=41.49 prep=41.88 pred=514.94 frequency(45)=1200000000
+ 
+pred: 2.11 deg. took: 601.89 ms | cam=42.23 prep=45.38 pred=514.28 frequency(45)=1200000000
+ 
+pred: 1.89 deg. took: 597.45 ms | cam=48.64 prep=40.33 pred=508.49 frequency(45)=1200000000
+ 
+pred: 1.57 deg. took: 617.07 ms | cam=45.76 prep=37.68 pred=533.64 frequency(45)=1200002000
+ 
+pred: 1.48 deg. took: 567.07 ms | cam=50.89 prep=49.32 pred=466.86 frequency(45)=1200002000
+ 
+pred: 1.62 deg. took: 597.23 ms | cam=46.44 prep=37.13 pred=513.66 frequency(45)=1200000000
+ 
+pred: 1.56 deg. took: 605.52 ms | cam=47.01 prep=40.33 pred=518.18 frequency(45)=1200000000
+ 
+pred: 2.04 deg. took: 584.35 ms | cam=44.60 prep=28.20 pred=511.55 frequency(45)=1200000000
+ 
+pred: 1.93 deg. took: 607.92 ms | cam=45.87 prep=36.48 pred=525.57 frequency(45)=1200000000
+ 
+pred: 3.38 deg. took: 586.46 ms | cam=47.44 prep=24.88 pred=514.14 frequency(45)=1200000000
+ 
+pred: 2.84 deg. took: 597.30 ms | cam=42.12 prep=44.02 pred=511.16 frequency(45)=1200000000
+ 
+pred: 3.78 deg. took: 596.32 ms | cam=49.07 prep=37.26 pred=509.98 frequency(45)=1200000000
+ 
+pred: 4.54 deg. took: 605.69 ms | cam=50.38 prep=40.42 pred=514.88 frequency(45)=1200000000
+ 
+pred: 3.43 deg. took: 590.79 ms | cam=50.24 prep=37.20 pred=503.35 frequency(45)=1200000000
+ 
+pred: 2.85 deg. took: 585.18 ms | cam=40.56 prep=44.44 pred=500.17 frequency(45)=1200000000
+ 
+pred: 3.72 deg. took: 607.27 ms | cam=45.29 prep=38.53 pred=523.44 frequency(45)=1200000000
+ 
+pred: 4.37 deg. took: 587.68 ms | cam=45.17 prep=39.01 pred=503.49 frequency(45)=1200002000
+ 
+pred: 11.17 deg. took: 595.73 ms | cam=49.10 prep=43.53 pred=503.10 frequency(45)=1200000000
+ 
+pred: 7.20 deg. took: 603.79 ms | cam=44.40 prep=47.13 pred=512.26 frequency(45)=1200000000
+ 
+pred: 4.51 deg. took: 565.87 ms | cam=45.24 prep=26.49 pred=494.13 frequency(45)=1200000000
+ 
+pred: 3.22 deg. took: 602.02 ms | cam=43.46 prep=39.69 pred=518.88 frequency(45)=1200000000
+ 
+pred: 3.95 deg. took: 592.37 ms | cam=50.32 prep=26.98 pred=515.07 frequency(45)=1200000000
+ 
+pred: 3.23 deg. took: 605.54 ms | cam=48.60 prep=47.86 pred=509.08 frequency(45)=1200000000
+ 
+pred: 2.25 deg. took: 619.66 ms | cam=49.60 prep=44.17 pred=525.89 frequency(45)=1200000000
+ 
+pred: 2.00 deg. took: 592.07 ms | cam=39.94 prep=42.42 pred=509.71 frequency(45)=1200000000
+ 
+pred: 2.11 deg. took: 595.30 ms | cam=48.61 prep=40.56 pred=506.13 frequency(45)=1200000000
+ 
+pred: 2.82 deg. took: 598.65 ms | cam=39.43 prep=50.21 pred=509.00 frequency(45)=1200000000
+ 
+pred: 3.20 deg. took: 592.00 ms | cam=42.20 prep=46.15 pred=503.64 frequency(45)=1200000000
+ 
+pred: 3.69 deg. took: 610.42 ms | cam=45.12 prep=44.27 pred=521.04 frequency(45)=1200000000
+ 
+pred: 3.04 deg. took: 602.44 ms | cam=40.70 prep=46.10 pred=515.64 frequency(45)=1200000000
+ 
+pred: 2.77 deg. took: 611.44 ms | cam=48.52 prep=45.00 pred=517.93 frequency(45)=1200000000
+ 
+pred: 1.93 deg. took: 586.09 ms | cam=42.89 prep=28.77 pred=514.42 frequency(45)=1200000000
+ 
+pred: 0.82 deg. took: 628.48 ms | cam=51.69 prep=42.44 pred=534.35 frequency(45)=1200000000
+ 
+pred: 1.03 deg. took: 655.50 ms | cam=48.31 prep=49.82 pred=557.38 frequency(45)=1200000000
+ 
+pred: 0.78 deg. took: 596.35 ms | cam=46.17 prep=42.78 pred=507.40 frequency(45)=1200000000
+ 
+pred: 1.29 deg. took: 611.51 ms | cam=43.56 prep=46.17 pred=521.78 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 594.20 ms | cam=38.91 prep=50.10 pred=505.19 frequency(45)=1200000000
+ 
+pred: 0.94 deg. took: 604.45 ms | cam=47.71 prep=44.13 pred=512.61 frequency(45)=1200000000
+ 
+pred: 1.08 deg. took: 601.59 ms | cam=45.44 prep=43.83 pred=512.31 frequency(45)=1200002000
+ 
+pred: 1.57 deg. took: 596.30 ms | cam=41.07 prep=42.06 pred=513.16 frequency(45)=1200002000
+ 
+pred: 3.14 deg. took: 607.07 ms | cam=48.97 prep=38.69 pred=519.41 frequency(45)=1200000000
+ 
+pred: 2.54 deg. took: 588.59 ms | cam=41.02 prep=45.84 pred=501.73 frequency(45)=1200002000
+ 
+pred: 1.14 deg. took: 609.93 ms | cam=44.16 prep=45.16 pred=520.60 frequency(45)=1200000000
+ 
+pred: 1.07 deg. took: 577.45 ms | cam=40.73 prep=30.06 pred=506.66 frequency(45)=1200000000
+ 
+pred: 1.52 deg. took: 575.96 ms | cam=40.96 prep=35.33 pred=499.67 frequency(45)=1200002000
+ 
+pred: 2.01 deg. took: 594.27 ms | cam=43.26 prep=39.35 pred=511.66 frequency(45)=1200000000
+ 
+pred: 5.56 deg. took: 582.84 ms | cam=55.72 prep=32.35 pred=494.76 frequency(45)=1200000000
+ 
+pred: 5.77 deg. took: 602.24 ms | cam=40.52 prep=42.06 pred=519.66 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 606.09 ms | cam=48.20 prep=37.12 pred=520.77 frequency(45)=1200000000
+ 
+pred: 3.14 deg. took: 550.81 ms | cam=20.10 prep=26.94 pred=503.77 frequency(45)=1200000000
+ 
+pred: 3.32 deg. took: 547.40 ms | cam=19.36 prep=23.54 pred=504.51 frequency(45)=1200000000
+ 
+pred: 2.51 deg. took: 542.59 ms | cam=18.04 prep=26.37 pred=498.18 frequency(45)=1200000000
+ 
+completed inference, total frames: 702, average fps: 1.1 Hz
+---------- processing video for epoch 6 ----------
+performing inference...
+pred: 2.42 deg. took: 724.32 ms | cam=144.46 prep=54.32 pred=525.55 frequency(45)=1200000000
+ 
+pred: 2.44 deg. took: 590.59 ms | cam=46.15 prep=36.47 pred=507.97 frequency(45)=1200000000
+ 
+pred: 2.39 deg. took: 518.58 ms | cam=41.39 prep=36.88 pred=440.31 frequency(45)=1200000000
+ 
+pred: 2.35 deg. took: 597.04 ms | cam=37.62 prep=38.32 pred=521.10 frequency(45)=1200000000
+ 
+pred: 2.31 deg. took: 578.11 ms | cam=39.78 prep=32.97 pred=505.36 frequency(45)=1200000000
+ 
+pred: 2.27 deg. took: 598.50 ms | cam=41.36 prep=31.24 pred=525.90 frequency(45)=1200000000
+ 
+pred: 2.26 deg. took: 585.35 ms | cam=36.31 prep=26.41 pred=522.63 frequency(45)=1200000000
+ 
+pred: 2.28 deg. took: 586.76 ms | cam=47.35 prep=29.56 pred=509.86 frequency(45)=1200000000
+ 
+pred: 2.29 deg. took: 603.82 ms | cam=46.85 prep=26.87 pred=530.10 frequency(45)=1200002000
+ 
+pred: 2.29 deg. took: 592.56 ms | cam=45.37 prep=28.71 pred=518.48 frequency(45)=1199998000
+ 
+pred: 2.29 deg. took: 591.10 ms | cam=42.02 prep=34.91 pred=514.17 frequency(45)=1200000000
+ 
+pred: 2.33 deg. took: 589.02 ms | cam=41.03 prep=33.30 pred=514.69 frequency(45)=1200000000
+ 
+pred: 2.35 deg. took: 614.81 ms | cam=40.26 prep=39.31 pred=535.24 frequency(45)=1200000000
+ 
+pred: 2.39 deg. took: 616.62 ms | cam=43.15 prep=39.21 pred=534.26 frequency(45)=1200000000
+ 
+pred: 2.43 deg. took: 579.83 ms | cam=45.83 prep=27.50 pred=506.50 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 597.74 ms | cam=43.69 prep=33.25 pred=520.80 frequency(45)=1200000000
+ 
+pred: 2.44 deg. took: 592.94 ms | cam=45.47 prep=27.57 pred=519.90 frequency(45)=1200000000
+ 
+pred: 2.43 deg. took: 600.85 ms | cam=46.35 prep=27.03 pred=527.48 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 519.44 ms | cam=50.30 prep=39.45 pred=429.69 frequency(45)=1200000000
+ 
+pred: 2.44 deg. took: 632.70 ms | cam=40.45 prep=39.87 pred=552.38 frequency(45)=1200000000
+ 
+pred: 2.35 deg. took: 593.60 ms | cam=45.31 prep=33.44 pred=514.85 frequency(45)=1199998000
+ 
+pred: 2.50 deg. took: 578.64 ms | cam=43.28 prep=26.95 pred=508.41 frequency(45)=1200000000
+ 
+pred: 2.32 deg. took: 596.60 ms | cam=47.56 prep=31.58 pred=517.45 frequency(45)=1200000000
+ 
+pred: 2.53 deg. took: 589.27 ms | cam=39.94 prep=38.77 pred=510.56 frequency(45)=1199998000
+ 
+pred: 2.40 deg. took: 642.42 ms | cam=48.13 prep=28.39 pred=565.90 frequency(45)=1200000000
+ 
+pred: 2.46 deg. took: 596.43 ms | cam=42.46 prep=36.82 pred=517.15 frequency(45)=1200000000
+ 
+pred: 2.38 deg. took: 579.92 ms | cam=40.16 prep=33.91 pred=505.85 frequency(45)=1199998000
+ 
+pred: 2.36 deg. took: 591.59 ms | cam=42.44 prep=32.94 pred=516.21 frequency(45)=1199998000
+ 
+pred: 2.41 deg. took: 589.66 ms | cam=49.13 prep=30.06 pred=510.48 frequency(45)=1200000000
+ 
+pred: 2.38 deg. took: 582.24 ms | cam=41.23 prep=36.50 pred=504.51 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 588.61 ms | cam=41.78 prep=38.54 pred=508.29 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 594.26 ms | cam=41.34 prep=38.98 pred=513.94 frequency(45)=1200002000
+ 
+pred: 2.54 deg. took: 596.24 ms | cam=47.38 prep=35.10 pred=513.76 frequency(45)=1200000000
+ 
+pred: 2.75 deg. took: 582.10 ms | cam=44.33 prep=27.52 pred=510.25 frequency(45)=1200000000
+ 
+pred: 2.74 deg. took: 592.78 ms | cam=39.63 prep=43.01 pred=510.14 frequency(45)=1200000000
+ 
+pred: 2.03 deg. took: 603.29 ms | cam=42.71 prep=43.79 pred=516.79 frequency(45)=1200000000
+ 
+pred: 2.26 deg. took: 608.55 ms | cam=40.85 prep=44.45 pred=523.25 frequency(45)=1200000000
+ 
+pred: 2.05 deg. took: 603.35 ms | cam=46.49 prep=40.52 pred=516.34 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 596.91 ms | cam=42.09 prep=45.30 pred=509.53 frequency(45)=1200000000
+ 
+pred: 0.54 deg. took: 601.77 ms | cam=45.38 prep=45.10 pred=511.29 frequency(45)=1200002000
+ 
+pred: 0.86 deg. took: 577.93 ms | cam=41.92 prep=41.36 pred=494.66 frequency(45)=1200000000
+ 
+pred: 1.17 deg. took: 594.37 ms | cam=41.14 prep=44.18 pred=509.06 frequency(45)=1200000000
+ 
+pred: 0.90 deg. took: 608.84 ms | cam=48.34 prep=39.84 pred=520.66 frequency(45)=1200000000
+ 
+pred: 0.46 deg. took: 611.63 ms | cam=45.84 prep=51.11 pred=514.68 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 608.43 ms | cam=43.62 prep=44.09 pred=520.73 frequency(45)=1200000000
+ 
+pred: 1.26 deg. took: 576.14 ms | cam=42.88 prep=29.12 pred=504.15 frequency(45)=1200000000
+ 
+pred: 1.30 deg. took: 623.94 ms | cam=44.72 prep=42.69 pred=536.52 frequency(45)=1200000000
+ 
+pred: 1.17 deg. took: 601.75 ms | cam=48.16 prep=34.18 pred=519.41 frequency(45)=1200000000
+ 
+pred: 1.34 deg. took: 599.67 ms | cam=45.97 prep=44.19 pred=509.51 frequency(45)=1200000000
+ 
+pred: 1.57 deg. took: 615.67 ms | cam=45.22 prep=44.51 pred=525.93 frequency(45)=1200000000
+ 
+pred: 1.31 deg. took: 602.89 ms | cam=46.32 prep=41.83 pred=514.74 frequency(45)=1200000000
+ 
+pred: 1.41 deg. took: 600.93 ms | cam=40.06 prep=52.90 pred=507.97 frequency(45)=1200000000
+ 
+pred: 0.83 deg. took: 592.20 ms | cam=47.75 prep=39.74 pred=504.71 frequency(45)=1200000000
+ 
+pred: 1.66 deg. took: 604.87 ms | cam=44.13 prep=42.65 pred=518.09 frequency(45)=1200000000
+ 
+pred: 1.22 deg. took: 603.36 ms | cam=43.75 prep=44.54 pred=515.07 frequency(45)=1200000000
+ 
+pred: 1.33 deg. took: 601.76 ms | cam=46.71 prep=41.23 pred=513.83 frequency(45)=1200000000
+ 
+pred: 1.79 deg. took: 592.93 ms | cam=44.38 prep=38.93 pred=509.63 frequency(45)=1200000000
+ 
+pred: 0.82 deg. took: 570.33 ms | cam=41.59 prep=33.04 pred=495.70 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 599.90 ms | cam=49.86 prep=45.74 pred=504.30 frequency(45)=1200000000
+ 
+pred: 0.69 deg. took: 600.32 ms | cam=26.02 prep=54.08 pred=520.22 frequency(45)=1200000000
+ 
+pred: 0.67 deg. took: 620.49 ms | cam=45.88 prep=48.29 pred=526.32 frequency(45)=1200000000
+ 
+pred: 0.60 deg. took: 616.08 ms | cam=43.02 prep=53.50 pred=519.57 frequency(45)=1200002000
+ 
+pred: 0.37 deg. took: 591.62 ms | cam=49.09 prep=40.85 pred=501.68 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 613.41 ms | cam=43.75 prep=51.13 pred=518.52 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 583.05 ms | cam=50.21 prep=35.76 pred=497.08 frequency(45)=1200000000
+ 
+pred: 0.48 deg. took: 598.10 ms | cam=46.46 prep=38.59 pred=513.05 frequency(45)=1200000000
+ 
+pred: 0.44 deg. took: 600.09 ms | cam=43.44 prep=45.70 pred=510.96 frequency(45)=1200000000
+ 
+pred: -0.13 deg. took: 606.10 ms | cam=50.24 prep=45.64 pred=510.22 frequency(45)=1200000000
+ 
+pred: 0.14 deg. took: 605.61 ms | cam=51.09 prep=39.51 pred=515.01 frequency(45)=1199998000
+ 
+pred: 0.39 deg. took: 578.22 ms | cam=47.08 prep=27.93 pred=503.22 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 607.08 ms | cam=47.35 prep=38.57 pred=521.17 frequency(45)=1200000000
+ 
+pred: 0.70 deg. took: 617.80 ms | cam=35.59 prep=53.97 pred=528.24 frequency(45)=1200000000
+ 
+pred: 0.62 deg. took: 607.98 ms | cam=39.89 prep=58.92 pred=509.17 frequency(45)=1200000000
+ 
+pred: 0.15 deg. took: 615.37 ms | cam=48.21 prep=47.28 pred=519.89 frequency(45)=1200000000
+ 
+pred: -0.38 deg. took: 598.99 ms | cam=42.46 prep=42.71 pred=513.83 frequency(45)=1199998000
+ 
+pred: 0.09 deg. took: 605.77 ms | cam=41.22 prep=45.35 pred=519.19 frequency(45)=1200002000
+ 
+pred: -0.27 deg. took: 589.43 ms | cam=44.46 prep=33.43 pred=511.54 frequency(45)=1200000000
+ 
+pred: 0.68 deg. took: 600.80 ms | cam=42.12 prep=46.58 pred=512.10 frequency(45)=1200002000
+ 
+pred: 0.96 deg. took: 609.99 ms | cam=49.29 prep=39.25 pred=521.45 frequency(45)=1200000000
+ 
+pred: 1.07 deg. took: 593.51 ms | cam=46.95 prep=44.02 pred=502.55 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 614.51 ms | cam=42.84 prep=44.05 pred=527.61 frequency(45)=1200000000
+ 
+pred: 0.25 deg. took: 573.66 ms | cam=48.79 prep=28.60 pred=496.27 frequency(45)=1200002000
+ 
+pred: 0.44 deg. took: 604.32 ms | cam=44.35 prep=41.18 pred=518.80 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 611.85 ms | cam=45.23 prep=51.63 pred=514.98 frequency(45)=1200002000
+ 
+pred: 1.15 deg. took: 599.29 ms | cam=47.51 prep=41.76 pred=510.03 frequency(45)=1200000000
+ 
+pred: 0.94 deg. took: 649.13 ms | cam=49.07 prep=42.76 pred=557.30 frequency(45)=1200000000
+ 
+pred: 1.23 deg. took: 578.32 ms | cam=50.71 prep=64.45 pred=463.15 frequency(45)=1200000000
+ 
+pred: 1.51 deg. took: 615.13 ms | cam=46.80 prep=50.62 pred=517.71 frequency(45)=1200000000
+ 
+pred: 0.66 deg. took: 603.22 ms | cam=45.65 prep=42.93 pred=514.64 frequency(45)=1200000000
+ 
+pred: 0.37 deg. took: 591.08 ms | cam=42.11 prep=45.21 pred=503.77 frequency(45)=1200000000
+ 
+pred: 0.45 deg. took: 612.13 ms | cam=44.67 prep=47.16 pred=520.30 frequency(45)=1200000000
+ 
+pred: -0.06 deg. took: 595.79 ms | cam=48.65 prep=46.86 pred=500.28 frequency(45)=1200002000
+ 
+pred: -0.31 deg. took: 592.36 ms | cam=43.02 prep=44.68 pred=504.66 frequency(45)=1200000000
+ 
+pred: 0.65 deg. took: 594.73 ms | cam=38.52 prep=27.59 pred=528.61 frequency(45)=1200000000
+ 
+pred: 0.68 deg. took: 597.98 ms | cam=42.03 prep=40.36 pred=515.58 frequency(45)=1200000000
+ 
+pred: 0.74 deg. took: 602.99 ms | cam=50.72 prep=43.40 pred=508.87 frequency(45)=1200000000
+ 
+pred: 0.52 deg. took: 597.51 ms | cam=48.50 prep=40.40 pred=508.62 frequency(45)=1200000000
+ 
+pred: 0.58 deg. took: 607.66 ms | cam=41.77 prep=50.62 pred=515.28 frequency(45)=1200000000
+ 
+pred: 0.10 deg. took: 584.36 ms | cam=44.58 prep=44.09 pred=495.69 frequency(45)=1200000000
+ 
+pred: 0.35 deg. took: 613.47 ms | cam=50.62 prep=40.74 pred=522.10 frequency(45)=1200000000
+ 
+pred: 0.18 deg. took: 609.11 ms | cam=49.98 prep=37.61 pred=521.52 frequency(45)=1200000000
+ 
+pred: 0.86 deg. took: 599.82 ms | cam=46.10 prep=43.72 pred=510.00 frequency(45)=1200000000
+ 
+pred: 0.84 deg. took: 604.00 ms | cam=44.09 prep=49.32 pred=510.59 frequency(45)=1200000000
+ 
+pred: 0.77 deg. took: 602.76 ms | cam=43.08 prep=53.36 pred=506.32 frequency(45)=1200000000
+ 
+pred: 0.04 deg. took: 584.87 ms | cam=45.97 prep=32.49 pred=506.41 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 615.12 ms | cam=45.96 prep=29.99 pred=539.17 frequency(45)=1200000000
+ 
+pred: 0.87 deg. took: 620.71 ms | cam=43.62 prep=45.39 pred=531.70 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 612.80 ms | cam=48.82 prep=45.85 pred=518.14 frequency(45)=1200000000
+ 
+pred: 0.92 deg. took: 582.55 ms | cam=41.43 prep=47.39 pred=493.74 frequency(45)=1200000000
+ 
+pred: 1.23 deg. took: 608.96 ms | cam=47.49 prep=41.65 pred=519.82 frequency(45)=1200000000
+ 
+pred: 1.42 deg. took: 587.85 ms | cam=48.40 prep=28.93 pred=510.52 frequency(45)=1200000000
+ 
+pred: 1.34 deg. took: 620.28 ms | cam=49.29 prep=47.69 pred=523.29 frequency(45)=1200000000
+ 
+pred: 1.61 deg. took: 613.99 ms | cam=47.44 prep=37.49 pred=529.06 frequency(45)=1200000000
+ 
+pred: 0.79 deg. took: 601.29 ms | cam=45.73 prep=49.07 pred=506.49 frequency(45)=1200000000
+ 
+pred: 0.21 deg. took: 612.47 ms | cam=50.40 prep=35.67 pred=526.41 frequency(45)=1200000000
+ 
+pred: 1.02 deg. took: 600.08 ms | cam=48.07 prep=43.21 pred=508.80 frequency(45)=1200000000
+ 
+pred: 1.83 deg. took: 621.46 ms | cam=45.09 prep=44.07 pred=532.29 frequency(45)=1200000000
+ 
+pred: 1.55 deg. took: 598.34 ms | cam=45.09 prep=29.57 pred=523.67 frequency(45)=1200000000
+ 
+pred: 0.92 deg. took: 584.50 ms | cam=49.99 prep=39.38 pred=495.13 frequency(45)=1200002000
+ 
+pred: 1.37 deg. took: 605.40 ms | cam=43.19 prep=47.02 pred=515.19 frequency(45)=1200000000
+ 
+pred: 0.90 deg. took: 585.05 ms | cam=45.79 prep=44.91 pred=494.35 frequency(45)=1200000000
+ 
+pred: 1.04 deg. took: 602.14 ms | cam=43.94 prep=49.30 pred=508.90 frequency(45)=1200000000
+ 
+pred: 1.00 deg. took: 612.83 ms | cam=47.96 prep=40.63 pred=524.24 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 633.63 ms | cam=42.08 prep=58.34 pred=533.20 frequency(45)=1200000000
+ 
+pred: 0.96 deg. took: 608.16 ms | cam=45.51 prep=46.44 pred=516.21 frequency(45)=1200002000
+ 
+pred: 0.50 deg. took: 599.42 ms | cam=41.77 prep=49.62 pred=508.03 frequency(45)=1200000000
+ 
+pred: 0.24 deg. took: 601.04 ms | cam=46.06 prep=42.05 pred=512.92 frequency(45)=1200000000
+ 
+pred: 0.41 deg. took: 611.09 ms | cam=46.02 prep=52.41 pred=512.66 frequency(45)=1200000000
+ 
+pred: 0.91 deg. took: 603.66 ms | cam=47.65 prep=45.48 pred=510.52 frequency(45)=1200002000
+ 
+pred: 1.25 deg. took: 590.85 ms | cam=44.26 prep=28.43 pred=518.15 frequency(45)=1200000000
+ 
+pred: 1.85 deg. took: 592.42 ms | cam=48.10 prep=40.94 pred=503.38 frequency(45)=1200000000
+ 
+pred: 2.23 deg. took: 604.47 ms | cam=45.82 prep=45.90 pred=512.75 frequency(45)=1200000000
+ 
+pred: 3.23 deg. took: 589.40 ms | cam=50.70 prep=32.89 pred=505.81 frequency(45)=1200000000
+ 
+pred: 4.16 deg. took: 620.84 ms | cam=48.74 prep=42.16 pred=529.94 frequency(45)=1200000000
+ 
+pred: 14.76 deg. took: 597.54 ms | cam=46.34 prep=36.99 pred=514.21 frequency(45)=1200000000
+ 
+pred: 23.90 deg. took: 596.69 ms | cam=48.45 prep=42.18 pred=506.07 frequency(45)=1200002000
+ 
+pred: 9.24 deg. took: 592.82 ms | cam=51.67 prep=39.98 pred=501.16 frequency(45)=1200000000
+ 
+pred: 4.38 deg. took: 590.44 ms | cam=42.73 prep=42.41 pred=505.30 frequency(45)=1200000000
+ 
+pred: 3.57 deg. took: 589.85 ms | cam=45.27 prep=44.52 pred=500.07 frequency(45)=1200000000
+ 
+pred: 2.95 deg. took: 619.72 ms | cam=50.42 prep=38.55 pred=530.74 frequency(45)=1200000000
+ 
+pred: 2.93 deg. took: 597.87 ms | cam=49.75 prep=36.83 pred=511.28 frequency(45)=1200000000
+ 
+pred: 2.01 deg. took: 599.90 ms | cam=41.41 prep=34.10 pred=524.38 frequency(45)=1200002000
+ 
+pred: 2.30 deg. took: 593.12 ms | cam=50.74 prep=37.43 pred=504.95 frequency(45)=1200000000
+ 
+pred: 2.41 deg. took: 616.73 ms | cam=44.93 prep=48.38 pred=523.42 frequency(45)=1200000000
+ 
+pred: 3.45 deg. took: 582.61 ms | cam=43.35 prep=36.14 pred=503.12 frequency(45)=1200000000
+ 
+pred: 4.73 deg. took: 600.79 ms | cam=50.55 prep=40.83 pred=509.41 frequency(45)=1200000000
+ 
+pred: 10.21 deg. took: 594.82 ms | cam=45.25 prep=43.46 pred=506.11 frequency(45)=1200000000
+ 
+pred: 4.45 deg. took: 588.21 ms | cam=47.00 prep=46.71 pred=494.50 frequency(45)=1200002000
+ 
+pred: 4.21 deg. took: 615.17 ms | cam=45.55 prep=43.20 pred=526.43 frequency(45)=1200000000
+ 
+pred: 3.73 deg. took: 603.11 ms | cam=46.67 prep=41.35 pred=515.09 frequency(45)=1200000000
+ 
+pred: 3.99 deg. took: 599.48 ms | cam=44.18 prep=41.33 pred=513.97 frequency(45)=1199998000
+ 
+pred: 8.47 deg. took: 648.33 ms | cam=47.87 prep=40.31 pred=560.14 frequency(45)=1200000000
+ 
+pred: 18.34 deg. took: 589.70 ms | cam=43.51 prep=39.58 pred=506.62 frequency(45)=1200000000
+ 
+pred: 23.69 deg. took: 598.01 ms | cam=45.73 prep=28.12 pred=524.15 frequency(45)=1200000000
+ 
+pred: 28.61 deg. took: 574.68 ms | cam=57.52 prep=42.80 pred=474.36 frequency(45)=1200000000
+ 
+pred: 28.79 deg. took: 592.29 ms | cam=44.69 prep=39.57 pred=508.03 frequency(45)=1200000000
+ 
+pred: 26.96 deg. took: 606.23 ms | cam=40.82 prep=36.63 pred=528.78 frequency(45)=1200000000
+ 
+pred: 26.96 deg. took: 601.85 ms | cam=45.33 prep=43.54 pred=512.98 frequency(45)=1200000000
+ 
+pred: 26.95 deg. took: 597.63 ms | cam=47.70 prep=36.18 pred=513.75 frequency(45)=1200002000
+ 
+pred: 29.03 deg. took: 598.74 ms | cam=48.55 prep=39.63 pred=510.56 frequency(45)=1200000000
+ 
+pred: 27.84 deg. took: 604.54 ms | cam=49.76 prep=36.64 pred=518.14 frequency(45)=1200000000
+ 
+pred: 25.60 deg. took: 594.65 ms | cam=49.53 prep=40.48 pred=504.63 frequency(45)=1200000000
+ 
+pred: 21.32 deg. took: 601.27 ms | cam=50.10 prep=41.72 pred=509.46 frequency(45)=1200000000
+ 
+pred: 12.53 deg. took: 604.59 ms | cam=44.26 prep=47.47 pred=512.86 frequency(45)=1200002000
+ 
+pred: 11.41 deg. took: 594.66 ms | cam=51.33 prep=34.31 pred=509.02 frequency(45)=1200000000
+ 
+pred: 14.53 deg. took: 590.91 ms | cam=44.10 prep=30.53 pred=516.28 frequency(45)=1200000000
+ 
+pred: 16.96 deg. took: 597.30 ms | cam=50.94 prep=40.42 pred=505.94 frequency(45)=1200000000
+ 
+pred: 18.09 deg. took: 606.65 ms | cam=41.69 prep=48.86 pred=516.10 frequency(45)=1200000000
+ 
+pred: 7.05 deg. took: 614.21 ms | cam=41.41 prep=47.97 pred=524.83 frequency(45)=1200000000
+ 
+pred: 10.07 deg. took: 606.29 ms | cam=42.82 prep=47.47 pred=515.99 frequency(45)=1200000000
+ 
+pred: 2.54 deg. took: 703.88 ms | cam=51.47 prep=76.98 pred=575.43 frequency(45)=1200000000
+ 
+pred: 2.18 deg. took: 601.69 ms | cam=47.37 prep=46.60 pred=507.72 frequency(45)=1200000000
+ 
+pred: 3.04 deg. took: 602.05 ms | cam=44.97 prep=48.93 pred=508.15 frequency(45)=1200000000
+ 
+pred: 2.81 deg. took: 605.97 ms | cam=48.84 prep=39.07 pred=518.06 frequency(45)=1200000000
+ 
+pred: 2.60 deg. took: 606.10 ms | cam=41.49 prep=45.22 pred=519.39 frequency(45)=1200002000
+ 
+pred: 2.99 deg. took: 611.02 ms | cam=40.75 prep=48.28 pred=521.99 frequency(45)=1200000000
+ 
+pred: 2.89 deg. took: 592.67 ms | cam=49.03 prep=38.44 pred=505.20 frequency(45)=1200000000
+ 
+pred: 3.07 deg. took: 583.14 ms | cam=44.41 prep=27.82 pred=510.91 frequency(45)=1200000000
+ 
+pred: 3.60 deg. took: 593.88 ms | cam=44.71 prep=33.86 pred=515.31 frequency(45)=1200000000
+ 
+pred: 7.33 deg. took: 592.09 ms | cam=50.03 prep=33.95 pred=508.12 frequency(45)=1200000000
+ 
+pred: 13.48 deg. took: 601.65 ms | cam=41.11 prep=44.49 pred=516.05 frequency(45)=1200000000
+ 
+pred: 7.07 deg. took: 606.03 ms | cam=49.96 prep=44.02 pred=512.04 frequency(45)=1200000000
+ 
+pred: 4.92 deg. took: 614.45 ms | cam=43.51 prep=47.59 pred=523.35 frequency(45)=1200000000
+ 
+pred: 4.88 deg. took: 587.60 ms | cam=49.31 prep=41.31 pred=496.97 frequency(45)=1200002000
+ 
+pred: 6.43 deg. took: 600.00 ms | cam=40.83 prep=41.35 pred=517.83 frequency(45)=1200000000
+ 
+pred: 21.53 deg. took: 597.43 ms | cam=47.59 prep=36.32 pred=513.51 frequency(45)=1200000000
+ 
+pred: 23.64 deg. took: 599.74 ms | cam=50.37 prep=36.54 pred=512.84 frequency(45)=1200000000
+ 
+pred: 21.81 deg. took: 613.99 ms | cam=46.52 prep=48.02 pred=519.46 frequency(45)=1200000000
+ 
+pred: 25.57 deg. took: 577.63 ms | cam=39.89 prep=50.38 pred=487.36 frequency(45)=1200000000
+ 
+pred: 23.21 deg. took: 581.16 ms | cam=42.73 prep=30.45 pred=507.98 frequency(45)=1200002000
+ 
+pred: 18.12 deg. took: 604.75 ms | cam=49.08 prep=30.58 pred=525.10 frequency(45)=1200000000
+ 
+pred: 3.73 deg. took: 605.50 ms | cam=46.76 prep=50.94 pred=507.80 frequency(45)=1200002000
+ 
+pred: 4.58 deg. took: 614.31 ms | cam=46.74 prep=41.51 pred=526.06 frequency(45)=1200000000
+ 
+pred: 3.54 deg. took: 593.17 ms | cam=41.52 prep=44.62 pred=507.03 frequency(45)=1200002000
+ 
+pred: 2.26 deg. took: 599.01 ms | cam=48.60 prep=41.29 pred=509.12 frequency(45)=1200000000
+ 
+pred: 2.75 deg. took: 596.78 ms | cam=40.31 prep=50.90 pred=505.56 frequency(45)=1200000000
+ 
+pred: 3.19 deg. took: 608.38 ms | cam=42.33 prep=44.94 pred=521.11 frequency(45)=1200000000
+ 
+pred: 2.78 deg. took: 603.62 ms | cam=49.89 prep=37.23 pred=516.50 frequency(45)=1200000000
+ 
+pred: 2.79 deg. took: 599.43 ms | cam=47.35 prep=44.56 pred=507.52 frequency(45)=1200000000
+ 
+pred: 2.56 deg. took: 614.34 ms | cam=46.67 prep=44.70 pred=522.96 frequency(45)=1200000000
+ 
+pred: 2.17 deg. took: 592.36 ms | cam=43.49 prep=45.75 pred=503.11 frequency(45)=1200000000
+ 
+pred: 2.46 deg. took: 593.28 ms | cam=42.30 prep=31.27 pred=519.71 frequency(45)=1200000000
+ 
+pred: 2.07 deg. took: 608.90 ms | cam=43.14 prep=48.59 pred=517.17 frequency(45)=1200000000
+ 
+pred: 2.42 deg. took: 612.99 ms | cam=41.94 prep=52.73 pred=518.32 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 610.18 ms | cam=41.93 prep=46.92 pred=521.34 frequency(45)=1200000000
+ 
+pred: 2.19 deg. took: 593.72 ms | cam=49.71 prep=45.18 pred=498.83 frequency(45)=1200000000
+ 
+pred: 2.20 deg. took: 586.39 ms | cam=45.59 prep=44.18 pred=496.62 frequency(45)=1200000000
+ 
+pred: 1.98 deg. took: 616.49 ms | cam=47.85 prep=48.59 pred=520.05 frequency(45)=1200000000
+ 
+pred: 2.17 deg. took: 617.57 ms | cam=49.02 prep=44.21 pred=524.34 frequency(45)=1200000000
+ 
+pred: 2.10 deg. took: 608.75 ms | cam=46.76 prep=40.23 pred=521.75 frequency(45)=1200000000
+ 
+pred: 1.89 deg. took: 677.51 ms | cam=50.02 prep=40.31 pred=587.18 frequency(45)=1200002000
+ 
+pred: 2.04 deg. took: 612.96 ms | cam=50.49 prep=48.62 pred=513.84 frequency(45)=1200000000
+ 
+pred: 2.13 deg. took: 597.07 ms | cam=49.72 prep=30.06 pred=517.29 frequency(45)=1200000000
+ 
+pred: 2.39 deg. took: 581.20 ms | cam=47.58 prep=26.80 pred=506.81 frequency(45)=1200000000
+ 
+pred: 2.12 deg. took: 600.39 ms | cam=45.90 prep=48.80 pred=505.68 frequency(45)=1200000000
+ 
+pred: 2.79 deg. took: 602.14 ms | cam=46.14 prep=49.07 pred=506.93 frequency(45)=1200002000
+ 
+pred: 2.92 deg. took: 620.46 ms | cam=42.69 prep=53.54 pred=524.22 frequency(45)=1200000000
+ 
+pred: 3.15 deg. took: 594.75 ms | cam=41.31 prep=52.14 pred=501.30 frequency(45)=1200000000
+ 
+pred: 3.10 deg. took: 599.84 ms | cam=44.42 prep=44.02 pred=511.39 frequency(45)=1200000000
+ 
+pred: 2.78 deg. took: 624.39 ms | cam=39.98 prep=57.11 pred=527.30 frequency(45)=1200002000
+ 
+pred: 2.17 deg. took: 604.45 ms | cam=44.64 prep=46.52 pred=513.28 frequency(45)=1200000000
+ 
+pred: 2.30 deg. took: 620.79 ms | cam=41.38 prep=47.62 pred=531.78 frequency(45)=1200000000
+ 
+pred: 1.60 deg. took: 565.42 ms | cam=52.81 prep=53.31 pred=459.30 frequency(45)=1200000000
+ 
+pred: 2.01 deg. took: 607.95 ms | cam=41.20 prep=45.80 pred=520.95 frequency(45)=1200000000
+ 
+pred: 1.47 deg. took: 612.75 ms | cam=49.31 prep=44.89 pred=518.55 frequency(45)=1200000000
+ 
+pred: 1.97 deg. took: 587.53 ms | cam=46.65 prep=27.69 pred=513.19 frequency(45)=1200000000
+ 
+pred: 1.13 deg. took: 599.06 ms | cam=50.56 prep=38.09 pred=510.41 frequency(45)=1200002000
+ 
+pred: 1.23 deg. took: 643.79 ms | cam=59.89 prep=50.70 pred=533.19 frequency(45)=1199998000
+ 
+pred: 1.25 deg. took: 611.15 ms | cam=44.41 prep=48.34 pred=518.39 frequency(45)=1200000000
+ 
+pred: 1.22 deg. took: 642.65 ms | cam=48.84 prep=43.23 pred=550.58 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 632.52 ms | cam=42.36 prep=50.03 pred=540.13 frequency(45)=1200002000
+ 
+pred: 1.96 deg. took: 631.54 ms | cam=60.79 prep=37.42 pred=533.34 frequency(45)=1200000000
+ 
+pred: 1.95 deg. took: 587.87 ms | cam=42.17 prep=47.02 pred=498.68 frequency(45)=1200000000
+ 
+pred: 2.34 deg. took: 600.23 ms | cam=42.01 prep=46.29 pred=511.93 frequency(45)=1200002000
+ 
+pred: 1.82 deg. took: 600.53 ms | cam=45.94 prep=47.01 pred=507.58 frequency(45)=1200000000
+ 
+pred: 1.56 deg. took: 592.48 ms | cam=45.10 prep=43.91 pred=503.47 frequency(45)=1200002000
+ 
+pred: 1.51 deg. took: 617.10 ms | cam=45.36 prep=47.16 pred=524.58 frequency(45)=1200000000
+ 
+pred: 1.74 deg. took: 580.70 ms | cam=46.24 prep=31.11 pred=503.34 frequency(45)=1200000000
+ 
+pred: 1.59 deg. took: 612.20 ms | cam=47.04 prep=42.51 pred=522.66 frequency(45)=1200000000
+ 
+pred: 1.42 deg. took: 593.83 ms | cam=44.92 prep=42.69 pred=506.22 frequency(45)=1200002000
+ 
+pred: 1.17 deg. took: 599.82 ms | cam=42.58 prep=45.12 pred=512.12 frequency(45)=1200000000
+ 
+pred: 0.88 deg. took: 624.63 ms | cam=47.02 prep=45.75 pred=531.86 frequency(45)=1200000000
+ 
+pred: 0.88 deg. took: 607.13 ms | cam=48.38 prep=48.55 pred=510.20 frequency(45)=1200000000
+ 
+pred: 1.49 deg. took: 634.63 ms | cam=48.57 prep=52.73 pred=533.33 frequency(45)=1200000000
+ 
+pred: 1.28 deg. took: 599.06 ms | cam=45.45 prep=49.38 pred=504.23 frequency(45)=1200002000
+ 
+pred: 1.56 deg. took: 611.94 ms | cam=53.53 prep=39.82 pred=518.59 frequency(45)=1200000000
+ 
+pred: 1.74 deg. took: 613.74 ms | cam=43.71 prep=51.80 pred=518.22 frequency(45)=1200000000
+ 
+pred: 0.86 deg. took: 611.65 ms | cam=48.15 prep=54.23 pred=509.27 frequency(45)=1200000000
+ 
+pred: 0.90 deg. took: 619.34 ms | cam=49.57 prep=40.80 pred=528.98 frequency(45)=1200000000
+ 
+pred: 1.37 deg. took: 589.98 ms | cam=46.78 prep=33.34 pred=509.87 frequency(45)=1200002000
+ 
+pred: 1.52 deg. took: 627.37 ms | cam=50.80 prep=48.50 pred=528.07 frequency(45)=1200000000
+ 
+pred: 1.39 deg. took: 602.95 ms | cam=43.58 prep=47.37 pred=511.99 frequency(45)=1200000000
+ 
+pred: 0.92 deg. took: 594.63 ms | cam=52.14 prep=43.99 pred=498.50 frequency(45)=1200000000
+ 
+pred: 0.81 deg. took: 611.30 ms | cam=45.04 prep=52.41 pred=513.85 frequency(45)=1200000000
+ 
+pred: 0.34 deg. took: 594.52 ms | cam=50.54 prep=47.28 pred=496.70 frequency(45)=1200000000
+ 
+pred: 0.17 deg. took: 612.56 ms | cam=43.70 prep=56.17 pred=512.68 frequency(45)=1200000000
+ 
+pred: -0.19 deg. took: 599.20 ms | cam=47.06 prep=44.57 pred=507.57 frequency(45)=1200000000
+ 
+pred: 0.31 deg. took: 612.77 ms | cam=50.12 prep=42.53 pred=520.12 frequency(45)=1200000000
+ 
+pred: 0.25 deg. took: 634.32 ms | cam=59.63 prep=51.31 pred=523.39 frequency(45)=1200000000
+ 
+pred: 0.08 deg. took: 626.63 ms | cam=49.16 prep=46.55 pred=530.91 frequency(45)=1200000000
+ 
+pred: -0.49 deg. took: 648.69 ms | cam=41.57 prep=60.86 pred=546.26 frequency(45)=1200000000
+ 
+pred: 0.49 deg. took: 596.60 ms | cam=50.19 prep=29.85 pred=516.57 frequency(45)=1200000000
+ 
+pred: 0.29 deg. took: 608.24 ms | cam=49.74 prep=47.17 pred=511.33 frequency(45)=1200002000
+ 
+pred: 0.42 deg. took: 638.16 ms | cam=49.58 prep=50.32 pred=538.27 frequency(45)=1200002000
+ 
+pred: 0.60 deg. took: 631.24 ms | cam=50.68 prep=43.19 pred=537.36 frequency(45)=1200000000
+ 
+pred: 1.13 deg. took: 674.23 ms | cam=50.32 prep=37.35 pred=586.56 frequency(45)=1200000000
+ 
+pred: 1.24 deg. took: 607.71 ms | cam=51.03 prep=38.78 pred=517.90 frequency(45)=1200000000
+ 
+pred: 0.79 deg. took: 598.81 ms | cam=44.44 prep=51.24 pred=503.13 frequency(45)=1200000000
+ 
+pred: 1.16 deg. took: 589.26 ms | cam=49.69 prep=37.19 pred=502.39 frequency(45)=1200000000
+ 
+pred: 0.76 deg. took: 591.26 ms | cam=46.51 prep=43.00 pred=501.75 frequency(45)=1199998000
+ 
+pred: 0.34 deg. took: 602.98 ms | cam=45.00 prep=47.46 pred=510.51 frequency(45)=1200000000
+ 
+pred: 0.22 deg. took: 608.18 ms | cam=46.13 prep=46.34 pred=515.71 frequency(45)=1200000000
+ 
+pred: 0.20 deg. took: 595.77 ms | cam=48.98 prep=36.27 pred=510.51 frequency(45)=1200000000
+ 
+pred: -0.14 deg. took: 582.17 ms | cam=46.23 prep=27.87 pred=508.07 frequency(45)=1200000000
+ 
+pred: -0.44 deg. took: 555.27 ms | cam=30.50 prep=26.09 pred=498.69 frequency(45)=1200000000
+ 
+pred: -0.88 deg. took: 609.84 ms | cam=43.16 prep=50.64 pred=516.04 frequency(45)=1200000000
+ 
+pred: -0.88 deg. took: 611.78 ms | cam=40.86 prep=48.89 pred=522.03 frequency(45)=1200000000
+ 
+pred: -1.15 deg. took: 601.01 ms | cam=45.75 prep=43.91 pred=511.35 frequency(45)=1200000000
+ 
+pred: -1.59 deg. took: 607.82 ms | cam=51.35 prep=38.01 pred=518.46 frequency(45)=1200000000
+ 
+pred: -1.29 deg. took: 595.61 ms | cam=46.34 prep=46.83 pred=502.44 frequency(45)=1200000000
+ 
+pred: -0.93 deg. took: 598.38 ms | cam=47.68 prep=39.46 pred=511.23 frequency(45)=1200000000
+ 
+pred: -0.50 deg. took: 594.20 ms | cam=49.11 prep=35.75 pred=509.34 frequency(45)=1200000000
+ 
+pred: -0.18 deg. took: 607.81 ms | cam=45.67 prep=44.55 pred=517.59 frequency(45)=1200000000
+ 
+pred: -0.02 deg. took: 624.36 ms | cam=44.14 prep=50.28 pred=529.94 frequency(45)=1200000000
+ 
+pred: -0.12 deg. took: 600.90 ms | cam=48.60 prep=38.79 pred=513.51 frequency(45)=1200000000
+ 
+pred: -0.58 deg. took: 591.89 ms | cam=46.89 prep=27.98 pred=517.02 frequency(45)=1200002000
+ 
+pred: -0.88 deg. took: 597.57 ms | cam=40.40 prep=48.53 pred=508.65 frequency(45)=1200000000
+ 
+pred: -0.19 deg. took: 610.57 ms | cam=42.04 prep=48.24 pred=520.29 frequency(45)=1200002000
+ 
+pred: -0.21 deg. took: 596.65 ms | cam=46.09 prep=28.18 pred=522.38 frequency(45)=1200000000
+ 
+pred: -0.27 deg. took: 638.42 ms | cam=42.36 prep=63.34 pred=532.71 frequency(45)=1200000000
+ 
+pred: 0.44 deg. took: 613.34 ms | cam=43.82 prep=44.03 pred=525.49 frequency(45)=1200000000
+ 
+pred: -0.42 deg. took: 588.70 ms | cam=48.19 prep=39.28 pred=501.23 frequency(45)=1200000000
+ 
+pred: -0.57 deg. took: 601.54 ms | cam=46.04 prep=40.69 pred=514.81 frequency(45)=1199998000
+ 
+pred: -0.57 deg. took: 582.61 ms | cam=46.72 prep=25.57 pred=510.31 frequency(45)=1200000000
+ 
+pred: -0.54 deg. took: 599.32 ms | cam=42.60 prep=42.69 pred=514.04 frequency(45)=1200000000
+ 
+pred: 0.29 deg. took: 609.10 ms | cam=41.83 prep=45.32 pred=521.95 frequency(45)=1200000000
+ 
+pred: 0.59 deg. took: 595.55 ms | cam=48.87 prep=35.64 pred=511.04 frequency(45)=1200000000
+ 
+pred: 0.48 deg. took: 583.62 ms | cam=43.01 prep=30.39 pred=510.21 frequency(45)=1200000000
+ 
+pred: 0.48 deg. took: 582.42 ms | cam=47.68 prep=37.37 pred=497.37 frequency(45)=1200002000
+ 
+pred: 0.58 deg. took: 618.55 ms | cam=47.16 prep=41.45 pred=529.95 frequency(45)=1200000000
+ 
+completed inference, total frames: 702, average fps: 2.6 Hz
+count: 1000
+mean: 599.732708693
+max: 703.875780106
+99.999pct: 703.662494535
+99.99pct: 701.742924404
+99.9pct: 682.547223091
+99pct: 656.461877823
+min: 491.107940674
+median: 598.437905312
+stdev: 18.1199178542
