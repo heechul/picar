@@ -9,7 +9,7 @@ set style histogram cluster gap 1
 set style fill pattern border
 
 set boxwidth 1
-plot  "compare_benchmark.dat"  using 2:xticlabel(1) title "Raspberry Pi 3" lt -1,\
-      ""                  using 3 title "Intel UP Board" lt -1,\
-      ""                  using 4 title "Tegra TX2 CPU Only" lt -1,\
-      ""                  using 5 title "Tegra TX2 GPU" lt -1
+plot  "compare_benchmark.dat"  using 2:xticlabel(1) title "Pi 3" lt -1,\
+      ""                  using 3 title "IntelUP" lt -1,\
+      ""                  using 4 title "TX2 CPU" lt -1,\
+      ""                  using 5 title "TX2 GPU" lt -1
