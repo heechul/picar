@@ -27,23 +27,24 @@ compared.
 \begin{figure}[h]
   \centering
   \includegraphics[width=.5\textwidth]{figs/compare_core}
-  \caption{Inferencing time across platforms based on number of cores 
-used.}
+  \caption{Average control loop execution time.} 
   \label{fig:sys_core}
 \end{figure}
 
 Figure~\ref{fig:sys_core} shows the average control loop completion
-timing as a function of the number of CPU cores on each of the four
-system configurations. First, Tegra TX2 and the Intel UP exhibit
-superio performance  compared with the Raspberry Pi 3 in 
-all experiments. On average, the Intel UP is able to perform
-inferencing operations more than twice as fast as the Raspberry Pi
-3. The  difference is even greater with the TX2 as the performance is
-about 3X faster using only the CPU and 10X faster when using the GPU.
-As a result, they were all able to satisfy the 50 ms 
-WCET by a very clear margin (in the worst case, the UP Board would 
-still meet it by $\sim$20 ms), and, thus, demonstrates that they are 
-more capable of autonomous driving than the Raspberry Pi 3.
+timing of the four system configurations we tested as a function of
+the number of CPU cores used.
+First, both the Intel UP and Tegra TX2 exhibit superior performance
+compared with the Raspberry Pi 3. 
+When all four CPU cores are used, the Intel UP is 2.53X faster than
+the Pi 3, while TX (CPU) and TX (GPU) are 3.6X and 7.6X times faster,
+respectively, than the Pi 3. 
+As a result, they are all able to satisfy the 50 ms 
+WCET by a clear margin
+%%  (in the worst case, the UP Board would 
+%% still meet it by $\sim$20 ms) --> where's the data showing this?
+, and, in case of TX2, 50 Hz or even 100 Hz real-time control is
+feasible with the help of its GPU.
 
 The UP Board and TX2 also performed better in the multimodel tests, 
 as is shown in Figure~\ref{fig:sys_model}. Once again, they were able 
