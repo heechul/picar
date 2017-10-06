@@ -12,7 +12,7 @@ the point of view of supporting vision-based end-to-end deep learning
 based autonomous vehicles. 
 Table~\ref{tbl:platforms} shows architectural features of the three
 platforms~\footnote{Note that the GPUs of the Raspberry Pi 3 and Intel
-  Up are not used in evaluation due to lack of software (TensorFlow)
+  Up are not used in evaluation due to the lack of software (TensorFlow)
 support. Also, the two Denvor cores in Tegra TX2 are not used in
 evaluation due to TensorFlow issues.}.
   
@@ -34,14 +34,13 @@ used.}
 
 Figure~\ref{fig:sys_core} shows the average control loop completion
 timing as a function of the number of CPU cores on each of the four
-system configurations.
-It was found that the both the Tegra TX2 
-and the Intel UP Board performed better than the Raspberry Pi 3 in 
-all experiments. On average, the UP was able to perform inferencing 
-operations, at least, twice as fast as the Raspberry Pi 3. The 
-difference was even greater with the TX2, as control loops, in the 
-worst case, were 3x faster using only the CPU and 10x quicker when 
-using the GPU. As a result, they were all able to satisfy the 50 ms 
+system configurations. First, Tegra TX2 and the Intel UP exhibit
+superio performance  compared with the Raspberry Pi 3 in 
+all experiments. On average, the Intel UP is able to perform
+inferencing operations more than twice as fast as the Raspberry Pi
+3. The  difference is even greater with the TX2 as the performance is
+about 3X faster using only the CPU and 10X faster when using the GPU.
+As a result, they were all able to satisfy the 50 ms 
 WCET by a very clear margin (in the worst case, the UP Board would 
 still meet it by $\sim$20 ms), and, thus, demonstrates that they are 
 more capable of autonomous driving than the Raspberry Pi 3.
