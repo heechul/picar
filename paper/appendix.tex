@@ -10,12 +10,12 @@ across 2,000 training steps. When a model was trained with the
 aformentioned data, the training loss was 0.0188 and the validation 
 loss was 0.0132. The change of the loss value over the course of model training can be seen in Figure~\ref{fig:modelloss}.
 
-\begin{figure}[h]
+\begin{figure*}[t]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/TrainingLoss}
+  \includegraphics[width=.9\textwidth]{figs/TrainingLoss}
   \caption{Change in loss value throughout training.}
   \label{fig:modelloss}
-\end{figure}
+\end{figure*}
 
 We also trained models where center frames (where the car was going 
 straight) and curve frames (where the car was turning) were equally 
@@ -28,13 +28,13 @@ the training loss being 0.009 and the validation loss becoming
 though, that this can be rectified through the collection of 
 additional data for training and validation.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.55\textwidth]{figs/graph_run=.pdf}
-  \caption{ Network visualization. }
-  \label{fig:}
-\end{figure}
-\fixme{Is all of the network graph necessary or only certain parts?}
+%% \begin{figure*}[h]
+%%   \centering
+%%   \includegraphics[width=.9\textwidth]{figs/graph_run=.pdf}
+%%   \caption{ Network visualization. }
+%%   \label{fig:}
+%% \end{figure*}
+%% \fixme{Is all of the network graph necessary or only certain parts?}
 
 \subsection{System-level Factors Affecting Real-Time Performance}
 In the utilization of the Raspberry Pi 3 in our platform, there are a
