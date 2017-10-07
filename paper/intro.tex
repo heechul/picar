@@ -14,7 +14,7 @@ no human intervention. Deep neural networks (DNNs) have been
 successfully applied in various perception and control tasks in
 recent years.  They are important workloads for autonomous vehicles
 as well. For example, Tesla Model S was known to use a specialized
-chip (MobileEye EyeQ), which uses a deep neural network for vision-based
+chip (MobileEye EyeQ), which used a deep neural network for vision-based
 real-time obstacle detection and avoidance. More recently, researchers
 are investigating DNN based end-to-end control of
 cars~\cite{Bojarski2016} and other robots. It is expected that more
@@ -29,7 +29,7 @@ real-time requirements. For example, latency in a vision-based object
 detection task may be directly linked to safety of the vehicle. This
 requires a high computing capacity as well as the means to guaranteeing
 the timings. On the other hand, the computing hardware platform must
-also satisfy cost, size, weight, and power constraints, which require
+also satisfy cost, size, weight, and power constraints, which require a
 highly efficient computing platform. These two conflicting
 requirements  complicate the platform selection process as observed in
 ~\cite{Otterness2017}, which evaluated vision workloads on
@@ -45,7 +45,7 @@ NVIDIA's Tegra TX1 platform.
 % related work and remaining problems
 To understand what kind of computing hardware is needed for AI
 workloads, we need a testbed and realistic workloads. While using a real car
-based testbed would be most ideal, it is not only highly expensive but also
+based testbed would be most ideal, it is not only highly expensive, but also
 poses serious safety concerns that hinder development and exploration.
 Therefore, there is a strong need for safer and less costly testbeds
 that still employ state-of-the-art AI technologies. There are already
@@ -61,12 +61,12 @@ which was developed for a real self-driving car, NVIDIA
 DAVE-2~\cite{Bojarski2016}, and use the same methodology on a
 smaller, safer and less costly setup. In developing the testbed, our
 goals are (1) to analyze real-time issues in DNN based end-to-end
-control; (2) to evaluate real-time performance of contemporary embedded
+control; and (2) to evaluate real-time performance of contemporary embedded
 multicore platforms for the AI workloads.
 
 % DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
-platform for research and education. From hardware perspective,
+platform for research and education. From a hardware perspective,
 DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
 computer, a web camera and a RC car, all of which are affordable
 components (less than \$100 in total).
@@ -79,11 +79,11 @@ value as output at each control period in \emph{real-time}.
 The network has 9 layers, about 27 million connections
 and 250 thousand parameters (weights).
 The network architecture is identical to that of NVIDIA's DAVE-2
-self-driving car~\cite{Bojarski2016}, which uses much more powerful
+self-driving car~\cite{Bojarski2016}, which uses a much more powerful
 computer (Drive PX computer~\cite{drivepx}) than Raspberry Pi~3.
 We chose to use Pi 3 not only because of its
-affordability but also because it is representative
-of today's mainstream low-end embedded multicore platforms, found in
+affordability, but also because it is representative
+of today's mainstream low-end embedded multicore platforms found in
 smartphones and other embedded devices.
 
 %% Other than the difference in scale (RC car vs. real car), the only other
@@ -102,12 +102,12 @@ training and validation by manually
 controlling the RC car and recording the vision (from the webcam
 mounted on the RC-car) and the human control inputs. We then train the
 network offline using the collected data on a desktop computer, which
-equips a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
-back to the Raspberry Pi, which is then used to perform interference
+is equipped with a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
+back to the Raspberry Pi, which is then used to perform inference
 operations---locally on the Pi---in the car's main control loop in
 real-time. For real-time control, each inference operation must
-be completed within the desired control period. (e.g., 50ms period for
-20Hz control frequency.)
+be completed within the desired control period (e.g., 50ms period for
+20Hz control frequency).
 % how we evaluated (in terms real-time performance)
 
 % what are our findings?
@@ -117,7 +117,7 @@ almost 99\% of the time. The number of cores used by the platform has
 an unexpectedly low impact on its performance, only decreasing the 
 control loop times by 30\% when using 4 cores instead of 1.  Our 
 platform shows the potential to run multiple neural network models 
-simultaneously, as there are no indications of direct interference 
+simultaneously as there are no indications of direct interference 
 between them. Instead, we show that memory intensive co-runners can 
 be detrimental to the real-time performance of the DeepPicar. 
 Finally, while we find that the Raspberry Pi 3 takes longer to 
@@ -130,7 +130,7 @@ vehicle research.
 The {\bf contributions} of this paper are as follows:
 \begin{itemize}
   \item We present the design and implementation of a
-    low-cost autonomous vehicle testbed DeepPicar, which utilizes the
+    low-cost autonomous vehicle testbed DeepPicar, which utilizes
     state-of-the-art artificial intelligence techniques.
   \item We provide an analysis and case-study of real-time issues in the
     DeepPicar.
