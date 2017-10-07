@@ -40,10 +40,10 @@ in a DARPA Autonomous Vehicle (DAVE) project in early
 project~\cite{Bojarski2016}, using 9 layer CNN. In all these projects,
 the neural network models take raw image pixels as input and directly
 produce steering control commands bypassing all intermediary steps and
-hand-written rules in conventional robotics control approach. The
-NVIDIA's latest effort reports that their trained CNN successfully
-self-drive their modified cars in public roads without human
-intervention~\cite{Bojarski2016}.
+hand-written rules in conventional robotics control approach.  
+NVIDIA's latest effort reports that their trained CNN
+autonomously controls their modified cars on public roads without human
+intervention successfully~\cite{Bojarski2016}.
 
 Using deep neural networks involves two distinct
 phases~\cite{NVIDIA2015}. The first
@@ -53,11 +53,11 @@ training examples. Once the network is trained---i.e., the weights of
 the network minimize errors in the training examples---the next phase
 is \emph{inferencing} during which unseen data is fed to the network
 as input to produce predicted output (e.g., predicted image
-classification). In general, the training phase is most compute
+classification). In general, the training phase is most computationally
 intensive and requires high throughput, which is generally not
 available on embedded platforms. The inferencing phase, on the
-other hand, is relatively less compute intensive and latency becomes
-as important, if not more, as compute throughput because many
+other hand, is relatively less computationally intensive and latency becomes
+as important, if not more, as computational throughput because many
 use-cases have strict real-time requirements (e.g., search query
 latency).
 
@@ -91,14 +91,14 @@ systems must satisfy two often conflicting goals~\cite{Otterness2017}:
 %% high accuracy.
 %% For practical applications, the computer platform in an
 %% autonomous vehicle must satisfy two often conflicting goals:
-On the one hand, the platform must provide 
+The platform must provide 
 enough computing capacity for real-time processing of computationally
 expensive AI workloads (deep neural networks);
-On the other hand, the platform must also satisfy various
-constrains such as cost, size, weight, and power consumption limits.
+The platform must also satisfy various
+constraints such as cost, size, weight, and power consumption limits.
 
 Accelerating AI workloads, especially inferencing
-operations, has gotten a lot of attentions from academia and industry
+operations, has received a lot of attention from academia and industry
 in recent years as applications of deep learning are broadening to
 areas real-time embedded systems such as autonomous vehicles. These
 efforts include development of various heterogeneous architecture
@@ -109,9 +109,9 @@ resources while guaranteeing real-time performance is also an active
 research area, which is orthogonal to improving raw
 performance. Consolidation is necessary for efficiency but unmanaged 
 interference can nullify the benefits of consolidation~\cite{Kim2016}.
-Because of these reasons, finding a right computing platform is
+Because of these reasons, finding a good computing platform is a
 non-trivial task, one that requires deep understanding of the
-workloads and the hardware platform that executes the workloads.
+workloads and the hardware platform being utilized.
 
 The primary objectives of this study are (1) to understand the
 necessary computing performance for applying AI technology based
