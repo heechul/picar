@@ -18,7 +18,7 @@ running at up to 1.2GHz. Each core has 16K private I\&D caches, and all
 cores share a 512KB L2 cache.
 The chip also includes Broadcom's Videocore IV
 GPU, although we did not use the GPU in our evaluation due to the lack
-of sofware support (Tensorflow is not compatible with the GPU).
+of sofware support (Tensorflow is not compatible with the Raspberry Pi's GPU).
 For software, we use Ubuntu MATE 16.04, Tensorflow 1.1 and python
 2.7. We disabled DVFS (dynamic voltage frequency scaling) and
 configure the clock speed of each core at the maximum 1.2GHz.
@@ -83,7 +83,7 @@ the execution time.
 Second, more importantly, we also find that the measured average
 execution time of a single control loop is 42.67 ms, or 23.4 Hz and
 the 99 percentail time is 50.70ms.
-This means that the DeepPicar can operates
+This means that the DeepPicar can operate
 at about 20 Hz control frequency in real-time using only the on-board
 Raspberry Pi 3 computing platform, without needing any remote computing
 resources. We consider these results respectable given the complexity
@@ -96,7 +96,7 @@ network architecture, is reportedly run at 30 Hz~\cite{Bojarski2016},
 just a bit faster than the DeepPicar. Although we believe it was not
 limited by their computing platform (we will experimentally compare
 performance differences among multiple embedded computing platforms,
-including NVIDIA's Jetson TK2, later in
+including NVIDIA's Jetson TX2, later in
 Section~\ref{sec:comparison}), the fact that the low-cost
 Raspberry Pi 3 can achieve similar real-time control performance is
 surprising.
@@ -104,13 +104,13 @@ surprising.
 \subsection{Effect of the Core Count to Inference Timing}
 
 In this experiment, we investigate the scalability of performing
-inference operation of DeepPicar's nueral network with respect to the
+inference operations of DeepPicar's neural network with respect to the
 number of cores. As noted earlier, the Raspberry Pi 3 platform has
-four Cortex-A53 cores and the Tensorflow 
-provides a programmable mechanism to to adjust how many cores to be
+four Cortex-A53 cores and Tensorflow 
+provides a programmable mechanism to to adjust how many cores are to be
 used by the library. Leveraging this feature, we repeat the
 same experiment described in the previous subsection with varying
-number of CPU cores---from one to four.
+numbers of CPU cores---from one to four.
 
 
 \begin{figure}[h]
@@ -137,8 +137,8 @@ number of CPU cores---from one to four.
 %%   \caption{Execution time statistics vs. \#of CPU cores.}
 %% \end{table}
 
-Figure~\ref{fig:perf-vs-corecnt} shows the average execution times of
-the control loop as we vary the number of cores used by the
+Figure~\ref{fig:perf-vs-corecnt} shows the average execution time of
+the control loop as we vary the number of cores used by
 Tensorflow. As expected as we assign more cores, the average execution
 time decreases---from 61.96 ms on a single core to 42.67 ms on four
 cores (a 30\% improvement). However, the improvement is far from ideal
@@ -150,12 +150,12 @@ Tensorflow's multicore implementation or it's the model's inherent
 characteristics. 
 
 The poor scalability opens up the possibility of consolidating
-multiple different tasks or different nueral network models rather
-than allocating all cores for a single nueral network model. For
+multiple different tasks or different neural network models rather
+than allocating all cores for a single neural network model. For
 example, it is conceivable to use four cameras and four different
-neural network models, each of which is trained seperately and
+neural network models, each of which is trained separately and
 executed on a single dedicated core. Assuming we use the same network
-architecture for all models, then one might exepct to achieve up to
+architecture for all models, then one might expect to achieve up to
 15 Hz using one core (given 1 core can deliver 62ms average
 execution time). In the next experiment, we investigate the
 feasibility of such a scenario.
@@ -184,7 +184,7 @@ feasibility of such a scenario.
 In this experiment, we launch multiple instances of DeepPicar's DNN
 model at the same time and measure its impact to their inference
 timings. In particular, we are interested in how shared resource
-contention affect inference timing.
+contention affects inference timing.
 
 %% We also test the capability of the DeepPicar to run multiple models at
 %% the same time, and whether each model can successfully perform within
@@ -215,7 +215,7 @@ contention affect inference timing.
 %% \end{figure}
 
 
-Figure~\ref{fig:perf-vs-modelcnt} shows the results. In the figure,
+Figure~\ref{fig:perf-vs-modelcnt} shows the results. In the figure, the
 X-axis shows the system configuration: \#of DNN models x \#of CPU
 cores\/DNN. For example, '4x1' means running four DNN models each of
 which is assigned to run on one CPU core, whereas '2x2' means running
@@ -227,7 +227,7 @@ models. Compared to executing a single DNN model on one CPU core
 suffers an average inference time increase of approximately 15 ms,
 $\sim$24\%. On the other hand, when two DNN models, each using two CPU
 cores, are co-scheduled, the average inference timing is increased by
-about 7 ms, or 10\%, comapred to the baseline of running one model
+about 7 ms, or 10\%, compared to the baseline of running one model
 using two CPU cores. 
 
 %% The results for the 2 model test are outlined in Figure 3 and Table
@@ -287,14 +287,14 @@ increase. Figure~\ref{fig:l2missrate-vs-modelcnt} shows the results.
 As can be see in the figure, L2 miss rates are largely unchanged
 regardless whether multiple models are co-scheduled or not. This
 suggests that the shared L2 cache is not the bottleneck that caused
-execution time increases. In other words, DNN models appear to be not
+execution time increases. In other words, DNN models appear not to be
 sensitive to the shared L2 cache space. % L2 partitioning is probably
                                 % not going to be useful.
 Instead, we hypothesize that it is likely caused by the memory
 controller---the only other major shared hardware source---where
 memory requests from different CPU cores contend, which would result
 in increased memory access latency. While some Intel processors
-provide uncore hardware counters that can measure average memory
+provide oncore hardware counters that can measure average memory
 access latency~\cite{ye2016maracas}, we were not able to identify
 whether such hardware counters exist in the BCM2837 processor of
 Raspberry Pi 3 due to the lack of documentation. Instead, in the next
@@ -341,7 +341,7 @@ benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
   \centering
   \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth}
   \caption{Effect of memory performance hogs on the DNN
-    inferencing. The DNN model uses Core 0 and memory-hog co-runnes
+    inferencing. The DNN model uses Core 0 and memory-hog co-runners
     use the rest of the cores.}
   \label{fig:}
 \end{figure}
@@ -368,7 +368,7 @@ co-scheduled memory intensive synthetic benchmarks. First, as we
 increase the number of co-runners, the DNN model's execution times are
 increased---by up to 9.6X---even though the DNN model is running on a
 dedicated core (Core0). On the other hand, the DNN model's L2
-cache-miss rates are not increase as much. This suggests that
+cache-miss rates did not increase as much. This suggests that
 the DNN model's exeuction increase cannot be fully explained by
 increased L2 cache-misses. Instead, as we hypothesized in the previous
 experiment, the increased memory pressure from the co-scheduled memory
@@ -437,11 +437,11 @@ the Raspberry Pi 3 Model B, offers adquate computing capacity to
 perform real-time control of the RC car at 20 Hz frequency (or
 50ms per control loop). Given the complexity of the DNN we use, we
 were pleasantly suprised by this finding. The time breakdown shows that
-the DNN inferencing operation, perforemd by the Tensorflow library,
+the DNN inferencing operation, performed by the Tensorflow library,
 dominates the execution time, which is expected.
 
 Second, we find that scalability of Tensorflow's DNN inference 
-implementation is limited: We find that using all four cores are 
+implementation is limited: We find that using all four cores is 
 only about 30\% better than using just a single core.
 
 Third, we find that consolidating multiple DNN models---on different CPU
@@ -450,9 +450,9 @@ core is not much worse than using multiple cores; (2) multiple DNN
 models running simultaneously do not cause severe interference with
 each other.
 
-Lastly, we however find that consolidating memory (DRAM) performance
+Lastly, we find that consolidating memory (DRAM) performance
 intensive applications could jeopadize DNN performance because DNN
-performance appear very sensitive to memory performance; we observe up
+performance appears very sensitive to memory performance; we observe up
 to 9.6X slowdown in DNN performance by co-scheduling synthetic memory 
 bandwidth intensive applications on idle cores.
 
