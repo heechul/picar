@@ -59,7 +59,7 @@ is done at the GPU.
 The UP Board and TX2 also perform much better when multiple DNN models
 are co-scheduled. Figure~\ref{fig:sys_model} shows the results of the
 multi-model co-scheduling experiment. Once again, they can comfortably
-20 Hz real-time performance for all of the co-scheduled DNN control
+satisfy 20 Hz real-time performance for all of the co-scheduled DNN control
 loops, and in case of TX 2 (GPU), 100 Hz real-time control is still
 feasible. Given that the GPU must be shared among the co-scheduled DNN
 models, the result suggests that TX2's GPU has sufficient capacity to
@@ -107,7 +107,7 @@ known characteristic of integrated CPU-GPU architectue based
 platforms that both CPU and GPU share the same memory
 subsystem~\cite{Ali2017}. As a result, TX2 (GPU) fails to meet the
 10ms deadline for 100 Hz control that would have been feasible if
-there is no contention between the CPU cores and the GPU.
+there was no contention between the CPU cores and the GPU.
 
 %% experienced a change in their inferencing times, but the increases 
 %% were not as drastic as is seen by the Raspberry Pi 3. in the worst 
@@ -130,8 +130,8 @@ vision and end-to-end deep learning based real-time control
 applications. Furthermore, availability of CPU cores and GPU on these
 platforms allow consolidating mutiple deep neural network based AI
 workloads. However, shared resource contention among these diverse
-computing resources remain an important issue that must be understood
-and controlled especially for safety-critical applications.
+computing resources remains an important issue that must be understood
+and controlled, especially for safety-critical applications.
 
 %% the comparison of the real-time capabilities of three embedded 
 %% computing platforms, we found that the Raspberry Pi 3 performed the 
