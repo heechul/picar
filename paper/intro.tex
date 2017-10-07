@@ -9,10 +9,10 @@
 %
 Autonomous cars have been a topic of increasing interest in recent
 years as many companies are actively developing related hardware
-and software technologies toward fully autonomous driving capability without
-any human intervention. Deep neural networks (DNNs) have been
+and software technologies toward fully autonomous driving capability with
+no human intervention. Deep neural networks (DNNs) have been
 successfully applied in various perception and control tasks in
-recent years, and they are important workloads for autonomous vehicles
+recent years.  They are important workloads for autonomous vehicles
 as well. For example, Tesla Model S was known to use a specialized
 chip (MobileEye EyeQ), which uses a deep neural network for vision-based
 real-time obstacle detection and avoidance. More recently, researchers
@@ -27,7 +27,7 @@ be used in a car poses several additional challenges. First, many AI
 workloads in vehicles are computationally demanding and have strict
 real-time requirements. For example, latency in a vision-based object
 detection task may be directly linked to safety of the vehicle. This
-requires a high computing capacity as well as means to guaranteeing
+requires a high computing capacity as well as the means to guaranteeing
 the timings. On the other hand, the computing hardware platform must
 also satisfy cost, size, weight, and power constraints, which require
 highly efficient computing platform. These two conflicting
@@ -44,8 +44,8 @@ NVIDIA's Tegra TX1 platform.
 
 % related work and remaining problems
 To understand what kind of computing hardware is needed for AI
-workloads, we need a testbed and realistic workloads. While a real car
-testbed would be most ideal, it is not only highly expensive but also
+workloads, we need a testbed and realistic workloads. While using a real car
+based testbed would be most ideal, it is not only highly expensive but also
 poses serious safety concerns that hinder development and exploration.
 Therefore, there is a strong need for safer and less costly testbeds
 that still employ state-of-the-art AI technologies. There are already
@@ -135,7 +135,7 @@ The {\bf contributions} of this paper are as follows:
   \item We provide an analysis and case-study of real-time issues in the
     DeepPicar.
   \item We systematically compare real-time computing capabilities of
-    multiple embedded computing platforms in the context of a
+    multiple embedded computing platforms in the context of
     vision-based autonomous driving.
 \end{itemize}
 
@@ -161,15 +161,14 @@ The {\bf contributions} of this paper are as follows:
 %% operations required for autonomous driving in a 50 millisecond frame.
 
 The remaining sections of the paper are as follows: Section II 
-provides a background of applications in autonomous driving. Section 
-III gives an overview of the DeepPicar platform, including the 
+provides a background of applications in autonomous driving and related works.
+ Section III gives an overview of the DeepPicar platform, including the 
 high-level system and the methods used for training and inference. 
 Section IV presents our evaluation of the platform and how different 
 factors can affect performance. Section V gives a comparison between 
 the Raspberry Pi 3 and other embedded computing platforms to 
-determine their suitably for autonomous driving research. Related 
-works are discussed in Section VI, and the paper finishes with 
-conclusions in Section VII.
+determine their suitably for autonomous driving research. The paper finishes with 
+conclusions in Section VI.
 
 %% it is necessary that all real-time operations are successfully
 %% performed prior to their deadlines. This requires that the AV platform
