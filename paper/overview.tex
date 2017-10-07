@@ -123,21 +123,21 @@ DAVE-2's network architecture and its real-time characteristics.
 Another issue we observed in training/testing the network, which could
 affect the network performance, is camera latency. In DeepPicar's
 context, the camera latency is the time from the time the camera
-sensor observes the scene to the time the computer actually read the
-digitized image data. Unfortunately, this time can be substantially
-long depending on the camera and the computer performance. We
+sensor observes the scene to the time the computer actually reads the
+digitized image data. Unfortunately, this time can be significantly
+long depending on camera and the computer performance. We
 experimentally measure DeepPicar's camera latency as
 follows~\footnote{We follow the method and the tool found at
   https://www.makehardware.com/2016/03/29/finding-a-low-latency-webcam/}.
 First, we point the DeepPicar's camera toward to a computer monitor, which is
 conntected to the Raspberry Pi 3's HDMI output. We then launch a
-simple program that overlay the current time with the camera's preview
-screen on the monitor. Then, infinite number of time strings will be
+simple program that overlays the current time with the camera's preview
+screen on the monitor. Then, an infinite number of time strings will be
 shown on the monitor screen and the time difference between the two
 successive time strings represent the camera
 latency. Figure~\ref{fig:camera-latency} shows the captured moniotor
 screen. The measured camera latency is about 300~350 ms. This is
-significantly higher than a human's perception latency, which is known
+significantly higher than the latency of human perception, which is known
 to be as fast as 13 ms~\cite{ThomasBurger2015}. Higher camera latency
 could negatively affect to the control performance as the DNN would
 analyze stale scenes. In the future, we plan to identify and use
