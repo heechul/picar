@@ -1,0 +1,376 @@
+processing and loading "train" epoch 30 into memory, current num of imgs is 0...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-30.avi
+DBG: 167
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-30.csv
+167 167
+processing and loading "train" epoch 32 into memory, current num of imgs is 167...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-32.avi
+DBG: 195
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-32.csv
+195 195
+processing and loading "train" epoch 34 into memory, current num of imgs is 362...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-34.avi
+DBG: 196
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-34.csv
+196 196
+processing and loading "train" epoch 36 into memory, current num of imgs is 558...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-36.avi
+DBG: 164
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-36.csv
+164 164
+processing and loading "train" epoch 38 into memory, current num of imgs is 722...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-38.avi
+DBG: 185
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-38.csv
+185 185
+processing and loading "train" epoch 40 into memory, current num of imgs is 907...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-40.avi
+DBG: 189
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-40.csv
+189 189
+processing and loading "train" epoch 42 into memory, current num of imgs is 1096...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-42.avi
+DBG: 189
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-42.csv
+189 189
+processing and loading "train" epoch 44 into memory, current num of imgs is 1285...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-44.avi
+DBG: 205
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-44.csv
+205 205
+processing and loading "train" epoch 46 into memory, current num of imgs is 1490...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-46.avi
+DBG: 212
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-46.csv
+212 212
+processing and loading "train" epoch 48 into memory, current num of imgs is 1702...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-48.avi
+DBG: 203
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-48.csv
+203 203
+processing and loading "train" epoch 50 into memory, current num of imgs is 1905...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-50.avi
+DBG: 194
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-50.csv
+194 194
+processing and loading "train" epoch 52 into memory, current num of imgs is 2099...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-52.avi
+DBG: 184
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-52.csv
+184 184
+processing and loading "train" epoch 54 into memory, current num of imgs is 2283...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-54.avi
+DBG: 189
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-54.csv
+189 189
+processing and loading "train" epoch 56 into memory, current num of imgs is 2472...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-56.avi
+DBG: 204
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-56.csv
+204 204
+processing and loading "train" epoch 58 into memory, current num of imgs is 2676...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-58.avi
+DBG: 201
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-58.csv
+201 201
+processing and loading "val" epoch 31 into memory, current num of imgs is 0...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-31.avi
+DBG: 191
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-31.csv
+191 191
+processing and loading "val" epoch 33 into memory, current num of imgs is 191...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-33.avi
+DBG: 205
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-33.csv
+205 205
+processing and loading "val" epoch 35 into memory, current num of imgs is 396...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-35.avi
+DBG: 186
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-35.csv
+186 186
+processing and loading "val" epoch 37 into memory, current num of imgs is 582...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-37.avi
+DBG: 178
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-37.csv
+178 178
+processing and loading "val" epoch 39 into memory, current num of imgs is 760...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-39.avi
+DBG: 198
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-39.csv
+198 198
+processing and loading "val" epoch 41 into memory, current num of imgs is 958...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-41.avi
+DBG: 164
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-41.csv
+164 164
+processing and loading "val" epoch 43 into memory, current num of imgs is 1122...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-43.avi
+DBG: 197
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-43.csv
+197 197
+processing and loading "val" epoch 45 into memory, current num of imgs is 1319...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-45.avi
+DBG: 198
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-45.csv
+198 198
+processing and loading "val" epoch 47 into memory, current num of imgs is 1517...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-47.avi
+DBG: 206
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-47.csv
+206 206
+processing and loading "val" epoch 49 into memory, current num of imgs is 1723...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-49.avi
+DBG: 205
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-49.csv
+205 205
+processing and loading "val" epoch 51 into memory, current num of imgs is 1928...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-51.avi
+DBG: 192
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-51.csv
+192 192
+processing and loading "val" epoch 53 into memory, current num of imgs is 2120...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-53.avi
+DBG: 195
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-53.csv
+195 195
+processing and loading "val" epoch 55 into memory, current num of imgs is 2315...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-55.avi
+DBG: 203
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-55.csv
+203 203
+processing and loading "val" epoch 57 into memory, current num of imgs is 2518...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-57.avi
+DBG: 204
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-57.csv
+204 204
+processing and loading "val" epoch 59 into memory, current num of imgs is 2722...
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-video-59.avi
+DBG: 198
+DBG: C:\Users\mbech\Documents\GitHub\picar\epochs\out-key-59.csv
+198 198
+---< train >---
+# center imgs: 2556
+# curve imgs: 321
+---< val >---
+# center imgs: 2609
+# curve imgs: 311
+step 10 of 2000, train loss 0.0862526148557663, val loss 0.07100037485361099
+step 20 of 2000, train loss 0.025305550545454025, val loss 0.053714651614427567
+step 30 of 2000, train loss 0.04668308049440384, val loss 0.043473705649375916
+step 40 of 2000, train loss 0.03059130348265171, val loss 0.04375885799527168
+step 50 of 2000, train loss 0.03358400613069534, val loss 0.047652095556259155
+step 60 of 2000, train loss 0.03402788192033768, val loss 0.03151150792837143
+step 70 of 2000, train loss 0.05501941964030266, val loss 0.04246284067630768
+step 80 of 2000, train loss 0.018457116559147835, val loss 0.032370321452617645
+step 90 of 2000, train loss 0.03744860365986824, val loss 0.026576679199934006
+step 100 of 2000, train loss 0.03924950212240219, val loss 0.05340438336133957
+Model saved. Time passed: 00 hours 00 mins 45 secs 000 msecs. Time left: 00 hours 14 mins 32 secs 000 msecs
+step 110 of 2000, train loss 0.03470107913017273, val loss 0.04695282131433487
+step 120 of 2000, train loss 0.035287633538246155, val loss 0.03154664486646652
+step 130 of 2000, train loss 0.019507654011249542, val loss 0.03474730998277664
+step 140 of 2000, train loss 0.04661033675074577, val loss 0.03055763803422451
+step 150 of 2000, train loss 0.043886687606573105, val loss 0.022096991539001465
+step 160 of 2000, train loss 0.02804712951183319, val loss 0.0328838974237442
+step 170 of 2000, train loss 0.042780324816703796, val loss 0.034500524401664734
+step 180 of 2000, train loss 0.031122345477342606, val loss 0.03974362835288048
+step 190 of 2000, train loss 0.027651995420455933, val loss 0.02812613546848297
+step 200 of 2000, train loss 0.01933518424630165, val loss 0.04826955497264862
+Model saved. Time passed: 00 hours 01 mins 15 secs 000 msecs. Time left: 00 hours 11 mins 23 secs 000 msecs
+step 210 of 2000, train loss 0.04279826208949089, val loss 0.02321852743625641
+step 220 of 2000, train loss 0.017240211367607117, val loss 0.026753656566143036
+step 230 of 2000, train loss 0.03325042873620987, val loss 0.027218608185648918
+step 240 of 2000, train loss 0.03280190750956535, val loss 0.020194876939058304
+step 250 of 2000, train loss 0.04163280129432678, val loss 0.026493623852729797
+step 260 of 2000, train loss 0.02226027473807335, val loss 0.02807890810072422
+step 270 of 2000, train loss 0.027217600494623184, val loss 0.037729449570178986
+step 280 of 2000, train loss 0.01950222998857498, val loss 0.02409953624010086
+step 290 of 2000, train loss 0.04439931362867355, val loss 0.028857629746198654
+step 300 of 2000, train loss 0.02407599426805973, val loss 0.01401202380657196
+Model saved. Time passed: 00 hours 01 mins 46 secs 000 msecs. Time left: 00 hours 10 mins 02 secs 000 msecs
+step 310 of 2000, train loss 0.025636421516537666, val loss 0.028410673141479492
+step 320 of 2000, train loss 0.02667098492383957, val loss 0.034648846834897995
+step 330 of 2000, train loss 0.014269526116549969, val loss 0.03552769869565964
+step 340 of 2000, train loss 0.027286149561405182, val loss 0.02000337466597557
+step 350 of 2000, train loss 0.04011079668998718, val loss 0.024684298783540726
+step 360 of 2000, train loss 0.018232572823762894, val loss 0.040002986788749695
+step 370 of 2000, train loss 0.03233172744512558, val loss 0.021322431042790413
+step 380 of 2000, train loss 0.03670712187886238, val loss 0.032518040388822556
+step 390 of 2000, train loss 0.040600571781396866, val loss 0.04334539175033569
+step 400 of 2000, train loss 0.031355686485767365, val loss 0.02315545454621315
+Model saved. Time passed: 00 hours 02 mins 15 secs 000 msecs. Time left: 00 hours 09 mins 01 secs 000 msecs
+step 410 of 2000, train loss 0.039802856743335724, val loss 0.02010507322847843
+step 420 of 2000, train loss 0.016698915511369705, val loss 0.03086286596953869
+step 430 of 2000, train loss 0.02480768784880638, val loss 0.021243756636977196
+step 440 of 2000, train loss 0.0395960658788681, val loss 0.03751963749527931
+step 450 of 2000, train loss 0.03437201678752899, val loss 0.03449845314025879
+step 460 of 2000, train loss 0.028737608343362808, val loss 0.026032229885458946
+step 470 of 2000, train loss 0.028655655682086945, val loss 0.01753641851246357
+step 480 of 2000, train loss 0.022834517061710358, val loss 0.037060484290122986
+step 490 of 2000, train loss 0.0320042222738266, val loss 0.03073807992041111
+step 500 of 2000, train loss 0.023891571909189224, val loss 0.039785295724868774
+Model saved. Time passed: 00 hours 02 mins 44 secs 000 msecs. Time left: 00 hours 08 mins 13 secs 000 msecs
+step 510 of 2000, train loss 0.030126212164759636, val loss 0.021335408091545105
+step 520 of 2000, train loss 0.03532438725233078, val loss 0.01966819539666176
+step 530 of 2000, train loss 0.028075752779841423, val loss 0.01414439082145691
+step 540 of 2000, train loss 0.02909020334482193, val loss 0.01602821610867977
+step 550 of 2000, train loss 0.034157976508140564, val loss 0.020437462255358696
+step 560 of 2000, train loss 0.03009018674492836, val loss 0.021556589752435684
+step 570 of 2000, train loss 0.024639137089252472, val loss 0.025434128940105438
+step 580 of 2000, train loss 0.0271700918674469, val loss 0.025405792519450188
+step 590 of 2000, train loss 0.030612219125032425, val loss 0.03523974120616913
+step 600 of 2000, train loss 0.025690335780382156, val loss 0.021387718617916107
+Model saved. Time passed: 00 hours 03 mins 13 secs 000 msecs. Time left: 00 hours 07 mins 32 secs 000 msecs
+step 610 of 2000, train loss 0.028651181608438492, val loss 0.023650217801332474
+step 620 of 2000, train loss 0.02437056042253971, val loss 0.03605308756232262
+step 630 of 2000, train loss 0.028582116588950157, val loss 0.017177406698465347
+step 640 of 2000, train loss 0.020943157374858856, val loss 0.02085532620549202
+step 650 of 2000, train loss 0.03673966974020004, val loss 0.02751847170293331
+step 660 of 2000, train loss 0.01647721603512764, val loss 0.021790912374854088
+step 670 of 2000, train loss 0.035592880100011826, val loss 0.018560219556093216
+step 680 of 2000, train loss 0.02992507815361023, val loss 0.023128151893615723
+step 690 of 2000, train loss 0.027831947430968285, val loss 0.02184629812836647
+step 700 of 2000, train loss 0.021629225462675095, val loss 0.0269119031727314
+Model saved. Time passed: 00 hours 03 mins 42 secs 000 msecs. Time left: 00 hours 06 mins 54 secs 000 msecs
+step 710 of 2000, train loss 0.018892686814069748, val loss 0.02848805859684944
+step 720 of 2000, train loss 0.02410094067454338, val loss 0.026678109541535378
+step 730 of 2000, train loss 0.022171158343553543, val loss 0.021861063316464424
+step 740 of 2000, train loss 0.04151296988129616, val loss 0.02269565314054489
+step 750 of 2000, train loss 0.03377995267510414, val loss 0.021788204088807106
+step 760 of 2000, train loss 0.024061692878603935, val loss 0.02474968694150448
+step 770 of 2000, train loss 0.024653978645801544, val loss 0.03497777506709099
+step 780 of 2000, train loss 0.033975373953580856, val loss 0.02541118487715721
+step 790 of 2000, train loss 0.016027674078941345, val loss 0.019395746290683746
+step 800 of 2000, train loss 0.031243085861206055, val loss 0.021096283569931984
+Model saved. Time passed: 00 hours 04 mins 11 secs 000 msecs. Time left: 00 hours 06 mins 17 secs 000 msecs
+step 810 of 2000, train loss 0.029487870633602142, val loss 0.024916620925068855
+step 820 of 2000, train loss 0.031368836760520935, val loss 0.024320784956216812
+step 830 of 2000, train loss 0.024620071053504944, val loss 0.016895396634936333
+step 840 of 2000, train loss 0.026834741234779358, val loss 0.023450300097465515
+step 850 of 2000, train loss 0.018131189048290253, val loss 0.028881380334496498
+step 860 of 2000, train loss 0.03357446938753128, val loss 0.03022565320134163
+step 870 of 2000, train loss 0.023707382380962372, val loss 0.014130797237157822
+step 880 of 2000, train loss 0.026014477014541626, val loss 0.02040986157953739
+step 890 of 2000, train loss 0.018985794857144356, val loss 0.013188419863581657
+step 900 of 2000, train loss 0.024806302040815353, val loss 0.023360278457403183
+Model saved. Time passed: 00 hours 04 mins 40 secs 000 msecs. Time left: 00 hours 05 mins 43 secs 000 msecs
+step 910 of 2000, train loss 0.018006745725870132, val loss 0.025487160310149193
+step 920 of 2000, train loss 0.020115487277507782, val loss 0.025094855576753616
+step 930 of 2000, train loss 0.02503439038991928, val loss 0.023755092173814774
+step 940 of 2000, train loss 0.022324305027723312, val loss 0.024384545162320137
+step 950 of 2000, train loss 0.027724452316761017, val loss 0.017233598977327347
+step 960 of 2000, train loss 0.02574433758854866, val loss 0.02387646585702896
+step 970 of 2000, train loss 0.023835627362132072, val loss 0.02059626765549183
+step 980 of 2000, train loss 0.018585465848445892, val loss 0.023088183254003525
+step 990 of 2000, train loss 0.03472060710191727, val loss 0.02706659585237503
+step 1000 of 2000, train loss 0.027447249740362167, val loss 0.026928769424557686
+Model saved. Time passed: 00 hours 05 mins 08 secs 000 msecs. Time left: 00 hours 05 mins 09 secs 000 msecs
+step 1010 of 2000, train loss 0.034510329365730286, val loss 0.02257613278925419
+step 1020 of 2000, train loss 0.021655797958374023, val loss 0.011510374024510384
+step 1030 of 2000, train loss 0.023237019777297974, val loss 0.016952432692050934
+step 1040 of 2000, train loss 0.01803665980696678, val loss 0.02777513861656189
+step 1050 of 2000, train loss 0.024513114243745804, val loss 0.025177568197250366
+step 1060 of 2000, train loss 0.027742628008127213, val loss 0.026102358475327492
+step 1070 of 2000, train loss 0.027669470757246017, val loss 0.019987810403108597
+step 1080 of 2000, train loss 0.025203075259923935, val loss 0.0244657713919878
+step 1090 of 2000, train loss 0.026260286569595337, val loss 0.022773128002882004
+step 1100 of 2000, train loss 0.03247124329209328, val loss 0.021051721647381783
+Model saved. Time passed: 00 hours 05 mins 37 secs 000 msecs. Time left: 00 hours 04 mins 36 secs 000 msecs
+step 1110 of 2000, train loss 0.02088526263833046, val loss 0.03290671482682228
+step 1120 of 2000, train loss 0.02456415444612503, val loss 0.019287852570414543
+step 1130 of 2000, train loss 0.031030993908643723, val loss 0.020345402881503105
+step 1140 of 2000, train loss 0.019710781052708626, val loss 0.026274576783180237
+step 1150 of 2000, train loss 0.024903077632188797, val loss 0.02161397412419319
+step 1160 of 2000, train loss 0.01950850337743759, val loss 0.015587829053401947
+step 1170 of 2000, train loss 0.0269026979804039, val loss 0.028584882616996765
+step 1180 of 2000, train loss 0.030986670404672623, val loss 0.02139241248369217
+step 1190 of 2000, train loss 0.023273775354027748, val loss 0.021049614995718002
+step 1200 of 2000, train loss 0.037868812680244446, val loss 0.023393146693706512
+Model saved. Time passed: 00 hours 06 mins 06 secs 000 msecs. Time left: 00 hours 04 mins 04 secs 000 msecs
+step 1210 of 2000, train loss 0.022484464570879936, val loss 0.024995287880301476
+step 1220 of 2000, train loss 0.018968241289258003, val loss 0.0295985396951437
+step 1230 of 2000, train loss 0.013704346492886543, val loss 0.028028136119246483
+step 1240 of 2000, train loss 0.036284033209085464, val loss 0.024790525436401367
+step 1250 of 2000, train loss 0.016371294856071472, val loss 0.02406029775738716
+step 1260 of 2000, train loss 0.022991668432950974, val loss 0.03597519174218178
+step 1270 of 2000, train loss 0.016881950199604034, val loss 0.011680151335895061
+step 1280 of 2000, train loss 0.0301259346306324, val loss 0.014029078185558319
+step 1290 of 2000, train loss 0.022414900362491608, val loss 0.021492626518011093
+step 1300 of 2000, train loss 0.021838625892996788, val loss 0.03214004263281822
+Model saved. Time passed: 00 hours 06 mins 34 secs 000 msecs. Time left: 00 hours 03 mins 33 secs 000 msecs
+step 1310 of 2000, train loss 0.021551288664340973, val loss 0.029852818697690964
+step 1320 of 2000, train loss 0.02925277315080166, val loss 0.02145429700613022
+step 1330 of 2000, train loss 0.022903474047780037, val loss 0.023755624890327454
+step 1340 of 2000, train loss 0.029160907492041588, val loss 0.022931240499019623
+step 1350 of 2000, train loss 0.01368851400911808, val loss 0.02293696627020836
+step 1360 of 2000, train loss 0.02273651212453842, val loss 0.028374414891004562
+step 1370 of 2000, train loss 0.022390814498066902, val loss 0.021215077489614487
+step 1380 of 2000, train loss 0.021984554827213287, val loss 0.025323951616883278
+step 1390 of 2000, train loss 0.026310788467526436, val loss 0.012722871266305447
+step 1400 of 2000, train loss 0.015194481238722801, val loss 0.01736532524228096
+Model saved. Time passed: 00 hours 07 mins 03 secs 000 msecs. Time left: 00 hours 03 mins 02 secs 000 msecs
+step 1410 of 2000, train loss 0.03134343773126602, val loss 0.017356205731630325
+step 1420 of 2000, train loss 0.02486516162753105, val loss 0.019003376364707947
+step 1430 of 2000, train loss 0.028548983857035637, val loss 0.02201341837644577
+step 1440 of 2000, train loss 0.024808257818222046, val loss 0.01568106934428215
+step 1450 of 2000, train loss 0.028181038796901703, val loss 0.015496838837862015
+step 1460 of 2000, train loss 0.03291771188378334, val loss 0.02641414850950241
+step 1470 of 2000, train loss 0.013665972277522087, val loss 0.01805809698998928
+step 1480 of 2000, train loss 0.018352722749114037, val loss 0.020693683996796608
+step 1490 of 2000, train loss 0.021684829145669937, val loss 0.030362557619810104
+step 1500 of 2000, train loss 0.021351996809244156, val loss 0.031791672110557556
+Model saved. Time passed: 00 hours 07 mins 32 secs 000 msecs. Time left: 00 hours 02 mins 31 secs 000 msecs
+step 1510 of 2000, train loss 0.01375800184905529, val loss 0.013310739770531654
+step 1520 of 2000, train loss 0.030429277569055557, val loss 0.023563671857118607
+step 1530 of 2000, train loss 0.018633875995874405, val loss 0.029108228161931038
+step 1540 of 2000, train loss 0.021135814487934113, val loss 0.01610678806900978
+step 1550 of 2000, train loss 0.019102580845355988, val loss 0.02231495827436447
+step 1560 of 2000, train loss 0.022327326238155365, val loss 0.01630980335175991
+step 1570 of 2000, train loss 0.02316845767199993, val loss 0.0081786485388875
+step 1580 of 2000, train loss 0.03254071995615959, val loss 0.026287205517292023
+step 1590 of 2000, train loss 0.015498052351176739, val loss 0.021457891911268234
+step 1600 of 2000, train loss 0.03233899176120758, val loss 0.023042894899845123
+Model saved. Time passed: 00 hours 08 mins 01 secs 000 msecs. Time left: 00 hours 02 mins 01 secs 000 msecs
+step 1610 of 2000, train loss 0.027971241623163223, val loss 0.026900125667452812
+step 1620 of 2000, train loss 0.029723910614848137, val loss 0.025674238801002502
+step 1630 of 2000, train loss 0.024013232439756393, val loss 0.018848538398742676
+step 1640 of 2000, train loss 0.015083955600857735, val loss 0.028119150549173355
+step 1650 of 2000, train loss 0.02367151714861393, val loss 0.01704493537545204
+step 1660 of 2000, train loss 0.022675130516290665, val loss 0.024798879399895668
+step 1670 of 2000, train loss 0.028576184064149857, val loss 0.024676108732819557
+step 1680 of 2000, train loss 0.017065320163965225, val loss 0.020218444988131523
+step 1690 of 2000, train loss 0.01839274726808071, val loss 0.01891358569264412
+step 1700 of 2000, train loss 0.01836193911731243, val loss 0.014517132192850113
+Model saved. Time passed: 00 hours 08 mins 30 secs 000 msecs. Time left: 00 hours 01 mins 30 secs 000 msecs
+step 1710 of 2000, train loss 0.011200811713933945, val loss 0.029135022312402725
+step 1720 of 2000, train loss 0.016861679032444954, val loss 0.031293075531721115
+step 1730 of 2000, train loss 0.025279734283685684, val loss 0.01997816562652588
+step 1740 of 2000, train loss 0.019116733223199844, val loss 0.020315686240792274
+step 1750 of 2000, train loss 0.026150403544306755, val loss 0.016653932631015778
+step 1760 of 2000, train loss 0.02135312929749489, val loss 0.024212641641497612
+step 1770 of 2000, train loss 0.016148176044225693, val loss 0.025806916877627373
+step 1780 of 2000, train loss 0.03536651283502579, val loss 0.04073413461446762
+step 1790 of 2000, train loss 0.016292409971356392, val loss 0.019097987562417984
+step 1800 of 2000, train loss 0.017063947394490242, val loss 0.024245934560894966
+Model saved. Time passed: 00 hours 08 mins 58 secs 000 msecs. Time left: 00 hours 01 mins 00 secs 000 msecs
+step 1810 of 2000, train loss 0.014016648754477501, val loss 0.01858430728316307
+step 1820 of 2000, train loss 0.011355678550899029, val loss 0.021398374810814857
+step 1830 of 2000, train loss 0.022610142827033997, val loss 0.02386375144124031
+step 1840 of 2000, train loss 0.013382180593907833, val loss 0.029051724821329117
+step 1850 of 2000, train loss 0.0159106757491827, val loss 0.01867147535085678
+step 1860 of 2000, train loss 0.017032740637660027, val loss 0.02293509989976883
+step 1870 of 2000, train loss 0.02226761355996132, val loss 0.019307605922222137
+step 1880 of 2000, train loss 0.025071894749999046, val loss 0.019141308963298798
+step 1890 of 2000, train loss 0.010985656641423702, val loss 0.022472340613603592
+step 1900 of 2000, train loss 0.020022422075271606, val loss 0.014671385288238525
+Model saved. Time passed: 00 hours 09 mins 27 secs 000 msecs. Time left: 00 hours 00 mins 30 secs 000 msecs
+step 1910 of 2000, train loss 0.020834583789110184, val loss 0.017319336533546448
+step 1920 of 2000, train loss 0.017161838710308075, val loss 0.02802918665111065
+step 1930 of 2000, train loss 0.011014606803655624, val loss 0.030206644907593727
+step 1940 of 2000, train loss 0.039337992668151855, val loss 0.011444042436778545
+step 1950 of 2000, train loss 0.011970854364335537, val loss 0.03380754217505455
+step 1960 of 2000, train loss 0.024834658950567245, val loss 0.022603381425142288
+step 1970 of 2000, train loss 0.028885796666145325, val loss 0.0176076702773571
+step 1980 of 2000, train loss 0.02405008301138878, val loss 0.014882541261613369
+step 1990 of 2000, train loss 0.017111124470829964, val loss 0.01770521141588688
+step 2000 of 2000, train loss 0.018782231956720352, val loss 0.013224977999925613
+Model saved. Time passed: 00 hours 09 mins 56 secs 000 msecs. Time left: 00 hours 00 mins 00 secs 000 msecs
