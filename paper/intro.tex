@@ -22,18 +22,17 @@ DNN based Artificial Intelligence workloads may be used in future
 autonomous vehicles.
 
 % big problem
-Executing these AI workloads on an embedded computing platform that can
-be used in a car poses several additional challenges. First, many AI
-workloads in vehicles are computationally demanding and have strict
-real-time requirements. For example, latency in a vision-based object
+Executing these AI workloads on an embedded computing platform 
+poses several additional challenges. First, many AI workloads in vehicles 
+are computationally demanding and have strict real-time requirements. 
+For example, latency in a vision-based object
 detection task may be directly linked to safety of the vehicle. This
 requires a high computing capacity as well as the means to guaranteeing
 the timings. On the other hand, the computing hardware platform must
 also satisfy cost, size, weight, and power constraints, which require a
 highly efficient computing platform. These two conflicting
 requirements  complicate the platform selection process as observed in
-~\cite{Otterness2017}, which evaluated vision workloads on
-NVIDIA's Tegra TX1 platform.
+~\cite{Otterness2017}.
 
 %% For example, while today's self-driving car
 %% prototype equip more \$100,000
@@ -67,7 +66,7 @@ platforms for such workload.
 
 % DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
-platform for research and education. From a hardware perspective,
+platform for research. From a hardware perspective,
 DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
 computer, a web camera and a RC car, all of which are affordable
 components (less than \$100 in total).
@@ -133,21 +132,6 @@ increase, mostly due to increase in the nueral network inferencing
 operation, when memory performance intensive applications are
 co-scheduled on idle CPU cores.
 
-%% that must be considered in applying deep-learning
-%% models on shared memory based embedded computing platforms.
-%% The number of cores used to process the neural network by the platform has 
-%% an unexpectedly low impact on its performance, only decreasing the 
-%% control loop times by 30\% when using 4 cores instead of 1.  Our 
-%% platform shows the potential to run multiple neural network models 
-%% simultaneously as there are no indications of direct interference 
-%% between them. Instead, we show that memory intensive co-runners can 
-%% be detrimental to the real-time performance of the DeepPicar. 
-%% Finally, while we find that the Raspberry Pi 3 takes longer to 
-%% complete control loops when compared to other embedded computing 
-%% platforms, namely the Intel UP Board and the NVIDIA Tegra TX2, we 
-%% still conclude that the Pi 3 is a viable option for autonomous 
-%% vehicle research.
-
 % contributions
 The {\bf contributions} of this paper are as follows:
 \begin{itemize}
@@ -161,27 +145,6 @@ The {\bf contributions} of this paper are as follows:
     vision-based autonomous driving.
 \end{itemize}
 
-%% The DeepPicar is comprised of a Raspberry
-%% Pi 3 Model B, a camera and a low cost RC car.
-
-%% By creating and using the Picar platform, we seek to accomplish the
-%% following three goals. First, the significant reduction of the overall
-%% cost required
-%% would make autonomous driving research more accessible to interested
-%% individuals/parties. Furthermore, it would remove the concerns of
-%% creating replacement platforms as each part, or the entire system,
-%% could be replaced relatively inexpensively. Second, the utilization of
-%% a more cost-efficient platform would allow for a better understanding
-%% of the performance requirements necessary for efficiently operating
-%% autonomous vehicles. Finally, we strive to achieve the ability to
-%% compare the real-time performance of multiple embedded computing
-%% platforms.
-
-%% We display the efficacy of the Picar by training and testing the
-%% DeepTesla DNN \cite{} in a custom-made environment. We find that the
-%% Picar is capable of consistently accomplishing all real-time
-%% operations required for autonomous driving in a 50 millisecond frame.
-
 The remaining sections of the paper are as follows: Section II 
 provides a background of applications in autonomous driving and related works.
  Section III gives an overview of the DeepPicar platform, including the 
@@ -191,25 +154,3 @@ factors can affect performance. Section V gives a comparison between
 the Raspberry Pi 3 and other embedded computing platforms to 
 determine their suitably for autonomous driving research. The paper finishes with 
 conclusions in Section VI.
-
-%% it is necessary that all real-time operations are successfully
-%% performed prior to their deadlines. This requires that the AV platform
-%% be capable of completing all necessary computations in a timely
-%% manner, while maintaining a high level of accuracy. Consequently, the
-%% cost of creating a platform capable of self-driving can be relatively
-%% high, especially in the current cost-sensitive climate of the
-%% automotive industry \cite{}. The overall price for an autonomous
-%% vehicle platform currently acts as a bottleneck, especially from an
-%% academic standpoint, where cost is an important factor. For many
-%% researchers and students, the charge associated with autonomous
-%% vehicle research is a significant barrier. These same parties may also
-%% be deterred from participating in autonomous vehicle research due to
-%% the potential for their developed platforms to break in the
-%% experimental process. The idea of building one relatively expensive
-%% platform may not be too daunting for some, but the notion of
-%% potentially making multiple identical platforms in case of accidents
-%% may be overwhelming.
-%% Toward this end, we explore the possibility of
-%% developing a low-cost system that still employs state-of-the-art AI
-%% technologies and is capable of executing real-time autonomous vehicle
-%% operations.
