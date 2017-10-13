@@ -32,5 +32,17 @@ In our testing and evaluation of the real-time performance of the Raspberry Pi 3
 * benchmark: a memory intensive synthetic benchmark that acts as a co-runner to the model. It can be found in the IsolBench suite.
 * vcgencmd: specific to the Raspberry Pi 3, we use this to measure cpu frequency and temperature to ensure that it is always operating at 1.2 GHz.
 
+### Changing the # of Cores used
+The number of cores used by TensorFlow can be changed in test-model.py:
+
+	NCPU = _ # Replace _ with the number of cores (between 0-3)
+
+The specific cores to be used can be changed by using taskset:
+
+	$ taskset -c [] python test-model.py 
+	
+Rather than a number, [] should be replaced with a list of each core to be used. For example, in a test using 4 cores, [] = 0,1,2,3.
+
+###Script Usage
 For convenience, we make use of a platform specific shell scripts that run all of the tests for their designated embedded computing platform. For example, the test-model_timings.sh script will run the tests on both the Raspberry Pi 3 and the Intel UP Board. When the scripts are first run, the user is asked to input the name of the platform, which will be used for storing the results as the tests are run. Note that it may take a while for all of the tests to finish. When completed, the results for each test can be found under the logs/test-model directory and in the folder that begins with the input given be the user at the beginning of the script (if the user input "Pi3", then the results folder will begin with Pi3). The date and timestamp of the test are also added to the folder name in order to track when the tests were performed, and prevent any folder naming conflicts from occurring.
 
