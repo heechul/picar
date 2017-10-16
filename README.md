@@ -30,15 +30,12 @@ Change model (folder) name:
     
 Change if normal category is to be used:
 
-	use_normal_category = True #True = equally select center/curve images, 
-False = no equal selection
+	use_normal_category = True #True = equally select center/curve images, False = no equal selection
 
 Select epochs to be used for training and validation in the params.py file:
 
-	epochs['train'] = [...] #Replace ... with integer values used to 
-represent epochs  
-	epochs['val'] = [...] #Replace ... with integer values used to 
-represent epochs
+	epochs['train'] = [...] #Replace ... with integer values used to represent epochs  
+	epochs['val'] = [...] #Replace ... with integer values used to represent epochs
     
 After all of the above steps are completed, The model can then be trained 
 by running:
@@ -67,21 +64,15 @@ scripts:
 Raspberry Pi 3 / Intel UP board:
 
 	$ ./test-model_timings.sh # Run all multicore and multimodel tests
-	$ ./benchmark_timings.sh # Run all synthetic benchmark/co-runner tests 
-w/ perf information
-	$ ./benchmark_timings_noperf.sh # Same as benchmark_timings.sh but 
-doesn't measure perf information
+	$ ./benchmark_timings.sh # Run all synthetic benchmark/co-runner tests w/ perf information
+	$ ./benchmark_timings_noperf.sh # Same as benchmark_timings.sh but doesn't measure perf information
 	
 NVIDIA Jetson TX2:
 
-	$ ./test-model_timings_x2.sh # Run all multicore and multimodel tests 
-while using the GPU
-	$ ./test-model_timings_x2_cpu.sh # Run all multicore and multimodel 
-tests while using the CPU only
-	$ ./benchmark_timings_x2.sh # Run all synthetic benchmark/co-runner 
-tests while utilizing the GPU
-	$ ./benchmark_timings_x2_cpu.sh # Run all synthetic benchmark/co-runner 
-tests while only using the CPU
+	$ ./test-model_timings_x2.sh # Run all multicore and multimodel tests while using the GPU
+	$ ./test-model_timings_x2_cpu.sh # Run all multicore and multimodel tests while using the CPU only
+	$ ./benchmark_timings_x2.sh # Run all synthetic benchmark/co-runner tests while utilizing the GPU
+	$ ./benchmark_timings_x2_cpu.sh # Run all synthetic benchmark/co-runner tests while only using the CPU
     
 ## Additional Information
 Please refer to 
