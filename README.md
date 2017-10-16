@@ -1,5 +1,5 @@
 # DeepPicar
-DeepPicar is a low-cost autonomous vehcile platform that can be used for 
+DeepPicar is a low-cost autonomous vehicle platform that can be used for 
 researching performance requirements for self-driving cars.
 
 ## Driving DeepPicar
