@@ -92,8 +92,8 @@ performed by TensorFlow only utilizes the CPU cores of the
 Raspberry Pi 3 (its GPU is not supported by Tensorflow).
 
 In comparison, NVIDIA's DAVE-2 system, which has the exact same neural
-network architecture, reportedly runs at 30 Hz~\cite{Bojarski2016},
-just a bit faster than the DeepPicar. Although we believe it was not
+network architecture, reportedly runs at 30 Hz~\cite{Bojarski2016}, which 
+is just a bit faster than the DeepPicar. Although we believe it was not
 limited by their computing platform (we will experimentally compare
 performance differences among multiple embedded computing platforms,
 including NVIDIA's Jetson TX2, later in
@@ -125,7 +125,7 @@ Figure~\ref{fig:perf-vs-corecnt} shows the average execution time of
 the control loop as we vary the number of cores used by
 TensorFlow. As expected, as we assign more cores, the average execution
 time decreases---from 61.96 ms on a single core to 42.67 ms on four
-cores (a 30\% improvement). However, the improvement is far from ideal
+cores (a 30\% improvement). However, the improvement is far from an ideal
 linear scaling. In particular, from 2 cores to 3 cores, the
 improvement is mere 2.38 ms (or 4\%). In short, we find that the
 scalability of DeepPicar's deep neural network is not ideal on the
