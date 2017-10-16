@@ -49,6 +49,7 @@ value is then used in params.py in either the epochs['train'] or
 epochs['val'] lists.
 * While trivial, since the RC car utilized in the Picar-Mini only has three 
 steering angles, there is no maxAngle variable that needs to be set.
+
 After the epochs for training and validation are set in the params.py file, 
 the model can be trained by running:
 
@@ -99,7 +100,7 @@ The specific cores to be used can be changed by using taskset:
 Rather than a number, [] should be replaced with a list of each core to be 
 used. For example, in a test using 4 cores, [] = 0,1,2,3.
 
-###Script Usage
+### Script Usage
 For convenience, we make use of a platform specific shell scripts that run 
 all of the tests for their designated embedded computing platform. For 
 example, the test-model_timings.sh script will run the tests on both the 

@@ -22,6 +22,8 @@ For autonomous control:
 	$ python picar-mini-dnn-drv8835.py
     
 ## Model Training
+Before training a model, the following changes should be made:
+
 Change model (folder) name:
 
 	save_dir = os.path.abspath('...') #Replace ... with a name for the model
@@ -38,7 +40,8 @@ represent epochs
 	epochs['val'] = [...] #Replace ... with integer values used to 
 represent epochs
     
-The model can then be trained by running:
+After all of the above steps are completed, The model can then be trained 
+by running:
 
 	$ python train.py
     
@@ -82,5 +85,4 @@ tests while only using the CPU
     
 ## Additional Information
 Please refer to 
-[PicarMini.md](https://github.com/heechul/picar/blob/picar-mini-v2.0-release/
-PicarMini.md) for more detailed explanations/instructions.
+[PicarMini.md](https://github.com/heechul/picar/blob/picar-mini-v2.0-release/PicarMini.md) for more detailed explanations/instructions.
