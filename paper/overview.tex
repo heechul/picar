@@ -10,13 +10,13 @@
 In this section, we provide an overview of our DeepPicar platform. In
 developing DeepPicar, one of our primary goals is to replicate the
 NVIDIA's DAVE-2 system on a smaller scale with using a low cost
-multicore platform, Raspberry Pi 3. Because Pi 3's computing
+multicore platform, Raspberry Pi 3. Because the Pi 3's computing
 performance is much lower than that of the DRIVE PX platform used in
 DAVE-2, we are interested in if, and how, we can process
 computationally expensive neural network operations in
 real-time. Specifically, inferencing (forward pass processing)
 operations must be completed within each control period
-duration---e.g., WCET of 50ms for 20Hz control frequency---locally on
+duration---e.g., a WCET of 50ms for 20Hz control frequency---locally on
 the Pi 3 platform, although training of the network (back-propagation
 for weight updates) can be done offline and remotely using a desktop
 computer.
@@ -86,11 +86,11 @@ desktop computer using the GTX 1060 GPU.
 Once the network is trained on the desktop computer, the trained model
 is copied back to the Raspberry Pi. The network is then used
 by the car's main controller, which feeds a image frame from the web
-camera as input to the network. The produced steering angle output is
-then converted as the PWM values of the steering motor of the
-car. Figure~\ref{fig:controlloop} shows simplified pseudo code of the
-controller's main loop. Among the five steps, step 3, network
-inferencing, is the most computationally intensive and dominates the
+camera as input to the network. In each control period, the produced 
+steering angle output is then converted as the PWM values of the 
+steering motor of the car. Figure~\ref{fig:controlloop} shows simplified 
+pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
+network inferencing, is the most computationally intensive and dominates the
 execution time.
 
 \begin{figure}[t]
@@ -113,9 +113,9 @@ Currently, we approximate the network generated real-valued
 angle to the closest one of the three angles, which may
 introduce inaccuracy in control.
 In the future, we plan to use a different (more expensive) RC car
-platforms that can precisely control the car's steering angle.
+platform that can precisely control the car's steering angle.
 We would like to stress, however, that the use of different RC car
-platforms has no impact in terms of computational 
+platforms has no impact on the computational 
 aspects of the system, and that our main focus of this study is
 not in improving network accuracy but in closely replicating the
 DAVE-2's network architecture and its real-time characteristics.
@@ -125,11 +125,11 @@ affect the network performance, is camera latency. In DeepPicar's
 context, the camera latency is from the time the camera
 sensor observes the scene to the time the computer actually reads the
 digitized image data. Unfortunately, this time can be significantly
-long depending on camera and the performance of the Pi. We
+long depending on the camera and the performance of the Pi. We
 experimentally measure DeepPicar's camera latency as
 follows~\footnote{We follow the method and the tool found at
   https://www.makehardware.com/2016/03/29/finding-a-low-latency-webcam/}.
-First, we point the DeepPicar's camera toward to a computer monitor, which is
+First, we point the DeepPicar's camera towards a computer monitor, which is
 conntected to the Raspberry Pi 3's HDMI output. We then launch a 
 program that overlays the current time with the camera's preview
 screen on the monitor. Then, an infinite number of time strings will be

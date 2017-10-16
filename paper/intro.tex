@@ -48,7 +48,7 @@ car-based testbed would be most ideal, it is not only highly expensive, but also
 poses serious safety concerns that hinder development and exploration.
 Therefore, there is a strong need for safer and less costly
 testbeds. There are already several relatively inexpensive RC-car
-based testbeds, such as MIT 
+based testbeds, such as MIT's 
 RaceCar~\cite{shin2017project} and UPenn's F1$/$10 racecar~\cite{upennf1tenth}.
 However, these RC-car testbeds still cost more than \$3,000, requiring
 considerable investment.
@@ -80,8 +80,8 @@ The network has 9 layers, about 27 million connections
 and 250 thousand parameters (weights).
 The network architecture is identical to that of NVIDIA's DAVE-2
 self-driving car~\cite{Bojarski2016}, which uses a much more powerful
-computer (Drive PX computer~\cite{drivepx}) than Raspberry Pi~3.
-We chose to use Pi 3 not only because of its
+computer (Drive PX computer~\cite{drivepx}) than a Raspberry Pi~3.
+We chose to use a Pi 3 not only because of its
 affordability, but also because it is representative
 of today's mainstream low-end embedded multicore platforms found in
 smartphones and other embedded devices.
@@ -106,12 +106,12 @@ is equipped with a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
 back to the Raspberry Pi, which is then used to perform inference
 operations---locally on the Pi---in the car's main control loop in
 real-time. For real-time control, each inference operation must
-be completed within the desired control period (e.g., 50ms period for
-20Hz control frequency).
+be completed within the desired control period (e.g., 50 ms period for
+20 Hz control frequency).
 % how we evaluated (in terms real-time performance)
 
 % what are our findings?
-Using the DeepPicar platform, we systematically analyzed its real-time
+Using the DeepPicar platform, we systematically analyze its real-time
 capabilities in the context of deep-learning based real-time
 control, especially on real-time deep neural network inferencing.
 We also evaluated other, more powerful, embedded computing
@@ -136,7 +136,7 @@ co-scheduled on idle CPU cores.
 The {\bf contributions} of this paper are as follows:
 \begin{itemize}
   \item We present the design and implementation of a
-    low-cost autonomous vehicle testbed DeepPicar, which utilizes
+    low-cost autonomous vehicle testbed, DeepPicar, which utilizes
     state-of-the-art artificial intelligence techniques.
   \item We provide an analysis and case-study of real-time issues in the
     DeepPicar.

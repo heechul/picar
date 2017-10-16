@@ -40,7 +40,7 @@ in a DARPA Autonomous Vehicle (DAVE) project in early
 project~\cite{Bojarski2016}, using a 9 layer CNN. In all of these projects,
 the neural network models take raw image pixels as input and directly
 produce steering control commands, bypassing all intermediary steps and
-hand-written rules used in conventional robotics control approach.  
+hand-written rules used in the conventional robotics control approach.  
 NVIDIA's latest effort reports that their trained CNN
 autonomously controls their modified cars on public roads without human
 intervention~\cite{Bojarski2016}.
@@ -53,7 +53,7 @@ training examples. Once the network is trained---i.e., the weights of
 the network minimize errors in the training examples---the next phase
 is \emph{inferencing}, during which unseen data is fed to the network
 as input to produce predicted output (e.g., predicted image
-classification). In general, the training phase is most computationally
+classification). In general, the training phase is more computationally
 intensive and requires high throughput, which is generally not
 available on embedded platforms. The inferencing phase, on the
 other hand, is relatively less computationally intensive and latency becomes

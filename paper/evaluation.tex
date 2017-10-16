@@ -25,21 +25,21 @@ configured the clock speed of each core statically at the maximum 1.2GHz.
 
 \subsection{Inference Timing for Real-Time Control}
 
-For real-time control of a car (or any robots), the control loop
+For real-time control of a car (or any robot), the control loop
 frequency must be sufficiently high so that the car can quickly
 react to the changing environment and its internal states. In general,
 control performance improves when the frequency is higher, though
-computation time and the type of particular physical system are
+computation time and the type of the particular physical system are
 factors in determining a proper control loop frequency. While a standard
 control system may be comprised of multiple control loops with
-differing control frequencies---e.g., a inner control loop for lower-level
-PD control, a outer loop for motion planning, etc.---DeepPicar's
+differing control frequencies---e.g., an inner control loop for lower-level
+PD control, an outer loop for motion planning, etc.---DeepPicar's
 control loop is a single layer, as shown earlier in
 Figure~\ref{fig:controlloop}, since a single deep neural network
-replaces the traditional multi-layer control pipline. (Recall
+replaces the traditional multi-layer control pipline. (Refer to
 Figure~\ref{fig:end-to-end-control} on the differences between the
 standard robotics control vs. end-to-end deep learning approach).
-This means that the DNN interference operation must be completed
+This means that the DNN inference operation must be completed
 within the inner-most control loop update frequency. To understand
 achievable control-loop update frequencies, we experimentally measured
 the execution times of DeepPicar's DNN inference operations.
@@ -71,7 +71,7 @@ the execution times of DeepPicar's DNN inference operations.
 
 Figure~\ref{fig:control-loop-timing} shows the measured control loop 
 processing times of the DeepPicar over 1000 image frames (one per each
-control loop). We omit the first frame processing time for cache
+control loop). We omit the first frame's processing time for cache
 warmup. Table~\ref{tbl:control-loop-breakdown} shows the time
 breakdown of each control loop. Note that all four CPU cores of the
 Raspberry Pi 3 were used by the TensorFlow library when performing the
@@ -82,17 +82,17 @@ dominates the control loop execution time, accounting for about 85\% of
 the execution time.
 Second, and more importantly, we also find that the measured average
 execution time of a single control loop is 42.67 ms, or 23.4 Hz and
-the 99 percentail time is 50.70 ms.
+the 99 percentile time is 50.70 ms.
 This means that the DeepPicar can operate
-at about 20 Hz control frequency in real-time using only the on-board
-Raspberry Pi 3 computing platform, without needing any remote computing
-resources. We consider these results respectable given the complexity
+at about a 20 Hz control frequency in real-time using only the on-board
+Raspberry Pi 3 computing platform, as no remote computing resources 
+were necessary. We consider these results respectable given the complexity
 of the deep neural network, and the fact that the inference operation
 performed by TensorFlow only utilizes the CPU cores of the
-Raspberry Pi 3 (its GPU is not supported by Tensorflow.)
+Raspberry Pi 3 (its GPU is not supported by Tensorflow).
 
 In comparison, NVIDIA's DAVE-2 system, which has the exact same neural
-network architecture, reportedly run at 30 Hz~\cite{Bojarski2016},
+network architecture, reportedly runs at 30 Hz~\cite{Bojarski2016},
 just a bit faster than the DeepPicar. Although we believe it was not
 limited by their computing platform (we will experimentally compare
 performance differences among multiple embedded computing platforms,
