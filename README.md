@@ -2,6 +2,15 @@
 DeepPicar is a low-cost autonomous vehicle platform that can be used for 
 researching performance requirements for self-driving cars.
 
+## Hardware Configuration
+DeepPicar is comprised of the following components:
+
+* Raspberry Pi 3 Model B: $35
+* New Bright 1:24 scale RC car: $10
+* Playstation Eye camera: $7
+* Pololu DRV8835 motor hat: $8
+* External battery pack & misc.: $10
+
 ## Driving DeepPicar
 For manual control:
 
