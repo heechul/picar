@@ -40,12 +40,12 @@ When all four CPU cores are used, the Intel UP is 2.53X faster than
 the Pi 3, while TX (CPU) and TX (GPU) are 3.6X and 7.6X times faster,
 respectively, than the Pi 3. 
 As a result, they are all able to satisfy the 50 ms 
-WCET by a clear margin
+WCET by a clear margin,
 %%  (in the worst case, the UP Board would 
 %% still meet it by $\sim$20 ms) --> where's the data showing this?
-, and, in case of TX2, 50 Hz or even 100 Hz real-time control is
+and, in case of TX2, 50 Hz or even 100 Hz real-time control is
 feasible with the help of its GPU. Another observation is that TX2
-(GPU) does not change much as most of the neural network computation
+(GPU) does not change much, as most of the neural network computation
 is done at the GPU.
 
 \begin{figure}[h]
@@ -59,7 +59,7 @@ is done at the GPU.
 The UP Board and TX2 also perform much better when multiple DNN models
 are co-scheduled. Figure~\ref{fig:sys_model} shows the results of the
 multi-model co-scheduling experiment. Once again, they can comfortably
-20 Hz real-time performance for all of the co-scheduled DNN control
+satisfy 20 Hz real-time performance for all of the co-scheduled DNN control
 loops, and in case of TX 2 (GPU), 100 Hz real-time control is still
 feasible. Given that the GPU must be shared among the co-scheduled DNN
 models, the result suggests that TX2's GPU has sufficient capacity to
@@ -84,8 +84,8 @@ Finally, we compare the effect of co-scheduling memory bandwidth
 intensive synthetic benchmarks on the DNN control loop timing. 
 Figure~\ref{fig:sys_bench} shows the results.
 As discussed in 
-Section~\ref{sec:eval-memhog}, we observe dramatic execution time
-increase, up to 9.4X, in Raspberry Pi 3 as we increase the number of
+Section~\ref{sec:eval-memhog}, we observed dramatic execution time
+increases, up to 9.4X, in Raspberry Pi 3 as we increased the number of
 co-scheduled tasks. We also observe increased control loop execution
 timing in Intel Up and TX2, but the degree of the increase is not as
 dramatic as the Pi3. Compared to their respective solo timings (i.e.,
@@ -94,7 +94,7 @@ the model runs on a single core in isolation), Intel UP suffers up to
 2.2X and 2.5X increase, respectively. This is somewhat suprising
 because Raspberry Pi 3's cores are in-order architecture based while
 the cores in Intel Up and NVIDIA TX2 are out-of-order architecture
-based and that the memory intensive tasks on out-of-order cores can
+based, and that the memory intensive tasks on out-of-order cores can
 generate more memory traffic. We suspect that this is because the
 memory subsystems in the Intel UP and TX2 platforms provide higher
 bandwidth and fairness than the memory subsystem of the Pi 3.
@@ -104,10 +104,10 @@ considerable execution time increase (2.5X) despite the fact that the
 co-scheduled synthetic tasks do not utilize the GPU. In other words,
 the DNN model has dedicated access to the GPU. This is, however, a
 known characteristic of integrated CPU-GPU architectue based
-platforms that both CPU and GPU share the same memory
+platforms where both CPU and GPU share the same memory
 subsystem~\cite{Ali2017}. As a result, TX2 (GPU) fails to meet the
 10ms deadline for 100 Hz control that would have been feasible if
-there is no contention between the CPU cores and the GPU.
+there was no contention between the CPU cores and the GPU.
 
 %% experienced a change in their inferencing times, but the increases 
 %% were not as drastic as is seen by the Raspberry Pi 3. in the worst 
@@ -130,8 +130,8 @@ vision and end-to-end deep learning based real-time control
 applications. Furthermore, availability of CPU cores and GPU on these
 platforms allow consolidating mutiple deep neural network based AI
 workloads. However, shared resource contention among these diverse
-computing resources remain an important issue that must be understood
-and controlled especially for safety-critical applications.
+computing resources remains an important issue that must be understood
+and controlled, especially for safety-critical applications.
 
 %% the comparison of the real-time capabilities of three embedded 
 %% computing platforms, we found that the Raspberry Pi 3 performed the 

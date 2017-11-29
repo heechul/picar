@@ -19,9 +19,9 @@ cores share a 512KB L2 cache.
 The chip also includes Broadcom's Videocore IV
 GPU, although we did not use the GPU in our evaluation due to the lack
 of sofware support (Tensorflow is not compatible with the Raspberry Pi's GPU).
-For software, we use Ubuntu MATE 16.04, Tensorflow 1.1 and python
+For software, we use Ubuntu MATE 16.04, Tensorflow 1.1 and Python
 2.7. We disabled DVFS (dynamic voltage frequency scaling) and
-configure the clock speed of each core at the maximum 1.2GHz.
+configured the clock speed of each core at the maximum 1.2GHz.
 
 \subsection{Inference Timing for Real-Time Control}
 
@@ -31,11 +31,11 @@ react to the changing environment and its internal states. In general,
 control performance improves when the frequency is higher, though
 computation time and the type of particular physical system are
 factors in determining a proper control loop latency. While a standard
-control system may be comprized of multiple control loops with
-differning control frequencies---e.g., a inner control loop for lower-level
+control system may be comprised of multiple control loops with
+differing control frequencies---e.g., a inner control loop for lower-level
 PD control, a outer loop for motion planning, etc.---DeepPicar's
 control loop is a single layer, as shown earlier in
-Figure~\ref{fig:controlloop}, as a single deep neural network
+Figure~\ref{fig:controlloop}, since a single deep neural network
 replaces the traditional multi-layer control pipline. (Recall
 Figure~\ref{fig:end-to-end-control} on the differences between the
 standard robotics control vs. end-to-end deep learning approach).
@@ -78,16 +78,16 @@ Raspberry Pi 3 were used by the Tensorflow library when performing the
 DNN inference operations.
 
 First, as expected, we find that the inference operation
-dominates the control loop execution time, accounting about 85\% of
+dominates the control loop execution time, accounting for about 85\% of
 the execution time.
-Second, more importantly, we also find that the measured average
+Second, and more importantly, we also find that the measured average
 execution time of a single control loop is 42.67 ms, or 23.4 Hz and
-the 99 percentail time is 50.70ms.
+the 99 percentail time is 50.70 ms.
 This means that the DeepPicar can operate
 at about 20 Hz control frequency in real-time using only the on-board
 Raspberry Pi 3 computing platform, without needing any remote computing
 resources. We consider these results respectable given the complexity
-of the deep neural network  and the fact that the inference operation
+of the deep neural network, and the fact that the inference operation
 performed by Tensorflow only utilizes the CPU cores of the
 Raspberry Pi 3 (its GPU is not supported by Tensorflow.)
 
@@ -107,7 +107,7 @@ In this experiment, we investigate the scalability of performing
 inference operations of DeepPicar's neural network with respect to the
 number of cores. As noted earlier, the Raspberry Pi 3 platform has
 four Cortex-A53 cores and Tensorflow 
-provides a programmable mechanism to to adjust how many cores are to be
+provides a programmable mechanism to adjust how many cores are to be
 used by the library. Leveraging this feature, we repeat the
 same experiment described in the previous subsection with varying
 numbers of CPU cores---from one to four.
@@ -139,14 +139,14 @@ numbers of CPU cores---from one to four.
 
 Figure~\ref{fig:perf-vs-corecnt} shows the average execution time of
 the control loop as we vary the number of cores used by
-Tensorflow. As expected as we assign more cores, the average execution
+Tensorflow. As expected, as we assign more cores, the average execution
 time decreases---from 61.96 ms on a single core to 42.67 ms on four
 cores (a 30\% improvement). However, the improvement is far from ideal
 linear scaling. In particular, from 2 cores to 3 cores, the
-improvement is mere 2.38ms (or 4\%). In short, we find that the
+improvement is mere 2.38 ms (or 4\%). In short, we find that the
 scalability of DeepPicar's deep neural network is not ideal on the
 platform. We do not know whether it is due to the limitations of
-Tensorflow's multicore implementation or it's the model's inherent
+Tensorflow's multicore implementation or if it's the model's inherent
 characteristics. 
 
 The poor scalability opens up the possibility of consolidating
@@ -156,7 +156,7 @@ example, it is conceivable to use four cameras and four different
 neural network models, each of which is trained separately and
 executed on a single dedicated core. Assuming we use the same network
 architecture for all models, then one might expect to achieve up to
-15 Hz using one core (given 1 core can deliver 62ms average
+15 Hz using one core (given 1 core can deliver 62 ms average
 execution time). In the next experiment, we investigate the
 feasibility of such a scenario.
 
@@ -182,7 +182,7 @@ feasibility of such a scenario.
 \subsection{Effect of Co-scheduling Multiple DNN Models}
 
 In this experiment, we launch multiple instances of DeepPicar's DNN
-model at the same time and measure its impact to their inference
+model at the same time and measure its impact on their inference
 timings. In particular, we are interested in how shared resource
 contention affects inference timing.
 
@@ -217,11 +217,11 @@ contention affects inference timing.
 
 Figure~\ref{fig:perf-vs-modelcnt} shows the results. In the figure, the
 X-axis shows the system configuration: \#of DNN models x \#of CPU
-cores\/DNN. For example, '4x1' means running four DNN models each of
+cores/DNN. For example, '4x1' means running four DNN models each of
 which is assigned to run on one CPU core, whereas '2x2' means running
 two DNN models, each of which is assigned to run on two CPU
 cores. The Y-axis shows the average inference timing.
-Two bars in the left show the impact of co-scheduling four DNN
+The two bars on the left show the impact of co-scheduling four DNN
 models. Compared to executing a single DNN model on one CPU core
 (1x1), when four DNN models are co-scheduled (4x1), each model
 suffers an average inference time increase of approximately 15 ms,
@@ -277,17 +277,17 @@ using two CPU cores.
 
 These increases in inference times in the co-scheduled scenarios are
 expected and likely caused by contention in the shared hardware
-resources such as the shared L2 cache and/or the DRAM controller.
-To further analyze the source of contention, we use hardwawre
+resources, such as the shared L2 cache and/or the DRAM controller.
+To further analyze the source of contention, we use hardware
 performance counters of the processor. Specifically, we measure L2
 miss rates of the DNN models first in isolation and then after
-co-scheduling another models. If the shared L2 cache is the primary
-source of inteference, then the measured L2 miss rates would
+co-scheduling other models. If the shared L2 cache is the primary
+source of inteference, then the measured L2 miss rates will
 increase. Figure~\ref{fig:l2missrate-vs-modelcnt} shows the results.
 As can be see in the figure, L2 miss rates are largely unchanged
-regardless whether multiple models are co-scheduled or not. This
+regardless of whether multiple models are co-scheduled or not. This
 suggests that the shared L2 cache is not the bottleneck that caused
-execution time increases. In other words, DNN models appear not to be
+execution time increases. In other words, DNN models don't appear to be
 sensitive to the shared L2 cache space. % L2 partitioning is probably
                                 % not going to be useful.
 Instead, we hypothesize that it is likely caused by the memory
@@ -367,8 +367,8 @@ of the DNN model running on the Core 0 as a function of the number of
 co-scheduled memory intensive synthetic benchmarks. First, as we
 increase the number of co-runners, the DNN model's execution times are
 increased---by up to 9.6X---even though the DNN model is running on a
-dedicated core (Core0). On the other hand, the DNN model's L2
-cache-miss rates did not increase as much. This suggests that
+dedicated core (Core 0). On the other hand, the DNN model's L2
+cache-miss rates do not increase as much. This suggests that
 the DNN model's exeuction increase cannot be fully explained by
 increased L2 cache-misses. Instead, as we hypothesized in the previous
 experiment, the increased memory pressure from the co-scheduled memory
@@ -378,7 +378,7 @@ more senstive to DRAM access latency than L2 cache space.
 
 This observation suggests that shared cache partitioning
 techniques~\cite{Gracioli2015,Kim2016} may not be effective isolation
-solutions for DeepPicar as its AI workload is more sensitive to memory
+solutions for DeepPicar, as its AI workload is more sensitive to memory
 performance. Instead, memory controller focused isolation solutions,
 either hardware or software-based ones (e.g.,~\cite{Guo2017,Yun2013}),
 may be more important. Although our observation is made on a single
@@ -435,13 +435,13 @@ real-time control, and made several observations.
 First, we find that DeepPicar's computing platform,
 the Raspberry Pi 3 Model B, offers adquate computing capacity to
 perform real-time control of the RC car at 20 Hz frequency (or
-50ms per control loop). Given the complexity of the DNN we use, we
+50ms per control loop). Given the complexity of the DNN used, we
 were pleasantly suprised by this finding. The time breakdown shows that
 the DNN inferencing operation, performed by the Tensorflow library,
 dominates the execution time, which is expected.
 
 Second, we find that scalability of Tensorflow's DNN inference 
-implementation is limited: We find that using all four cores is 
+implementation is limited. We find that using all four cores is 
 only about 30\% better than using just a single core.
 
 Third, we find that consolidating multiple DNN models---on different CPU
@@ -451,8 +451,8 @@ models running simultaneously do not cause severe interference with
 each other.
 
 Lastly, we find that consolidating memory (DRAM) performance
-intensive applications could jeopadize DNN performance because DNN
-performance appears very sensitive to memory performance; we observe up
+intensive applications could jeopadize DNN performance, because DNN
+performance appears to be very sensitive to memory performance; we observe up
 to 9.6X slowdown in DNN performance by co-scheduling synthetic memory 
 bandwidth intensive applications on idle cores.
 

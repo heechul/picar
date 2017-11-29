@@ -44,25 +44,26 @@ NVIDIA's Tegra TX1 platform.
 
 % related work and remaining problems
 To understand what kind of computing hardware is needed for AI
-workloads, we need a testbed and realistic workloads. While using a real car
-based testbed would be most ideal, it is not only highly expensive, but also
+workloads, we need a testbed and realistic workloads. While using a real 
+car-based testbed would be most ideal, it is not only highly expensive, but also
 poses serious safety concerns that hinder development and exploration.
-Therefore, there is a strong need for safer and less costly testbeds
-that still employ state-of-the-art AI technologies. There are already
-several relatively inexpensive RC-car based testbeds, such as MIT
+Therefore, there is a strong need for safer and less costly
+testbeds. There are already several relatively inexpensive RC-car
+based testbeds, such as MIT 
 RaceCar~\cite{shin2017project} and UPenn's F1$/$10 racecar~\cite{upennf1tenth}.
-However, these RC-car testbeds still cost more than \$3,000.
+However, these RC-car testbeds still cost more than \$3,000, requiring
+considerable investment.
 
 % our goals
 Instead, we want to build a low cost testbed that still employs the
-state-of-the art AI technologies. Specifically, we focus on a deep
-convolutional neural network (CNN) based end-to-end control system,
+state-of-the art AI technologies. Specifically, we focus on a end-to-end
+deep learning based real-time control system,
 which was developed for a real self-driving car, NVIDIA
 DAVE-2~\cite{Bojarski2016}, and use the same methodology on a
-smaller, safer and less costly setup. In developing the testbed, our
+smaller and less costly setup. In developing the testbed, our
 goals are (1) to analyze real-time issues in DNN based end-to-end
 control; and (2) to evaluate real-time performance of contemporary embedded
-multicore platforms for the AI workloads.
+platforms for such workload.
 
 % DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
@@ -111,20 +112,41 @@ be completed within the desired control period (e.g., 50ms period for
 % how we evaluated (in terms real-time performance)
 
 % what are our findings?
-From our experiments, we discover that the DeepPicar is capable of 
+Using the DeepPicar platform, we systematically analyzed its real-time
+capabilities in the context of deep-learning based real-time
+control, especially on real-time deep neural network inferencing.
+We also evaluated other, more powerful, embedded computing
+platforms to better understand achievable real-time performance of
+DeepPicar's deep-learning based control system and the impact of
+computing hardware architectures.
+
+
+We find that the DeepPicar is capable of 
 completing control loops in under 50 ms, or 20 hz, and can do so 
-almost 99\% of the time. The number of cores used by the platform has 
-an unexpectedly low impact on its performance, only decreasing the 
-control loop times by 30\% when using 4 cores instead of 1.  Our 
-platform shows the potential to run multiple neural network models 
-simultaneously as there are no indications of direct interference 
-between them. Instead, we show that memory intensive co-runners can 
-be detrimental to the real-time performance of the DeepPicar. 
-Finally, while we find that the Raspberry Pi 3 takes longer to 
-complete control loops when compared to other embedded computing 
-platforms, namely the Intel UP Board and the NVIDIA Tegra TX2, we 
-still conclude that the Pi 3 is a viable option for autonomous 
-vehicle research.
+almost 99\% of the time.
+Other tested embedded platforms, Intel Up and NVIDIA TX2, offer even
+better performance, capable of supporting deep-learning based real-time
+control up to 100 Hz control frequency on the TX2 when the GPU is used.
+However, in all platforms, shared resource contention remains an
+important issue as we observe up to 9.6X control loop execution time
+increase, mostly due to increase in the nueral network inferencing
+operation, when memory performance intensive applications are
+co-scheduled on idle CPU cores.
+
+%% that must be considered in applying deep-learning
+%% models on shared memory based embedded computing platforms.
+%% The number of cores used to process the neural network by the platform has 
+%% an unexpectedly low impact on its performance, only decreasing the 
+%% control loop times by 30\% when using 4 cores instead of 1.  Our 
+%% platform shows the potential to run multiple neural network models 
+%% simultaneously as there are no indications of direct interference 
+%% between them. Instead, we show that memory intensive co-runners can 
+%% be detrimental to the real-time performance of the DeepPicar. 
+%% Finally, while we find that the Raspberry Pi 3 takes longer to 
+%% complete control loops when compared to other embedded computing 
+%% platforms, namely the Intel UP Board and the NVIDIA Tegra TX2, we 
+%% still conclude that the Pi 3 is a viable option for autonomous 
+%% vehicle research.
 
 % contributions
 The {\bf contributions} of this paper are as follows:

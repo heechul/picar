@@ -11,11 +11,11 @@ In this section, we provide an overview of our DeepPicar platform. In
 developing DeepPicar, one of our primary goals is to replicate the
 NVIDIA's DAVE-2 system on a smaller scale with using a low cost
 multicore platform, Raspberry Pi 3. Because Pi 3's computing
-performance is much lower than that of the DRIVE PX platform, used in
-DAVE-2, we are interested in if and how we can process
+performance is much lower than that of the DRIVE PX platform used in
+DAVE-2, we are interested in if, and how, we can process
 computationally expensive neural network operations in
 real-time. Specifically, inferencing (forward pass processing)
-operation must be completed within each control period
+operations must be completed within each control period
 duration---e.g., WCET of 50ms for 20Hz control frequency---locally on
 the Pi 3 platform, although training of the network (back-propagation
 for weight updates) can be done offline and remotely using a desktop
@@ -24,7 +24,7 @@ computer.
 Figure~\ref{fig:overview} shows the DeepPicar, which is comprised of a
 set of inexpensive components: a Raspberry Pi 3 Single Board Computer
 (SBC), a Pololu DRV8835 motor driver, a Playstation Eye webcam, a
-battery, and a 1:24 scale RC car. Table~\ref{tbl:carbom} shows
+battery, and a 1:24 scale RC car. Table~\ref{tbl:carbom} shows the
 estimated cost of the system.
 
 \begin{table}[t]
@@ -49,8 +49,8 @@ estimated cost of the system.
 For the neural network architecture, we adopt a tensorflow version of
 NVIDIA's DAVE-2 convolutional neural network (CNN), published by
 Fridman at  MIT~\footnote{https://github.com/lexfridman/deeptesla}. As
-in NVIDIA's DAVE-2, the CNN takes raw color image (200x66 RGB pixels)
-as input and produce a single steering angle value as
+in NVIDIA's DAVE-2, the CNN takes raw color images (200x66 RGB pixels)
+as input and produces a single steering angle value as
 output. Figure~\ref{fig:architecture} shows the network architecture, which
 is comprised of 9 layers, 250K parameters, and about 27 million
 connections.
@@ -68,9 +68,9 @@ connections.
 % data collection and training.
 To collect the training data, a human pilot manually drives the RC car
 on a small track we created (Figure~\ref{fig:track}) to record
-timestamped video and contol commands. The stored data is then copied 
-to a desktop computer, which equips a NVIDIA GTX 1060 GPU, where we
-train the network to accerate training speed. 
+timestamped videos and contol commands. The stored data is then copied 
+to a desktop computer, which is equipped with a NVIDIA GTX 1060 GPU, 
+where we train the network to accelerate training speed. 
 For comparison, training the network on the Raspbeery Pi 3 takes
 approximately 4 hours, whereas it takes only about 5 minutes on the
 desktop computer using the GTX 1060 GPU.
@@ -112,7 +112,7 @@ only supports three discrete angles---left (-30$^{\circ}$), center
 Currently, we approximate the network generated real-valued
 angle to the closest one of the three angles, which may
 introduce inaccuracy in control.
-In the future, we plan to use different (more expensive) RC car
+In the future, we plan to use a different (more expensive) RC car
 platforms that can precisely control the car's steering angle.
 We would like to stress, however, that the use of different RC car
 platforms has no impact in terms of computational 
@@ -122,7 +122,7 @@ DAVE-2's network architecture and its real-time characteristics.
 
 Another issue we observed in training/testing the network, which could
 affect the network performance, is camera latency. In DeepPicar's
-context, the camera latency is the time from the time the camera
+context, the camera latency is the measurement from the time the camera
 sensor observes the scene to the time the computer actually reads the
 digitized image data. Unfortunately, this time can be significantly
 long depending on camera and the computer performance. We
@@ -133,13 +133,13 @@ First, we point the DeepPicar's camera toward to a computer monitor, which is
 conntected to the Raspberry Pi 3's HDMI output. We then launch a
 simple program that overlays the current time with the camera's preview
 screen on the monitor. Then, an infinite number of time strings will be
-shown on the monitor screen and the time difference between the two
+shown on the monitor screen and the time difference between two
 successive time strings represent the camera
 latency. Figure~\ref{fig:camera-latency} shows the captured moniotor
-screen. The measured camera latency is about 300~350 ms. This is
+screen. The measured camera latency is about 300-350 ms. This is
 significantly higher than the latency of human perception, which is known
 to be as fast as 13 ms~\cite{ThomasBurger2015}. Higher camera latency
-could negatively affect to the control performance as the DNN would
+could negatively affect to the control performance, as the DNN would
 analyze stale scenes. In the future, we plan to identify and use
 low-latency cameras.
 

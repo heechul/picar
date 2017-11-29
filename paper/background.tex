@@ -37,10 +37,10 @@ using a small 3-layer fully connected neural network; and subsequently
 in a DARPA Autonomous Vehicle (DAVE) project in early
 2000s~\cite{LeCun:04}, using a 6 layer convolutional neural network
 (CNN); and most recently in NVIDIA's DAVE-2
-project~\cite{Bojarski2016}, using 9 layer CNN. In all these projects,
+project~\cite{Bojarski2016}, using a 9 layer CNN. In all of these projects,
 the neural network models take raw image pixels as input and directly
-produce steering control commands bypassing all intermediary steps and
-hand-written rules in conventional robotics control approach.  
+produce steering control commands, bypassing all intermediary steps and
+hand-written rules used in conventional robotics control approach.  
 NVIDIA's latest effort reports that their trained CNN
 autonomously controls their modified cars on public roads without human
 intervention successfully~\cite{Bojarski2016}.
@@ -51,13 +51,13 @@ phase is \emph{training} during which the weights of the network is
 incrementally updated by backpropagating errors it sees from the
 training examples. Once the network is trained---i.e., the weights of
 the network minimize errors in the training examples---the next phase
-is \emph{inferencing} during which unseen data is fed to the network
+is \emph{inferencing}, during which unseen data is fed to the network
 as input to produce predicted output (e.g., predicted image
 classification). In general, the training phase is most computationally
 intensive and requires high throughput, which is generally not
 available on embedded platforms. The inferencing phase, on the
 other hand, is relatively less computationally intensive and latency becomes
-as important, if not more, as computational throughput because many
+as important, if not moreso, as computational throughput, because many
 use-cases have strict real-time requirements (e.g., search query
 latency).
 
@@ -83,7 +83,7 @@ latency).
 
 \subsection{Embedded Computing Platforms for Real-Time Inferencing}
 Real-time embedded systems, such as an autonomous vehicle, present
-unique challenges for deep learning as the computing platforms of such
+unique challenges for deep learning, as the computing platforms of such
 systems must satisfy two often conflicting goals~\cite{Otterness2017}:
 %% Recent successes in AI, including NVIDIA's DAVE-2 showing, are due
 %% in large part to the increased computing performance,
@@ -100,23 +100,23 @@ constraints such as cost, size, weight, and power consumption limits.
 Accelerating AI workloads, especially inferencing
 operations, has received a lot of attention from academia and industry
 in recent years as applications of deep learning are broadening to
-areas real-time embedded systems such as autonomous vehicles. These
-efforts include development of various heterogeneous architecture
-based system-on-a-chips (SOCs) that may include multiple cores, GPU,
+areas of real-time embedded systems such as autonomous vehicles. These
+efforts include the development of various heterogeneous architecture-based 
+system-on-a-chips (SOCs) that may include multiple cores, GPU,
 DSP, FPGA and neural network optimized ASIC hardware~\cite{Jouppi2017}.
 Consolidating multiple tasks on SoCs with lots of shared hardware
 resources while guaranteeing real-time performance is also an active
 research area, which is orthogonal to improving raw
 performance. Consolidation is necessary for efficiency but unmanaged 
 interference can nullify the benefits of consolidation~\cite{Kim2016}.
-Because of these reasons, finding a good computing platform is a
+For these reasons, finding a good computing platform is a
 non-trivial task, one that requires deep understanding of the
 workloads and the hardware platform being utilized.
 
 The primary objectives of this study are (1) to understand the
-necessary computing performance for applying AI technology based
+necessary computing performance for applying AI technology-based
 robotics systems, and (2) what kind of computing architecture and
-runtime supports are most appropriate for such workload. Toward to
+runtime supports are most appropriate for such workload. To
 achieve these goals, we implement a low-cost autonomous car platform
-as a case-study and systematically conduct experiments, as we will 
+as a case-study and systematically conduct experiments, which we will 
 describe in the subsequent sections.
