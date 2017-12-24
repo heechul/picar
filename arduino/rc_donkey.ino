@@ -1,7 +1,7 @@
 #include <Servo.h>
 
-const int throttle_intr_pin = 3;
 const int steering_intr_pin = 2;
+const int throttle_intr_pin = 3;
 
 const int steering_servo_pin = 9;
 const int throttle_servo_pin = 10;
