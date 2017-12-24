@@ -6,11 +6,23 @@ import serial
 import math
 
 # steering:
-#   left: 916, center: 1516, right: 2110
+#   right: 916 us, center: 1516 us, left: 2110 us
 #
 # throttle:
-#    ffw: 906,   stop: 1476,  back: 2070
+#    rew: 876,   stop: 1476,  ffw: 2070
 
+#
+# PCA9658
+#    resolution: 4096 (12bit counter)
+#    freq = 60 Hz (16666 us period)
+
+# pwm value calculation
+#    length/period * 4096
+#
+# steering pwm
+#    916/16666 * 4096 = 
+# 
+ 
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
 
