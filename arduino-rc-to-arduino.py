@@ -28,7 +28,6 @@ while (True):
         ts = time.time()        
         ser.write("getrc\n")
         line = ser.readline().rstrip("\n\r")
-        print "line:", line
         rc_inputs = line.split(' ')
         if len(rc_inputs) != 2:
                 continue
@@ -40,5 +39,4 @@ while (True):
         cmd = "setpwm {0} {1}\n".format(rc_inputs[0], rc_inputs[1])
         print cmd
         ser.write(cmd)
-
 
