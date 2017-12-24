@@ -31,13 +31,14 @@ import Adafruit_PCA9685
  
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 pwm = Adafruit_PCA9685.PCA9685()
+pwm.set_pwm_freq(60) # 60 Hz freq.
 
 period = 0.05 # sec (=50ms)
 
 # pulse: pwm length (us)
 def calc_pwm(pulse):
-        val = pulse * 4096 / 16666
-        return val
+        val = float(pulse) * 4096 / 16666
+        return int(val)
 
 def g_tick():
         t = time.time()
