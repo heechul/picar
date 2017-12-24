@@ -1,6 +1,6 @@
 12/24/2017
 - TODO: Today
-  > RC control through arduino (pca9685)
+  > RC control through arduino (pca9685) /done
   > integration w/ donkey code (--rcjs)
   > deeppicar pca9685 support
 
