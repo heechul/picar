@@ -43,4 +43,3 @@ while (True):
         print cmd
         ser.write(cmd)
 
-
