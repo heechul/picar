@@ -15,11 +15,11 @@ ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
 
 def g_tick():
-    t = time.time()
-    count = 0
-    while True:
-        count += 1
-        yield max(t + count*period - time.time(),0)
+        t = time.time()
+        count = 0
+        while True:
+                count += 1
+                yield max(t + count*period - time.time(),0)
         
 g = g_tick()
 

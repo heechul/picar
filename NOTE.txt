@@ -1,3 +1,29 @@
+12/24/2017
+- TODO: Today
+  > RC control through arduino (pca9685)
+  > integration w/ donkey code (--rcjs)
+  > deeppicar pca9685 support
+
+
+8/26/2017
+
+python timertest3.py
+time (1503873382.7663)
+time (1503873382.9664)
+time (1503873383.1663)
+time (1503873383.3664)
+time (1503873383.5663)
+time (1503873383.7663)
+time (1503873383.9664)
+time (1503873384.1663)
+
+time=1503873423.3327 dur=0.0000
+time=1503873423.5330 dur=0.2003
+time=1503873423.7333 dur=0.2003
+time=1503873423.9336 dur=0.2003
+time=1503873424.1339 dur=0.2003
+time=1503873424.3342 dur=0.2003
+
 8/15/2017
 
 btn model
