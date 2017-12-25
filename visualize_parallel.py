@@ -47,9 +47,6 @@ timg_tesla_control_autopilot = cm.imread(os.path.abspath("images/text-tesla-cont
 timg_tesla_control_human = cm.imread(os.path.abspath("images/text-tesla-control-human.png"), cv2.IMREAD_UNCHANGED)
 # timg_ = cm.imread(os.path.abspath("images/text-.png"), cv2.IMREAD_UNCHANGED)
 
-def rad2deg(rad):
-    return 180.0 * rad / math.pi
-    
 def get_human_steering(epoch_id):
     epoch_dir = params.data_dir
     assert os.path.isdir(epoch_dir)
@@ -59,12 +56,7 @@ def get_human_steering(epoch_id):
     
     rows = cm.fetch_csv_data(steering_path)
     human_steering = [row['wheel'] for row in rows]
-    # return human_steering # <-- this is the original
-    # DBG: radian to degree conversion 
-    human_steering_in_deg = []
-    for i in human_steering:
-        human_steering_in_deg.append(rad2deg(i))
-    return human_steering_in_deg
+    return human_steering # <-- this is the original
 
 def process_one_frame (f_cur):
     rimg = cam_images[f_cur]

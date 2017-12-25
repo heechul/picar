@@ -16,11 +16,6 @@ import math
 import numpy as np
 import local_common as cm
 
-def deg2rad(deg):
-        return deg * math.pi / 180.0
-def rad2deg(rad):
-        return 180.0 * rad / math.pi
-
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
 model_name = 'model.ckpt'
@@ -56,18 +51,16 @@ for epoch_id in epoch_ids:
         img = preprocess.preprocess(img)
 
         pred_start = time.time()
-        rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
-        deg = rad2deg(rad)
+        angle = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
         pred_end   = time.time()
 
         prep_time = pred_start - prep_start
         pred_time = pred_end - pred_start
 
-        # print 'pred: {} deg. took {} ms'.format(deg, pred_time * 1000)
-        # print 'pred: {} deg (rad={})'.format(deg, rad)
+        # print 'pred: {} deg. took {} ms'.format(angle, pred_time * 1000)
 
         pred_time_list.append(pred_time*1000)
-        machine_steering.append(deg)
+        machine_steering.append(angle)
 
     cap.release()
 
