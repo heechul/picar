@@ -17,7 +17,7 @@ str_right_pwm = 2140
 
 thr_max_pwm = 2070
 thr_neu_pwm = 1476
-thr_cap_pct = 0.22  # 20% max
+thr_cap_pct = 0.20  # 20% max
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
@@ -26,7 +26,7 @@ ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
 
 cap = cv2.VideoCapture(0)
-cap.set(3,640)
+cap.set(3,640) # TBD: error check on non supported resolution..
 cap.set(4,480)
 
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
@@ -36,12 +36,19 @@ keyfile = open('out-key.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 frame_id = 0
 
+def turnOff():
+        print "Closing the files..."
+        cap.release()
+        keyfile.close()
+        vidfile.release()
+        
+atexit.register(turnOff)
 
 # linear map from X_range to Y_range
 def map_range(x, X_min, X_max, Y_min, Y_max):
         X_range = X_max - X_min 
         Y_range = Y_max - Y_min 
-        XY_ratio = X_range / Y_range
+        XY_ratio = float(X_range) / Y_range
         y = float((x - X_min)) / XY_ratio + Y_min 
         return y
 
@@ -105,4 +112,6 @@ while (True):
                 
                 # write video stream
                 vidfile.write(frame)
-                
+
+print "Finished.."
+turnOff()
