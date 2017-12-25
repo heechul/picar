@@ -17,7 +17,7 @@ str_right_pwm = 2140
 
 thr_max_pwm = 2070
 thr_neu_pwm = 1476
-thr_cap_pct = 0.20  # 20% max
+thr_cap_pct = 0.22  # 20% max
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
