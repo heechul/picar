@@ -13,8 +13,9 @@ import math
 
 thr_max_pwm = 2070
 thr_neu_pwm = 1476
-thr_cap_pct = 0.5  # 50% max
+thr_cap_pct = 0.25  # 50% max
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
+thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
@@ -47,6 +48,7 @@ while (True):
         steering_pwm = int(rc_inputs[0])
         throttle_pwm = int(rc_inputs[1])
         throttle_pwm = min(throttle_pwm, thr_cap_pwm)
+        throttle_pwm = max(throttle_pwm, thr_cap_pwm_rev)
         
         # steering [0], throttle [1]
         cmd = "setpwm {0} {1}\n".format(steering_pwm, throttle_pwm)
