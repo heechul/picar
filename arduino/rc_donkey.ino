@@ -14,7 +14,7 @@ volatile int ch1_prev_time, ch2_prev_time; // temporal store for time
 void isr_rc_ch1_rising()
 {
   ch1_prev_time = micros();
-  attachInterrupt(digitalPinToInterrupt(throttle_intr_pin),
+  attachInterrupt(digitalPinToInterrupt(steering_intr_pin),
                   isr_rc_ch1_falling, FALLING);
 }
 
@@ -23,14 +23,14 @@ void isr_rc_ch1_falling()
   int dur = micros() - ch1_prev_time;
   if (dur > 0) /* !overflow */
     ch1_pulse_us = dur;
-  attachInterrupt(digitalPinToInterrupt(throttle_intr_pin),
+  attachInterrupt(digitalPinToInterrupt(steering_intr_pin),
                   isr_rc_ch1_rising, RISING);    
 }
 
 void isr_rc_ch2_rising()
 {
   ch2_prev_time = micros();
-  attachInterrupt(digitalPinToInterrupt(steering_intr_pin),
+  attachInterrupt(digitalPinToInterrupt(throttle_intr_pin),
                   isr_rc_ch2_falling, FALLING);
 }
 
@@ -39,7 +39,7 @@ void isr_rc_ch2_falling()
   int dur = micros() - ch2_prev_time;
   if (dur > 0) /* !overflow */
     ch2_pulse_us = dur;
-  attachInterrupt(digitalPinToInterrupt(steering_intr_pin),
+  attachInterrupt(digitalPinToInterrupt(throttle_intr_pin),
                   isr_rc_ch2_rising, RISING);    
 }
 
@@ -49,9 +49,9 @@ void setup()
   pinMode(throttle_intr_pin, INPUT_PULLUP);
   
   // RC input pins
-  attachInterrupt(digitalPinToInterrupt(throttle_intr_pin),
-                  isr_rc_ch1_rising, RISING);
   attachInterrupt(digitalPinToInterrupt(steering_intr_pin),
+                  isr_rc_ch1_rising, RISING);
+  attachInterrupt(digitalPinToInterrupt(throttle_intr_pin),
                   isr_rc_ch2_rising, RISING);
   
   // servo control pins
@@ -72,15 +72,15 @@ void loop()
     char *c_str = str.c_str();
 		
     if (!strncmp(c_str, "getrc", 5)) {
-      Serial.print(ch1_pulse_us);
+      Serial.print(ch1_pulse_us); // steering
       Serial.print(' ');
-      Serial.print(ch2_pulse_us);
+      Serial.print(ch2_pulse_us); // throttling
       Serial.print('\n');
 		} else if (!strncmp(c_str, "setpwm", 6)) {
       int ch1, ch2;
       sscanf(c_str + 7, "%d %d", &ch1, &ch2);
       steer.writeMicroseconds(ch1);
-      throttle.writeMicroseconds(ch2);
+      throttle.writeMicroseconds(ch2); 
 		}
 	}
 }

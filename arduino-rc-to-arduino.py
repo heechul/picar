@@ -41,15 +41,15 @@ while (True):
                 continue
         if int(rc_inputs[0]) == 0 or int(rc_inputs[1]) == 0:
                 continue # there must be a timeout
-        print "rc_thr: {0}, rc_str: {1}".format(rc_inputs[0], rc_inputs[1])
+        print "rc_str: {0}, rc_thr: {1}".format(rc_inputs[0], rc_inputs[1])
 
 
-        throttle_pwm = int(rc_inputs[0])
+        steering_pwm = int(rc_inputs[0])
+        throttle_pwm = int(rc_inputs[1])
         throttle_pwm = min(throttle_pwm, thr_cap_pwm)
-        steering_pwm = int(rc_inputs[1])
         
         # steering [0], throttle [1]
-        cmd = "setpwm {0} {1}\n".format(throttle_pwm, steering_pwm)
+        cmd = "setpwm {0} {1}\n".format(steering_pwm, throttle_pwm)
         print cmd
         ser.write(cmd)
 
