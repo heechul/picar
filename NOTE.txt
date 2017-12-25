@@ -1,8 +1,21 @@
+12/25/2017
+- TODO: today
+  > arduino only RC/pwm control. /done
+  > deeppicar integration: video recording. nn controller.
+  
 12/24/2017
 - TODO: Today
   > RC control through arduino (pca9685) /done
   > integration w/ donkey code (--rcjs)
   > deeppicar pca9685 support
+  > camera latency comparison
+=====
+- USB camera has higher latency than CSI based one. 
+PI camera (CSI?):  100 ms
+PS3 Eye (USB):     300 ms
+
+CSI-2 MIPI I/F 
+https://www.mipi.org/sites/default/files/Camera%20Serial%20Interface_CSI2_CSI3_Overview.pdf
 
 
 8/26/2017
