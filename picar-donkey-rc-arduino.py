@@ -4,6 +4,7 @@ import time
 import atexit
 import serial
 import math
+import cv2
 
 # steering:
 #   right: 916 us, center: 1516 us, left: 2110 us
