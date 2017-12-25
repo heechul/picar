@@ -12,11 +12,15 @@ import cv2
 # throttle:
 #    rew: 876,   stop: 1476,  ffw: 2070
 
+str_left_pwm = 940
+str_right_pwm = 2140
+
 thr_max_pwm = 2070
 thr_neu_pwm = 1476
-thr_cap_pct = 0.25  # 50% max
+thr_cap_pct = 0.20  # 20% max
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
+
 
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
@@ -32,6 +36,21 @@ keyfile = open('out-key.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 frame_id = 0
 
+
+# linear map from X_range to Y_range
+def map_range(x, X_min, X_max, Y_min, Y_max):
+        X_range = X_max - X_min 
+        Y_range = Y_max - Y_min 
+        XY_ratio = X_range / Y_range
+        y = float((x - X_min)) / XY_ratio + Y_min 
+        return y
+
+# map steering pwm [916, 2110] to angle [-1, 1]
+def pwm_to_angle(pulse):
+        return map_range(pulse, str_left_pwm, str_right_pwm, -1, 1)
+
+
+# period tick
 def g_tick():
         t = time.time()
         count = 0
@@ -45,10 +64,10 @@ while (True):
         time.sleep(next(g))
         ts = time.time()
 
-        # read a frame
+        # 0. read a frame
         ret, frame = cap.read()
 
-        # get RC input
+        # 1. get RC input
         ser.write("getrc\n")
         ts_start = time.time()
         line = ser.readline().rstrip("\n\r")
@@ -61,16 +80,29 @@ while (True):
                 continue # there must be a timeout
         print "rc_str: {0}, rc_thr: {1}".format(rc_inputs[0], rc_inputs[1])
 
-
-        
-        
         steering_pwm = int(rc_inputs[0])
         throttle_pwm = int(rc_inputs[1])
         throttle_pwm = min(throttle_pwm, thr_cap_pwm)
         throttle_pwm = max(throttle_pwm, thr_cap_pwm_rev)
-        
-        # steering [0], throttle [1]
+
+        # 2. control: steering [0], throttle [1]
         cmd = "setpwm {0} {1}\n".format(steering_pwm, throttle_pwm)
         print cmd
         ser.write(cmd)
 
+        # 3. record data
+        if throttle_pwm == thr_cap_pwm:
+                # increase frame_id
+                frame_id = frame_id + 1
+
+                # convert steering pwm to angle
+                angle = pwm_to_angle(steering_pwm)
+
+                # write input (angle)
+                str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
+                keyfile.write(str)
+                print "DBG:", str
+                
+                # write video stream
+                vidfile.write(frame)
+                
