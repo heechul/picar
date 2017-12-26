@@ -111,7 +111,7 @@ while (True):
         angle_rc = pwm_to_angle(steering_pwm)
         if angle_rc > -0.05 and angle_rc < 0.05:
                 angle = angle_dnn
-                steering_pwm = angle_to_pwm(angle)
+                steering_pwm = int(angle_to_pwm(angle))
         else:
                 print "RC override: rc={0} dnn={1}".format(angle_rc, angle_dnn)
                 angle = angle_rc
