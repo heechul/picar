@@ -13,12 +13,6 @@ import local_common as cm
 import preprocess
 import numpy as np
 
-sess = tf.InteractiveSession()
-saver = tf.train.Saver()
-model_name = 'model.ckpt'
-model_path = cm.jn(params.save_dir, model_name)
-saver.restore(sess, model_path)
-
 # steering:
 #   right: 916 us, center: 1516 us, left: 2110 us
 #
@@ -31,6 +25,16 @@ str_right_pwm = 2140
 thr_max_pwm = 2070
 thr_neu_pwm = 1476
 thr_cap_pct = 0.20  # 20% max
+
+rc_mode = False;
+
+if len(sys.argv) >= 2:
+        thr_cap_pct = int(sys.argv[1])
+        print "Set new speed: ", thr_cap_pct
+if len(sys.argv) >= 3 and sys.argv[2] == "rc":
+        rc_mode = True
+        print "Record only mode enabled."
+        
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
@@ -40,12 +44,12 @@ width=320
 height=240
 
 cap = cv2.VideoCapture(0)
-cap.set(3,width) # TBD: error check on non supported resolution..
+cap.set(3,width) 
 cap.set(4,height)
 
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
 
-vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (width, height))
+vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (width, height))
 keyfile = open('out-key.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 frame_id = 0
@@ -83,6 +87,14 @@ def g_tick():
         
 g = g_tick()
 
+
+if rc_mode == False: 
+        sess = tf.InteractiveSession()
+        saver = tf.train.Saver()
+        model_name = 'model.ckpt'
+        model_path = cm.jn(params.save_dir, model_name)
+        saver.restore(sess, model_path)
+
 while (True):
         time.sleep(next(g))
         ts = time.time()
@@ -91,8 +103,9 @@ while (True):
         ret, frame = cap.read()
 
         # 1. machine input
-        img = preprocess.preprocess(frame)
-        angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        if rc_mode == False:
+                img = preprocess.preprocess(frame)
+                angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
 
         # 1. get RC input
         ser.write("getrc\n")
@@ -109,7 +122,7 @@ while (True):
 
         steering_pwm = int(rc_inputs[0])
         angle_rc = pwm_to_angle(steering_pwm)
-        if angle_rc > -0.05 and angle_rc < 0.05:
+        if rc_mode == False and angle_rc > -0.05 and angle_rc < 0.05:
                 angle = angle_dnn
                 steering_pwm = int(angle_to_pwm(angle))
         else:
