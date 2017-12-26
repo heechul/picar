@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os
+import sys
 import time
 import atexit
 import serial
@@ -28,20 +29,13 @@ thr_cap_pct = 0.20  # 20% max
 
 rc_mode = False;
 
-if len(sys.argv) >= 2:
-        thr_cap_pct = int(sys.argv[1])
-        print "Set new speed: ", thr_cap_pct
-if len(sys.argv) >= 3 and sys.argv[2] == "rc":
-        rc_mode = True
-        print "Record only mode enabled."
-        
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
-width=320
-height=240
+width=640
+height=480
 
 cap = cv2.VideoCapture(0)
 cap.set(3,width) 
@@ -88,12 +82,11 @@ def g_tick():
 g = g_tick()
 
 
-if rc_mode == False: 
-        sess = tf.InteractiveSession()
-        saver = tf.train.Saver()
-        model_name = 'model.ckpt'
-        model_path = cm.jn(params.save_dir, model_name)
-        saver.restore(sess, model_path)
+sess = tf.InteractiveSession()
+saver = tf.train.Saver()
+model_name = 'model.ckpt'
+model_path = cm.jn(params.save_dir, model_name)
+saver.restore(sess, model_path)
 
 while (True):
         time.sleep(next(g))
@@ -103,9 +96,8 @@ while (True):
         ret, frame = cap.read()
 
         # 1. machine input
-        if rc_mode == False:
-                img = preprocess.preprocess(frame)
-                angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        img = preprocess.preprocess(frame)
+        angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
 
         # 1. get RC input
         ser.write("getrc\n")

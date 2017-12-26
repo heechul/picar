@@ -1,2 +1,0 @@
-model_checkpoint_path: "/nfs/projects/heechul/picar/models-v21-lr/model.ckpt"
-all_model_checkpoint_paths: "/nfs/projects/heechul/picar/models-v21-lr/model.ckpt"
