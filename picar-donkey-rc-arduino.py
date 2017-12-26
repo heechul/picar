@@ -6,46 +6,33 @@ import serial
 import math
 import cv2
 
-# steering:
-#   right: 916 us, center: 1516 us, left: 2110 us
-#
-# throttle:
-#    rew: 876,   stop: 1476,  ffw: 2070
+# load configuration file
+import cfg 
 
-str_left_pwm = 940
-str_right_pwm = 2140
+# arduino (rc input, sevor output)
+ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=cfg.period/2)
 
-thr_max_pwm = 2070
-thr_neu_pwm = 1476
-thr_cap_pct = 0.20  # 20% max
-thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
-thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
-
-
-ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
-period = 0.05 # sec (=50ms)
-width=320
-height=240
-
+# camera
 cap = cv2.VideoCapture(0)
-cap.set(3,width) # TBD: error check on non supported resolution..
-cap.set(4,height)
+cap.set(3, cfg.cam_width) # TBD: error check on non supported resolution..
+cap.set(4, cfg.cam_height)
 
+# data files
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
-
-vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (width, height))
-keyfile = open('out-key.csv', 'w+')
+vidfile = cv2.VideoWriter(cfg.data_video, fourcc, 15.0, (cfg.cam_width, cfg.cam_height))
+keyfile = open(cfg.data_steer, 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
-frame_id = 0
 
-def turnOff():
+# stats
+deadline_miss = 0
+
+def turnOff(cap, vid, key):
         print "Closing the files..."
         cap.release()
-        keyfile.close()
-        vidfile.release()
+        key.close()
+        vid.release()
+        print "Stats: deadline_miss={}".format(deadline_miss)
         
-atexit.register(turnOff)
-
 # linear map from X_range to Y_range
 def map_range(x, X_min, X_max, Y_min, Y_max):
         X_range = X_max - X_min 
@@ -56,64 +43,86 @@ def map_range(x, X_min, X_max, Y_min, Y_max):
 
 # map steering pwm [916, 2110] to angle [-1, 1]
 def pwm_to_angle(pulse):
-        return map_range(pulse, str_left_pwm, str_right_pwm, -1, 1)
+        return map_range(pulse, cfg.str_min_pwm, cfg.str_max_pwm, -1, 1)
 
-
-# period tick
 def g_tick():
         t = time.time()
         count = 0
+        period = cfg.period
         while True:
                 count += 1
-                yield max(t + count*period - time.time(),0)
-        
-g = g_tick()
+                yield t + count*period
 
-while (True):
-        time.sleep(next(g))
-        ts = time.time()
-
-        # 0. read a frame
-        ret, frame = cap.read()
-
-        # 1. get RC input
-        ser.write("getrc\n")
-        ts_start = time.time()
-        line = ser.readline().rstrip("\n\r")
-        ts_end   = time.time()
-        print "line:{0} {1} ms".format(line, (ts_end - ts_start)*1000)
-        rc_inputs = line.split(' ')
-        if len(rc_inputs) != 2:
-                continue
-        if int(rc_inputs[0]) == 0 or int(rc_inputs[1]) == 0:
-                continue # there must be a timeout
-        print "rc_str: {0}, rc_thr: {1}".format(rc_inputs[0], rc_inputs[1])
-
-        steering_pwm = int(rc_inputs[0])
-        throttle_pwm = int(rc_inputs[1])
-        throttle_pwm = min(throttle_pwm, thr_cap_pwm)
-        throttle_pwm = max(throttle_pwm, thr_cap_pwm_rev)
-
-        # 2. control: steering [0], throttle [1]
-        cmd = "setpwm {0} {1}\n".format(steering_pwm, throttle_pwm)
-        print cmd
-        ser.write(cmd)
-
-        # 3. record data
-        if throttle_pwm == thr_cap_pwm:
-                # increase frame_id
-                frame_id = frame_id + 1
-
-                # convert steering pwm to angle
-                angle = pwm_to_angle(steering_pwm)
-
-                # write input (angle)
-                str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
-                keyfile.write(str)
-                print "DBG:", str
                 
-                # write video stream
-                vidfile.write(frame)
+if __name__ == "__main__":
+        # register exit callback
+        atexit.register(turnOff, cap=cap, vid=vidfile, key=keyfile)
 
-print "Finished.."
-turnOff()
+        # compute safe pwm cap
+        thr_cap_ffw_pwm = int(cfg.thr_neu_pwm +
+                              cfg.thr_cap_pct * (cfg.thr_max_pwm - cfg.thr_neu_pwm))
+        thr_cap_rev_pwm = int(cfg.thr_neu_pwm -
+                              cfg.thr_cap_pct * (cfg.thr_max_pwm - cfg.thr_neu_pwm))
+
+        # initialize frame id 
+        frame_id = 0
+
+        # period tick
+        g = g_tick()
+
+        # main loop
+        while (True):
+                ts = time.time()
+                next_ts = next(g)
+                
+                if next_ts > ts:
+                        time.sleep(next_ts - ts)
+                else:
+                        print "deadline_miss: {}".format(deadline_miss)
+                        deadline_miss += 1
+                        continue
+                ts = next_ts
+
+                print "\nDBG: TS {:.3f}".format(ts)
+                
+                # 0. read a frame
+                ret, frame = cap.read()
+
+                # 1. get RC input
+                ser.write("getrc\n")
+                line = ser.readline().rstrip("\n\r")
+
+                rc_inputs = line.split(' ')
+                if len(rc_inputs) != 2:
+                        continue
+                if int(rc_inputs[0]) == 0 or int(rc_inputs[1]) == 0:
+                        continue # there must be a timeout
+                
+                print "DBG: RC_INP {} {}".format(rc_inputs[0], rc_inputs[1])
+
+                steering_pwm = int(rc_inputs[0])
+                angle = pwm_to_angle(steering_pwm) # angle: -1 .. 1
+        
+                throttle_pwm = int(rc_inputs[1])
+                throttle_pwm = min(throttle_pwm, thr_cap_ffw_pwm)
+                throttle_pwm = max(throttle_pwm, thr_cap_rev_pwm)
+
+                # 2. control: steering [0], throttle [1]
+                cmd = "setpwm {0} {1}\n".format(steering_pwm, throttle_pwm)
+                ser.write(cmd)
+                print "DBG: SETPWM {} {}".format(steering_pwm, throttle_pwm)
+
+                # 3. record data
+                if throttle_pwm == thr_cap_ffw_pwm:
+                        # increase frame_id
+                        frame_id = frame_id + 1
+                        
+                        # write input (angle)
+                        str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
+                        keyfile.write(str)
+                        print "LOG: TS {:.3f},{},{:.3f}".format(ts, frame_id, angle)
+                
+                        # write video stream
+                        vidfile.write(frame)
+
+
