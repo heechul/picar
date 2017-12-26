@@ -24,14 +24,16 @@ thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
+width=320
+height=240
 
 cap = cv2.VideoCapture(0)
-cap.set(3,640) # TBD: error check on non supported resolution..
-cap.set(4,480)
+cap.set(3,width) # TBD: error check on non supported resolution..
+cap.set(4,height)
 
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
 
-vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (640,480))
+vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (width, height))
 keyfile = open('out-key.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 frame_id = 0

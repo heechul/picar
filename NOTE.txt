@@ -2,7 +2,23 @@
 - TODO: today
   > arduino only RC/pwm control. /done
   > deeppicar integration: video recording. nn controller.
-  
+====
+- tf-cpu (unoptimized)
+step 1980 of 2000, train loss 0.0135020660236, val loss 0.0570302754641
+step 1990 of 2000, train loss 0.0171256680042, val loss 0.0468752346933
+step 2000 of 2000, train loss 0.0151621187106, val loss 0.0337860509753
+Model saved. Time passed: 00 hours 37 mins 13 secs 000 msecs. Time left: 00 hours 00 mins 01 secs 000 msecs
+
+- tf-gpu (gtx-1050ti)
+step 1980 of 2000, train loss 0.0166095942259, val loss 0.0374676212668
+step 1990 of 2000, train loss 0.0141957849264, val loss 0.0423332005739
+step 2000 of 2000, train loss 0.0156617388129, val loss 0.0489725321531
+Model saved. Time passed: 00 hours 06 mins 47 secs 000 msecs. Time left: 00 hours 00 mins 00 secs 000 msecs
+
+- tf-gpu (gtx-1060)
+N/A (probably 3 minutes?)
+
+
 12/24/2017
 - TODO: Today
   > RC control through arduino (pca9685) /done

@@ -220,7 +220,9 @@ def visualize(epoch_id, machine_steering_local, out_dir, perform_smoothing=False
     assert os.path.isdir(out_dir)
     vid_size = cm.video_resolution_to_size('720p', width_first=True)
     out_path = cm.jn(out_dir, 'out-video-{}-human_machine.mkv'.format(epoch_id))
-    vw = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'X264' ), 30, vid_size)
+    # fourcc = cv2.VideoWriter_fourcc(*'XVID' ) # opencv 3.x
+    fourcc = cv2.cv.CV_FOURCC(*'XVID' ) # opencv 2.x
+    vw = cv2.VideoWriter(out_path, fourcc, 30, vid_size)
     w, h = vid_size
 
     #input lists
