@@ -1,7 +1,26 @@
+12/26/2017
+- TODO: today
+  > image mirroring.
+  > 320x240 data collection.
+  > visualize code memory issue fix.
+  > camera cable check.
+  > accept invitation from pavithra.
+==
+- 750 Project Idea.
+
+hard real-time software pwm output on pi3.
+
+wiringPI: software pwm - 100 us resolution
+RPIO.PWM: software/hardware pwm - 1 us resolution
+hardware pwm: 1-12 (gpio18) 
+
+https://raspberrypi.stackexchange.com/questions/298/can-i-use-the-gpio-for-pulse-width-modulation-pwm
+
+
 12/25/2017
 - TODO: today
   > arduino only RC/pwm control. /done
-  > deeppicar integration: video recording. nn controller.
+  > deeppicar integration: video recording. nn controller. /done
 ====
 - tf-cpu (unoptimized)
 step 1980 of 2000, train loss 0.0135020660236, val loss 0.0570302754641

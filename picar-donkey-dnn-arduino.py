@@ -14,35 +14,34 @@ import local_common as cm
 import preprocess
 import numpy as np
 
-# steering:
-#   right: 916 us, center: 1516 us, left: 2110 us
-#
-# throttle:
-#    rew: 876,   stop: 1476,  ffw: 2070
-
-str_left_pwm = 940
-str_right_pwm = 2140
+# config data.
+#   steering:
+#     right: 952 us, center: 1516 us, left: 2152 us
+#   throttle:
+#     rew: 876,   stop: 1476,  ffw: 2070
+str_min_pwm =  952   
+str_max_pwm = 2152
 
 thr_max_pwm = 2070
 thr_neu_pwm = 1476
 thr_cap_pct = 0.20  # 20% max
 
-rc_mode = False;
-
 thr_cap_pwm = int(thr_neu_pwm + thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 thr_cap_pwm_rev = int(thr_neu_pwm - thr_cap_pct * (thr_max_pwm - thr_neu_pwm))
 
+# arduino (rc input, sevor output)
 ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 period = 0.05 # sec (=50ms)
-width=640
-height=480
 
+# camera
+width=320
+height=240
 cap = cv2.VideoCapture(0)
 cap.set(3,width) 
 cap.set(4,height)
 
+# data files
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
-
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 20.0, (width, height))
 keyfile = open('out-key.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
@@ -66,10 +65,10 @@ def map_range(x, X_min, X_max, Y_min, Y_max):
 
 # map steering pwm [916, 2110] to angle [-1, 1]
 def pwm_to_angle(pulse):
-        return map_range(pulse, str_left_pwm, str_right_pwm, -1, 1)
+        return map_range(pulse, str_min_pwm, str_max_pwm, -1, 1)
 
 def angle_to_pwm(angle):
-        return map_range(angle, -1, 1, str_left_pwm, str_right_pwm)
+        return map_range(angle, -1, 1, str_min_pwm, str_max_pwm)
 
 # period tick
 def g_tick():
@@ -82,6 +81,7 @@ def g_tick():
 g = g_tick()
 
 
+# dnn model
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
 model_name = 'model.ckpt'
@@ -114,7 +114,7 @@ while (True):
 
         steering_pwm = int(rc_inputs[0])
         angle_rc = pwm_to_angle(steering_pwm)
-        if rc_mode == False and angle_rc > -0.05 and angle_rc < 0.05:
+        if angle_rc > -0.05 and angle_rc < 0.05:
                 angle = angle_dnn
                 steering_pwm = int(angle_to_pwm(angle))
         else:

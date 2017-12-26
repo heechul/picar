@@ -36,7 +36,7 @@ while (True):
         ts_start = time.time()
         line = ser.readline().rstrip("\n\r")
         ts_end   = time.time()
-        print "line:{0} {1} ms".format(line, (ts_end - ts_start)*1000)
+        print "{:.3f} line:{} {} ms".format(ts, line, (ts_end - ts_start)*1000)
         rc_inputs = line.split(' ')
         if len(rc_inputs) != 2:
                 continue

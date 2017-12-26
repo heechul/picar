@@ -81,6 +81,7 @@ if __name__ == "__main__":
                         print "deadline_miss: {}".format(deadline_miss)
                         deadline_miss += 1
                         continue
+                
                 ts = next_ts
 
                 print "\nDBG: TS {:.3f}".format(ts)
