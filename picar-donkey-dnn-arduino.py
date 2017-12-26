@@ -70,6 +70,8 @@ def map_range(x, X_min, X_max, Y_min, Y_max):
 def pwm_to_angle(pulse):
         return map_range(pulse, str_left_pwm, str_right_pwm, -1, 1)
 
+def angle_to_pwm(angle):
+        return map_range(angle, -1, 1, str_left_pwm, str_right_pwm)
 
 # period tick
 def g_tick():
@@ -107,7 +109,7 @@ while (True):
 
         steering_pwm = int(rc_inputs[0])
         angle_rc = pwm_to_angle(steering_pwm)
-        if angle_rc < -0.1 and rc_angle > 0.1:
+        if angle_rc > -0.05 and angle_rc < 0.05:
                 angle = angle_dnn
                 steering_pwm = angle_to_pwm(angle)
         else:
