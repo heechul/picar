@@ -26,7 +26,7 @@ rows = cm.fetch_csv_data(csv_path)
 assert frame_count == len(rows)
 for i in range(frame_count):
     ret, img = cap.read()
-    text = 'frame: {}, wheel: {}'.format(i, rows[i]['wheel'])
+    text = 'frame: {}, wheel: {:.3f}'.format(i, rows[i]['wheel'])
     cv2.putText(img, text, (50,50), font, 1, (255,255,255))
     imgs.append(img)
 
