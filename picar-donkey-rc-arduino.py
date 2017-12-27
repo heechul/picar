@@ -27,14 +27,27 @@ keyfile.write("ts_micro,frame,wheel\n")
 # stats
 deadline_miss = 0
 
-# debug flag
-debug = False
+# feature flags.
+use_debug = False
+use_dnn   = True
 
+if use_dnn:
+        print "Load TF"
+        import tensorflow as tf
+        print "Load deeppicar model"
+        import model
+        print "Load support modules.."
+        import params
+        import local_common as cm
+        import preprocess
+        import numpy as np
+        print "Done..."
+        
 # misc
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 def DEBUG(text):
-        if debug == True:
+        if use_debug == True:
                 print text
                 
 def turnOff(cap, vid, key):
@@ -56,6 +69,9 @@ def map_range(x, X_min, X_max, Y_min, Y_max):
 def pwm_to_angle(pulse):
         return map_range(pulse, cfg.str_min_pwm, cfg.str_max_pwm, -1, 1)
 
+def angle_to_pwm(angle):
+        return map_range(angle, -1, 1, cfg.str_min_pwm, cfg.str_max_pwm)
+
 def g_tick():
         t = time.time()
         count = 0
@@ -73,17 +89,25 @@ if __name__ == "__main__":
         thr_cap_rev_pwm = int(cfg.thr_neu_pwm -
                               cfg.thr_cap_pct * (cfg.thr_max_pwm - cfg.thr_neu_pwm))
 
-        # cache warmup?
+        # warmup camera, serial.
         ret, frame = cap.read()
         line = ser.readline().rstrip("\n\r")
-        
-        # initialize frame id 
-        frame_id = 0
 
+        # load DNN if needed.
+        if use_dnn:
+                sess = tf.InteractiveSession()
+                saver = tf.train.Saver()
+                model_name = 'model.ckpt'
+                model_path = cm.jn(params.save_dir, model_name)
+                saver.restore(sess, model_path)
+
+        # initialize vars/objects.
+        frame_id = 0
+        angle = 0
+        
         print "INFO: to start recording, set the RC throttle to the max."
         
         init_ts = time.time()
-        angle = 0
 
         # main loop
         while (True):
@@ -106,7 +130,26 @@ if __name__ == "__main__":
                 DEBUG("RC_INP {} {}".format(rc_inputs[0], rc_inputs[1]))
 
                 steering_pwm = int(rc_inputs[0])
-                angle = pwm_to_angle(steering_pwm) # angle: -1 .. 1
+                angle_rc = pwm_to_angle(steering_pwm) # angle: -1 .. 1
+
+                # 1. get machine input (if applicable)
+                if use_dnn:
+                        # image pre-processing.
+                        img = preprocess.preprocess(frame)
+
+                        # DNN inferencing.
+                        angle_dnn = model.y.eval(feed_dict={model.x: [img],
+                                                            model.keep_prob: 1.0})[0][0]
+                        
+                        if angle_rc > -0.05 and angle_rc < 0.05:
+                                angle = angle_dnn                 
+                                steering_pwm = int(angle_to_pwm(angle))
+                        else:
+                                print "RC override: rc={0} dnn={1}".format(angle_rc, angle_dnn)
+                                angle = angle_rc
+                else:
+                        angle = angle_rc
+                                
         
                 throttle_pwm = int(rc_inputs[1])
                 throttle_pwm = min(throttle_pwm, thr_cap_ffw_pwm)
