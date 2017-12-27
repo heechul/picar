@@ -20,7 +20,7 @@ cap.set(5, cfg.cam_fps) # this determines the control loop frequency.
 
 # data files
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
-vidfile = cv2.VideoWriter(cfg.data_video, fourcc, 15.0, (cfg.cam_width, cfg.cam_height))
+vidfile = cv2.VideoWriter(cfg.data_video, fourcc, cfg.cam_fps, (cfg.cam_width, cfg.cam_height))
 keyfile = open(cfg.data_steer, 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 
