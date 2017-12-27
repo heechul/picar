@@ -1,0 +1,2 @@
+model_checkpoint_path: "/nfs/projects/heechul/picar/models-donkey/model.ckpt"
+all_model_checkpoint_paths: "/nfs/projects/heechul/picar/models-donkey/model.ckpt"
