@@ -27,16 +27,16 @@ assert frame_count == len(rows)
 ts_init = rows[0]['ts_micro']
 for i in range(frame_count):
     ret, img = cap.read()
-    text = 'frame: {}, wheel: {:.3f}'.format(i, rows[i]['wheel'])
-    cv2.putText(img, text, (20,20), font, 0.7, (255,255,255))
-    text = 'ts: {:.3f}'.format(rows[i]['ts_micro'] - ts_init)
-    cv2.putText(img, text, (20,40), font, 0.7, (255,255,255))    
+    text = "{:.3f} {:3d} {:.3f}".format((rows[i]['ts_micro']-ts_init)/1000,
+                                     rows[i]['frame'],
+                                     rows[i]['wheel'])
+    cv2.putText(img, text, (5,50), font, 1.0, (255,255,255))
     imgs.append(img)
 
 frame_id = 0
 while True:
     cv2.imshow('frame', imgs[frame_id])
-    ch = cv2.waitKey(0) # wait 
+    ch = cv2.waitKey(0) & 0xFF # wait
     if ch == ord('q'):
         break
     elif ch == ord('l'):
