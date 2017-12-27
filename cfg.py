@@ -15,8 +15,8 @@ thr_cap_pct = 0.18  # 20% max
 period = 0.05 # sec (=50ms)
 
 # camera
-cam_width=640
-cam_height=480
+cam_width=320
+cam_height=240
 cam_fps=20 # 50ms/period
 
 # data output file names
