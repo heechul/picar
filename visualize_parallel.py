@@ -20,7 +20,15 @@ import time
 import shutil
 import numpy as np
 import datetime
-import matplotlib.pyplot as plt
+
+# headless version
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+
+# this requires DISPLAY
+# import matplotlib.pyplot as plt
+
 import PIL
 from pprint import pprint
 import multiprocessing
@@ -55,7 +63,7 @@ def get_human_steering(epoch_id):
     assert os.path.isfile(steering_path)
     
     rows = cm.fetch_csv_data(steering_path)
-    human_steering = [row['wheel'] for row in rows]
+    human_steering = [row['wheel']*(-90) for row in rows]
     return human_steering # <-- this is the original
 
 def process_one_frame (f_cur):
@@ -149,8 +157,8 @@ def process_one_frame (f_cur):
     green_machine_wimg = machine_wimg.copy()
     red_machine_wimg[:,:,2] = 255
     green_machine_wimg[:,:,1] = 255
-    #r = disagreement / (steering_max - steering_min)
-    max_disagreement = 15
+    # r = disagreement / (steering_max - steering_min)
+    max_disagreement = 15 # 15 degree
     r = min(1., disagreement / max_disagreement)
     g = 1 - r
     assert r >= 0
@@ -185,7 +193,7 @@ def visualize(epoch_id, machine_steering_local, out_dir, perform_smoothing=False
     global human_steering, machine_steering
     machine_steering = []
     for i in machine_steering_local:
-        machine_steering.append(i)
+        machine_steering.append(i*(-90))
 
     epoch_dir = params.data_dir
     human_steering = get_human_steering(epoch_id)
@@ -220,8 +228,8 @@ def visualize(epoch_id, machine_steering_local, out_dir, perform_smoothing=False
     assert os.path.isdir(out_dir)
     vid_size = cm.video_resolution_to_size('720p', width_first=True)
     out_path = cm.jn(out_dir, 'out-video-{}-human_machine.mkv'.format(epoch_id))
-    # fourcc = cv2.VideoWriter_fourcc(*'XVID' ) # opencv 3.x
-    fourcc = cv2.cv.CV_FOURCC(*'XVID' ) # opencv 2.x
+    fourcc = cv2.VideoWriter_fourcc(*'XVID' ) # opencv 3.x
+    # fourcc = cv2.cv.CV_FOURCC(*'XVID' ) # opencv 2.x
     vw = cv2.VideoWriter(out_path, fourcc, 30, vid_size)
     w, h = vid_size
 
@@ -233,7 +241,7 @@ def visualize(epoch_id, machine_steering_local, out_dir, perform_smoothing=False
 	cam_images.append(rimg)
         
     #output image lists
-    num_cores = multiprocessing.cpu_count()
+    num_cores = 4 # multiprocessing.cpu_count()
     out_images = Parallel (n_jobs = num_cores) (delayed (process_one_frame) (i) for i in range (len (machine_steering)))
 
     for fimg in out_images:
