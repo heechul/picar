@@ -1,4 +1,9 @@
 #!/usr/bin/python
+
+# feature flags.
+use_debug = True
+use_dnn   = False
+
 import os
 import time
 import atexit
@@ -8,11 +13,7 @@ import cv2
 
 # load configuration file
 import cfg
-import stat
-
-# feature flags.
-use_debug = False
-use_dnn   = True
+from mystat import DeadlineStat
 
 def DEBUG(text):
     if use_debug == True:
