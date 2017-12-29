@@ -16,8 +16,7 @@ cam_width=320
 cam_height=240
 cam_fps=20 # 50ms/period
 
-# control loop
-period = 1/cam_fps
+period = 1.0/cam_fps
 
 # data output file names
 data_video='out-video.avi'

@@ -1,31 +1,39 @@
 #!/usr/bin/python
 
-# feature flags.
-use_debug = True
-use_dnn   = False
-
 import os
 import time
 import atexit
 import serial
 import math
 import cv2
+import numpy as np
 
 # load configuration file
 import cfg
-from mystat import DeadlineStat
+period = 1.0/cfg.cam_fps    
+
+# feature flags.
+use_debug = False
+use_dnn   = True
 
 def DEBUG(text):
     if use_debug == True:
         print text
 
-def turnOff(cap, vid, key, stat):
-    stat.print_stat()
+def turn_off(cap, vid, key, stat):
     print "Closing the files..."
     cap.release()
     key.close()
     vid.release()
-    
+
+    print "Control loop statistics"
+    print "======================="
+    print "min/avg/99pct/max (sec): {:.3f} {:.3f} {:.3f} {:.3f}".format(
+        np.min(stat), np.mean(stat), np.percentile(stat, 99), np.max(stat))
+    dmiss_cnt = sum(i > period for i in stat)
+    print "deadline miss(es): {}/{} {:.1f}%".format(dmiss_cnt, len(stat),
+                                                float(dmiss_cnt)/len(stat)*100)
+
 # linear map from X_range to Y_range
 def map_range(x, X_min, X_max, Y_min, Y_max):
     X_range = X_max - X_min 
@@ -62,17 +70,17 @@ if __name__ == "__main__":
         print "Load model file into the TF session"
         saver.restore(sess, model_path)
         print "Done..."
-    
-    # arduino (rc input, sevor output)
-    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=cfg.period/2)
-    line = ser.readline().rstrip("\n\r")
 
+
+    # arduino (rc input, sevor output)
+    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.05)
+    
     # camera
     cap = cv2.VideoCapture(0)
     cap.set(3, cfg.cam_width) # TBD: error check on non supported resolution..
     cap.set(4, cfg.cam_height)
     cap.set(5, cfg.cam_fps) # this determines the control loop frequency.
-    
+        
     # data files
     fourcc = cv2.cv.CV_FOURCC(*'XVID')
     vidfile = cv2.VideoWriter(cfg.data_video, fourcc,
@@ -81,10 +89,10 @@ if __name__ == "__main__":
     keyfile.write("ts_micro,frame,wheel\n")
     
     # stats
-    dstat = DeadlineStat(1/cfg.cam_fps)
+    dstat = []
     
     # register exit callback
-    atexit.register(turnOff, cap=cap, vid=vidfile, key=keyfile, stat=dstat)
+    atexit.register(turn_off, cap=cap, vid=vidfile, key=keyfile, stat=dstat)
 
     # compute safe pwm cap
     thr_cap_ffw_pwm = int(cfg.thr_neu_pwm +
@@ -111,7 +119,7 @@ if __name__ == "__main__":
         if int(rc_inputs[0]) == 0 or int(rc_inputs[1]) == 0:
             continue # there must be a timeout
                 
-        DEBUG("RC_INP {} {}".format(rc_inputs[0], rc_inputs[1]))
+        DEBUG("{:.3f} RC_INP {} {}".format(ts-init_ts, rc_inputs[0], rc_inputs[1]))
 
         steering_pwm = int(rc_inputs[0])
         angle_rc = pwm_to_angle(steering_pwm) # angle: -1 .. 1
@@ -129,11 +137,10 @@ if __name__ == "__main__":
                 angle = angle_dnn                 
                 steering_pwm = int(angle_to_pwm(angle))
             else:
-                print "RC override: rc={0} dnn={1}".format(angle_rc, angle_dnn)
+                print "RC override: rc={:.3f} dnn={:.3f}".format(angle_rc, angle_dnn)
                 angle = angle_rc
         else:
             angle = angle_rc
-                                
         
         throttle_pwm = int(rc_inputs[1])
         throttle_pwm = min(throttle_pwm, thr_cap_ffw_pwm)
@@ -142,8 +149,8 @@ if __name__ == "__main__":
         # 2. control: steering [0], throttle [1]
         cmd = "setpwm {0} {1}\n".format(steering_pwm, throttle_pwm)
         ser.write(cmd)
-        DEBUG("DBG: SETPWM {} {}".format(steering_pwm, throttle_pwm))
-                
+        DEBUG("{:.3f} SETPWM {} {}".format(ts-init_ts, steering_pwm, throttle_pwm))
+        
         # 3. record data
         if throttle_pwm == thr_cap_ffw_pwm:
             # increase frame_id
@@ -167,8 +174,12 @@ if __name__ == "__main__":
 
         # 4. statistics update
         dur = time.time() - ts
-        dstat.update(dur)
-
+        if dur > period:
+             print "{:.3f} deadline miss. dur={:.03f}".format(ts-init_ts, dur)
+        if ts - init_ts > 1.0:
+            # ignore first 1 sec.
+            dstat.append(dur)
+             
         # 5. read a frame --> THIS MAY BLOCK.
         ret, frame = cap.read() # blocking. period = 1/cfg.cam_fps.
         ts = time.time() 
