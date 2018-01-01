@@ -23,11 +23,14 @@ frame_count = cm.frame_count(vid_path)
 cap = cv2.VideoCapture(vid_path)
 imgs = []
 rows = cm.fetch_csv_data(csv_path)
+print ("%d %d" % (frame_count, len(rows)))
 assert frame_count == len(rows)
+ts_init = rows[0]['ts_micro']
 for i in range(frame_count):
     ret, img = cap.read()
-    text = 'frame: {}, wheel: {}'.format(i, rows[i]['wheel'])
-    cv2.putText(img, text, (50,50), font, 1, (255,255,255))
+    text = '{:.3f} {:3d} {:.3f}'.format(float((rows[i]['ts_micro']-ts_init))/1000.0,
+                                  rows[i]['frame'], rows[i]['wheel'])
+    cv2.putText(img, text, (5,50), font, 1.0, (255,255,255))
     imgs.append(img)
 
 frame_id = 0
