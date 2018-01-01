@@ -10,13 +10,13 @@
 In this section, we provide an overview of our DeepPicar platform. In
 developing DeepPicar, one of our primary goals is to replicate the
 NVIDIA's DAVE-2 system on a smaller scale with using a low cost
-multicore platform, Raspberry Pi 3. Because Pi 3's computing
+multicore platform, Raspberry Pi 3. Because the Pi 3's computing
 performance is much lower than that of the DRIVE PX platform used in
 DAVE-2, we are interested in if, and how, we can process
 computationally expensive neural network operations in
 real-time. Specifically, inferencing (forward pass processing)
 operations must be completed within each control period
-duration---e.g., WCET of 50ms for 20Hz control frequency---locally on
+duration---e.g., a WCET of 50ms for 20Hz control frequency---locally on
 the Pi 3 platform, although training of the network (back-propagation
 for weight updates) can be done offline and remotely using a desktop
 computer.
@@ -46,10 +46,10 @@ estimated cost of the system.
   \label{tbl:carbom}
 \end{table}
 
-For the neural network architecture, we adopt a tensorflow version of
-NVIDIA's DAVE-2 convolutional neural network (CNN), published by
+For the neural network architecture, we adopt a TensorFlow version of
+NVIDIA DAVE-2's convolutional neural network (CNN), published by Dr.
 Fridman at  MIT~\footnote{https://github.com/lexfridman/deeptesla}. As
-in NVIDIA's DAVE-2, the CNN takes raw color images (200x66 RGB pixels)
+in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
 as input and produces a single steering angle value as
 output. Figure~\ref{fig:architecture} shows the network architecture, which
 is comprised of 9 layers, 250K parameters, and about 27 million
@@ -84,13 +84,13 @@ desktop computer using the GTX 1060 GPU.
 
 % inferencing on pi3
 Once the network is trained on the desktop computer, the trained model
-is copied back to the Raspberry Pi computer. The network is then used
+is copied back to the Raspberry Pi. The network is then used
 by the car's main controller, which feeds a image frame from the web
-camera as input to the network. The produced steering angle output is
-then converted as the PWM value of the steering motor of the
-car. Figure~\ref{fig:controlloop} shows simplified psuedo code of the
-controller's main loop. Among the five steps, step 3---network
-inferencing---is most computationally intensive and dominates the
+camera as input to the network. In each control period, the produced 
+steering angle output is then converted as the PWM values of the 
+steering motor of the car. Figure~\ref{fig:controlloop} shows simplified 
+pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
+network inferencing, is the most computationally intensive and dominates the
 execution time.
 
 \begin{figure}[t]
@@ -113,25 +113,25 @@ Currently, we approximate the network generated real-valued
 angle to the closest one of the three angles, which may
 introduce inaccuracy in control.
 In the future, we plan to use a different (more expensive) RC car
-platforms that can precisely control the car's steering angle.
+platform that can precisely control the car's steering angle.
 We would like to stress, however, that the use of different RC car
-platforms has no impact in terms of computational 
+platforms has no impact on the computational 
 aspects of the system, and that our main focus of this study is
 not in improving network accuracy but in closely replicating the
 DAVE-2's network architecture and its real-time characteristics.
 
 Another issue we observed in training/testing the network, which could
 affect the network performance, is camera latency. In DeepPicar's
-context, the camera latency is the measurement from the time the camera
+context, the camera latency is from the time the camera
 sensor observes the scene to the time the computer actually reads the
 digitized image data. Unfortunately, this time can be significantly
-long depending on camera and the computer performance. We
+long depending on the camera and the performance of the Pi. We
 experimentally measure DeepPicar's camera latency as
 follows~\footnote{We follow the method and the tool found at
   https://www.makehardware.com/2016/03/29/finding-a-low-latency-webcam/}.
-First, we point the DeepPicar's camera toward to a computer monitor, which is
-conntected to the Raspberry Pi 3's HDMI output. We then launch a
-simple program that overlays the current time with the camera's preview
+First, we point the DeepPicar's camera towards a computer monitor, which is
+conntected to the Raspberry Pi 3's HDMI output. We then launch a 
+program that overlays the current time with the camera's preview
 screen on the monitor. Then, an infinite number of time strings will be
 shown on the monitor screen and the time difference between two
 successive time strings represent the camera
@@ -139,7 +139,7 @@ latency. Figure~\ref{fig:camera-latency} shows the captured moniotor
 screen. The measured camera latency is about 300-350 ms. This is
 significantly higher than the latency of human perception, which is known
 to be as fast as 13 ms~\cite{ThomasBurger2015}. Higher camera latency
-could negatively affect to the control performance, as the DNN would
+could negatively affect control performance, because the DNN would
 analyze stale scenes. In the future, we plan to identify and use
 low-latency cameras.
 
@@ -158,79 +158,3 @@ achieve a reasonable degree of accuracy, successfully navigating
 several different tracks we trained. The source code, build
 instruction, and a collection of self-driving videos of the DeepPicar
 can be found at: \url{https://github.com/heechul/picar}.
-%% \begin{center}
-%% \end{center}
-
-%% We employ a small and relatively inexpensive RC car that is capable of
-%% performing basic automotive operations. However, the car we use
-%% doesn't replicate the capabilities of other autonomous vehicle
-%% platforms, as it is more simplistic in nature. Notably, the RC car we
-%% use only has three possible options in terms of turning: center, left,
-%% and right. As such, control of the car may be less precise at times,
-%% and may negatively affect performance. The car is capable of other
-%% operations that aren't used within the scope of this
-%% platform. Specifically, the car is able to drive in reverse and the
-%% driving speed can be changed. In our experiments, we have the RC car
-%% drive forward, and at a constant speed. 
-
-%% Our platform also comes equipped with a camera that is used for both
-%% recording training videos and providing input frames to the model
-%% whenever the Picar is self-driving. We chose the Playstation Eye
-%% Camera due to its ability to reach and maintain higher fps levels
-%% while also remaining relatively low-cost. One concern, however, is the
-%% affect of camera latency on the self-driving performance of our
-%% platform. While humans are able to see environmental changes in
-%% real-time, the same can't be said for cameras since there is a delay
-%% between when frame capture by the camera, and when it is read by the
-%% Raspberry Pi 3. As a result, it is possible for the model to be given
-%% an input frame that is different from the real world, thus impacting
-%% the performance of the Picar.
-
-%% Compared to other existing autonomous vehicle platforms, such as the
-%% F1/10 and NVIDIA DAVE-2, the Picar platform is capable of performing
-%% the same operations while using more cost inexpensive components. As
-%% shown by Table 1, the components selected for the Picar all cost
-%% considerably less than the other  platforms when focusing on the
-%% common components (camera, power supply, etc.). Including the other
-%% components used in the F1/10 and DAVE-2, such as the additional
-%% sensors employed by both, the difference  in cost would be even
-%% greater.
-
-%% \subsection{Model Training}
-%% In order to operate the Picar as an autonomous vehicle, we utilize the
-%% DeepTesla library, which is capable of training a deep neural network
-%% (DNN) with end-to-end learning, that could then be used by the  Picar
-%% for autonomous driving. Please note that it is more efficient to
-%% execute the actual model training  process on a different system with
-%% an NVIDIA GPU, rather than on the Raspberry Pi 3 itself. This is
-%% because DeepTesla trains the DNN with the Tensorflow library, which
-%% greatly benefits from the use of  gpu-enabled operations. For
-%% comparison, training a model on the Pi took approximately 6 hours,
-%% whereas  the time it took on a computer with a NVIDIA GPU was only
-%% around 5 minutes!
-
-%% We train our model on a custom made track/lane composed of black and
-%% white duct tape, where the black  tape represents the bounds of the
-%% track, and the white tape marks the center of the lane. The model is
-%% taught to stay close to the center of the lane for as long as
-%% possible, and to turn whenever it  reaches/crosses the outer lane
-%% bounds so that it remains on the track. For data, we navigate and
-%% record  the car going both ways across the track, and use the
-%% collected videos to train the model(s) that will  be used later for
-%% angle prediction while the car is self-driving.
-
-%% \begin{table*}[h]
-%%   \centering
-%%   \begin{tabular} {| l | l | l | l | l |}
-%%     \hline
-%%     \textbf{Platform} & \textbf{Picar} & \textbf{F1/10} & \textbf{NVIDIA DAVE-2}\\ \hline  
-%%     Car & Mini RC Car (\$10) & Traxxas 1/10th car platform (\$299.97) & TBD\\ \hline
-%%     Embedded system & Raspberry Pi 3 Model B (\$35.00) & NVIDIA Jetson TK1 (\$192.99) & NVIDIA DRIVE PX \\ \hline
-%%     CPU & Cortex A-53 quad core & Cortex A-15 quad core & 8x Cortex A-57 quad core, 8x Cortex A-53 quad core \\ \hline
-%%     Camera & Playstation Eye camera (\$6.99) & ZED camera (\$449.00) & 3x cameras\\ \hline
-%%     Power Supply & Mobile battery (\$5.99) & Energizer battery pack (\$159.00) & TBD\\
-%%     \hline
-%%   \end{tabular}
-%%   \caption{Comparison of components used in autonomous vehicle platforms.}
-%% \end{table*}
-

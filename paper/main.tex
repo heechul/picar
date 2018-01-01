@@ -92,10 +92,10 @@ replication of a real self-driving car called Dave-2 by NVIDIA, which
 drove on public roads using a deep convolutional neural network (CNN), 
 that takes images from a front-facing camera as input and produces
 car steering angles as output. DeepPicar uses the exact same network
-architecture---9 layers, 27 million connections and 24K
+architecture---9 layers, 27 million connections and 250K
 parameters---and can be trained to drive itself, in real-time, using a
 web camera and a modest Raspberry Pi 3 quad-core platform.
-Using DeepPicar, we analyze Pi 3's computing capabilities to 
+Using DeepPicar, we analyze the Pi 3's computing capabilities to 
 support end-to-end deep learning based real-time control of autonomous
 vehicles. We also systematically compare other contemporary embedded
 computing platforms using the DeepPicar's CNN based real-time control
@@ -106,20 +106,6 @@ Hz depending on hardware platform.
 However, shared resource contention remains an
 important issue that must be considered in applying deep-learning
 models on shared memory based embedded computing platforms.
-
-%% In order to effectively research autonomous vehicles, a real-time
-%% capable platform is required. Such platforms can be hard to obtain, or
-%% build, as the necessary components can be expensive. In this paper,
-%% we present a low-cost alternative platform that utilizes a Raspberry
-%% Pi 3 Model B, along with a single external camera sensor, to perform
-%% all necessary self-driving operations. A convolutional neural network
-%% (CNN) is employed and trained with input from a human driver to
-%% navigate a custom made track. We display the real-time efficacy of our
-%% platform in experiments with varying amounts of computational resources
-%% and/or intensive AI workloads. To gain a better understanding of our
-%% platform's potential, we compare it to other embedded computing
-%% platforms to determine which are suitable for autonomous driving
-%% research.
 \end{abstract}
 
 %-------------------------------------------------------------------------
