@@ -16,7 +16,7 @@ import cv2
 ###############################################
 width=320
 height=240
-fps=15
+fps=20
 camera_channel=0
 fname="camera_latency"
 ###############################################
@@ -26,7 +26,7 @@ cv2.namedWindow("preview")
 vc = cv2.VideoCapture(camera_channel)
 vc.set(3, width)
 vc.set(4, height)
-# vc.set(cv2.CAP_PROP_FPS,fps) 
+vc.set(5, fps) 
 
 ################################################
 time.sleep(2)
@@ -52,9 +52,10 @@ try:
         if key == ord('q'): # exit on ESC
             break
         elif key == ord('s'):
-            cv2.imwrite(fname+str(ii)+".jpg", frame_o)
+            cv2.imwrite(fname+str(ii)+".png", frame_o)
             ii+=1
         rval, frame_o = vc.read()
+        
           
 finally: 
     vc.release()
