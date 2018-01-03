@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python 
 from __future__ import division
 
@@ -29,8 +30,9 @@ assert os.path.isdir(data_dir)
 if not os.path.isdir(out_dir):
     os.makedirs(out_dir)
 
-epochs = OrderedDict()
+# epochs = OrderedDict()
+# epochs['train'] = [7,8,9,10]
+# epochs['val'] = [11,12]
 
-epochs['train'] = [7,8,9,10]
-epochs['val'] = [11,12]
-
+epochs = [7,8,9,10,11,12]
+train_pct = 0.8

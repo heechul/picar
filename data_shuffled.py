@@ -33,7 +33,50 @@ for p in purposes:
     for c in categories:
         imgs_cat[p][c] = []
         wheels_cat[p][c] = []
-    
+
+def load_imgs_v2():
+    global imgs
+    global wheels
+
+    for epoch_id in epochs:
+        print 'processing and loading epoch {} into memorys. train:{}, val:{}'.format(
+            epoch_id, len(imgs['train']), len(imgs['val']))
+        
+        # vid_path = cm.jn(data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
+        vid_path = cm.jn(data_dir, 'out-video-{}.avi'.format(epoch_id))
+
+        if not os.path.isfile(vid_path):
+            continue
+
+        frame_count = cm.frame_count(vid_path)
+        cap = cv2.VideoCapture(vid_path)
+
+
+        # csv_path = cm.jn(data_dir, 'epoch{:0>2}_steering.csv'.format(epoch_id))
+        csv_path = cm.jn(data_dir, 'out-key-{}.csv'.format(epoch_id))
+        assert os.path.isfile(csv_path)
+
+        rows = cm.fetch_csv_data(csv_path)
+        print len(rows), frame_count
+        assert frame_count == len(rows)
+
+        for row in rows:
+            ret, img = cap.read()
+            if not ret:
+                break
+
+            img = preprocess.preprocess(img)
+            angle = float(row['wheel']))
+            
+            if random.random() < params.train_pct:
+                imgs['train'].append(img)
+                wheels['train'].append(angle)
+            else:
+                imgs['val'].append(img)
+                wheels['val'].append(angle)
+
+        cap.release()
+        
 # load all preprocessed training images into memory
 def load_imgs():
     global imgs

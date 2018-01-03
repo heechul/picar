@@ -36,6 +36,13 @@ if write_summary:
     merged_summary_op = tf.summary.merge_all()
 
 saver = tf.train.Saver()
+
+# model_name = 'model.ckpt'
+# model_path = cm.jn(params.save_dir, model_name)
+# print "Load model file into the TF session"
+# saver.restore(sess, model_path)
+# print "Done..."
+
 time_start = time.time()
 
 # op to write logs to Tensorboard
@@ -43,7 +50,7 @@ if write_summary:
     summary_writer = tf.summary.FileWriter(params.save_dir, graph=tf.get_default_graph())
 
 if params.shuffle_training:
-    data.load_imgs()
+    data.load_imgs_v2()
 
 # center, curve 50:50%
 if params.use_category_normal:
