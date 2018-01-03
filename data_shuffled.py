@@ -38,7 +38,7 @@ def load_imgs_v2():
     global imgs
     global wheels
 
-    for epoch_id in epochs:
+    for epoch_id in epochs['all']:
         print 'processing and loading epoch {} into memorys. train:{}, val:{}'.format(
             epoch_id, len(imgs['train']), len(imgs['val']))
         
@@ -50,7 +50,6 @@ def load_imgs_v2():
 
         frame_count = cm.frame_count(vid_path)
         cap = cv2.VideoCapture(vid_path)
-
 
         # csv_path = cm.jn(data_dir, 'epoch{:0>2}_steering.csv'.format(epoch_id))
         csv_path = cm.jn(data_dir, 'out-key-{}.csv'.format(epoch_id))
@@ -66,16 +65,18 @@ def load_imgs_v2():
                 break
 
             img = preprocess.preprocess(img)
-            angle = float(row['wheel']))
+            angle = float(row['wheel'])
             
             if random.random() < params.train_pct:
                 imgs['train'].append(img)
-                wheels['train'].append(angle)
+                wheels['train'].append([angle])
             else:
                 imgs['val'].append(img)
-                wheels['val'].append(angle)
+                wheels['val'].append([angle])
 
         cap.release()
+
+    print 'Total data: train:{}, val:{}'.format(len(imgs['train']), len(imgs['val']))
         
 # load all preprocessed training images into memory
 def load_imgs():
@@ -117,6 +118,7 @@ def load_imgs():
                 imgs[p].append(img)
 
             wheels[p].extend(yy)
+            # print "DBG:", wheels[p]
             assert len(imgs[p]) == len(wheels[p])
 
             cap.release()

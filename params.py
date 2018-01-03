@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 batch_size = 255
 
-VER="-donkey-T78910_V1112"
+VER="-donkey-T789101112"
 save_dir = os.path.abspath('../picar/models' + VER)
 
 training_steps = 2000
@@ -30,9 +30,9 @@ assert os.path.isdir(data_dir)
 if not os.path.isdir(out_dir):
     os.makedirs(out_dir)
 
-# epochs = OrderedDict()
+epochs = OrderedDict()
 # epochs['train'] = [7,8,9,10]
 # epochs['val'] = [11,12]
 
-epochs = [7,8,9,10,11,12]
+epochs['all'] = [7,8,9,10,11,12]
 train_pct = 0.8
