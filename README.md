@@ -87,4 +87,8 @@ Please refer to
 [PicarMini.md](https://github.com/heechul/picar/blob/picar-mini-v2.0-release/PicarMini.md) for more detailed explanations/instructions.
 
 ## Acknowledgement
-The DeepPicar code utilizes MIT's DeepTesla (https://github.com/lexfridman/deeptesla), which provides a TensorFlow version of NVIDIA Dave-2's CNN.
+The DeepPicar code utilizes MIT's DeepTesla (https://github.com/lexfridman/deeptesla), which provides a TensorFlow version of NVIDIA Dave-2's CNN. 
+
+NVIDIA Dave-2 (and its CNN) is described in the following paper. 
+https://arxiv.org/pdf/1604.07316
+
