@@ -1,87 +1,52 @@
-%
-%  $Author: ienne $
-%  $Date: 1995/09/15 15:20:59 $
-%  $Revision: 1.4 $
-%
+\documentclass[a4paper,UKenglish]{lipics-v2016}
+%This is a template for producing LIPIcs articles. 
+%See lipics-manual.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+% for section-numbered lemmas etc., use "numberwithinsect"
+ 
+\usepackage{microtype}%if unwanted, comment out or use option "draft"
 
-% \documentclass[10pt,journal,cspaper,compsoc]{IEEEtran}   %%%tc version
-\documentclass[10pt, conference]{IEEEtran}
-%\documentclass[conference,compsoc]{IEEEtran}
-%\documentclass[10pt, conference]{IEEEtran}
-%\documentclass[times, 10pt,onecolumn]{article}
-\usepackage{amsmath, amssymb, enumerate}
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
 
-%%%%%%%%%%%%%%%% page control%%%%%%%%%%%%%%%%%
-%\usepackage[margin=0.75in]{geometry}
+\bibliographystyle{plainurl}% the recommended bibstyle
 
-%\linespread{0.991}  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this is really useful
-%\usepackage{cite}
-\usepackage{fancybox}
-\usepackage{amsfonts}
-%\usepackage{algorithm}
-%\usepackage[noend]{algorithmic}
-\usepackage[usenames]{color}
-%\usepackage{colortbl}
-%\usepackage[ figure, boxed, vlined]{algorithm2e}
-%\usepackage[linesnumbered,vlined]{algorithm2e}
-%\usepackage[lined,boxed]{algorithm2e}
-\usepackage{listings}
+% Author macros::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{DeepPicar: A Low-cost Deep Neural Network-based Autonomous Car}
+\titlerunning{DeepPicar: A Low-cost Autonomous Car} %optional, in case that the title is too long; the running title should fit into the top page column
 
-\usepackage[linesnumbered,vlined]{algorithm2e}
-\usepackage{graphicx}
-\usepackage{times}
-\usepackage{psfrag}
-\usepackage{subfigure}
-\usepackage{caption}
-%\usepackage{subcaption}
-\usepackage{multirow}
-%\usepackage{setspace}
-%\usepackage{listings}
-\usepackage{epsfig}
-%\usepackage{epstopdf}
-%\usepackage[font=small,labelfont=bf]{caption}
-\usepackage{url}
+%% Please provide for each author the \author and \affil macro, even when authors have the same affiliation, i.e. for each author there needs to be the  \author and \affil macros
+\author[1]{Michael G. Bechtel}
+\author[2]{Elise McEllhiney}
+\author[3]{Heechul Yun}
+\affil[1]{University of Kansas, Lawrence, United States\\
+  \texttt{m783b224@ku.edu}}
+\affil[2]{University of Kansas, Lawrence, United States\\
+  \texttt{e908m429@ku.edu}}
+\affil[3]{University of Kansas, Lawrence, United States\\
+  \texttt{heechul.yun@ku.edu}}
+\authorrunning{M.\,G. Bechtel, E. McEllhiney, H. Yun} %mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et. al.'
 
-\usepackage{color}
-\def\fixme#1{\typeout{FIXED in page \thepage : {#1}}
-%\bgroup \color{red}{} \egroup}
-\bgroup \color{red}{[FIXME: {#1}]} \egroup}
+\Copyright{Michael G. Bechtel, Elise McEllhiney, Heechul Yun}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
+\subjclass{Dummy classification -- please refer to \url{http://www.acm.org/about/class/ccs98-html}}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\keywords{Dummy keyword -- please provide 1--5 keywords}% mandatory: Please provide 1-5 keywords
+% Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[pdftex]{hyperref}
-\usepackage{rotating,tabularx}
-
-\interfootnotelinepenalty=10000
-
-%% Define a new 'leo' style for the package that will use a smaller font.
-\makeatletter
-\def\url@leostyle{%
-  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
-\makeatother
-
-%\documentstyle[times,art10,twocolumn,latex8]{article}
-
-%-------------------------------------------------------------------------
-% take the % away on next line to produce the final camera-ready version
-\pagestyle{plain}
-%\thispagestyle{empty}
-%\pagestyle{empty}
-
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-
-%% remaining budget share, used in task stall section.
-\newcommand{\bottomrule}{\hline}
-\newcommand{\toprule}{\hline}
-\newcommand{\midrule}{\hline}
-%-------------------------------------------------------------------------
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{Sebastian Altmeyer}
+\EventNoEds{1}
+\EventLongTitle{30th Euromicro Conference on Real-Time Systems (ECRTS 2018)}
+\EventShortTitle{ECRTS 2018}
+\EventAcronym{ECRTS}
+\EventYear{2018}
+\EventDate{July 3--6, 2018}
+\EventLocation{Barcelona, Spain}
+\EventLogo{}
+\SeriesVolume{XX}
+\ArticleNo{YY}
+% Editor-only macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
-\title{DeepPicar:​ ​A​ ​Low-cost​ ​Deep​ ​Neural​ ​Network-based​ ​Autonomous​ ​Car}
-\author{Michael Garrett Bechtel, Elise McEllhiney, Heechul Yun\\
-\{m783b224, e908m429, heechul.yun\}@ku.edu\\
-University of Kansas, USA\\ 
-}
 
 \maketitle
 \thispagestyle{empty}
@@ -117,7 +82,7 @@ models on shared memory based embedded computing platforms.
 % \input{related}
 \input{conclusion}
 %-------------------------------------------------------------------------
-\bibliographystyle{abbrv}
+%\bibliographystyle{abbrv}
 \bibliography{reference}
 
 \appendix
