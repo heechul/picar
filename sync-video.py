@@ -32,7 +32,8 @@ rows = cm.fetch_csv_data(csv_path)
 assert frame_count == len(rows)
 
 # data files
-fourcc = cv2.cv.CV_FOURCC(*'XVID')
+# fourcc = cv2.cv.CV_FOURCC(*'XVID')
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
 vidfile = cv2.VideoWriter(conv_vid_path, fourcc,
                           cam_fps, (cam_width, cam_height))
 keyfile = open(conv_csv_path, 'w+')
