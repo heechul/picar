@@ -10,12 +10,15 @@ import params
 import sys
 import os
 import preprocess
-import visualize_parallel
-# import visualize
+# import visualize_parallel
+import visualize
 import time
 import math
 
 import local_common as cm
+
+from joblib import Parallel, delayed 
+import multiprocessing
 
 def deg2rad(deg):
         return deg * math.pi / 180.0
@@ -29,9 +32,8 @@ model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 
 epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
-# epoch_ids = [6]
 
-for epoch_id in epoch_ids:
+def process_epoch(epoch_id):
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
     # vid_path = cm.jn(params.data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
 
@@ -72,13 +74,22 @@ for epoch_id in epoch_ids:
     cap.release()
 
     fps = frame_count / (time.time() - time_start)
-    
-    print 'completed inference, total frames: {}, average fps: {} Hz'.format(frame_count, round(fps, 1))
+    print ('completed inference, total frames: {}, average fps: {} Hz'.format(frame_count, round(fps, 1)))
+    # print "Machine Steering:", machine_steering
+    return machine_steering
 
-    print "Machine Steering:", machine_steering
-
-    print 'performing visualization...'
-    visualize_parallel.visualize(epoch_id, machine_steering, params.out_dir,
+def visualize_epoch(job):
+    epoch_id = job[0]
+    machine_steering = job[1]
+    visualize.visualize(epoch_id, machine_steering, params.out_dir,
                         verbose=True, frame_count_limit=None)
-    
-    
+job_list = []
+for epoch_id in epoch_ids:
+    steering = process_epoch(epoch_id)
+    job_list.append([epoch_id, steering])
+
+print "visualize epochs in parallel"    
+num_cores = 4 # multiprocessing.cpu_count()
+Parallel (n_jobs = num_cores) (delayed (visualize_epoch) (job) for job in job_list)
+
+     
