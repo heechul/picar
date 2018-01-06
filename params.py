@@ -15,15 +15,15 @@ use_category_normal = True # if ture, center/curve images are equally selected.
 shuffle_training = True
 
 # change this to the directory that contains the source videos
-save_dir = os.path.abspath('models-5conv_3fc')
 data_dir = os.path.abspath('epochs-conv')
-out_dir = os.path.abspath('output-5conv_3fc')
+save_dir = os.path.abspath('models-5conv_3fc-home')
+out_dir = os.path.abspath('output-5conv_3fc-home')
 
 assert os.path.isdir(data_dir)
 if not os.path.isdir(out_dir):
     os.makedirs(out_dir)
 
 epochs = OrderedDict()
-epochs['train'] = range(30, 50)
-epochs['val'] = range(50, 60)
+epochs['train'] = [100, 101, 103, 104] # range(30, 50)
+epochs['val'] = [102, 105] # range(50, 60)
 
