@@ -20,6 +20,15 @@ import time
 import shutil
 import numpy as np
 import datetime
+
+# headless version
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+
+# this requires DISPLAY
+# import matplotlib.pyplot as plt
+
 import matplotlib.pyplot as plt
 import PIL
 from pprint import pprint

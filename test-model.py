@@ -36,7 +36,7 @@ saver.restore(sess, model_path)
 
 epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
 
-epoch_ids = [6] # DBG - heechul
+epoch_ids = [101] # DBG - heechul
 
 tot_time_list = []
 

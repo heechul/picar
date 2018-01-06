@@ -7,6 +7,8 @@ import model
 import params
 import time
 
+use_model_load = False
+
 if params.shuffle_training:
     import data_shuffled as data
 else:
@@ -18,6 +20,7 @@ import local_common as cm
 write_summary = params.write_summary
 
 sess = tf.InteractiveSession()
+
 
 loss = tf.reduce_mean(tf.square(tf.subtract(model.y_, model.y)))
 # loss = tf.reduce_mean(tf.square(tf.sub(model.y_, model.y)))
@@ -36,6 +39,13 @@ if write_summary:
     merged_summary_op = tf.summary.merge_all()
 
 saver = tf.train.Saver()
+
+if use_model_load == True:
+    saver = tf.train.Saver()
+    model_name = 'model.ckpt'
+    model_path = cm.jn(params.save_dir, model_name)
+    saver.restore(sess, model_path)
+
 time_start = time.time()
 
 # op to write logs to Tensorboard
