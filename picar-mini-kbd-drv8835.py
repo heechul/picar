@@ -6,11 +6,8 @@ import serial
 import cv2
 import math
 import numpy as np
-import pygame
 import sys
 from threading import Thread
-
-# import rospy
 
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
@@ -85,7 +82,7 @@ cam_thr = Thread(target=cam.update, args=())
 cam_thr.start()
 time.sleep(2)
 
-view_video = True
+view_video = False
 frame_id = 0
 
 angle = 0.0
@@ -104,18 +101,18 @@ keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED * 5 / 10 
+SET_SPEED = MAX_SPEED * 6 / 10 
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
 print "cur speed:", cur_speed
 
 atexit.register(turnOff)
 
-#null_frame = np.zeros((cfg_width,cfg_height,3), np.uint8)
-#cv2.imshow('frame', null_frame)
+null_frame = np.zeros((cfg_width,cfg_height,3), np.uint8)
+cv2.imshow('frame', null_frame)
 
 if len(sys.argv) == 2:
-    SET_SPEED = int(sys.argv[1])
+    SET_SPEED = MAX_SPEED * int(sys.argv[1]) / 10 
     print "Set new speed: ", SET_SPEED
 
 g = g_tick()
@@ -190,7 +187,7 @@ while True:
         # write video stream
         vidfile.write(frame)
         
-        if frame_id >= 400:
+        if frame_id >= 1000:
             print "recorded 400 frames"
             break
 
