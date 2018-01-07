@@ -21,7 +21,16 @@ def deg2rad(deg):
 def rad2deg(rad):
         return 180.0 * rad / math.pi
 
-NCPU=int(sys.argv[1])
+epoch_ids = []
+if len(sys.argv) > 2:
+    NCPU=int(sys.argv[1])
+    for i in range(2,len(sys.argv)):
+        epoch_ids.append(int(sys.argv[i]))
+else:
+    NCPU = 4
+    epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
+    # epoch_ids = [50]
+ 
 config = tf.ConfigProto(intra_op_parallelism_threads=NCPU, inter_op_parallelism_threads=NCPU, \
                         allow_soft_placement=True, device_count = {'CPU': 1})
 # sess = tf.Session(config=config)
@@ -34,13 +43,9 @@ model_name = 'model.ckpt'
 model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 
-epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
-
-epoch_ids = [101] # DBG - heechul
 
 tot_time_list = []
 
-curFrame = 0
 for epoch_id in epoch_ids:
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
     # vid_path = cm.jn(params.data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
@@ -55,36 +60,32 @@ for epoch_id in epoch_ids:
     print 'performing inference...'
     time_start = time.time()
     for frame_id in xrange(frame_count):
-        if curFrame < NFRAMES:
-            cam_start = time.time()
-            ret, img = cap.read()
-            assert ret
+        cam_start = time.time()
+        ret, img = cap.read()
+        assert ret
 
-            prep_start = time.time()
-            img = preprocess.preprocess(img)
+        prep_start = time.time()
+        img = preprocess.preprocess(img)
 
-            pred_start = time.time()
-            rad = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
-            deg = rad2deg(rad)
-            pred_end   = time.time()
+        pred_start = time.time()
+        angle = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
+        pred_end   = time.time()
 
-            cam_time  = (prep_start - cam_start)*1000
-            prep_time = (pred_start - prep_start)*1000
-            pred_time = (pred_end - pred_start)*1000
-            tot_time  = (pred_end - cam_start)*1000
+        cam_time  = (prep_start - cam_start)*1000
+        prep_time = (pred_start - prep_start)*1000
+        pred_time = (pred_end - pred_start)*1000
+        tot_time  = (pred_end - cam_start)*1000
 
-            print 'pred: {:0.2f} deg. took: {:0.2f} ms | cam={:0.2f} prep={:0.2f} pred={:0.2f}'.format(deg, tot_time, cam_time, prep_time, pred_time)
-            # print 'pred: {} deg (rad={})'.format(deg, rad)
-            if frame_id > 0:
-                tot_time_list.append(tot_time)
-                machine_steering.append(deg)
-                curFrame += 1
+        print 'pred: {:0.2f} took: {:0.2f} ms | cam={:0.2f} prep={:0.2f} pred={:0.2f}'.format(angle, tot_time, cam_time, prep_time, pred_time)
+        if frame_id > 0:
+            tot_time_list.append(tot_time)
+            machine_steering.append(angle)
 
     cap.release()
 
     fps = frame_count / (time.time() - time_start)
     
-    print 'completed inference, total frames: {}, average fps: {} Hz'.format(frame_count, round(fps, 1))
+    print ('completed inference, total frames: {}, average fps: {} Hz'.format(frame_count, round(fps, 1)))
 
     # print "Machine Steering:", machine_steering
 
