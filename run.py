@@ -20,6 +20,7 @@ import local_common as cm
 from joblib import Parallel, delayed 
 import multiprocessing
 
+# for picar-mini-v2.0
 def deg2rad(deg):
         return deg * math.pi / 180.0
 def rad2deg(rad):
@@ -27,7 +28,7 @@ def rad2deg(rad):
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
-model_name = 'model.ckpt'
+model_name = params.model_name 
 model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 
@@ -43,8 +44,8 @@ def process_epoch(epoch_id):
         assert os.path.isfile(vid_path)
         os.system("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
         print("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
-    vid_path = vid_scaled_path
     frame_count = cm.frame_count(vid_path)
+    vid_path = vid_scaled_path
     cap = cv2.VideoCapture(vid_path)
 
     machine_steering = []

@@ -26,7 +26,7 @@ train_step = tf.train.AdamOptimizer(1e-4).minimize(loss)
 
 saver = tf.train.Saver()
 
-model_name = 'model.ckpt'
+model_name = params.model_name
 model_path = cm.jn(params.save_dir, model_name)
 
 if params.use_model_load == True and os.path.exists(model_path):
@@ -80,7 +80,7 @@ for i in xrange(params.training_steps):
     if (i+1) % 100 == 0:
         if not os.path.exists(params.save_dir):
             os.makedirs(params.save_dir)
-        checkpoint_path = os.path.join(params.save_dir, "model.ckpt")
+        checkpoint_path = os.path.join(params.save_dir, model_name)
         filename = saver.save(sess, checkpoint_path)
 
         time_passed = cm.pretty_running_time(time_start)

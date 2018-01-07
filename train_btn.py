@@ -70,7 +70,7 @@ for i in xrange(params.training_steps):
     if (i+1) % 100 == 0:
         if not os.path.exists(params.save_dir):
             os.makedirs(params.save_dir)
-        checkpoint_path = os.path.join(params.save_dir, "model.ckpt")
+        checkpoint_path = os.path.join(params.save_dir, model_name)
         filename = saver.save(sess, checkpoint_path)
 
         time_passed = cm.pretty_running_time(time_start)

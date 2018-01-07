@@ -27,7 +27,7 @@ def rad2deg(rad):
 numCore = 1
 sess = tf.InteractiveSession(config=tf.ConfigProto(intra_op_parallelism_threads=numCore, inter_op_parallelism_threads=numCore, allow_soft_placement=True))
 saver = tf.train.Saver()
-model_name = 'model.ckpt'
+model_name = params.model_name
 model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 

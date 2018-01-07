@@ -19,7 +19,7 @@ import preprocess
 print ("Load Model")
 sess = tf.InteractiveSession()    
 saver = tf.train.Saver()
-model_name = 'model.ckpt'
+model_name = params.model_name
 model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 print ("Done..")

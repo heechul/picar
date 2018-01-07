@@ -39,7 +39,7 @@ NFRAMES = 1000
 
 sess = tf.InteractiveSession(config=config)
 saver = tf.train.Saver()
-model_name = 'model.ckpt'
+model_name = params.model_name
 model_path = cm.jn(params.save_dir, model_name)
 saver.restore(sess, model_path)
 

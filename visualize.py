@@ -57,10 +57,23 @@ def get_human_steering(epoch_id):
 
     return human_steering
 
+def get_degree_picar_mini(deg):
+    # picar-mini-v2.0's actual control is shown.
+    if deg < 15 and deg > -15:
+        deg = 0  # center
+    elif deg >= 15:
+        deg = 30 # right
+    elif deg <= -15:
+        deg = -30 # left
+    return deg
+
+
 def visualize(epoch_id, machine_steering, out_dir, perform_smoothing=False,
               verbose=False, verbose_progress_step = 100, frame_count_limit = None):
     epoch_dir = params.data_dir
     human_steering = get_human_steering(epoch_id)
+    print ("epoch_id=%d, h_len=%d, m_len=%d" %
+           (epoch_id, len(human_steering), len(machine_steering)))
     assert len(human_steering) == len(machine_steering)
 
     # testing: artificially magnify steering to test steering wheel visualization
@@ -130,7 +143,8 @@ def visualize(epoch_id, machine_steering, out_dir, perform_smoothing=False,
         plot_size = (500, dh)
         win_before, win_after = 150, 150
 
-        xx, hh, mm = [], [], []
+        xx, hh, mm= [], [], []
+        pp = []
         for f_rel in xrange(-win_before, win_after+1):
             f_abs = f_cur + f_rel
             if f_abs < 0 or f_abs >= len(machine_steering):
@@ -138,6 +152,8 @@ def visualize(epoch_id, machine_steering, out_dir, perform_smoothing=False,
             xx.append(f_rel/30)
             hh.append(human_steering[f_abs])
             mm.append(machine_steering[f_abs])
+            if params.use_picar_mini == True:
+                pp.append(get_degree_picar_mini(machine_steering[f_abs]))
 
         fig = plt.figure()
         axis = fig.add_subplot(1, 1, 1)
@@ -153,6 +169,8 @@ def visualize(epoch_id, machine_steering, out_dir, perform_smoothing=False,
         axis.axvline(x=0, color='k', ls='dashed')
         axis.plot(xx, hh)
         axis.plot(xx, mm)
+        if params.use_picar_mini == True:
+            axis.plot(xx, pp) # picar-mini-v2.0
         axis.set_xlim([-win_before/30, win_after/30])
         axis.set_ylim(ylim)
         #axis.set_ylabel(y_label, fontsize=18)

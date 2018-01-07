@@ -56,4 +56,8 @@ print("Close files.")
 cap.release()
 keyfile.close()
 vidfile.release()
-    
+
+print("Validate converted data count")
+frame_count = cm.frame_count(conv_vid_path)
+rows = cm.fetch_csv_data(conv_csv_path)
+assert frame_count == len(rows)
