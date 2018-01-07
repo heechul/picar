@@ -2,6 +2,7 @@ import cv2
 import local_common as cm
 import os
 import sys
+import params
 
 vid_path = "out-video.avi"
 csv_path = "out-key.csv"
@@ -13,9 +14,10 @@ if len(sys.argv) == 3:
     csv_path = sys.argv[2]
 elif len(sys.argv) == 2:
     epoch_id = int(sys.argv[1])
-    vid_path = 'epochs/out-video-{}.avi'.format(epoch_id)
-    csv_path = 'epochs/out-key-{}.csv'.format(epoch_id)
+    vid_path = params.data_dir + '/out-video-{}.avi'.format(epoch_id)
+    csv_path = params.data_dir + '/out-key-{}.csv'.format(epoch_id)
 
+print params.data_dir, vid_path
 assert os.path.isfile(vid_path)
 assert os.path.isfile(csv_path)
 
