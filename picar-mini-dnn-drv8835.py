@@ -17,7 +17,6 @@ import numpy as np
 import pygame
 from pololu_drv8835_rpi import motors, MAX_SPEED
 import sys
-import rospy
 
 def deg2rad(deg):
     return deg * math.pi / 180.0
@@ -32,19 +31,21 @@ saver.restore(sess, model_path)
 
 motors.setSpeeds(0, 0)
 cap = cv2.VideoCapture(0)
-cap.set(3,640)
-cap.set(4,480)
+cap.set(3,320)
+cap.set(4,240)
+cap.set(5,30)
 
 # ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 # ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fourcc = cv2.cv.CV_FOURCC(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (640,480))
 keyfile = open('out-key.csv', 'w+')
 keyfile_btn = open('out-key-btn.csv', 'w+')
 keyfile.write("ts_micro,frame,wheel\n")
 keyfile_btn.write("ts_micro,frame,btn,speed\n")
 rec_start_time = 0
-SET_SPEED = MAX_SPEED * 5 / 10 
+SET_SPEED = MAX_SPEED * 6 / 10 
 cur_speed = SET_SPEED
 print "MAX speed:", MAX_SPEED
 print "cur speed:", cur_speed
