@@ -18,7 +18,7 @@ use_picar_mini = True
 
 # change this to the directory that contains the source videos
 # "-5conv_3fc_noreuse" "-5conv_3fc" "-3conv_1pool" "-5conv_3fc_noreuse_nocn"
-VER="-3conv_1pool_nocn"
+VER="-5conv_3fc_noreuse"
 model_name = 'model' + VER + '.ckpt'
 data_dir = os.path.abspath('epochs-conv')
 save_dir = os.path.abspath('models')
