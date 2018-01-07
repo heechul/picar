@@ -7,8 +7,6 @@ import model
 import params
 import time
 
-use_model_load = False
-
 if params.shuffle_training:
     import data_shuffled as data
 else:
@@ -21,14 +19,20 @@ write_summary = params.write_summary
 
 sess = tf.InteractiveSession()
 
-
 loss = tf.reduce_mean(tf.square(tf.subtract(model.y_, model.y)))
 # loss = tf.reduce_mean(tf.square(tf.sub(model.y_, model.y)))
 #         + tf.add_n([tf.nn.l2_loss(v) for v in train_vars]) * L2NormConst
 train_step = tf.train.AdamOptimizer(1e-4).minimize(loss)
 
-sess.run(tf.global_variables_initializer())
+saver = tf.train.Saver()
 
+model_name = 'model.ckpt'
+model_path = cm.jn(params.save_dir, model_name)
+
+if params.use_model_load == True and os.path.exists(model_path):
+    saver.restore(sess, model_path)
+else:
+    sess.run(tf.global_variables_initializer())
 
 # create a summary to monitor cost tensor
 if write_summary:
@@ -37,14 +41,6 @@ if write_summary:
 # merge all summaries into a single op
 if write_summary:
     merged_summary_op = tf.summary.merge_all()
-
-saver = tf.train.Saver()
-
-if use_model_load == True:
-    saver = tf.train.Saver()
-    model_name = 'model.ckpt'
-    model_path = cm.jn(params.save_dir, model_name)
-    saver.restore(sess, model_path)
 
 time_start = time.time()
 
