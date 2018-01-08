@@ -188,7 +188,7 @@ while True:
         vidfile.write(frame)
         
         if frame_id >= 1000:
-            print "recorded 400 frames"
+            print "recorded 1000 frames"
             break
 
     print ("%.3f %d %.3f %d %d(ms)" % (ts, frame_id, angle, btn, int((time.time() - ts)*1000)))

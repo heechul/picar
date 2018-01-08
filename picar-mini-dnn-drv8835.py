@@ -103,7 +103,7 @@ period = 0.05 # sec (=50ms)
 total_cnt = 0
 
 if len(sys.argv) == 2:
-    SET_SPEED = int(sys.argv[1])
+    SET_SPEED = MAX_SPEED * int(sys.argv[1]) / 10 
     print "Set new speed: ", SET_SPEED
 
 def g_tick():
@@ -116,11 +116,11 @@ def g_tick():
 g = g_tick()
 
 while True:
-    time.sleep(next(g))    
-    ts = time.time()
+    # time.sleep(next(g))    
     
     # 0. read a image frame
     ret, frame = cap.read()
+    ts = time.time()
 
     if view_video == True:
         cv2.imshow('frame', frame)
