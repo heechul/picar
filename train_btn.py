@@ -3,15 +3,14 @@ from __future__ import division
 
 import os
 import tensorflow as tf
-import model_btn as model
-import params_btn as params
+import params
+model = __import__(params.model)
 import time
 
 if params.shuffle_training:
     import data_shuffled_btn as data
 else:
     import data_ordered as data
-
 
 import local_common as cm
 
@@ -70,7 +69,7 @@ for i in xrange(params.training_steps):
     if (i+1) % 100 == 0:
         if not os.path.exists(params.save_dir):
             os.makedirs(params.save_dir)
-        checkpoint_path = os.path.join(params.save_dir, model_name)
+        checkpoint_path = os.path.join(params.save_dir, params.model_save_file)
         filename = saver.save(sess, checkpoint_path)
 
         time_passed = cm.pretty_running_time(time_start)

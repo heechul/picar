@@ -1,8 +1,8 @@
 #!/usr/bin/python
 from __future__ import division
 import tensorflow as tf
-import model_btn as model
-import params_btn as params
+import params
+model = __import__(params.model)
 import local_common as cm
 import preprocess
 
@@ -24,9 +24,8 @@ def rad2deg(rad):
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
-model_name = params.model_name 
-model_path = cm.jn(params.save_dir, model_name)
-saver.restore(sess, model_path)
+model_load_path = cm.jn(params.save_dir, params.model_load_file)
+saver.restore(sess, model_load_path)
 
 motors.setSpeeds(0, 0)
 cap = cv2.VideoCapture(0)

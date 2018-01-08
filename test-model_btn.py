@@ -23,9 +23,8 @@ def rad2deg(rad):
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
-model_name = params.model_name
-model_path = cm.jn(params.save_dir, model_name)
-saver.restore(sess, model_path)
+model_load_path = cm.jn(params.save_dir, params.model_load_file)
+saver.restore(sess, model_load_path)
 
 epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
 

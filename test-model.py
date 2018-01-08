@@ -2,11 +2,11 @@
 from __future__ import division
 
 import tensorflow as tf
-import model
+import params
+model = __import__(params.model)
 import cv2
 import subprocess as sp
 import itertools
-import params
 import sys
 import os
 import preprocess
@@ -39,10 +39,8 @@ NFRAMES = 1000
 
 sess = tf.InteractiveSession(config=config)
 saver = tf.train.Saver()
-model_name = params.model_name
-model_path = cm.jn(params.save_dir, model_name)
-saver.restore(sess, model_path)
-
+model_load_path = cm.jn(params.save_dir, params.model_load_file)
+saver.restore(sess, model_load_path)
 
 tot_time_list = []
 

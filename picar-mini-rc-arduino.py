@@ -15,17 +15,16 @@ use_rec = True
 if use_dnn:
     print ("Load TF")
     import tensorflow as tf
-    import model
     import params
+    model = __import__(params.model)    
     import local_common as cm
     import preprocess
 
     print ("Load Model")
     sess = tf.InteractiveSession()
     saver = tf.train.Saver()
-    model_name = params.model_name
-    model_path = cm.jn(params.save_dir, model_name)
-    saver.restore(sess, model_path)
+    model_load_path = cm.jn(params.save_dir, params.model_load_file)
+    saver.restore(sess, model_load_path)
     print ("Done..")
     
 from pololu_drv8835_rpi import motors, MAX_SPEED
@@ -257,10 +256,6 @@ while True:
         if frame_id >= 400:
             print "recorded 400 frames"
             break
-
-                                                 
-
-
 
 stop()
 cam.shutdown()
