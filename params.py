@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 batch_size = 255
 
-VER="-donkey-T789101112"
+VER="-donkey-T789101112-model1"
 save_dir = os.path.abspath('../picar/models' + VER)
 
 training_steps = 2000
