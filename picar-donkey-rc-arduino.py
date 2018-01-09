@@ -152,7 +152,7 @@ if __name__ == "__main__":
         DEBUG("{:.3f} SETPWM {} {}".format(ts-init_ts, steering_pwm, throttle_pwm))
         
         # 3. record data
-        if throttle_pwm == thr_cap_ffw_pwm:
+        if use_dnn == False and throttle_pwm == thr_cap_ffw_pwm:
             # increase frame_id
             frame_id += 1
 
