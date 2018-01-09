@@ -5,21 +5,21 @@ from __future__ import division
 import os
 from collections import OrderedDict
 
-batch_size = 255
+batch_size = 100
 
-VER="-donkey-T789101112-model1"
-save_dir = os.path.abspath('../picar/models' + VER)
+VER="-donkey-T789101112-model2-morning"
+save_dir = os.path.abspath('models' + VER)
 
 training_steps = 2000
 img_height = 66
 img_width = 200
 img_channels = 3
 write_summary = True
-use_category_normal = False # if ture, center/curve images are equally selected.
+use_category_normal = True # False # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
-data_dir = os.path.abspath('../picar/epochs')
-out_dir = os.path.abspath('../picar/output' + VER)
+data_dir = os.path.abspath('epochs')
+out_dir = os.path.abspath('output' + VER)
 
 # data_dir = os.path.abspath('epochs')
 # out_dir = os.path.abspath('.output')
