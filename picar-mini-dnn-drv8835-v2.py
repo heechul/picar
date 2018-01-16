@@ -125,7 +125,7 @@ time.sleep(2)
 frame_id = 0
 angle = 0.0
 btn   = 107
-period = 0.05 # sec (=50ms)
+period = 1.0/20 # sec (=50ms)
 
 motors.setSpeeds(0, 0)
 # ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)

@@ -18,8 +18,9 @@ use_picar_mini = True
 # change this to the directory that contains the source videos
 # "-5conv_3fc_noreuse" "-5conv_3fc" "-3conv_1pool" "-5conv_3fc_noreuse_nocn"
 model="model-5conv_3fc"
-model_save_file="model-5conv_3fc-home_night.ckpt"
-model_load_file=model_save_file 
+# model_load_file="model-5conv_3fc_noreuse.ckpt"  # <-- solved ittc building maze. 
+model_load_file="model-5conv_3fc-home_night.ckpt"
+model_save_file=model_load_file
 save_dir = os.path.abspath('models')
 data_dir = os.path.abspath('epochs-conv')
 out_dir = os.path.abspath('output')
