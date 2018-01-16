@@ -31,7 +31,7 @@ NFRAMES = 1000
 sess = tf.InteractiveSession(config=config)
 saver = tf.train.Saver()
 model_name = 'model.ckpt'
-model_path = cm.jn(params.save_dir2, model_name)
+model_path = cm.jn(params.save_dir4, model_name)
 saver.restore(sess, model_path)
 
 epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
