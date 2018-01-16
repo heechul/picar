@@ -35,16 +35,16 @@ epoch_ids = sorted(list(set(itertools.chain(*params.epochs.values()))))
 
 def process_epoch(epoch_id):
     print '---------- processing video for epoch {} ----------'.format(epoch_id)
-    # vid_path = cm.jn(params.data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
-
+    vid_path = cm.jn(params.data_dir, 'out-video-{}.avi'.format(epoch_id))
+    frame_count = cm.frame_count(vid_path)        
+    
     vid_scaled_path = cm.jn(params.data_dir, 'out-video-{}-scaled.avi'.format(epoch_id))
     if not os.path.exists(vid_scaled_path):
-        vid_path = cm.jn(params.data_dir, 'out-video-{}.avi'.format(epoch_id))
         assert os.path.isfile(vid_path)
         os.system("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
         print("ffmpeg -i " + vid_path + " -vf scale=1280:720 " + vid_scaled_path)
-    frame_count = cm.frame_count(vid_path)
     vid_path = vid_scaled_path
+    
     cap = cv2.VideoCapture(vid_path)
 
     machine_steering = []
@@ -89,7 +89,7 @@ for epoch_id in epoch_ids:
     job_list.append([epoch_id, steering])
 
 print "visualize epochs in parallel"    
-num_cores = 4 # multiprocessing.cpu_count()
+num_cores = int(multiprocessing.cpu_count()/2)
 Parallel (n_jobs = num_cores) (delayed (visualize_epoch) (job) for job in job_list)
 
      
