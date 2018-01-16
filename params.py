@@ -18,8 +18,8 @@ use_picar_mini = True
 # change this to the directory that contains the source videos
 # "-5conv_3fc_noreuse" "-5conv_3fc" "-3conv_1pool" "-5conv_3fc_noreuse_nocn"
 model="model-5conv_3fc"
-model_load_file="model-5conv_3fc_noreuse.ckpt"
-model_save_file="model-5conv_3fc_noreuse.ckpt"
+model_save_file="model-5conv_3fc-home_night.ckpt"
+model_load_file=model_save_file 
 save_dir = os.path.abspath('models')
 data_dir = os.path.abspath('epochs-conv')
 out_dir = os.path.abspath('output')
@@ -30,8 +30,8 @@ if not os.path.isdir(out_dir):
     os.makedirs(out_dir)
 
 epochs = OrderedDict()
-epochs['train'] = range(30, 50) + range(60, 68) 
-epochs['val'] = range(50, 60) + range(68, 70)
+epochs['train'] = range(106, 110) # range(30, 50) + range(60, 68) 
+epochs['val']   = range(110, 112) # range(50, 60) + range(68, 70)
 
 # data description
 # range(30, 60)        # ittc building. michael. resynchronized
