@@ -50,7 +50,7 @@ the execution times of DeepPicar's DNN inference operations.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/Fig7_new}
+  \includegraphics[width=.75\textwidth]{figs/Fig7_new}
   \caption{DeepPicar's control loop processing times over 1000 input image frames.}
   \label{fig:control-loop-timing}
 \end{figure}
@@ -115,7 +115,7 @@ numbers of CPU cores---from one to four.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.45\textwidth]{figs/perf_vs_corecnt}
+  \includegraphics[width=.7\textwidth]{figs/perf_vs_corecnt}
   \caption{Average control loop execution time vs. \#of CPU
     cores.}
   \label{fig:perf-vs-corecnt}
@@ -153,7 +153,7 @@ contention affects inference timing.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.45\textwidth]{figs/perf_vs_modelcnt}
+  \includegraphics[width=.7\textwidth]{figs/perf_vs_modelcnt}
   \caption{Timing impact of co-scheduling multiple DNNs. 1Nx1C: one DNN
     model using one core; 4Nx1C: four DNN models each using one core;
     1Nx2C: one DNN model using two cores; 2Nx2C: two DNN models each
@@ -178,7 +178,7 @@ using two CPU cores (1Nx2C).
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.45\textwidth]{figs/l2missrate_vs_modelcnt}
+  \includegraphics[width=.7\textwidth]{figs/l2missrate_vs_modelcnt}
   \caption{L2 cache miss rates of different neural network and core
     assignments. X-axis is the same as Figure~\ref{fig:perf-vs-modelcnt}.} 
   \label{fig:l2missrate-vs-modelcnt}
@@ -224,7 +224,7 @@ benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth}
+  \includegraphics[width=.7\textwidth]{figs/perf_vs_bandwidth}
   \caption{Effect of memory performance hogs on the DNN
     inferencing. The DNN model uses Core 0 and memory-hog co-runners
     use the rest of the cores.}
