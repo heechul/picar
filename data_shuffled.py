@@ -47,12 +47,13 @@ def load_imgs():
             # vid_path = cm.jn(data_dir, 'epoch{:0>2}_front.mkv'.format(epoch_id))
             vid_path = cm.jn(data_dir, 'out-video-{}.avi'.format(epoch_id))
 
+            print "DBG:", vid_path
             assert os.path.isfile(vid_path)
 
-            print "DBG:", vid_path
             frame_count = cm.frame_count(vid_path)
-            cap = cv2.VideoCapture(vid_path)
             print "DBG:", frame_count
+
+            cap = cv2.VideoCapture(vid_path)
 
             # csv_path = cm.jn(data_dir, 'epoch{:0>2}_steering.csv'.format(epoch_id))
             csv_path = cm.jn(data_dir, 'out-key-{}.csv'.format(epoch_id))
