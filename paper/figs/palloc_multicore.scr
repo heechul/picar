@@ -8,9 +8,13 @@ set style data histogram
 set style histogram cluster gap 1.5
 set style fill pattern border
 
-set arrow from -1,50 to 4,50 nohead dt "."
-set label  "20" at 4.55,53 
-set label  "Hz" at 4.55,45
+set arrow from -1,50 to 4,50 nohead dt "-"
+set label  "20" at 4.05,53 
+set label  "Hz" at 4.05,45
+
+set arrow from -1,33.33 to 4,33.33 nohead dt "-"
+set label  "30" at 4.05,36 
+set label  "Hz" at 4.05,28
 
 set boxwidth 1
 plot  "palloc_multicore.dat"  using 2:xticlabel(1) title "no PALLOC" lt -1,\
