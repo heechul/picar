@@ -1,0 +1,17 @@
+set terminal pdf font "Times-Roman,14"
+set output "palloc_multicore.pdf"
+set yrange [0.0:100.0]
+set xlabel "#of cores" 
+set ylabel "Avg. processing time (ms)" offset 2.5
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set arrow from -1,50 to 4,50 nohead dt "."
+set label  "20" at 4.55,53 
+set label  "Hz" at 4.55,45
+
+set boxwidth 1
+plot  "palloc_multicore.dat"  using 2:xticlabel(1) title "no PALLOC" lt -1,\
+      ""                  using 3 title "PALLOC" lt -1

@@ -1,0 +1,18 @@
+set terminal pdf font "Times-Roman,14"
+set output "palloc_bandwidth_exectime.pdf"
+set yrange [0.0:30]
+set ylabel "Normalized Ratio" offset 1.5
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set arrow from -1,1 to 2,1 nohead dt "-"
+
+set key left top
+
+set boxwidth 1
+plot  "palloc_bandwidth_exectime.dat"  using 2:xticlabel(1) title "solo" lt -1,\
+      ""                  using 3 title "+1 co-runner" lt -1,\
+      ""                  using 4 title "+2 co-runners" lt -1,\
+      ""                  using 5 title "+3 co-runners" lt -1
