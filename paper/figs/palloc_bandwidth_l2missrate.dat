@@ -1,4 +1,4 @@
 "No PALLOC"		1.0  1.5  2.2  2.6
-"PALLOC"		1.2  1.4  1.8  2.1
+"PALLOC"		1.6  1.5  1.8  2.1
 #"Actual No PALLOC"		14.02  21.46  30.57  35.97
-#"Actual PALLOC"		16.31  20.06  25.78  29.60
+#"Actual PALLOC"		22.16  21.22  24.81  29.88
