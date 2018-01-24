@@ -120,13 +120,13 @@ computing hardware architectures.
 
 
 We find that the DeepPicar is capable of 
-completing control loops in under 50 ms, or 20 hz, and can do so 
-almost 99\% of the time.
+completing control loops in under 33.$\overline{\mbox{33}}$ 
+ms, or 30 hz, and can do so 100\% of the time.
 Other tested embedded platforms, Intel Up and NVIDIA TX2, offer even
 better performance, capable of supporting deep-learning based real-time
 control up to 100 Hz control frequency on the TX2 when the GPU is used.
 However, in all platforms, shared resource contention remains an
-important issue as we observe up to 9.6X control loop execution time
+important issue as we observe up to 11.6X control loop execution time
 increase, mostly due to increase in the nueral network inferencing
 operation, when memory performance intensive applications are
 co-scheduled on idle CPU cores.

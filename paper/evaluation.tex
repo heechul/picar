@@ -254,7 +254,92 @@ may be more important. Although our observation is made on a single
 hardware platform running on a single DNN workload, we suspect that
 many AI workloads may exhibit similar characteristics.
 
-\begin{table*}[h]
+\subsection{Effect of Cache Partitioning}
+
+In order to determine if the DNN is mostly affected by shared DRAM 
+contention, we partition the L2 cache of the Pi3 and reperform the 
+same experiments to see if there are any noticable changes. For the 
+partition, we employ PALLOC~\cite{yun2014rtas}, a color-based page 
+allocator that works on the kernel level. For the bit mask, we select 
+bits 12, 13 and 14 as those bits are used to specifically access the 
+shared L2 cache, as can be seen by \ref{fig:cache-mapping}. This 
+results in 2\textsuperscript{3} = 8 colors, which we then assign to the Pi3's 
+physical cores such that each core has two unique colors (colors 0 
+and 1 are assigned to core 0, colors 2 and 3 are assigned to core 1, 
+etc.).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{figs/cache-mapping}
+  \caption{A memory mapping of the cache sets for the Broadcom 
+BCM2837 processor used in the Raspberry Pi 3 Model B.}
+  \label{fig:cache-mapping}
+\end{figure}
+
+If performance improves as a result of partitioning the shared cache 
+then we know that the DNN, to some extent, relies on shared cache 
+performance in addition to shared DRAM performance. On the other 
+hand, if there is no improvement in performance, then it can be 
+observed that the shared memory is more critical to the performance 
+of the DNN.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/palloc_multicore}
+  \caption{Average control loop execution time vs. \#of CPU
+    cores with cache partitioning enabled.}
+  \label{fig:palloc_multicore}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/palloc_multicore}
+  \caption{Timing impact of co-scheduling multiple DNNs when cache 
+partitioning is enabled.}
+  \label{fig:palloc_multimodel}
+\end{figure}
+
+The results can be seen in Figures \ref{fig:palloc_multicore} - 
+\ref{fig:palloc_bandwidth_l2missrate}. As 
+expected, based off of previous results, we find that the performance 
+of the DNN remains consistent when cache partitioning is employed. 
+When fewer cores are used, DNN performance is slightly affected as 
+the entire L2 cache isn't available to the network. In the case of 
+running multiple models simultaneously, no performance improvements 
+are seen, which further shows that the shared cache has no affect on 
+the DNN's real-time performance.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/palloc_bandwidth_exectime}
+  \caption{Timing impact of co-scheduling memory intensive co-runners 
+when cache partitioning is enabled.}
+  \label{fig:palloc_bandwidth_exectime}
+\end{figure}
+
+In the case of running the DNN alongside synthetic memory-intensive 
+benchmarks, however, we found that partitioning the L2 cache led to a 
+decrease in performance as the number of co-runners increased. 
+However, the L2 miss rates of the model decrease as more benchmarks 
+are introduced. As such, this means that the model encounters greater 
+interence from the memory contention of the co-runners.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/palloc_bandwidth_l2missrate}
+  \caption{L2 miss rate impact of co-scheduling memory intensive co-
+runners when cache partitioning is enabled.}
+  \label{fig:palloc_bandwidth_l2missrate}
+\end{figure}
+
+By partitioning the shared L2 cache, we find that no noticable 
+improvements are gained and that performance remains consistent, or 
+decreases, depending on the circumstances. As a result, we find that 
+cache partitioning is not an effective isolation mechanism, and that 
+the performance of the shared DRAM is of greater importance to the 
+real-time efficiacy of the DeepPicar.
+
+\begin{table*}[!h]
   \centering
   \begin{tabular}{|c|c|c|c|}
     \hline
@@ -272,6 +357,10 @@ many AI workloads may exhibit similar characteristics.
     \hline
     Memory  & 1GB LPDDR2   &  2GB DDR3L     & 8GB LPDDR4              \\
     \hline
+	Peak Memory Bandwidth & 8.5 GB/s & 12.8 GB/s & 59.7 GB/s \\
+	\hline
+	Measured Bandwidth & 2127.94 MB/s & 3951.94 MB/s & 4447.90 MB/s \\
+	\hline
   \end{tabular}
   \caption{Compared embedded computing platforms}
   \label{tbl:platforms}
@@ -300,8 +389,17 @@ core is not much worse than using multiple cores; (2) multiple DNN
 models running simultaneously do not cause severe interference with
 each other.
 
-Lastly, we find that consolidating memory (DRAM) performance
+Fourth, we find that consolidating memory (DRAM) performance
 intensive applications could jeopadize DNN performance, because DNN
-performance appears to be very sensitive to memory performance; we observe up
-to 9.6X slowdown in DNN performance by co-scheduling synthetic memory 
-bandwidth intensive applications on idle cores.
+performance appears to be very sensitive to memory performance; we 
+observe up to 11.6X slowdown in DNN performance by co-scheduling 
+synthetic memory bandwidth intensive applications on idle cores.
+
+Lastly, we find that partitioning the shared L2 cache provides 
+practically no benefits to the real-time performance of the DNN. To the 
+contrary, performance is negatively affected when fewer cores are used, 
+due to less cache being available, and memory intensive co-runners are 
+introduced, as they generate more memory contention. Furthermore, we 
+find that performance remains consistent when multiple models are run 
+simultaneously. As such, we conclude that the shared L2 cache is not 
+important to the DNN's real-time performance.
