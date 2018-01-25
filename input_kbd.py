@@ -37,7 +37,7 @@ def stop(state):
     
 def read_single_keypress():
     state = init()    
-    r, w, e = select.select([sys.stdin], [], [], 0.001)
+    r, w, e = select.select([sys.stdin], [], [], 0.000)
     input = ' '
     for s in r:
         if s == sys.stdin:
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         key = read_single_keypress()
         if key == "q":
             break
-        elif key != None:
+        elif key != ' ':
             print ("%s pressed\r" % key)
         
 
