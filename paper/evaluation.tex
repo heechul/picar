@@ -261,12 +261,13 @@ contention, we partition the L2 cache of the Pi3 and reperform the
 same experiments to see if there are any noticable changes. For the 
 partition, we employ PALLOC~\cite{yun2014rtas}, a color-based page 
 allocator that works on the kernel level. For the bit mask, we select 
-bits 12, 13 and 14 as those bits are used to specifically access the 
-shared L2 cache, as can be seen by \ref{fig:cache-mapping}. This 
-results in 2\textsuperscript{3} = 8 colors, which we then assign to the Pi3's 
+bits 12, 13 and 14 as they can be used to access the L2 cache,
+as can be seen by \ref{fig:cache-mapping}. This results in 
+2\textsuperscript{3} = 8 colors, which we then assign to the Pi3's 
 physical cores such that each core has two unique colors (colors 0 
 and 1 are assigned to core 0, colors 2 and 3 are assigned to core 1, 
-etc.).
+etc.). In the case of bit 12, since we use 2 colors for each partition,
+the L1D cache is not partitioned in our experiments.
 
 \begin{figure}[h]
   \centering
@@ -306,7 +307,7 @@ of the DNN remains consistent when cache partitioning is employed.
 When fewer cores are used, DNN performance is slightly affected as 
 the entire L2 cache isn't available to the network. In the case of 
 running multiple models simultaneously, no performance improvements 
-are seen, which further shows that the shared cache has no affect on 
+are seen, which further shows that the shared cache has little affect on 
 the DNN's real-time performance.
 
 \begin{figure}[h]
@@ -334,7 +335,7 @@ runners when cache partitioning is enabled.}
 
 By partitioning the shared L2 cache, we find that no noticable 
 improvements are gained and that performance remains consistent, or 
-decreases, depending on the circumstances. As a result, we find that 
+decreases, depending on the circumstances. As a result, we conclude that 
 cache partitioning is not an effective isolation mechanism, and that 
 the performance of the shared DRAM is of greater importance to the 
 real-time efficiacy of the DeepPicar.
@@ -402,4 +403,4 @@ due to less cache being available, and memory intensive co-runners are
 introduced, as they generate more memory contention. Furthermore, we 
 find that performance remains consistent when multiple models are run 
 simultaneously. As such, we conclude that the shared L2 cache is not 
-important to the DNN's real-time performance.
+essential to the DNN's real-time performance.
