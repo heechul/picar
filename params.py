@@ -13,7 +13,7 @@ camera="camera-webcam"
 # actuator selection
 #   "actuator-drv8835", "actuator-adafruit_hat"
 ##########################################################
-actuator="actuator-adafruit_hat"
+actuator="actuator-drv8835"
 
 ##########################################################
 # model selection

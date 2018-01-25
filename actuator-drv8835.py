@@ -1,15 +1,14 @@
 from pololu_drv8835_rpi import motors, MAX_SPEED
 
 # init
-def init():
+def init(default_speed=50):
     motors.setSpeeds(0, 0)
+    set_speed(default_speed)
 
 # throttle
 cur_speed = MAX_SPEED
 
 def set_speed(speed):
-
-
     global cur_speed
     speed = int(MAX_SPEED * speed / 100)
     cur_speed = min(MAX_SPEED, speed)

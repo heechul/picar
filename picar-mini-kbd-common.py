@@ -52,7 +52,6 @@ def g_tick():
 def turn_off():    
     actuator.stop()
     camera.stop()
-    input_kbd.stop()
     
     keyfile.close()
     keyfile_btn.close()
@@ -97,9 +96,6 @@ if use_dnn == True:
     model_load_path = cm.jn(params.save_dir, params.model_load_file)
     saver.restore(sess, model_load_path)
     print ("Done..")
-
-# initialize kbd input 
-input_kbd.init()
 
 # initlaize deeppicar modules
 actuator.init(cfg_throttle)

@@ -36,16 +36,18 @@ def stop(state):
     fcntl.fcntl(fd, fcntl.F_SETFL, state[0])
     
 def read_single_keypress():
+    state = init()    
     r, w, e = select.select([sys.stdin], [], [], 0.001)
+    input = ' '
     for s in r:
         if s == sys.stdin:
             input = sys.stdin.read(1)
-            return input
-    return None
+            break
+    stop(state)
+    return input
 
 if __name__ == "__main__":
-    state = init()
-    
+
     while True:
         key = read_single_keypress()
         if key == "q":
@@ -53,5 +55,5 @@ if __name__ == "__main__":
         elif key != None:
             print ("%s pressed\r" % key)
         
-    stop(state)
+
     
