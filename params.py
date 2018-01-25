@@ -6,6 +6,7 @@ from collections import OrderedDict
 
 ##########################################################
 # camera module selection
+#   "camera-webcam"
 ##########################################################
 camera="camera-webcam"
 
