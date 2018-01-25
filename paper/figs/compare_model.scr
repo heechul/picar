@@ -13,6 +13,9 @@ set label "(#of {/Times:Bold N}Ns) x (#of {/Times:Bold C}ores/NN)" at 1.8,70
 set arrow from -1,50 to 4,50 nohead dt "."
 set label  "20 Hz" at 3.5,48 font "Times-Roman,14"
 
+set arrow from -1,33.33 to 4,33.33 nohead dt "."
+set label  "30 Hz" at 3.5,31.33 font "Times-Roman,14"
+
 set arrow from -1,20 to 4,20 nohead dt "."
 set label  "50 Hz" at 3.5,18 font "Times-Roman,14"
 
