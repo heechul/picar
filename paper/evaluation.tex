@@ -149,7 +149,10 @@ feasibility of such a scenario.
 In this experiment, we launch multiple instances of DeepPicar's DNN
 model at the same time and measure its impact on their inference
 timings. In other words, we are interested in how shared resource
-contention affects inference timing.
+contention affects inference timing. These instances are not identical
+copies of the same model, but are instead copies of different models. 
+This is done to ensure that no L2 cache memory is shared between the 
+models as they are running.
 
 \begin{figure}[h]
   \centering
