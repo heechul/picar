@@ -6,6 +6,7 @@
 % for section-numbered lemmas etc., use "numberwithinsect"
  
 \usepackage{microtype}%if unwanted, comment out or use option "draft"
+\usepackage{adjustbox}
 
 %\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
 
@@ -29,8 +30,8 @@
 
 \Copyright{Michael G. Bechtel, Elise McEllhiney, Heechul Yun}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
-\subjclass{Dummy classification -- please refer to \url{http://www.acm.org/about/class/ccs98-html}}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
-\keywords{Dummy keyword -- please provide 1--5 keywords}% mandatory: Please provide 1-5 keywords
+\subjclass{C.4 PERFORMANCE OF SYSTEMS}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\keywords{Self-driving car, CNN, Raspberry Pi 3}% mandatory: Please provide 1-5 keywords
 % Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,7 +58,7 @@ replication of a real self-driving car called Dave-2 by NVIDIA, which
 drove on public roads using a deep convolutional neural network (CNN), 
 that takes images from a front-facing camera as input and produces
 car steering angles as output. DeepPicar uses the exact same network
-architecture---9 layers, 27 million connections and 250K
+architecture---8 layers, 27 million connections and 250K
 parameters---and can be trained to drive itself, in real-time, using a
 web camera and a modest Raspberry Pi 3 quad-core platform.
 Using DeepPicar, we analyze the Pi 3's computing capabilities to 
