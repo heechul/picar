@@ -76,7 +76,7 @@ utilizes a deep convolutional neural network (CNN).
 The network receives an image frame from a single forward
 looking camera as input and generates a predicted steering angle
 value as output at each control period in \emph{real-time}.
-The network has 9 layers, about 27 million connections
+The network has 8 layers, about 27 million connections
 and 250 thousand parameters (weights).
 The network architecture is identical to that of NVIDIA's DAVE-2
 self-driving car~\cite{Bojarski2016}, which uses a much more powerful
@@ -105,8 +105,8 @@ is equipped with a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
 back to the Raspberry Pi, which is then used to perform inference
 operations---locally on the Pi---in the car's main control loop in
 real-time. For real-time control, each inference operation must
-be completed within the desired control period (e.g., 50 ms period for
-20 Hz control frequency).
+be completed within the desired control period (e.g., 33.$\overline{\mbox{33}}$ ms
+ period for 30 Hz control frequency).
 % how we evaluated (in terms real-time performance)
 
 % what are our findings?
@@ -122,12 +122,12 @@ computing hardware architectures.
 We find that the DeepPicar is capable of 
 completing control loops in under 33.$\overline{\mbox{33}}$ 
 ms, or 30 hz, and can do so 100\% of the time.
-Other tested embedded platforms, Intel Up and NVIDIA TX2, offer even
-better performance, capable of supporting deep-learning based real-time
-control up to 100 Hz control frequency on the TX2 when the GPU is used.
-However, in all platforms, shared resource contention remains an
-important issue as we observe up to 11.6X control loop execution time
-increase, mostly due to increase in the nueral network inferencing
+Other tested embedded platforms, Intel UP and NVIDIA TX2, offer even
+better performance, and are capable of supporting deep-learning based 
+real-time control up to 100 Hz control frequency on the TX2 when the GPU 
+is used. However, in all platforms, shared resource contention remains 
+an important issue as we observe up to 11.6X control loop execution time
+increase, mostly due to increase in the neural network inferencing
 operation, when memory performance intensive applications are
 co-scheduled on idle CPU cores.
 
