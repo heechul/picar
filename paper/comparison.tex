@@ -4,6 +4,36 @@
 
 \section{Embedded Computing Platform Comparison}\label{sec:comparison}
 
+
+\begin{table*}[h]
+  \centering
+  \begin{adjustbox}{width=1\textwidth}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    Item    & Raspberry Pi 3 (B)   & Intel UP                  & NVIDIA Jetson TX2\\
+    \hline
+            & BCM2837              & X5-Z8350 (Cherry Trail)   & Tegra X2 \\
+    CPU     & 4x Cortex-A53@1.2GHz/512KB L2  &
+              4x Atom@1.92GHz/2MB L2 &
+              4x Cortex-A57@2GHz/2MB L2 \\
+            &              &              & 2x Denver@2.0GHz/2MB L2 (not used)  \\
+    \hline
+    GPU     &  VideoCore IV (not used)    &
+               Intel HD 400 Graphics (not used) &
+               Pascal 256 CUDA cores   \\
+    \hline
+    Memory  & 1GB LPDDR2   &  2GB DDR3L     & 8GB LPDDR4              \\
+    \hline
+	Peak Memory Bandwidth & 8.5 GB/s & 12.8 GB/s & 59.7 GB/s \\
+	\hline
+	Measured Bandwidth & 2127.94 MB/s & 3951.94 MB/s & 4447.90 MB/s \\
+	\hline
+  \end{tabular}
+  \end{adjustbox}
+  \caption{Compared embedded computing platforms}
+  \label{tbl:platforms}
+\end{table*}
+
 In this section, we compare three computing platforms---the Raspberry
 Pi 3, the Intel UP~\footnote{http://www.up-board.org/up/} and NVIDIA
 Jetson
@@ -18,7 +48,9 @@ evaluation due to TensorFlow issues.}.
   
 Our basic approach is to use the same DeepPicar software, and repeat
 the experiments in Section~\ref{sec:evaluation} on each hardware
-platform and compare the results. 
+platform and compare the results. We do not, however, repeat the cache
+partitioned experiments done on the Pi 3, as we did not believe our 
+findings warranted further experimentation on additional platforms. 
 For the Jetson TX2, we have two different system configurations,
 which differ in whether TensorFlow is configured to use its GPU or
 only the CPU cores. Thus, the total four system configurations are
@@ -36,10 +68,10 @@ timing of the four system configurations we tested as a function of
 the number of CPU cores used.
 First, both the Intel UP and Jetson TX2 exhibit superior performance when
 compared with the Raspberry Pi 3. 
-When all four CPU cores are used, the Intel UP is 2.53X faster than
-the Pi 3, while the TX2 (CPU) and TX2 (GPU) are 3.6X and 7.6X times faster,
+When all four CPU cores are used, the Intel UP is 1.33X faster than
+the Pi 3, while the TX2 (CPU) and TX2 (GPU) are 2.79X and 4.16X times faster,
 respectively, than the Pi 3. 
-As a result, they are all able to satisfy the 50 ms 
+As a result, they are all able to satisfy the 33.$\overline{\mbox{33}}$ ms 
 WCET by a clear margin,
 %%  (in the worst case, the UP Board would 
 %% still meet it by $\sim$20 ms) --> where's the data showing this?
@@ -73,18 +105,26 @@ accomodate multiple instances of the DNN model we tested.
   \label{fig:sys_bench}
 \end{figure} 
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/compare_l2missrate}
+  \caption{L2 miss rates in the presence of an increasing number of 
+			memory intensive applications on idle CPU cores.}
+  \label{fig:sys_l2miss}
+\end{figure}
+
 Finally, we compare the effect of co-scheduling memory bandwidth
 intensive synthetic benchmarks on the DNN control loop timing. 
 Figure~\ref{fig:sys_bench} shows the results.
 As discussed in 
 Section~\ref{sec:eval-memhog}, we observed dramatic execution time
-increases, up to 9.4X, in Raspberry Pi 3 as we increased the number of
+increases, up to 11.6X, in Raspberry Pi 3 as we increased the number of
 co-scheduled tasks. We also observe increased control loop execution
 timing in the Intel Up and Jetson TX2, but the degree of the increase is 
 not as dramatic as the Pi 3. Compared to their respective solo timings 
 (i.e., the model runs on a single core in isolation), Intel UP suffers up to
 2.3X execution time increase; TX2 (CPU) and TX2 (GPU) suffer up to
-2.2X and 2.5X increases, respectively. This is somewhat suprising
+2.2X and 2.1X increases, respectively. This is somewhat suprising
 because the Raspberry Pi 3's cores are in-order architecture based while
 the cores in the Intel Up and NVIDIA TX2 are out-of-order architecture
 based, and that the memory intensive tasks on out-of-order cores can
@@ -92,8 +132,18 @@ generate more memory traffic. We suspect that this is because the
 memory subsystems in the Intel UP and TX2 platforms provide higher
 bandwidth and fairness than the memory subsystem of the Pi 3.
 
+However, the L2 miss rates of the platforms follow the same expected 
+pattern, as can be seen in Figure~\ref{fig:sys_l2miss}. Namely, the 
+percentage of L2 miss rates increases are more 
+memory intensive co-runners are introduced. We found that the Pi 3 had 
+slightly higher L2 miss rates than the TX2, both CPU and GPU, but lower 
+miss rates than the UP, which had the highest l2 miss rates. Also, we
+found that the TX2 had similar miss rates when it used either the CPU
+or the GPU, which was expected as the GPU on the TX2 shares a majority 
+of the available DRAM.
+
 Another interesting observation is that the TX2 (GPU) also suffers
-considerable execution time increase (2.5X) despite the fact that the
+considerable execution time increase (2.1X) despite the fact that the
 co-scheduled synthetic tasks do not utilize the GPU. In other words,
 the DNN model has dedicated access to the GPU. This is, however, a
 known characteristic of integrated CPU-GPU architectue based
