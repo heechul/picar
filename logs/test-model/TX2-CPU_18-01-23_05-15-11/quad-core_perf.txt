@@ -1,0 +1,10 @@
+# started on Tue Jan 23 05:16:56 2018
+
+
+ Performance counter stats for 'taskset -c 0,3,4,5 python test-model.py 4':
+
+     1,310,167,044      r16                                                         
+       148,567,118      r17                                                         
+
+      12.276508978 seconds time elapsed
+
