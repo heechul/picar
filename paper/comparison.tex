@@ -91,11 +91,14 @@ is done at the GPU.
 The Intel UP board and Jetson TX2 also perform much better when multiple DNN models
 are co-scheduled. Figure~\ref{fig:sys_model} shows the results of the
 multi-model co-scheduling experiment. Once again, they can comfortably
-satisfy 20 Hz real-time performance for all of the co-scheduled DNN control
+satisfy 30 Hz real-time performance for all of the co-scheduled DNN control
 loops, and in the case of the TX2 (GPU), 100 Hz real-time control is still
-feasible. Given that the GPU must be shared among the co-scheduled DNN
-models, the results suggest that the TX2's GPU has sufficient capacity to
-accomodate multiple instances of the DNN model we tested.
+feasible. However, we found that the TX2's GPU may not have the capacity
+necessary to support multiple models running simultaneously. 
+It was unable to co-schedule 4 DNN models due to insufficient memory, 
+hence why there is no data entry for the 4Nx1C test. In our experiements,
+we found that the TX2's GPU could run at most 3 models concurrently, as 
+any more would result in one of the models being terminated.
 
 \begin{figure}[h]
   \centering
