@@ -1,11 +1,3 @@
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=.9\textwidth]{figs/TrainingLoss}
-  \caption{Change in loss value throughout training.}
-  \label{fig:modelloss}
-\end{figure*}
-
-
 \subsection{DNN Training and Testing}
 We have trained and tested the deep neural network with several
 different track conditions, different combinations of input
@@ -13,12 +5,19 @@ data, and different hyper parameters. In the following paragraphs, we
 describe details on two of the training methods that performed 
 reasonably well.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.1\textwidth, height=5cm]{figs/TrainingLoss}
+  \caption{Change in loss value throughout training.}
+  \label{fig:modelloss}
+\end{figure}
+
 In the first method, we trained the neural network model across a set 
 of 30 completed runs on the track seen in Figure~\ref{fig:track} by a
 human pilot. Half of the runs saw the car driving one way along the
 track, while the remaining half were of the car driving in the
 opposite direction on the track.
-In total, we collected 2,556 frames for training and 2,609 
+In total, we collected 2,481 frames for training and 2,534 
 frames for validation.
 The weights of the network are initialized using a Xavier
 initializer~\cite{Glorot2010}, which is known to provide better
@@ -27,8 +26,8 @@ In each training step, we use a batch
 size of 100 frames, which are randomly selected among all the
 collected training images, to optimize the network.
 We repeat this across 2,000 training steps. When a model was trained
-with the  aformentioned data, the training loss was 0.0188 and the
-validation  loss was 0.0132.
+with the  aformentioned data, the training loss was 0.0151 and the
+validation  loss was 0.0251.
 The change of the loss value over the course of model training can be
 seen in Figure~\ref{fig:modelloss}.
 
@@ -40,9 +39,9 @@ images. We find that the car performed better in practice by applying
 this approach as the car displayed a greater ability to stay in the
 center of the track (on the white tape).
 However, we find that there is a huge discrepency between the training
-loss and the validation loss as the former was 0.009, while the latter
-was 0.0869---a 10X difference---indicating that the model suffers from
-an overfitting problem.
+loss and the validation loss as the former was 0.0126, while the latter
+was 0.0725 --- almost a 6X difference---indicating that the model 
+suffers from an overfitting problem.
 
 We continue to investigate ways to achieve better prediction accuracy
 in training the network, as well as improving the performance of the RC
