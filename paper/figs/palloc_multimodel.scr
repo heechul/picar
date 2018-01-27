@@ -4,16 +4,20 @@ set yrange [0.0:100.0]
 set ylabel "Avg. processing time (ms)" offset 2.5
 set xlabel "(#of {/Times:Bold N}Ns) x (#of {/Times:Bold C}ores/NN)"
 
-set arrow from -1,50 to 4,50 nohead dt "-"
-set label  "20" at 4.05,53 
-set label  "Hz" at 4.05,45
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
 
-set arrow from -1,33.33 to 4,33.33 nohead dt "-"
-set label  "30" at 4.05,36 
-set label  "Hz" at 4.05,28
+set arrow from -1,50 to 2,50 nohead dt "-"
+set label  "20" at 2.05,53 
+set label  "Hz" at 2.05,45
 
-set boxwidth 1.0
+set arrow from -1,33.33 to 2,33.33 nohead dt "-"
+set label  "30" at 2.05,36 
+set label  "Hz" at 2.05,28
+
+set boxwidth 1
 set termoption dash
-set arrow from 1.5,0 to 1.5,100 nohead dt "-"
-plot  "palloc_multimodel.dat"  using 2:xticlabel(1) title "no part." lt -1,\
+set arrow from 0.5,0 to 0.5,100 nohead dt "-"
+plot  "palloc_multimodel.dat"  using 2:xticlabel(1)  title "no part." lt -1,\
       ""                  using 3 title "PALLOC" lt -1
