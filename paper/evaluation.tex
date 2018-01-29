@@ -270,9 +270,17 @@ BCM2837 processor used in the Raspberry Pi 3 Model B.}
 \begin{figure}[h]
   \centering
   \includegraphics[width=.7\textwidth]{figs/palloc_multicore}
-  \caption{Average control loop execution time vs. \#of CPU
-    cores with cache partitioning enabled.}
+  \caption{Average control loop execution time vs. \# % of L2 cache
+  space available.}
   \label{fig:palloc_multicore}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/palloc_multicore_l2missrate}
+  \caption{L2 miss rate impact of limiting the amount of L2 cache space
+  available to the DNN.}
+  \label{fig:palloc_multicore_l2missrate}
 \end{figure}
 
 \begin{figure}[h]
@@ -289,6 +297,14 @@ partitioning is enabled.}
   \caption{Timing impact of co-scheduling memory intensive co-runners 
 when cache partitioning is enabled.}
   \label{fig:palloc_bandwidth_exectime}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.7\textwidth]{figs/palloc_bandwidth_bus}
+  \caption{Bus access impact of co-scheduling memory intensive co-runners 
+when cache partitioning is enabled.}
+  \label{fig:palloc_bandwidth_bus}
 \end{figure}
 
 \begin{figure}[h]
@@ -327,8 +343,11 @@ test the performance of the model when it utilizes a single core and
 all four of the available cores. The results can be seen in 
 \ref{fig:palloc_multicore}. As expected, the amount of L2 cache 
 available to the model does not result in any significant changes in 
-performance. As such, we find that a single model is not sensitive to 
-the shared L2 cache.
+performance. This can also be seen by the L2 miss rates of the model 
+seen in \ref{fig:palloc_multicore_l2missrate}. As more cache space 
+becomes avaiable, the percentage of L2 misses decreases, which doesn't 
+affect the real-time performance of the DNN. As such, we find that a 
+single model is not sensitive to the shared L2 cache.
 
 We also co-schedule multiple models to see how cache partitioning affects
 interference between them. Each model uses an equal number of colors, and
@@ -349,18 +368,19 @@ performance doesnt't change relative to when the cache wasn't partitioned.
 However, we find that with two or more co-runners, DNN performance becomes
 worse. In the case of two co-runners, average control loop time increases
 by 66.31 ms, or 26\%, and with three co-runners, the average time
-is 265.64 ms, of 49\%, greater. This difference is most likely due to the
-L2's prefetcher, which has the potential to generate additional memory
-contention and, thus, affect the performance of the DNN.
+is 265.64 ms, of 49\%, greater.
 At the same time, though, the L2 miss rates of the model don't correlate 
 to the timing increases seen, as is shown in 
-\ref{fig:palloc_bandwidth_l2missrate}. With partitioning enabled, L2 miss
-rates are higher when no co-runners are present, which is expected, but 
-are the same or lower when co-runners are introduced. If the model was 
-sensitive to the L2 cache, then performance would have improved as 
-proportionaly fewer L2 misses occurred. Since this is not the case, it 
-can be seen that the DNN is more sensitive to the performance of the DRAM
-controller, and not the shared L2 cache.
+\ref{fig:palloc_bandwidth_l2missrate}. Instead, we find that the number
+of bus accesses increases when cache partitions was used, and they mirror
+the timing increases of the model. These additional bus accesses are
+most likely caused by the L2 prefetcher, as it can generate additional bus
+accesses that aren't counted as L2 misses. As a result, we find that cache
+partitioning is detrimental to the performance of the DNN so long as the 
+L2 prefetcher is enabled (we have not yet found a way to disable it on
+the Pi 3). Furthermore, no cache sensitivity was displayed by the model,
+thus showing that the performance of the L2 cache is not vital for DNN 
+performance when co-runners are introduced.
 
 By partitioning the shared L2 cache, we find that no noticable 
 improvements are gained and that performance remains consistent, or 
