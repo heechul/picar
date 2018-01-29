@@ -349,9 +349,18 @@ performance doesnt't change relative to when the cache wasn't partitioned.
 However, we find that with two or more co-runners, DNN performance becomes
 worse. In the case of two co-runners, average control loop time increases
 by 66.31 ms, or 26\%, and with three co-runners, the average time
-is 265.64 ms, of 49\%, greater.
-
-%TODO: Talk about the prefetcher, or something, for why the benchmark performance is worse.
+is 265.64 ms, of 49\%, greater. This difference is most likely due to the
+L2's prefetcher, which has the potential to generate additional memory
+contention and, thus, affect the performance of the DNN.
+At the same time, though, the L2 miss rates of the model don't correlate 
+to the timing increases seen, as is shown in 
+\ref{fig:palloc_bandwidth_l2missrate}. With partitioning enabled, L2 miss
+rates are higher when no co-runners are present, which is expected, but 
+are the same or lower when co-runners are introduced. If the model was 
+sensitive to the L2 cache, then performance would have improved as 
+proportionaly fewer L2 misses occurred. Since this is not the case, it 
+can be seen that the DNN is more sensitive to the performance of the DRAM
+controller, and not the shared L2 cache.
 
 By partitioning the shared L2 cache, we find that no noticable 
 improvements are gained and that performance remains consistent, or 
