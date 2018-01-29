@@ -319,27 +319,45 @@ hand, if there is no improvement in performance, then it can be
 observed that the shared memory is more critical to the performance 
 of the DNN.
 
-The results can be seen in Figures \ref{fig:palloc_multicore} - 
-\ref{fig:palloc_bandwidth_l2missrate}. As 
-expected, based off of previous results, we find that the performance 
-of the DNN remains consistent when cache partitioning is employed. 
-When fewer cores are used, DNN performance is slightly affected as 
-the entire L2 cache isn't available to the network. In the case of 
-running multiple models simultaneously, no performance improvements 
-are seen, which further shows that the shared cache has little affect on 
-the DNN's real-time performance.
+We run the DNN model with different amounts of L2 cache being
+available based on the number of colors being used. For example, if two 
+colors are used, then 25\% of the L2 cache is available, whereas if all 
+8 colors are used, 100\% of the L2 cache is available. Particularly, we 
+test the performance of the model when it utilizes a single core and
+all four of the available cores. The results can be seen in 
+\ref{fig:palloc_multicore}. As expected, the amount of L2 cache 
+available to the model does not result in any significant changes in 
+performance. As such, we find that a single model is not sensitive to 
+the shared L2 cache.
 
-In the case of running the DNN alongside synthetic memory-intensive 
-benchmarks, however, we found that partitioning the L2 cache led to a 
-decrease in performance as the number of co-runners increased. 
-However, the L2 miss rates of the model decrease as more benchmarks 
-are introduced. As such, this means that the model encounters greater 
-interence from the memory contention of the co-runners.
+We also co-schedule multiple models to see how cache partitioning affects
+interference between them. Each model uses an equal number of colors, and
+are thus given equal amounts of L2 cache space, and there is no overlap
+in the colors used, so no L2 cache is shared between models. As can be 
+seen in \ref{fig:palloc_multimodel}, the performance of the models 
+remains the same as when no cache partitioning was employed. Based of 
+these results, we find that contention for the L2 cache is not the main
+source of interference between multiple DNN models.
+
+Finally, we run a single model alongside memory intensive co-runners 
+again, but ensure that each task is given equal amounts of L2 cache space.
+For this, we assign two colors to each task, regardless of the number of
+tasks being scheduled. As a result, the entire cache is not utilized in
+experiments with less than four tasks. The results can be seen in 
+\ref{fig:palloc_bandwidth_exectime}. With zero or one co-runners, the DNN
+performance doesnt't change relative to when the cache wasn't partitioned.
+However, we find that with two or more co-runners, DNN performance becomes
+worse. In the case of two co-runners, average control loop time increases
+by 66.31 ms, or 26\%, and with three co-runners, the average time
+is 265.64 ms, of 49\%, greater.
+
+%TODO: Talk about the prefetcher, or something, for why the benchmark performance is worse.
 
 By partitioning the shared L2 cache, we find that no noticable 
 improvements are gained and that performance remains consistent, or 
-decreases, depending on the circumstances. As a result, we conclude that 
-cache partitioning is not an effective isolation mechanism, and that 
+decreases, depending on the circumstances. In all experiements, the DNN
+shows no sensitivity to the shared L2 cache. As a result, we conclude 
+that cache partitioning is not an effective isolation mechanism, and that 
 the performance of the shared DRAM controller is of greater importance 
 to the real-time efficiacy of the DeepPicar.
 
