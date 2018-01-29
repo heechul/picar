@@ -21,4 +21,4 @@ plot  "palloc_multicore.dat"  using 2:xticlabel(1) title "no part." lt -1,\
       ""                  using 3 title "25%" lt -1,\
       ""                  using 4 title "50%" lt -1,\
       ""                  using 5 title "75%" lt -1,\
-      ""                  using 6 title "10%" lt -1
+      ""                  using 6 title "100%" lt -1

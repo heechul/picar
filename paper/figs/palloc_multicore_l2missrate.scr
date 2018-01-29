@@ -1,0 +1,16 @@
+set terminal pdf font "Times-Roman,14"
+set output "palloc_multicore_l2missrate.pdf"
+set yrange [0.0:30.0]
+set xlabel "#of cores" 
+set ylabel "L2 miss %" offset 2.5
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set boxwidth 1
+plot  "palloc_multicore_l2missrate.dat"  using 2:xticlabel(1) title "no part." lt -1,\
+      ""                  using 3 title "25%" lt -1,\
+      ""                  using 4 title "50%" lt -1,\
+      ""                  using 5 title "75%" lt -1,\
+      ""                  using 6 title "100%" lt -1
