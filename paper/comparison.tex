@@ -132,17 +132,12 @@ the cores in the Intel Up and NVIDIA TX2 are out-of-order architecture
 based, and that the memory intensive tasks on out-of-order cores can
 generate more memory traffic. We suspect that this is because the
 memory subsystems in the Intel UP and TX2 platforms provide higher
-bandwidth and fairness than the memory subsystem of the Pi 3.
-
-However, the L2 miss rates of the platforms follow the same expected 
+bandwidth and fairness than the memory subsystem of the Pi 3. However, 
+the L2 miss rates of the platforms follow the same expected 
 pattern, as can be seen in Figure~\ref{fig:sys_l2miss}. Namely, the 
 percentage of L2 miss rates increases are more 
 memory intensive co-runners are introduced. We found that the Pi 3 had 
-slightly higher L2 miss rates than the TX2, both CPU and GPU, but lower 
-miss rates than the UP, which had the highest l2 miss rates. Also, we
-found that the TX2 had similar miss rates when it used either the CPU
-or the GPU, which was expected as the GPU on the TX2 shares a majority 
-of the available DRAM.
+slightly higher L2 miss rates than the UP and TX2. 
 
 Another interesting observation is that the TX2 (GPU) also suffers
 considerable execution time increase (2.1X) despite the fact that the
