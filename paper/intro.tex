@@ -118,30 +118,93 @@ platforms to better understand achievable real-time performance of
 DeepPicar's deep-learning based control system and the impact of
 computing hardware architectures.
 
+% Findings:
+%
+% - we find DNN processing is an ideal real-time workload from the
+%   perspective of timing predictability as the amount of computation
+%   needed is fixed at design time and doesn't change over input.
+%
+% - real-time processing of non-trivial DNN inferencing is feasible
+%   on today's embedded multicore platform, even as inexpensive as
+%   raspberry pi3.
+%
+% - all tested platforms have enough computing capacity to consolidate 
+%   multiple DeepPicar's CNN workloads or other compute intensive tasks
+%   simultaneously.
+%
+% - however, when consolidating multiple workloads shared resource
+%   contention is an important issue. we carefully analyzed
+%   sensitivity of DeepPicar's workload with respect to shared
+%   hardware resources.
+%
+% - in particular, we find DNN processing is highly sensitive to
+%   memory performance. performance severely affected when memory
+%   bandwidth is contented.
+%
+% - however, we find that dnn processing is not sensitive to cache
+%   space. we find applying cache partitioning does not help improve
+%   isolation of DNN workload when memory bandwidth is contended.
+From the systematic study, we made a number of interesting
+observations from the perspective of real-time systems.
+% predictability
+First, we find that DNN inferencing is, in a sense, an ideal real-time
+workload as the amount of computation needed to compete a single
+inference is fixed at the DNN architecture design time and does not
+change at runtime over different input (e.g., different image frame).
+This means that it is feasible to achieve highly predictable and
+tightly bounded worst-case execution time estimation.
+Second,
 
-We find that the DeepPicar is capable of 
-completing control loops in under 33.$\overline{\mbox{33}}$ 
-ms, or 30 hz, and can do so 100\% of the time.
+% performance on low-cost embedded multicore
+Second, we find that real-time processing of DeepPicar's DNN-based
+control loop is feasible on today's embedded computing platforms, even 
+as inexpensive as Raspberry Pi 3. We find that the control loop completes 
+under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two cores of
+the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
+do so 100\% of the time; we can achieve 20 Hz control frequency using
+just one core (out of four) of the Raspberry Pi 3's quad-core CPU.
 Other tested embedded platforms, Intel UP and NVIDIA TX2, offer even
 better performance, and are capable of supporting deep-learning based 
-real-time control up to 100 Hz control frequency on the TX2 when the GPU 
-is used. However, in all platforms, shared resource contention remains 
-an important issue as we observe up to 11.6X control loop execution time
-increase, mostly due to increase in the neural network inferencing
-operation, when memory performance intensive applications are
-co-scheduled on idle CPU cores.
+real-time control over 100 Hz control frequency on the TX2 when its
+embedded GPU is used.
+We find that all the tested embedded computing platforms have 
+enough computing capacity to consolidate multiple instances of
+DeepPicar's DNN workload.
+
+% all platforms have enough capacity to consolidate
+Third, contention in shared hardware resources remains an important
+issue when consolidating multiple workloads. 
+In particular, we find that DNN inferencing is highly sensitive to
+memory performance inference as we observe up to 11.6X control loop
+execution time increase, when memory performance intensive
+applications are co-scheduled on idle CPU cores.
+We find, however, that DNN inferencing is not sensitive to cache
+space; we show that applying cache partitioning has negligible impact
+in providing timing isolation on consolidated scenarios. This finding
+suggests that in order to guarantee real-time performance of DNN-based
+control applications, solutions to guarantee its memory performance
+are much more important.
 
 % contributions
 The {\bf contributions} of this paper are as follows:
 \begin{itemize}
-  \item We present the design and implementation of a
-    low-cost autonomous vehicle testbed, DeepPicar, which utilizes
-    state-of-the-art artificial intelligence techniques.
-  \item We provide an analysis and case-study of real-time issues in the
-    DeepPicar.
-  \item We systematically compare real-time computing capabilities of
-    multiple embedded computing platforms in the context of
-    vision-based autonomous driving.
+  \item We provide the design and implementation of a low-cost
+    autonomous car testbed, DeepPicar, which is based on a
+    state-of-the-art end-to-end deep learning, as
+    open-source~\footnote{The source code, build 
+instruction, and a collection of self-driving videos of the DeepPicar
+can be found at: \url{https://github.com/heechul/picar}}, with the
+    goal of lowering the economic and safety-related barriers to study
+    autonomous cars.
+
+  \item We systematically analyze the characteristics of DeepPicar's
+    DNN inferencing workload on a number of representative
+    contemporary embedded computing platforms from the perspective of
+    real-time systems. In particular, to the best of our knowledge,
+    our work is first to investigate the impacts of shared resource
+    contention on DNN inferencing workloads in the context of
+    real-time systems.
+
 \end{itemize}
 
 The remaining sections of the paper are as follows: Section II 

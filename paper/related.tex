@@ -6,14 +6,14 @@
   platforms.
   2) But, the CNN model is rather smaller-kind with respect to today's
   state-of-the-art CNNs, which are much bigger.
-  3) show table, borrowed from google's object detection api
+  3) disscuss google's object detection api
   paper~\cite{huang2017speed}. 
-  4) Applying these much more complex DNNs would improve network accuracy
-  but they are obviously challenging for embedded computing
-  platforms. We already discussed computing platform improvement that
-  improve performance of executing a given DNN workload in
-  section 2, so here we discuss model compression that reduces
-  the necessary computing load itself.}
+  4) Applying these much more complex DNNs (such as google's detection
+  models) may be challenging for embedded computing
+  platforms.
+  5) Two general approaches: (1) make it faster (computing workload
+  remains the same) (2) reduce the workload itself (model compression
+  or reduced precision etc.)}
 
 % related work on efficient DNN representation and processing.
 While repeated feedforward and backpropagation operations during
@@ -65,7 +65,7 @@ XNOR-POP is another hardware implementation that reduced
 the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
 
 % related work on testbeds
-\fixme{discuss MIT racecar, UPENN car, donkey car and other testbeds?
+\fixme{maybe we can also discuss MIT racecar, UPENN car, donkey car and other testbeds?
   The points of discussion may include: 1) they are expensive. 2)
   donkey car is similar to us, but still a bit more expnsive, and more
   importantly there is no existing studies which systematically evaluate
