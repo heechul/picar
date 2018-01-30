@@ -14,6 +14,19 @@
   5) Two general approaches: (1) make it faster (computing workload
   remains the same) (2) reduce the workload itself (model compression
   or reduced precision etc.)}
+  
+While we were able to show that a smaller embedded platform like the 
+Raspberry Pi 3 can successfully run a DNN, it should be noted that the
+network architecture, and hence model, used was relatively small. Other 
+available DNN's can be much larger compared to the architecture of the
+DAVE-2. Such DNN's can be seen in Google's Object Detection API~\cite{huang2017speed}.
+The smallest model available in the API is the MobileNet model, which
+has 3,191,072 parameters and is approximately 12.7 larger than the
+model used by the DeepPicar. The other models all have parameter sizes 
+of at least 10 million. Due to the considerable differences in the 
+model sizes, it is likely that running them on platforms like the Pi 3,
+and still get acceptable real-time performance would be difficult, 
+if not infeasible. 
 
 % related work on efficient DNN representation and processing.
 While repeated feedforward and backpropagation operations during
@@ -75,3 +88,15 @@ the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
   car. Our work is fully reproducible at a very low cost, lowring the
   barrier to entry in researching self-driving cars, helping the
   community blah blah blah.}
+  
+Another autonomous vehicle platform is the Donkey Car\footnote{https://donkeycar.com}.
+Like the DeepPicar, the Donkey Car is a low cost platform that can be 
+utilized for researching self-driving cars. However, comparatively, the
+DeepPicar is approximately \$200 cheaper than the Donkey Car. 
+Furthermore, the Donkey Car was created with an emphasis on model accuracy
+and the ability of the car to navigate the desired environment. We are 
+more focused on the real-time performance of the DeepPicar, and whether
+the Raspberry Pi 3 embedded computing platform can properly support autonomous 
+vehicle operations. To the best of our knowledge, no other studies have
+been done to evaluate the capabilities of the Pi 3 for running DNNs and
+performing autonomous vehicle operations.
