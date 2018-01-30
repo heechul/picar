@@ -26,7 +26,7 @@ Executing these AI workloads on an embedded computing platform
 poses several additional challenges. First, many AI workloads in vehicles 
 are computationally demanding and have strict real-time requirements. 
 For example, latency in a vision-based object
-detection task may be directly linked to safety of the vehicle. This
+detection task may be directly linked to the safety of the vehicle. This
 requires a high computing capacity as well as the means to guaranteeing
 the timings. On the other hand, the computing hardware platform must
 also satisfy cost, size, weight, and power constraints, which require a
@@ -78,7 +78,7 @@ looking camera as input and generates a predicted steering angle
 value as output at each control period in \emph{real-time}.
 The network has 8 layers, about 27 million connections
 and 250 thousand parameters (weights).
-The network architecture is identical to that of NVIDIA's DAVE-2
+The network architecture is almost identical to that of NVIDIA's DAVE-2
 self-driving car~\cite{Bojarski2016}, which uses a much more powerful
 computer (Drive PX computer~\cite{drivepx}) than a Raspberry Pi~3.
 We chose to use a Pi 3 not only because it is affordable, but also because it is representative
@@ -153,7 +153,6 @@ inference is fixed at the DNN architecture design time and does not
 change at runtime over different input (e.g., different image frame).
 This means that it is feasible to achieve highly predictable and
 tightly bounded worst-case execution time estimation.
-Second,
 
 % performance on low-cost embedded multicore
 Second, we find that real-time processing of DeepPicar's DNN-based
