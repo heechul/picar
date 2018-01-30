@@ -48,7 +48,9 @@ estimated cost of the system.
 
 For the neural network architecture, we adopt a TensorFlow version of
 NVIDIA DAVE-2's convolutional neural network (CNN), published by Dr.
-Fridman at  MIT~\footnote{https://github.com/lexfridman/deeptesla}. As
+Fridman at  MIT~\footnote{https://github.com/lexfridman/deeptesla}. The 
+main difference is that we do not utilize a normalization layer, and 
+instead initialize the weights using a Xavier initialization. As
 in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
 as input and produces a single steering angle value as
 output. Figure~\ref{fig:architecture} shows the network architecture, which
@@ -60,8 +62,8 @@ connections.
   \includegraphics[width=\textwidth]{figs/architecture}
   \caption{DeepPicar's neural network architecture: 8 layers (5
     convolutional, 3 fully-connected layers), 27 million connections,
-    250K parameters. The architecture is identical to the one used
-    in NVIDIA's real self-driving car~\cite{Bojarski2016}.}
+    250K parameters. The architecture is almost identical to the one 
+	used in NVIDIA's real self-driving car~\cite{Bojarski2016}.}
   \label{fig:architecture}
 \end{figure}
 
