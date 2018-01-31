@@ -150,18 +150,18 @@ observations from the perspective of real-time systems.
 First, we find that DNN inferencing is, in a sense, an ideal real-time
 workload as the amount of computation needed to compete a single
 inference is fixed at the DNN architecture design time and does not
-change at runtime over different input (e.g., different image frame).
+change at runtime over different inputs (e.g., different image frame).
 This means that it is feasible to achieve highly predictable and
 tightly bounded worst-case execution time estimation.
 
 % performance on low-cost embedded multicore
 Second, we find that real-time processing of DeepPicar's DNN-based
 control loop is feasible on today's embedded computing platforms, even 
-as inexpensive as Raspberry Pi 3. We find that the control loop completes 
-under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two cores of
-the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
+as inexpensive as the Raspberry Pi 3. We find that the control loop 
+completes in under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two 
+cores of the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
 do so 100\% of the time; we can achieve 20 Hz control frequency using
-just one core (out of four) of the Raspberry Pi 3's quad-core CPU.
+just one core of the Raspberry Pi 3's quad-core CPU.
 Other tested embedded platforms, Intel UP and NVIDIA TX2, offer even
 better performance, and are capable of supporting deep-learning based 
 real-time control over 100 Hz control frequency on the TX2 when its
@@ -174,7 +174,7 @@ DeepPicar's DNN workload.
 Third, contention in shared hardware resources remains an important
 issue when consolidating multiple workloads. 
 In particular, we find that DNN inferencing is highly sensitive to
-memory performance inference as we observe up to 11.6X control loop
+memory performance inference as we observe up to an 11.6X control loop
 execution time increase, when memory performance intensive
 applications are co-scheduled on idle CPU cores.
 We find, however, that DNN inferencing is not sensitive to cache
