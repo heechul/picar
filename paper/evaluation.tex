@@ -7,8 +7,8 @@ of the DeepPicar. This includes
 deep learning inferencing,
 (2) the effect of using multiple cores in accelerating inferencing,
 (3) the effect of co-scheduling multiple deep neural network models,
-and 
-(4) the effect of co-scheduling memory bandwidth intensive co-runners.
+(4) the effect of co-scheduling memory bandwidth intensive co-runners,
+and
 (5) the effect of partitioning the shared L2 cache.
 
 \subsection{Setup}
@@ -127,7 +127,7 @@ TensorFlow. As expected, as we assign more cores, the average execution
 time decreases---from 46.30 ms on a single core to 22.86 ms on four
 cores (over a 100\% improvement). However, the improvement is far from an ideal
 linear scaling. In particular, from 3 cores to 4 cores, the
-improvement is mere 2.80 ms, or 12%. In short, we find that the
+improvement is mere 2.80 ms, or 12\%. In short, we find that the
 scalability of DeepPicar's deep neural network is not ideal on the
 platform. We do not know whether it is due to the limitations of
 TensorFlow's multicore implementation or if it's the model's inherent
@@ -362,7 +362,7 @@ Finally, we run a single model alongside memory intensive co-runners
 again, but ensure that each task is given equal amounts of L2 cache space.
 For this, we assign two colors to each task, regardless of the number of
 tasks being scheduled. As a result, the entire cache is not utilized in
-experiments with less than four tasks. The results can be seen in 
+experiments with less than four tasks. The results can be seen in Figure
 \ref{fig:palloc_bandwidth_exectime}. With zero or one co-runners, the DNN
 performance doesnt't change relative to when the cache wasn't partitioned.
 However, we find that with two or more co-runners, DNN performance becomes
@@ -372,8 +372,9 @@ is 265.64 ms, of 49\%, greater.
 At the same time, though, the L2 miss rates of the model don't correlate 
 to the timing increases seen, as is shown in 
 \ref{fig:palloc_bandwidth_l2missrate}. Instead, we find that the number
-of bus accesses increases when cache partitions was used, and they mirror
-the timing increases of the model. These additional bus accesses are
+of bus accesses increases when cache partitions are used, and they mirror
+the timing increases of the model. This can be seen in Figure 
+\ref{fig:palloc_bandwidth_bus}. These additional bus accesses are
 most likely caused by the L2 prefetcher, as it can generate additional bus
 accesses that aren't counted as L2 misses. As a result, we find that cache
 partitioning is detrimental to the performance of the DNN so long as the 
@@ -423,9 +424,10 @@ synthetic memory bandwidth intensive applications on idle cores.
 
 Lastly, we find that partitioning the shared L2 cache provides 
 practically no benefits to the real-time performance of the DNN. To the 
-contrary, performance is negatively affected when fewer cores are used, 
-due to less cache being available, and memory intensive co-runners are 
-introduced, as they generate more memory contention. Furthermore, we 
+contrary, performance is constant regardless of the amount of cache 
+space used. We also find that performance becomes worse when memory
+intensive co-runners are introduced as they generate more memory 
+contention when partitioning is enabled. Furthermore, we 
 find that performance remains consistent when multiple models are run 
 simultaneously. As such, we conclude that the shared L2 cache is not 
 essential to the DNN's real-time performance.

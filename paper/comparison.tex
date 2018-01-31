@@ -45,7 +45,7 @@ based autonomous vehicles.
 Table~\ref{tbl:platforms} shows architectural features of the three
 platforms~\footnote{The GPUs of the Raspberry Pi 3 and Intel
   Up are not used in evaluation due to the lack of software (TensorFlow)
-support. Also, the two Denver cores in Tegra TX2 are not used in
+support. Also, the two Denver cores in the Tegra TX2 are not used in
 evaluation due to TensorFlow issues.}.
   
 Our basic approach is to use the same DeepPicar software, and repeat
@@ -77,10 +77,10 @@ As a result, they are all able to satisfy the 33.$\overline{\mbox{33}}$ ms
 WCET by a clear margin,
 %%  (in the worst case, the UP Board would 
 %% still meet it by $\sim$20 ms) --> where's the data showing this?
-and, in case of TX2, 50 Hz or even 100 Hz real-time control is
-feasible with the help of its GPU. Another observation is that TX2
-(GPU) does not change much, as most of the neural network computation
-is done at the GPU.
+and, in the case of the TX2, 50 Hz or even 100 Hz real-time control is
+feasible with the help of its GPU. Another observation is that the TX2
+(GPU) performance does not change much, as most of the neural network 
+computation is done at the GPU.
 
 \begin{figure}[h]
   \centering
@@ -97,7 +97,7 @@ satisfy 30 Hz real-time performance for all of the co-scheduled DNN control
 loops, and in the case of the TX2 (GPU), 100 Hz real-time control is still
 feasible. Given that the GPU must be shared among the co-scheduled DNN
 models, the results suggest that the TX2's GPU has sufficient capacity to
-accomodate multiple instances of the DNN model we tested.
+accomodate multiple instances of the DNN models we tested.
 
 \begin{figure}[h]
   \centering
@@ -133,11 +133,14 @@ based, and that the memory intensive tasks on out-of-order cores can
 generate more memory traffic. We suspect that this is because the
 memory subsystems in the Intel UP and TX2 platforms provide higher
 bandwidth and fairness than the memory subsystem of the Pi 3. However, 
-the L2 miss rates of the platforms follow the same expected 
+the L2 miss rates of the Pi 3 and TX2 platforms follow the same expected 
 pattern, as can be seen in Figure~\ref{fig:sys_l2miss}. Namely, the 
 percentage of L2 miss rates increases are more 
-memory intensive co-runners are introduced. We found that the Pi 3 had 
-slightly higher L2 miss rates than the UP and TX2. 
+memory intensive co-runners are introduced. This was not the case for 
+the UP board, where the model running on two cores generated the highest
+percentage of L2 cache misses. This is most likely due to the CPU 
+architecture of the UP's CPU which is Intel based, whereas both the Pi 3
+and TX2 have ARM based CPUs.
 
 Another interesting observation is that the TX2 (GPU) also suffers
 considerable execution time increase (2.1X) despite the fact that the
