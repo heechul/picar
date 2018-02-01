@@ -24,4 +24,4 @@ echo 0-7 > /sys/fs/cgroup/palloc/part8/palloc.bins #Multicore 4c
 
 #Enable PALLOC and set debug level
 echo 1 > /sys/kernel/debug/palloc/use_palloc
-echo 2 > /sys/kernel/debug/palloc/debug_level
+#echo 2 > /sys/kernel/debug/palloc/debug_level
