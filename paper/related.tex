@@ -17,10 +17,11 @@
 
 %% {\bf DNN optimization for embedded systems.}
 
-While we showed that a low-cost embedded platform such as the 
-Raspberry Pi 3 can successfully implement CNN-based autonomous driving
-in real-time, it should be noted that the CNN we used here is relatively
-small and recent state-of-the-art CNNs tend to be much larger.
+In this paper, we demonstrated that a low-cost embedded platform such
+as the  Raspberry Pi 3 can successfully run a CNN-based autonomous
+driving control system in real-time. However, it should be noted that
+the CNN we used here is relatively small compared to recent
+state-of-the-art CNNs, which are increasingly larger and deeper.
 For example, the CNN based object detector models evaluated in
 Google's recent study~\cite{huang2017speed} have between 3M to 54M
 parameters. Using such large CNN models will be challenging on
@@ -48,7 +49,7 @@ real-time applications such as self-driving cars.
 
 While continuing performance improvmenets in embedded computing
 platforms will certainly make processing of these complex CNNs faster,
-another actively investigate approrach is to reduce the required
+another actively investigated approrach is to reduce the required
 computational complexity itself.
 When a DNN is deployed in those implementations with limited
 resources, such as memory and power, the floating-point operations
@@ -90,8 +91,8 @@ single precision~\cite{beauchamp2006embedded,govindu2004analysis}.
 XNOR-POP is another hardware implementation that reduced
 the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
 
-We believe these reseach can make complex DNNs more accessible for
-real-time embedded systems.
+These reseach efforts are expected to make complex DNNs more
+accessible for real-time embedded systems.
 
 %% % related work on testbeds
 %% \fixme{maybe we can also discuss MIT racecar, UPENN car, donkey car and other testbeds?
