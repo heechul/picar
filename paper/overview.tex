@@ -166,9 +166,12 @@ applied 50 ms later. Considering that camera's framerate is 30Hz
 (33.3ms/frame), this is about two frames after the control action.
 %% We experimentally measured the camera
 %% latency and found it to be around 50-100 ms.
-If this value is too high, control performance may suffer. 
+If this value is too high, control performance may suffer.
+Our initial prototype suffered this problem as the observed camera and
+control latency was as high as 300 ms, which negatively affected
+control performance.
 For reference, the latency of human perception is known to be as fast
-as 13 ms~\cite{ThomasBurger2015}.
+as 13 ms~\cite{ThomasBurger2015}. 
 % https://www.pubnub.com/blog/2015-02-09-how-fast-is-realtime-human-perception-and-technology/
 
 Despite these issues, the trained models were still able to
@@ -180,4 +183,8 @@ the experiment, and more than one minute at a higher speed (75\%
 throttle)~\footnote{A collection of self-driving videos can be found
   at: \url{https://photos.app.goo.gl/ce93sU7jPk4ywO8u2}}. Running at
 higher speed is inherently more challenging because the CNN controller
-has less time to recover from mistakes (bad predictions).
+has less time to recover from mistakes (bad predictions).  Also, we
+find that the prediction accuracy is significantly affected by the
+quality of training data as well as various environmental factors such
+as the lighting condition. We plan to investigate more systematic ways
+to improve the CNN's prediction accuracies.
