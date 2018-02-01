@@ -79,9 +79,25 @@ processing is minimal.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.5\textwidth]{figs/track_new2}
-  \caption{One of the custom tracks used for training/testing.}
-  \label{fig:track}
+%% <<<<<<< HEAD
+%%   \includegraphics[width=.5\textwidth]{figs/track_new2}
+%%   \caption{One of the custom tracks used for training/testing.}
+%%   \label{fig:track}
+%% =======
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{figs/track_new2}
+    \caption{Track 1.}
+    \label{fig:track}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{figs/track-2}
+    \caption{Track 2.}
+    \label{fig:track2}
+  \end{subfigure}
+  \caption{Custom tracks used for training/testing}
+  \label{fig:tracks}
+%% >>>>>>> f3814396d8701264f2439b42fbe8bbb608c41452
 \end{figure}
 
 % data collection and training.
