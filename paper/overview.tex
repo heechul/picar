@@ -142,11 +142,6 @@ angle to the closest one of the three angles, which may
 introduce inaccuracy in control.
 In the future, we plan to use a different (more expensive) RC car
 platform that can precisely control the car's steering angle.
-We would like to stress, however, that the use of different RC car
-platforms has no impact on the computational 
-aspects of the system, and that our main focus of this study is
-not in improving network accuracy but in closely replicating the
-DAVE-2's network architecture and its real-time characteristics.
 
 Other issues we observed in training/testing the network, which
 can affect the prediction accuracy of the CNN, are camera and actuator
@@ -188,3 +183,10 @@ find that the prediction accuracy is significantly affected by the
 quality of training data as well as various environmental factors such
 as the lighting condition. We plan to investigate more systematic ways
 to improve the CNN's prediction accuracies.
+
+We would like to stress, however, that the the issues related to the
+CNN's accuracies have no impact on the \emph{computational 
+aspects of the system}, and that our main focus of this study is
+not in improving network accuracy but in closely replicating the
+DAVE-2's network architecture and studying its real-time
+characteristics.
