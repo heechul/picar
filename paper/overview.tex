@@ -1,18 +1,12 @@
+
 \section{DeepPicar Overview}
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=.55\textwidth]{figs/DeepPicar_platform}
-  \caption{DeepPicar platform.}
-  \label{fig:overview}
-\end{figure}
-
 In this section, we provide an overview of our DeepPicar platform. In
-developing DeepPicar, one of our primary goals is to replicate the
-NVIDIA's DAVE-2 system on a smaller scale with using a low cost
-multicore platform, the Raspberry Pi 3. Because the Pi 3's computing
-performance is much lower than that of the DRIVE PX platform used in
-DAVE-2, we are interested in if, and how, we can process
+developing DeepPicar, one of our primary goals is to faithfully
+replicate NVIDIA's DAVE-2 system on a smaller scale with using a low cost
+multicore platform, the Raspberry Pi 3. Because the Raspberry Pi 3's
+computing performance is much lower than that of the DRIVE PX platform
+used in DAVE-2, we are interested in if, and how, we can process
 computationally expensive neural network operations in
 real-time. Specifically, inferencing (forward pass processing)
 operations must be completed within each control period
@@ -21,13 +15,22 @@ frequency---locally on the Pi 3 platform, although training of the
 network (back-propagation for weight updates) can be done offline and 
 remotely using a desktop computer.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.55\textwidth]{figs/DeepPicar_platform}
+  \caption{DeepPicar platform.}
+  \label{fig:overview}
+\end{figure}
+
+
+
 Figure~\ref{fig:overview} shows the DeepPicar, which is comprised of a
 set of inexpensive components: a Raspberry Pi 3 Single Board Computer
 (SBC), a Pololu DRV8835 motor driver, a Playstation Eye webcam, a
 battery, and a 1:24 scale RC car. Table~\ref{tbl:carbom} shows the
 estimated cost of the system.
 
-\begin{table}[t]
+\begin{table}[h]
   \centering
   \begin{tabular}{|c|r|}
     \hline
@@ -46,20 +49,10 @@ estimated cost of the system.
   \label{tbl:carbom}
 \end{table}
 
-For the neural network architecture, we adopt a TensorFlow version of
-NVIDIA DAVE-2's convolutional neural network (CNN), published by Dr.
-Fridman at  MIT~\footnote{https://github.com/lexfridman/deeptesla}. The 
-main difference is that we do not utilize a normalization layer, and 
-instead initialize the weights using a Xavier initialization. As
-in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
-as input and produces a single steering angle value as
-output. Figure~\ref{fig:architecture} shows the network architecture, which
-is comprised of 8 layers, 250K parameters, and about 27 million
-connections.
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{figs/architecture}
+  \includegraphics[width=0.7\textwidth]{figs/architecture}
   \caption{DeepPicar's neural network architecture: 8 layers (5
     convolutional, 3 fully-connected layers), 27 million connections,
     250K parameters. The architecture is almost identical to the one 
@@ -67,23 +60,30 @@ connections.
   \label{fig:architecture}
 \end{figure}
 
-\begin{figure}[t]
+
+For the neural network architecture, we implement
+NVIDIA DAVE-2's convolutional neural network (CNN) using TensorFlow,
+based on ~\cite{deeptesla}. Note, however, that the CNN model
+in~\cite{deeptesla} was considerably bigger than NVIDIA's CNN as it contained an
+additional fully-connected layer of approximately 1.3M additional
+parameters. We eliminated the additional layer to faithfully recreate
+the NVIDIA's original CNN model.
+%% The main difference is that we do not utilize a normalization layer, and 
+%% instead initialize the weights using a Xavier initialization. 
+As in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
+as input and produces a single steering angle value as
+output. Figure~\ref{fig:architecture} shows the network architecture
+used in this paper, which
+is comprised of 8 layers, 250K parameters, and about 27 million
+connections. It is identical to NVIDIA DAVE-2's CNN except that we do
+not apply a normalization layer as it does not include trainable
+parameters and its computational demand is minimal.
+
+\begin{figure}[h]
   \centering
   \includegraphics[width=.65\textwidth]{figs/track_new2}
   \caption{One of the custom tracks used for training/testing.}
   \label{fig:track}
-\end{figure}
-
-\begin{figure}[t]
-   \lstset{language=python,
-           basicstyle=\ttfamily\small,
-           keywordstyle=\color{blue}\ttfamily,
-           stringstyle=\color{red}\ttfamily,
-           commentstyle=\color{green}\ttfamily
-          }  
-  \lstinputlisting[language=python]{control.py}
-  \caption{Control loop}
-  \label{fig:controlloop}
 \end{figure}
 
 % data collection and training.
@@ -95,6 +95,18 @@ where we train the network to accelerate training speed.
 For comparison, training the network on the Raspbeery Pi 3 takes
 approximately 4 hours, whereas it takes only about 5 minutes on the
 desktop computer using the GTX 1060 GPU.
+
+\begin{figure}[h]
+   \lstset{language=python,
+           basicstyle=\ttfamily\small,
+           keywordstyle=\color{blue}\ttfamily,
+           stringstyle=\color{red}\ttfamily,
+           commentstyle=\color{green}\ttfamily
+          }  
+  \lstinputlisting[language=python]{control.py}
+  \caption{Control loop}
+  \label{fig:controlloop}
+\end{figure}
 
 % inferencing on pi3
 Once the network is trained on the desktop computer, the trained model
