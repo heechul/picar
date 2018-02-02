@@ -148,14 +148,14 @@ there was no contention between the CPU cores and the GPU.
 Figure~\ref{fig:sys_l2miss} shows the L2 miss rates of DNN control
 loop. The key takeaway of this result is that the L2 miss rate is a
 poor indicator to the execution time of the control loop. As shown
-already, Raspberry Pi 3's increased L2 misses do not fully explain
-increase in processing times. In case of Intel UP, as the number of
+already, the Raspberry Pi 3's increased L2 misses do not fully explain
+increases in processing times. In case of the Intel UP, as the number of
 interfering Bandwidth benchmark instances increases, the L2 miss rates
-even drop slightly. In case of TX2 (CPU), from solo to one co-runner,
+even drop slightly. In case of the TX2 (CPU), from solo to one co-runner,
 L2 miss rate increase almost twice, but then the execution time
-increase is only about less than 10\%. However, when there are
+increase is a little less than 10\%. However, when there are
 co-runners, even though the L2 miss rates are largely unchanged, the
-DNN processing time increases significantly. TX2 (GPU) also shows
+DNN processing time increases significantly. The TX2 (GPU) also shows
 similar behavior. All of these results essentially point to the fact
 that DNN inferencing workload is largely memory performance sensitive
 but not L2 cache space sensitive. 
