@@ -104,11 +104,11 @@ processing is minimal.
 To collect the training data, a human pilot manually drives the RC car
 on tracks we created (Figure~\ref{fig:tracks}) to record
 timestamped videos and contol commands. The stored data is then copied 
-to a desktop computer, which is equipped with a NVIDIA GTX 1050ti GPU, 
+to a desktop computer, which is equipped with a NVIDIA GTX 1050 Ti GPU, 
 where we train the network to accelerate training speed. 
 For comparison, training the network on the Raspbeery Pi 3 takes
 approximately 4 hours, whereas it takes only about 4 minutes on the
-desktop computer using the GTX 1050ti GPU.
+desktop computer using the GTX 1050 Ti GPU.
 
 \begin{figure}[h]
    \lstset{language=python,
@@ -133,7 +133,7 @@ pseudo code of the controller's main loop. Among the five steps, the 3rd step,
 network inferencing, is the most computationally intensive and dominates the
 execution time.
 
-Note that although the steering angle output of the network $angle$ is
+Note that although the steering angle output of the network ($angle$) is
 a continuous real value, the RC car platform we used unfortunately
 only supports three discrete angles---left (-30$^{\circ}$), center
 (0$^{\circ}$), and right (+30$^{\circ}$)---as control inputs.

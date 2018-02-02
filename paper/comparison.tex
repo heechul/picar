@@ -116,8 +116,8 @@ accomodate multiple instances of the DNN models we tested.
 
 Finally, we compare the effect of co-scheduling memory bandwidth
 intensive synthetic benchmarks on the DNN control loop timing. 
-Figure~\ref{fig:sys_bench} shows the results.
-As discussed in 
+
+Figure~\ref{fig:sys_bench} shows the results. As discussed in 
 Section~\ref{sec:eval-memhog}, we observed dramatic execution time
 increases, up to 11.5X, in Raspberry Pi 3 as we increased the number of
 co-scheduled tasks. We also observe increased control loop execution
@@ -125,31 +125,50 @@ timing in the Intel Up and Jetson TX2, but the degree of the increase is
 not as dramatic as the Pi 3. Compared to their respective solo timings 
 (i.e., the model runs on a single core in isolation), Intel UP suffers up to
 2.3X execution time increase; TX2 (CPU) and TX2 (GPU) suffer up to
-2.2X and 2.1X increases, respectively. This is somewhat suprising
+2.2X and 2.1X increases, respectively. This is somewhat surprising
 because the Raspberry Pi 3's cores are in-order architecture based while
 the cores in the Intel Up and NVIDIA TX2 are out-of-order architecture
 based, and that the memory intensive tasks on out-of-order cores can
-generate more memory traffic. We suspect that this is because the
+generate more memory traffic. We believe that this is because the
 memory subsystems in the Intel UP and TX2 platforms provide higher
-bandwidth and fairness than the memory subsystem of the Pi 3. However, 
-the L2 miss rates of the Pi 3 and TX2 platforms follow the same expected 
-pattern, as can be seen in Figure~\ref{fig:sys_l2miss}. Namely, the 
-percentage of L2 miss rates increases are more 
-memory intensive co-runners are introduced. This was not the case for 
-the UP board, where the model running on two cores generated the highest
-percentage of L2 cache misses. This is most likely due to the CPU 
-architecture of the UP's CPU which is Intel based, whereas both the Pi 3
-and TX2 have ARM based CPUs.
+performance than the memory subsystem of the Pi 3 as suggested from
+the measured memory bandwidth results in Table~\ref{tbl:platforms}
+('Measured Bandwidth').
 
 Another interesting observation is that the TX2 (GPU) also suffers
 considerable execution time increase (2.1X) despite the fact that the
 co-scheduled synthetic tasks do not utilize the GPU. In other words,
 the DNN model has dedicated access to the GPU. This is, however, a
-known characteristic of integrated CPU-GPU architectue based
+known characteristic of integrated CPU-GPU architecture based
 platforms where both CPU and GPU share the same memory
 subsystem~\cite{Ali2017}. As a result, the TX2 (GPU) fails to meet the
 10ms deadline for 100 Hz control that would have been feasible if
 there was no contention between the CPU cores and the GPU.
+
+Figure~\ref{fig:sys_l2miss} shows the L2 miss rates of DNN control
+loop. The key takeaway of this result is that the L2 miss rate is a
+poor indicator to the execution time of the control loop. As shown
+already, Raspberry Pi 3's increased L2 misses do not fully explain
+increase in processing times. In case of Intel UP, as the number of
+interfering Bandwidth benchmark instances increases, the L2 miss rates
+even drop slightly. In case of TX2 (CPU), from solo to one co-runner,
+L2 miss rate increase almost twice, but then the execution time
+increase is only about less than 10\%. However, when there are
+co-runners, even though the L2 miss rates are largely unchanged, the
+DNN processing time increases significantly. TX2 (GPU) also shows
+similar behavior. All of these results essentially point to the fact
+that DNN inferencing workload is largely memory performance sensitive
+but not L2 cache space sensitive. 
+
+%% However, the L2 miss rates of the Pi 3 and TX2 platforms follow the same expected 
+%% pattern, as can be seen in Figure~\ref{fig:sys_l2miss}. Namely, the 
+%% percentage of L2 miss rates increases are more 
+%% memory intensive co-runners are introduced. This was not the case for 
+%% the UP board, where the model running on two cores generated the highest
+%% percentage of L2 cache misses. This is most likely due to the CPU 
+%% architecture of the UP's CPU which is Intel based, whereas both the Pi 3
+%% and TX2 have ARM based CPUs.
+
 
 In summary, we find that today's embedded computing platforms, even as
 inexpensive as a Raspberry Pi 3, are powerful enough to support

@@ -157,13 +157,13 @@ property for real-time systems.
 %% real-time community to be interested in the use of DNNs.
 
 % performance on low-cost embedded multicore
-Second, we find that real-time processing of DeepPicar's CNN-based
-control loop is feasible on today's embedded computing platforms, even 
+Second, we find that real-time processing of DeepPicar's CNN is
+feasible on today's embedded computing platforms, even  
 as inexpensive as the Raspberry Pi 3. We find that the control loop 
 completes in under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two 
 cores of the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
 do so 100\% of the time; or we can achieve 20 Hz control frequency using
-just one core of the Raspberry Pi 3's quad-core CPU.
+just one core.
 Other tested embedded platforms, the Intel UP and NVIDIA TX2, offer even
 better performance, and are capable of supporting deep-learning based 
 real-time control over 100 Hz control frequency on the TX2 when its
