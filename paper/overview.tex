@@ -3,7 +3,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.55\textwidth]{figs/DeepPicar_platform}
+  \includegraphics[width=.65\textwidth]{figs/DeepPicar_platform}
   \caption{DeepPicar platform.}
   \label{fig:overview}
 \end{figure}
@@ -50,8 +50,8 @@ estimated cost of the system.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/architecture}
-  \caption{DeepPicar's neural network architecture: 8 layers (5
-    convolutional, 3 fully-connected layers), 27 million connections,
+  \caption{DeepPicar's neural network architecture: 9 layers (5
+    convolutional, 4 fully-connected layers), 27 million connections,
     250K parameters. The CNN architecture is identical to the one 
 	used in NVIDIA's real self-driving car~\cite{Bojarski2016}.}
   \label{fig:architecture}
@@ -70,7 +70,7 @@ faithfully recreate the NVIDIA's original CNN model.
 As in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
 as input and produces a single steering angle value as
 output. Figure~\ref{fig:architecture} shows the network architecture
-used in this paper, which is comprised of 8 layers, 250K parameters,
+used in this paper, which is comprised of 9 layers, 250K parameters,
 and about 27 million connections as in NVIDIA DAVE-2's. Note, however,
 that we did not apply the normalization mentioned
 in~\cite{Bojarski2016}, as it does not include trainable parameters
@@ -84,13 +84,13 @@ processing is minimal.
 %%   \caption{One of the custom tracks used for training/testing.}
 %%   \label{fig:track}
 %% =======
-  \begin{subfigure}{0.4\textwidth}
+  \begin{subfigure}{0.6\textwidth}
     \includegraphics[width=\textwidth]{figs/track_new2}
     \caption{Track 1.}
     \label{fig:track}
   \end{subfigure}
   \hfill
-  \begin{subfigure}{0.52\textwidth}
+  \begin{subfigure}{0.7\textwidth}
     \includegraphics[width=\textwidth]{figs/track-2}
     \caption{Track 2.}
     \label{fig:track2}
