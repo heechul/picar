@@ -1,0 +1,14 @@
+# started on Sat Jan 27 14:44:35 2018
+
+
+ Performance counter stats for './bandwidth -a write -m 16384 -t 10000 -c 2':
+
+     1,735,590,490      cache-misses:u            #   14.462 % of all cache refs    
+    12,000,894,687      cache-references:u                                          
+    12,016,904,846      LLC-loads:u                                                 
+     6,000,299,623      LLC-load-misses:u         #   49.93% of all LL-cache hits   
+    31,852,496,433      r19:u                                                       
+     4,274,440,868      rc2:u                                                       
+
+     890.165390096 seconds time elapsed
+
