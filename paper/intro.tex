@@ -102,8 +102,8 @@ controlling the RC car and recording the vision (from the webcam
 mounted on the RC-car) and the human control inputs. We then train the
 network offline using the collected data on a desktop computer, which
 is equipped with a NVIDIA GTX 1060 GPU. Finally, the trained network is copied
-back to the Raspberry Pi, which is then used to perform inference
-operations---locally on the Pi---in the car's main control loop in
+back to the Raspberry Pi 3, which is then used to perform inference
+operations---locally on the Pi 3---in the car's main control loop in
 real-time. For real-time control, each inference operation must
 be completed within the desired control period (e.g., 33.$\overline{\mbox{33}}$ ms
  period for 30 Hz control frequency).
@@ -164,7 +164,7 @@ completes in under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two
 cores of the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
 do so 100\% of the time; or we can achieve 20 Hz control frequency using
 just one core of the Raspberry Pi 3's quad-core CPU.
-Other tested embedded platforms, Intel UP and NVIDIA TX2, offer even
+Other tested embedded platforms, the Intel UP and NVIDIA TX2, offer even
 better performance, and are capable of supporting deep-learning based 
 real-time control over 100 Hz control frequency on the TX2 when its
 embedded GPU is used.
@@ -176,7 +176,7 @@ DeepPicar's DNN workload.
 Third, contention in shared hardware resources remains an important
 issue when consolidating multiple workloads. 
 In particular, we find that DNN inferencing is highly sensitive to
-memory performance interference as we observe up to an 11.6X control
+memory performance interference as we observe up to an 11.5X control
 loop execution time increase, when memory performance intensive
 applications are co-scheduled on idle CPU cores.
 On the other hand, we find that DNN inferencing is not sensitive to
@@ -193,8 +193,8 @@ The {\bf contributions} of this paper are as follows:
 \begin{itemize}
   \item We present DeepPicar, a low-cost autonomous car testbed, which
     is based on a state-of-the-art end-to-end deep learning, as 
-    open-source~\footnote{The source code, build 
-instruction the DeepPicar
+    open-source~\footnote{The source code, and build 
+instructions for the DeepPicar
 can be found at: \url{https://github.com/heechul/picar}}, with the
     goal of lowering the economic and safety-related barriers to study
     autonomous cars.

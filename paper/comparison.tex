@@ -37,7 +37,7 @@
 \end{table*}
 
 In this section, we compare three computing platforms---the Raspberry
-Pi 3, the Intel UP~\footnote{http://www.up-board.org/up/} and NVIDIA
+Pi 3, the Intel UP~\footnote{http://www.up-board.org/up/} and the NVIDIA
 Jetson
 TX2~\footnote{http://www.nvidia.com/object/embedded-systems-dev-kits-modules.html}---from
 the point of view of supporting end-to-end deep learning
@@ -48,12 +48,13 @@ platforms~\footnote{The GPU of Intel UP and the two Denver cores in the
   
 Our basic approach is to use the same DeepPicar software, and repeat
 the experiments in Section~\ref{sec:evaluation} on each hardware
-platform and compare the results. We do not, however, repeat the cache
-partitioned experiments done on the Pi 3, as we did not believe our 
-findings warranted further experimentation on additional platforms. 
+platform and compare the results. 
+%We do not, however, repeat the cache
+%partitioned experiments done on the Pi 3, as we did not believe our 
+%findings warranted further experimentation on additional platforms. 
 For the Jetson TX2, we have two different system configurations,
 which differ in whether TensorFlow is configured to use its GPU or
-only the CPU cores. Thus, the total four system configurations are
+only the CPU cores. Thus, a total of four system configurations are
 compared.
 
 \begin{figure}[h]
@@ -118,7 +119,7 @@ intensive synthetic benchmarks on the DNN control loop timing.
 Figure~\ref{fig:sys_bench} shows the results.
 As discussed in 
 Section~\ref{sec:eval-memhog}, we observed dramatic execution time
-increases, up to 11.6X, in Raspberry Pi 3 as we increased the number of
+increases, up to 11.5X, in Raspberry Pi 3 as we increased the number of
 co-scheduled tasks. We also observe increased control loop execution
 timing in the Intel Up and Jetson TX2, but the degree of the increase is 
 not as dramatic as the Pi 3. Compared to their respective solo timings 

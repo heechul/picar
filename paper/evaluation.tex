@@ -259,7 +259,7 @@ Figure~\ref{fig:} shows the normalized execution time and L2 miss-rate
 of the DNN model running on the Core 0 as a function of the number of
 co-scheduled memory intensive synthetic benchmarks. First, as we
 increase the number of co-runners, the DNN model's execution times are
-increased---by up to 11.6X---even though the DNN model is running on a
+increased---by up to 11.5X---even though the DNN model is running on a
 dedicated core (Core 0). On the other hand, the DNN model's L2
 cache-miss rates do not increase as much.
 In other words, the DNN model's execution increase is not fully
@@ -314,7 +314,7 @@ each other.
 Fourth, we find that consolidating memory (DRAM) performance
 intensive applications could jeopadize DNN performance, because DNN
 performance appears to be very sensitive to memory performance; we 
-observe up to 11.6X slowdown in DNN performance by co-scheduling 
+observe up to 11.5X slowdown in DNN performance by co-scheduling 
 synthetic memory bandwidth intensive applications on idle cores.
 
 %% Lastly, we find that partitioning the shared L2 cache provides 
