@@ -13,7 +13,7 @@ set arrow from -1,1 to 3,1 nohead dt "-"
 
 #set label  "36.3" at .7,9 
 
-set label  "78.6" at 1.5,6 
+set label  "78.6" at 1.5,25 
 
 set boxwidth 1
 plot  "perf_vs_bandwidth.dat"  using 2:xticlabel(1) title "solo" lt -1,\
