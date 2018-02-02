@@ -263,8 +263,10 @@ increased---by up to 11.6X---even though the DNN model is running on a
 dedicated core (Core 0). On the other hand, the DNN model's L2
 cache-miss rates do not increase as much.
 In other words, the DNN model's execution increase is not fully
-explained by increased contention in the L2 cache space.
-Instead, the high memory bandwidth pressure from the co-scheduled
+explained by increased contention in the L2 cache space. Instead, the 
+total number of bus accesses made while the model is running increases
+dramatically, which explains why the DNN's performance decreased.
+As such, the high memory bandwidth pressure from the co-scheduled
 memory intensive benchmarks is likely the primary cause.
 
 %% Instead, as we hypothesized in the previous
