@@ -15,10 +15,14 @@ shuffle_training = True
 use_category_normal = True # if ture, center/curve images are equally selected.
 use_picar_mini = True
 
+# actuator selection
+#   "actuator-drv8835", "actuator-adafruit_hat"
+actuator="actuator-adafruit_hat"
+
 # change this to the directory that contains the source videos
 # "-5conv_3fc_noreuse" "-5conv_3fc" "-3conv_1pool" "-5conv_3fc_noreuse_nocn"
+#   model_load_file="model-5conv_3fc_noreuse.ckpt"  # <-- solved ittc building maze.
 model="model-5conv_3fc"
-# model_load_file="model-5conv_3fc_noreuse.ckpt"  # <-- solved ittc building maze. 
 model_load_file="model-5conv_3fc-home_night.ckpt"
 model_save_file=model_load_file
 save_dir = os.path.abspath('models')
