@@ -4,27 +4,47 @@ from __future__ import division
 import os
 from collections import OrderedDict
 
+##########################################################
+# camera module selection
+##########################################################
+camera="camera-webcam"
+
+##########################################################
+# actuator selection
+#   "actuator-drv8835", "actuator-adafruit_hat"
+##########################################################
+actuator="actuator-adafruit_hat"
+
+##########################################################
+# model selection
+#   "model-5conv_3fc"   <-- nvidia dave-2 model
+#   "model-5conv_4fc"   <-- deeptesla model
+#
+# model checkpoint file selection
+#   "model-5conv_3fc_noreuse.ckpt"  <-- ittc building maze
+#   "model-5conv_3fc-home_night.ckpt" <-- kitchen@night
+##########################################################
+model="model-5conv_3fc"
+model_load_file="model-5conv_3fc-home_night.ckpt"
+model_save_file=model_load_file
+
+##########################################################
+# Training options
+##########################################################
 batch_size = 100
 training_steps = 2000
 img_height = 66
 img_width = 200
 img_channels = 3
-
 write_summary = True
-shuffle_training = True
-use_category_normal = True # if ture, center/curve images are equally selected.
-use_picar_mini = True
+shuffle_training = True 
+use_category_normal = True # if ture, center/curve images
+                           # are equally selected.
+use_picar_mini = True # visualization fix for picar mini
 
-# actuator selection
-#   "actuator-drv8835", "actuator-adafruit_hat"
-actuator="actuator-adafruit_hat"
-
-# change this to the directory that contains the source videos
-# "-5conv_3fc_noreuse" "-5conv_3fc" "-3conv_1pool" "-5conv_3fc_noreuse_nocn"
-#   model_load_file="model-5conv_3fc_noreuse.ckpt"  # <-- solved ittc building maze.
-model="model-5conv_3fc"
-model_load_file="model-5conv_3fc-home_night.ckpt"
-model_save_file=model_load_file
+##########################################################
+# Directories
+##########################################################
 save_dir = os.path.abspath('models')
 data_dir = os.path.abspath('epochs-conv')
 out_dir = os.path.abspath('output')

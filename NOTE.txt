@@ -1,3 +1,11 @@
+2/4/2018
+
+pi camera
+https://www.pyimagesearch.com/2015/03/30/accessing-the-raspberry-pi-camera-with-opencv-and-python/
+
+simply use /dev/video0 
+# modprobe bcm2835-v4l2
+
 8/15/2017
 
 btn model
