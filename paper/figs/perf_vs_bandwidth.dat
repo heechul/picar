@@ -1,4 +1,6 @@
 "Exec. time"		1.0  1.5  5.5  11.6
+"Bus accesses"		1.0  8.1  36.3 78.6
 "L2 miss-rate"		1.0  1.5  2.2  2.6
-#"Actual times"		46.31  70.14  254.46  537.10
-#"Actual rates"		14.02  21.46  30.57  35.97
+#"Actual times"			46.31  70.14  254.46  537.10
+#"Actual Bus accesses"	924235087	7523615679	33560765738	72660873374
+#"Actual rates"			14.02  21.46  30.57  35.97
