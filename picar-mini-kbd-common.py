@@ -202,7 +202,7 @@ while True:
             print "recorded 1000 frames"
             break
 
-    print ("%.3f %d %.3f %d %d(ms)" %
+        print ("%.3f %d %.3f %d %d(ms)" %
            (ts, frame_id, angle, btn, int((time.time() - ts)*1000)))
 
 
