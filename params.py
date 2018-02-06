@@ -47,7 +47,7 @@ use_picar_mini = True # visualization fix for picar mini
 # Directories
 ##########################################################
 save_dir = os.path.abspath('models')
-data_dir = os.path.abspath('epochs-conv')
+data_dir = os.path.abspath('epochs')
 out_dir = os.path.abspath('output')
 
 if not os.path.isdir(data_dir):
