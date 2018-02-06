@@ -83,12 +83,18 @@ fourcc = cv2.cv.CV_FOURCC(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 
                           cfg_cam_fps, cfg_cam_res)
 
+# initlaize deeppicar modules
+actuator.init(cfg_throttle)
+camera.init(res=cfg_cam_res, fps=cfg_cam_fps)
+atexit.register(turn_off)
+
 # initilize dnn model
 if use_dnn == True:
+    print ("Load TF")
     import tensorflow as tf
+    model = __import__(params.model)
     import local_common as cm
     import preprocess
-    model = __import__(params.model)
 
     print ("Load Model")
     sess = tf.InteractiveSession()    
@@ -96,11 +102,6 @@ if use_dnn == True:
     model_load_path = cm.jn(params.save_dir, params.model_load_file)
     saver.restore(sess, model_load_path)
     print ("Done..")
-
-# initlaize deeppicar modules
-actuator.init(cfg_throttle)
-camera.init(res=cfg_cam_res, fps=cfg_cam_fps)
-atexit.register(turn_off)
 
 # null_frame = np.zeros((cfg_cam_res[0],cfg_cam_res[1],3), np.uint8)
 # cv2.imshow('frame', null_frame)
