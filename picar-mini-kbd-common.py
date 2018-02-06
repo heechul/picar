@@ -10,6 +10,8 @@ import sys
 import params
 import argparse
 
+import input_kbd
+
 ##########################################################
 # import deeppicar's sensor/actuator modules
 ##########################################################
@@ -50,6 +52,7 @@ def g_tick():
 def turn_off():    
     actuator.stop()
     camera.stop()
+    input_kbd.stop()
     
     keyfile.close()
     keyfile_btn.close()
@@ -95,13 +98,16 @@ if use_dnn == True:
     saver.restore(sess, model_load_path)
     print ("Done..")
 
+# initialize kbd input 
+input_kbd.init()
+
 # initlaize deeppicar modules
 actuator.init(cfg_throttle)
 camera.init(res=cfg_cam_res, fps=cfg_cam_fps)
 atexit.register(turn_off)
 
-null_frame = np.zeros((cfg_cam_res[0],cfg_cam_res[1],3), np.uint8)
-cv2.imshow('frame', null_frame)
+# null_frame = np.zeros((cfg_cam_res[0],cfg_cam_res[1],3), np.uint8)
+# cv2.imshow('frame', null_frame)
 
 g = g_tick()
 
@@ -117,24 +123,25 @@ while True:
         
     if view_video == True:
         cv2.imshow('frame', frame)
-
-    ch = cv2.waitKey(1) & 0xFF
-
+        ch = cv2.waitKey(1) & 0xFF
+    else:
+        ch = ord(input_kbd.read_single_keypress())
+    
     if ch == ord('j'):
         actuator.left()
         print ("left")
         angle = deg2rad(-30)
-        btn   = ch
+        btn   = ord('j')
     elif ch == ord('k'):
         actuator.center()
         print ("center")
         angle = deg2rad(0)
-        btn   = ch                
+        btn   = ord('k')
     elif ch == ord('l'):
         actuator.right()
         print ("right")
         angle = deg2rad(30)
-        btn   = ch               
+        btn   = ord('l')         
     elif ch == ord('a'):
         actuator.ffw()
         print ("accel")
