@@ -28,9 +28,8 @@ angle = 0.0
 btn   = ord('k') # center
 period = 0.05 # sec (=50ms)
 
-cfg_width = 320
-cfg_height = 240
-cfg_fps = 30
+cfg_cam_res = (320, 240)
+cfg_cam_fps = 30
 cfg_throttle = 50 # 50% power.
 
 ##########################################################
@@ -80,7 +79,7 @@ rec_start_time = 0
 # fourcc = cv2.VideoWriter_fourcc(*'XVID')
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
 vidfile = cv2.VideoWriter('out-video.avi', fourcc, 
-	cfg_fps, (cfg_width,cfg_height))
+                          cfg_cam_fps, cfg_cam_res)
 
 # initilize dnn model
 if use_dnn == True:
@@ -98,10 +97,10 @@ if use_dnn == True:
 
 # initlaize deeppicar modules
 actuator.init(cfg_throttle)
-camera.init(res=(cfg_width,cfg_height), fps=cfg_fps)
+camera.init(res=cfg_cam_res, fps=cfg_cam_fps)
 atexit.register(turn_off)
 
-null_frame = np.zeros((cfg_width,cfg_height,3), np.uint8)
+null_frame = np.zeros((cfg_cam_res[0],cfg_cam_res[1],3), np.uint8)
 cv2.imshow('frame', null_frame)
 
 g = g_tick()
