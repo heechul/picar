@@ -1,33 +1,14 @@
-\section{DeepPicar Overview}
 
-\begin{figure}[t]
+\section{DeepPicar Overview}\label{sec:overview}
+
+\begin{figure}[h]
   \centering
-  \includegraphics[width=.4\textwidth]{figs/DeepPicar_platform}
+  \includegraphics[width=.65\textwidth]{figs/DeepPicar_platform}
   \caption{DeepPicar platform.}
   \label{fig:overview}
 \end{figure}
 
-In this section, we provide an overview of our DeepPicar platform. In
-developing DeepPicar, one of our primary goals is to replicate the
-NVIDIA's DAVE-2 system on a smaller scale with using a low cost
-multicore platform, Raspberry Pi 3. Because the Pi 3's computing
-performance is much lower than that of the DRIVE PX platform used in
-DAVE-2, we are interested in if, and how, we can process
-computationally expensive neural network operations in
-real-time. Specifically, inferencing (forward pass processing)
-operations must be completed within each control period
-duration---e.g., a WCET of 50ms for 20Hz control frequency---locally on
-the Pi 3 platform, although training of the network (back-propagation
-for weight updates) can be done offline and remotely using a desktop
-computer.
-
-Figure~\ref{fig:overview} shows the DeepPicar, which is comprised of a
-set of inexpensive components: a Raspberry Pi 3 Single Board Computer
-(SBC), a Pololu DRV8835 motor driver, a Playstation Eye webcam, a
-battery, and a 1:24 scale RC car. Table~\ref{tbl:carbom} shows the
-estimated cost of the system.
-
-\begin{table}[t]
+\begin{table}[h]
   \centering
   \begin{tabular}{|c|r|}
     \hline
@@ -46,54 +27,90 @@ estimated cost of the system.
   \label{tbl:carbom}
 \end{table}
 
-For the neural network architecture, we adopt a TensorFlow version of
-NVIDIA DAVE-2's convolutional neural network (CNN), published by Dr.
-Fridman at  MIT~\footnote{https://github.com/lexfridman/deeptesla}. As
-in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
-as input and produces a single steering angle value as
-output. Figure~\ref{fig:architecture} shows the network architecture, which
-is comprised of 9 layers, 250K parameters, and about 27 million
-connections.
 
-\begin{figure}[t]
+In this section, we provide an overview of our DeepPicar platform.
+In developing DeepPicar, one of our primary goals is to faithfully
+replicate NVIDIA's DAVE-2 system on a smaller scale using a low cost
+multicore platform, the Raspberry Pi 3. Because the Raspberry Pi 3's
+computing performance is much lower than that of the DRIVE PX platform
+used in DAVE-2, we are interested in if, and how, we can process
+computationally expensive neural network operations in
+real-time. Specifically, inferencing (forward pass processing)
+operations must be completed within each control period
+duration---e.g., a WCET of 33.$\overline{\mbox{33}}$ ms for 30Hz control 
+frequency---locally on the Pi 3 platform, although training of the 
+network (back-propagation for weight updates) can be done offline and 
+remotely using a desktop computer.
+Figure~\ref{fig:overview} shows the DeepPicar, which is comprised of a
+set of inexpensive components: a Raspberry Pi 3 Single Board Computer
+(SBC), a Pololu DRV8835 motor driver, a Playstation Eye webcam, a
+battery, and a 1:24 scale RC car. Table~\ref{tbl:carbom} shows the
+estimated cost of the system.
+
+\begin{figure}[h]
   \centering
-  \includegraphics[width=.4\textwidth]{figs/architecture}
+  \includegraphics[width=0.65\textwidth]{figs/architecture}
   \caption{DeepPicar's neural network architecture: 9 layers (5
     convolutional, 4 fully-connected layers), 27 million connections,
-    250K parameters. The architecture is identical to the one used
-    in NVIDIA's real self-driving car~\cite{Bojarski2016}.}
+    250K parameters. The CNN architecture is identical to the one 
+	used in NVIDIA's real self-driving car~\cite{Bojarski2016}.}
   \label{fig:architecture}
+\end{figure}
+
+
+For the neural network architecture, we implement
+NVIDIA DAVE-2's convolutional neural network (CNN) using a TensorFlow
+based CNN model in ~\cite{deeptesla}. Note, however, that the CNN model
+in~\cite{deeptesla} was considerably bigger than NVIDIA's CNN model as
+it contained an additional fully-connected layer of approximately 1.3M
+additional parameters. We eliminated the additional layer to
+faithfully recreate the NVIDIA's original CNN model.
+%% The main difference is that we do not utilize a normalization layer, and 
+%% instead initialize the weights using a Xavier initialization. 
+As in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
+as input and produces a single steering angle value as
+output. Figure~\ref{fig:architecture} shows the network architecture
+used in this paper, which is comprised of 9 layers, 250K parameters,
+and about 27 million connections as in NVIDIA DAVE-2's. Note, however,
+that we did not apply the normalization mentioned
+in~\cite{Bojarski2016}, as it does not include trainable parameters
+and its computational demand with respect to the overall CNN
+processing is minimal.
+
+\begin{figure}[h]
+  \centering
+%% <<<<<<< HEAD
+%%   \includegraphics[width=.5\textwidth]{figs/track_new2}
+%%   \caption{One of the custom tracks used for training/testing.}
+%%   \label{fig:track}
+%% =======
+  \begin{subfigure}{0.55\textwidth}
+    \includegraphics[width=\textwidth]{figs/track_new2}
+    \caption{Track 1.}
+    \label{fig:track}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.7\textwidth}
+    \includegraphics[width=\textwidth]{figs/track-2}
+    \caption{Track 2.}
+    \label{fig:track2}
+  \end{subfigure}
+  \caption{Custom tracks used for training/testing}
+  \label{fig:tracks}
+%% >>>>>>> f3814396d8701264f2439b42fbe8bbb608c41452
 \end{figure}
 
 % data collection and training.
 To collect the training data, a human pilot manually drives the RC car
-on a small track we created (Figure~\ref{fig:track}) to record
+on tracks we created (Figure~\ref{fig:tracks}) to record
 timestamped videos and contol commands. The stored data is then copied 
-to a desktop computer, which is equipped with a NVIDIA GTX 1060 GPU, 
+to a desktop computer, which is equipped with a NVIDIA GTX 1050 Ti GPU, 
 where we train the network to accelerate training speed. 
 For comparison, training the network on the Raspbeery Pi 3 takes
-approximately 4 hours, whereas it takes only about 5 minutes on the
-desktop computer using the GTX 1060 GPU.
+approximately 4 hours, whereas it takes only about 4 minutes on the
+desktop computer using the GTX 1050 Ti GPU.
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=.4\textwidth]{figs/track_new2}
-  \caption{One of the custom tracks used for training/testing.}
-  \label{fig:track}
-\end{figure}
-
-% inferencing on pi3
-Once the network is trained on the desktop computer, the trained model
-is copied back to the Raspberry Pi. The network is then used
-by the car's main controller, which feeds a image frame from the web
-camera as input to the network. In each control period, the produced 
-steering angle output is then converted as the PWM values of the 
-steering motor of the car. Figure~\ref{fig:controlloop} shows simplified 
-pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
-network inferencing, is the most computationally intensive and dominates the
-execution time.
-
-\begin{figure}[t]
+\begin{figure}[h]
    \lstset{language=python,
            basicstyle=\ttfamily\small,
            keywordstyle=\color{blue}\ttfamily,
@@ -105,7 +122,18 @@ execution time.
   \label{fig:controlloop}
 \end{figure}
 
-Note that although the steering angle output of the network $angle$ is
+% inferencing on pi3
+Once the network is trained on the desktop computer, the trained model
+is copied back to the Raspberry Pi 3. The network is then used
+by the car's main controller, which feeds a image frame from the web
+camera as input to the network. In each control period, the produced 
+steering angle output is then converted as the PWM values of the 
+steering motor of the car. Figure~\ref{fig:controlloop} shows simplified 
+pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
+network inferencing, is the most computationally intensive and dominates the
+execution time.
+
+Note that although the steering angle output of the network ($angle$) is
 a continuous real value, the RC car platform we used unfortunately
 only supports three discrete angles---left (-30$^{\circ}$), center
 (0$^{\circ}$), and right (+30$^{\circ}$)---as control inputs.
@@ -114,47 +142,52 @@ angle to the closest one of the three angles, which may
 introduce inaccuracy in control.
 In the future, we plan to use a different (more expensive) RC car
 platform that can precisely control the car's steering angle.
-We would like to stress, however, that the use of different RC car
-platforms has no impact on the computational 
-aspects of the system, and that our main focus of this study is
-not in improving network accuracy but in closely replicating the
-DAVE-2's network architecture and its real-time characteristics.
 
-Another issue we observed in training/testing the network, which could
-affect the network performance, is camera latency. In DeepPicar's
+Other issues we observed in training/testing the network, which
+can affect the prediction accuracy of the CNN, are camera and actuator
+(motor) control latencies. In DeepPicar's
 context, the camera latency is from the time the camera
 sensor observes the scene to the time the computer actually reads the
-digitized image data. Unfortunately, this time can be significantly
-long depending on the camera and the performance of the Pi. We
-experimentally measure DeepPicar's camera latency as
-follows~\footnote{We follow the method and the tool found at
-  https://www.makehardware.com/2016/03/29/finding-a-low-latency-webcam/}.
-First, we point the DeepPicar's camera towards a computer monitor, which is
-conntected to the Raspberry Pi 3's HDMI output. We then launch a 
-program that overlays the current time with the camera's preview
-screen on the monitor. Then, an infinite number of time strings will be
-shown on the monitor screen and the time difference between two
-successive time strings represent the camera
-latency. Figure~\ref{fig:camera-latency} shows the captured moniotor
-screen. The measured camera latency is about 300-350 ms. This is
-significantly higher than the latency of human perception, which is known
-to be as fast as 13 ms~\cite{ThomasBurger2015}. Higher camera latency
-could negatively affect control performance, because the DNN would
-analyze stale scenes. In the future, we plan to identify and use
-low-latency cameras.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=.4\textwidth]{figs/camera_latency}
-  \caption{Measuring DeepPicar's camera latency.}
-  \label{fig:camera-latency}
-\end{figure}
-
-
+digitized image data. This time can be noticable depending on the camera 
+used and the performance of the Pi. Higher camera latency could
+negatively affect control performance, because the DNN would analyze
+stale scenes. Actuator (motor) control latency also can be a
+factor, because moving the steering motor to a desired position takes
+time. 
+In our platform, the combined latency is measured to be around
+50 ms. In other words, in the recorded video and control data, a
+control action (left, center, right) taken by the CNN appears to be
+applied 50 ms later. Considering that camera's framerate is 30Hz
+(33.$\overline{\mbox{33}}$ ms/frame), this is about two frames after the 
+control action.
+%% We experimentally measured the camera
+%% latency and found it to be around 50-100 ms.
+If this value is too high, control performance may suffer.
+Our initial prototype suffered this problem as the observed camera and
+control latency was as high as 300 ms, which negatively affected
+control performance.
+For reference, the latency of human perception is known to be as fast
+as 13 ms~\cite{ThomasBurger2015}. 
 % https://www.pubnub.com/blog/2015-02-09-how-fast-is-realtime-human-perception-and-technology/
 
 Despite these issues, the trained models were still able to
 achieve a reasonable degree of accuracy, successfully navigating
-several different tracks we trained. The source code, build
-instruction, and a collection of self-driving videos of the DeepPicar
-can be found at: \url{https://github.com/heechul/picar}.
+several different tracks we used for training. In our testing, we found 
+that the DeepPicar could remain on a fairly challenging track for over 
+10 minutes at a moderate speed (50\% throttle), at which point we stopped
+the experiment, and more than one minute at a higher speed (75\%
+throttle)~\footnote{A collection of self-driving videos can be found
+  at: \url{https://photos.app.goo.gl/ce93sU7jPk4ywO8u2}}. Running at
+higher speed is inherently more challenging because the CNN controller
+has less time to recover from mistakes (bad predictions).  Also, we
+find that the prediction accuracy is significantly affected by the
+quality of training data as well as various environmental factors such
+as the lighting condition. We plan to investigate more systematic ways
+to improve the CNN's prediction accuracies.
+
+We would like to stress, however, that the issues related to the
+CNN's accuracies have no impact on the \emph{computational 
+aspects of the system}, and that our main focus of this study is
+not in improving network accuracy but in closely replicating the
+DAVE-2's network architecture and studying its real-time
+characteristics.

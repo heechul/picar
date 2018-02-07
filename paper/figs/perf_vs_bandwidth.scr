@@ -1,0 +1,22 @@
+set terminal pdf font "Times-Roman,14"
+set output "perf_vs_bandwidth.pdf"
+set yrange [0.0:40]
+set ylabel "Normalized Ratio" offset 1.5
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set arrow from -1,1 to 3,1 nohead dt "-"
+
+#set label  "11.6" at -.1,9 
+
+#set label  "36.3" at .7,9 
+
+set label  "78.6" at 1.5,25 
+
+set boxwidth 1
+plot  "perf_vs_bandwidth.dat"  using 2:xticlabel(1) title "solo" lt -1,\
+      ""                  using 3 title "+1 co-runner" lt -1,\
+      ""                  using 4 title "+2 co-runners" lt -1,\
+      ""                  using 5 title "+3 co-runners" lt -1

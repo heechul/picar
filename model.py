@@ -50,22 +50,15 @@ W_conv5 = weight_variable("wc5", [3, 3, 64, 64])
 b_conv5 = bias_variable([64])
 
 h_conv5 = tf.nn.relu(conv2d(h_conv4, W_conv5, 1) + b_conv5)
-
-# fully connected layer 1
-W_fc1 = weight_variable("fc1", [1152, 1164])
-b_fc1 = bias_variable([1164])
-
 h_conv5_flat = tf.reshape(h_conv5, [-1, 1152])
-h_fc1 = tf.nn.relu(tf.matmul(h_conv5_flat, W_fc1) + b_fc1)
 
 keep_prob = tf.placeholder(tf.float32)
-h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 
 # fully connected layer 2
-W_fc2 = weight_variable("fc2", [1164, 100])
+W_fc2 = weight_variable("fc2", [1152, 100])
 b_fc2 = bias_variable([100])
 
-h_fc2 = tf.nn.relu(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+h_fc2 = tf.nn.relu(tf.matmul(h_conv5_flat, W_fc2) + b_fc2)
 
 h_fc2_drop = tf.nn.dropout(h_fc2, keep_prob)
 

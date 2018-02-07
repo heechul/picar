@@ -5,13 +5,13 @@ End-to-end deep learning based real-time control.
 Specifically, DeepPicar uses a deep convolutional neural network to
 predict steering angles of the car directly from camera input data
 in real-time. Importantly, DeepPicar's neural network architecture is
-identical to that of NVIDIA's real self-driving car. 
+almost identical to that of NVIDIA's real self-driving car. 
 
 Despite the complexity of the neural network, DeepPicar uses a
 low-cost Raspberry Pi 3 quad-core computer as its sole computing
 resource. We systematically analyzed the real-time characteristics of
 the Pi 3 platform in the context of deep-learning based real-time
-control appilcations, with a special emphasis on real-time deep neural
+control applications, with a special emphasis on real-time deep neural
 network inferencing.
 We also evaluated other, more powerful, embedded computing
 platforms to better understand achievable real-time performance of
@@ -24,7 +24,7 @@ configuration. However, shared resource contention remains an
 important issue that must be considered in applying deep-learning
 models on shared memory based embedded computing platforms.
 
-As future work, we plan to apply shared resource management
+As future work, we plan to apply shared DRAM resource management
 techniques~\cite{Yun2013,yun2014rtas} on the DeepPicar platform and
 evaluate their impact on the real-time performance of the system. We
 also plan to improve the prediction accuracy by feeding more data and

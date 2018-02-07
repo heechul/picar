@@ -1,0 +1,30 @@
+set terminal pdf font "Times-Roman,14"
+set output "compare_core.pdf"
+set yrange [0.0:70]
+# set xtics nomirror scale 0
+# unset xlabel 
+set ylabel "Avg. processing time (ms)" offset 1.5
+# set xlabel "(#of cores)"
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set arrow from -1,50 to 4,50 nohead dt "."
+set label  "20 Hz" at 3.5,48 font "Times-Roman,14"
+
+set arrow from -1,20 to 4,20 nohead dt "."
+set label  "50 Hz" at 3.5,18 font "Times-Roman,14"
+
+set arrow from -1,10 to 4,10 nohead dt "."
+set label  "100 Hz" at 3.42,8 font "Times-Roman,14"
+
+set boxwidth 1
+plot  "compare_core.dat"  using 2:xticlabel(1) title "1 core" lt -1,\
+      ""                  using 3 title "2 cores" lt -1,\
+      ""                  using 4 title "3 cores" lt -1,\
+      ""                  using 5 title "4 cores" lt -1
+      
+
+      
+

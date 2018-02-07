@@ -1,87 +1,61 @@
-%
-%  $Author: ienne $
-%  $Date: 1995/09/15 15:20:59 $
-%  $Revision: 1.4 $
-%
-
-% \documentclass[10pt,journal,cspaper,compsoc]{IEEEtran}   %%%tc version
-\documentclass[10pt, conference]{IEEEtran}
-%\documentclass[conference,compsoc]{IEEEtran}
-%\documentclass[10pt, conference]{IEEEtran}
-%\documentclass[times, 10pt,onecolumn]{article}
-\usepackage{amsmath, amssymb, enumerate}
-
-%%%%%%%%%%%%%%%% page control%%%%%%%%%%%%%%%%%
-%\usepackage[margin=0.75in]{geometry}
-
-%\linespread{0.991}  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this is really useful
-%\usepackage{cite}
-\usepackage{fancybox}
-\usepackage{amsfonts}
-%\usepackage{algorithm}
-%\usepackage[noend]{algorithmic}
-\usepackage[usenames]{color}
-%\usepackage{colortbl}
-%\usepackage[ figure, boxed, vlined]{algorithm2e}
-%\usepackage[linesnumbered,vlined]{algorithm2e}
-%\usepackage[lined,boxed]{algorithm2e}
-\usepackage{listings}
-
-\usepackage[linesnumbered,vlined]{algorithm2e}
-\usepackage{graphicx}
-\usepackage{times}
-\usepackage{psfrag}
-\usepackage{subfigure}
-\usepackage{caption}
-%\usepackage{subcaption}
-\usepackage{multirow}
-%\usepackage{setspace}
-%\usepackage{listings}
-\usepackage{epsfig}
-%\usepackage{epstopdf}
-%\usepackage[font=small,labelfont=bf]{caption}
-\usepackage{url}
-
+\documentclass[a4paper,UKenglish]{lipics-v2016}
+%This is a template for producing LIPIcs articles. 
+%See lipics-manual.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+% for section-numbered lemmas etc., use "numberwithinsect"
+ 
+\usepackage{microtype}%if unwanted, comment out or use option "draft"
+\usepackage{adjustbox}
 \usepackage{color}
 \def\fixme#1{\typeout{FIXED in page \thepage : {#1}}
-%\bgroup \color{red}{} \egroup}
+%  \bgroup \color{red}{} \egroup}
 \bgroup \color{red}{[FIXME: {#1}]} \egroup}
 
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
 
-\usepackage[pdftex]{hyperref}
-\usepackage{rotating,tabularx}
+\bibliographystyle{plainurl}% the recommended bibstyle
 
-\interfootnotelinepenalty=10000
+% Author macros::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{DeepPicar: A Low-cost Deep Neural Network-based Autonomous Car}
+\titlerunning{DeepPicar: A Low-cost Autonomous Car}
+%optional, in case that the title is too long; the running title should fit into the top page column
 
-%% Define a new 'leo' style for the package that will use a smaller font.
-\makeatletter
-\def\url@leostyle{%
-  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
-\makeatother
+%% Please provide for each author the \author and \affil macro, even when authors have the same affiliation, i.e. for each author there needs to be the  \author and \affil macros
+\author[1]{Michael G. Bechtel}
+\author[2]{Elise McEllhiney}
+\author[3]{Minje Kim}
+\author[4]{Heechul Yun}
+\affil[1]{University of Kansas, Lawrence, United States\\
+  \texttt{mbechtel@ku.edu}}
+\affil[2]{University of Kansas, Lawrence, United States\\
+  \texttt{e908m429@ku.edu}}
+\affil[3]{Indiana University, Bloomington, United States\\
+  \texttt{minje@indiana.edu}}
+\affil[4]{University of Kansas, Lawrence, United States\\
+  \texttt{heechul.yun@ku.edu}}
+\authorrunning{M.\,G. Bechtel, E. McEllhiney, M. Kim, H. Yun} %mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et. al.'
 
-%\documentstyle[times,art10,twocolumn,latex8]{article}
+\Copyright{Michael G. Bechtel, Elise McEllhiney, Minje Kim, Heechul Yun}%mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
-%-------------------------------------------------------------------------
-% take the % away on next line to produce the final camera-ready version
-\pagestyle{plain}
-%\thispagestyle{empty}
-%\pagestyle{empty}
+\subjclass{C.4 PERFORMANCE OF SYSTEMS}% mandatory: Please choose ACM 1998 classifications from http://www.acm.org/about/class/ccs98-html . E.g., cite as "F.1.1 Models of Computation". 
+\keywords{Real-time, Autonomous car, Convolutional neural network, Case study}% mandatory: Please provide 1-5 keywords
+% Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-
-%% remaining budget share, used in task stall section.
-\newcommand{\bottomrule}{\hline}
-\newcommand{\toprule}{\hline}
-\newcommand{\midrule}{\hline}
-%-------------------------------------------------------------------------
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{Sebastian Altmeyer}
+\EventNoEds{1}
+\EventLongTitle{30th Euromicro Conference on Real-Time Systems (ECRTS 2018)}
+\EventShortTitle{ECRTS 2018}
+\EventAcronym{ECRTS}
+\EventYear{2018}
+\EventDate{July 3--6, 2018}
+\EventLocation{Barcelona, Spain}
+\EventLogo{}
+\SeriesVolume{XX}
+\ArticleNo{YY}
+% Editor-only macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
-\title{DeepPicar:​ ​A​ ​Low-cost​ ​Deep​ ​Neural​ ​Network-based​ ​Autonomous​ ​Car}
-\author{Michael Garrett Bechtel, Elise McEllhiney, Heechul Yun\\
-\{m783b224, e908m429, heechul.yun\}@ku.edu\\
-University of Kansas, USA\\ 
-}
 
 \maketitle
 \thispagestyle{empty}
@@ -91,8 +65,8 @@ autonomous car platform. DeepPicar is a small scale
 replication of a real self-driving car called Dave-2 by NVIDIA, which
 drove on public roads using a deep convolutional neural network (CNN), 
 that takes images from a front-facing camera as input and produces
-car steering angles as output. DeepPicar uses the exact same network
-architecture---9 layers, 27 million connections and 250K
+car steering angles as output. DeepPicar uses almost the exact same 
+network architecture---9 layers, 27 million connections and 250K
 parameters---and can be trained to drive itself, in real-time, using a
 web camera and a modest Raspberry Pi 3 quad-core platform.
 Using DeepPicar, we analyze the Pi 3's computing capabilities to 
@@ -114,12 +88,11 @@ models on shared memory based embedded computing platforms.
 \input{overview}
 \input{evaluation}
 \input{comparison}
-% \input{related}
+\input{discussion}
+\input{related}
 \input{conclusion}
 %-------------------------------------------------------------------------
-\bibliographystyle{abbrv}
+%\bibliographystyle{abbrv}
 \bibliography{reference}
-
-\appendix
-\input{appendix}
+%% \appendix
 \end{document}

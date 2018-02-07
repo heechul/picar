@@ -13,7 +13,10 @@ write_summary = True
 use_category_normal = False # if ture, center/curve images are equally selected.
 
 # change this to the directory that contains the source videos
-save_dir = os.path.abspath('models')
+save_dir = os.path.abspath('MiniModelNew')
+save_dir2 = os.path.abspath('MiniModelNew2')
+save_dir3 = os.path.abspath('MiniModelNew3')
+save_dir4 = os.path.abspath('MiniModelNew4')
 data_dir = os.path.abspath('epochs')
 out_dir = os.path.abspath('output')
 

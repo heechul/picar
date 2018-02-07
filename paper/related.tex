@@ -1,0 +1,122 @@
+\section{Related Work}\label{sec:related}
+% discusstion
+% - model is still quite small. cam we use bigger CNNs?
+%% \fixme{What we want to say:
+%%   1) We showed DNN is feasible on today's embedded computing
+%%   platforms.
+%%   2) But, the CNN model is rather smaller-kind with respect to today's
+%%   state-of-the-art CNNs, which are much bigger.
+%%   3) disscuss google's object detection api
+%%   paper~\cite{huang2017speed}. 
+%%   4) Applying these much more complex DNNs (such as google's detection
+%%   models) may be challenging for embedded computing
+%%   platforms.
+%%   5) Two general approaches: (1) make it faster (computing workload
+%%   remains the same) (2) reduce the workload itself (model compression
+%%   or reduced precision etc.)}
+
+%% {\bf DNN optimization for embedded systems.}
+
+In this paper, we demonstrated that a low-cost embedded platform such
+as the  Raspberry Pi 3 can successfully run a CNN-based autonomous
+driving control system in real-time. However, it should be noted that
+the CNN we used here is relatively small compared to recent
+state-of-the-art CNNs, which are increasingly larger and deeper.
+For example, the CNN based object detector models evaluated in
+Google's recent study~\cite{huang2017speed} have between 3M to 54M
+parameters. Using such large CNN models will be challenging on
+resource constrainted embedded computing platforms, especially for
+real-time applications such as self-driving cars.
+
+%% available DNN's can be much larger compared to the architecture of the
+%% DAVE-2. Such DNN's can be seen in Google's Object Detection API
+%% The smallest model available in the API is the MobileNet model, which
+%% has 3,191,072 parameters and is approximately 12.7 larger than the
+%% model used by the DeepPicar. The other models all have parameter sizes 
+%% of at least 10 million. Due to the considerable differences in the 
+%% model sizes, it is likely that running them on platforms like the Pi 3,
+%% and still get acceptable real-time performance would be difficult, 
+%% if not infeasible. 
+
+%% % related work on efficient DNN representation and processing.
+%% While repeated feedforward and backpropagation operations during
+%% the training time account for most of the computational cost in
+%% deep learning, there is a growing need for an improved efficiency
+%% during the inferencing time as well, especially because of the
+%% potential of utilizing Deep Neural Networks (DNN) for the real-time
+%% pattern recognition tasks in embedded systems, as our paper
+%% exemplifies.
+
+While continuing performance improvmenets in embedded computing
+platforms will certainly make processing of these complex CNNs faster,
+another actively investigated approrach is to reduce the required
+computational complexity itself.
+When a DNN is deployed in those implementations with limited
+resources, such as memory and power, the floating-point operations
+involved in the large matrix multiplications are a burdensome task.
+Many recent advances in network compression showed promising results
+in reducing such computational cost during the feedforward
+process. The fundamental assumption in those techniques is that the
+DNNs are redundant in their structure and representation. For example,
+network pruning can thin out the network and provides a more condensed
+topology~\cite{han2015deep}.
+Another common compression method is to reduce the
+quantization level of the network parameters, so that arithmetic
+defined with the floating-point operations are replaced with low-bit
+fixed-point counterparts. To this end, single bit quantization of the
+network parameters or ternary quantization have been recently proposed
+~\cite{hwang2014fixed,soudry2014expectation,kim2016bitwise,rastegari2016xnor,hubara2016binarized,beauchamp2006embedded,govindu2004analysis}.
+In those networks, the inner product between the
+originally real-valued parameter vectors is defined with XNOR followed
+by bit counting, so that the network can greatly minimize the
+computational cost in the hardware implementations. This drastic
+quantization can produce some additional performance loss, but those
+new binarized or ternarized systems provide a simple quantization
+noise injection mechanism during training so that the additional error
+is minimized to an acceptable level.
+
+The XNOR operation and bit counting have been known to be efficient in
+hardware implementations. In~\cite{rastegari2016xnor}, it was shown
+that the binarized convolution can substitute the expensive
+convolutional feedforward operations in a regular Convolutional Neural
+Network (CNN), %% by using only about 1.5\% of the memory space, while
+providing 20 to 60 times faster feedforward. Binary weights were also
+able to provide 7 times faster feedforward than a floating-point
+network for the hand written digit recognition task as well as 23
+times faster matrix multiplication tasks on
+GPU~\cite{hubara2016binarized}.
+Moreover, FPGA implementations showed that the XNOR operation is 200
+times cheaper than floating-point multiplications with 
+single precision~\cite{beauchamp2006embedded,govindu2004analysis}.
+XNOR-POP is another hardware implementation that reduced
+the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
+
+These research efforts are expected to make complex DNNs more
+accessible for real-time embedded systems. We plan to investigate the
+feasibility of these approaches in the context of DeepPicar so that we
+can use even more resource constrained micro-controller class
+computing platforms instead of Raspberry Pi3.
+
+%% % related work on testbeds
+%% \fixme{maybe we can also discuss MIT racecar, UPENN car, donkey car and other testbeds?
+%%   The points of discussion may include: 1) they are expensive. 2)
+%%   donkey car is similar to us, but still a bit more expnsive, and more
+%%   importantly there is no existing studies which systematically evaluate
+%%   real-time performance of using DNN on embedded computing
+%%   platforms. Our work provides quantitive real-time performance
+%%   evaluation results, using a known DNN used in a real self-driving
+%%   car. Our work is fully reproducible at a very low cost, lowring the
+%%   barrier to entry in researching self-driving cars, helping the
+%%   community blah blah blah.}
+  
+%% Another autonomous vehicle platform is the Donkey Car\footnote{https://donkeycar.com}.
+%% Like the DeepPicar, the Donkey Car is a low cost platform that can be 
+%% utilized for researching self-driving cars. However, comparatively, the
+%% DeepPicar is approximately \$200 cheaper than the Donkey Car. 
+%% Furthermore, the Donkey Car was created with an emphasis on model accuracy
+%% and the ability of the car to navigate the desired environment. We are 
+%% more focused on the real-time performance of the DeepPicar, and whether
+%% the Raspberry Pi 3 embedded computing platform can properly support autonomous 
+%% vehicle operations. To the best of our knowledge, no other studies have
+%% been done to evaluate the capabilities of the Pi 3 for running DNNs and
+%% performing autonomous vehicle operations.

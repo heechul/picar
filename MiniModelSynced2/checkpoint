@@ -1,0 +1,2 @@
+model_checkpoint_path: "E:\\Documents\\GitHub\\picar\\MiniModelSync5\\model.ckpt"
+all_model_checkpoint_paths: "E:\\Documents\\GitHub\\picar\\MiniModelSync5\\model.ckpt"

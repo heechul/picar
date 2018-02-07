@@ -1,0 +1,26 @@
+set terminal pdf font "Times-Roman,14"
+set output "compare_benchmark.pdf"
+set yrange [0.0:150]
+set ylabel "Avg. processing time (ms)" offset 1.5
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set label "298" at -0.37,140
+set label "588" at 0.45,140
+
+set arrow from -1,50 to 4,50 nohead dt "."
+set label  "20 Hz" at 3.5,48 font "Times-Roman,14"
+
+set arrow from -1,20 to 4,20 nohead dt "."
+set label  "50 Hz" at 3.5,18 font "Times-Roman,14"
+
+set arrow from -1,10 to 4,10 nohead dt "."
+set label  "100 Hz" at 3.42,8 font "Times-Roman,14"
+
+set boxwidth 1
+plot  "compare_benchmark.dat"  using 2:xticlabel(1) title "solo" lt -1,\
+      ""                  using 3 title "+1 co-runner" lt -1,\
+      ""                  using 4 title "+2 co-runners" lt -1,\
+      ""                  using 5 title "+3 co-runners" lt -1
