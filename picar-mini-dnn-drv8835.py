@@ -1,12 +1,4 @@
 #!/usr/bin/python
-from __future__ import division
-import tensorflow as tf
-import model
-import params
-import local_common as cm
-import preprocess
-
-import random
 import os
 import time
 import atexit
@@ -14,40 +6,29 @@ import serial
 import cv2
 import math
 import numpy as np
-import pygame
-from pololu_drv8835_rpi import motors, MAX_SPEED
 import sys
-import rospy
+from threading import Thread
+
+print ("Load TF")
+import tensorflow as tf
+import params
+model = __import__(params.model)
+import local_common as cm
+import preprocess
+
+print ("Load Model")
+sess = tf.InteractiveSession()    
+saver = tf.train.Saver()
+model_load_path = cm.jn(params.save_dir, params.model_load_file)
+saver.restore(sess, model_load_path)
+print ("Done..")
+    
+from pololu_drv8835_rpi import motors, MAX_SPEED
 
 def deg2rad(deg):
     return deg * math.pi / 180.0
 def rad2deg(rad):
     return 180.0 * rad / math.pi
-
-sess = tf.InteractiveSession()
-saver = tf.train.Saver()
-model_name = 'model.ckpt'
-model_path = cm.jn(params.save_dir, model_name)
-saver.restore(sess, model_path)
-
-motors.setSpeeds(0, 0)
-cap = cv2.VideoCapture(0)
-cap.set(3,640)
-cap.set(4,480)
-
-# ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
-# ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-vidfile = cv2.VideoWriter('out-video.avi', fourcc, 15.0, (640,480))
-keyfile = open('out-key.csv', 'w+')
-keyfile_btn = open('out-key-btn.csv', 'w+')
-keyfile.write("ts_micro,frame,wheel\n")
-keyfile_btn.write("ts_micro,frame,btn,speed\n")
-rec_start_time = 0
-SET_SPEED = MAX_SPEED * 5 / 10 
-cur_speed = SET_SPEED
-print "MAX speed:", MAX_SPEED
-print "cur speed:", cur_speed
 
 def stop():
     global cur_speed
@@ -57,14 +38,14 @@ def stop():
 def ffw():
     global cur_speed
     # cur_speed = min(MAX_SPEED, cur_speed + MAX_SPEED/10)
-    cur_speed = SET_SPEED
+    cur_speed = SET_SPEED    
     motors.motor2.setSpeed(int(cur_speed))
 
 def rew():
     global cur_speed        
     # cur_speed = max(-MAX_SPEED, cur_speed - MAX_SPEED/10)
     cur_speed = SET_SPEED
-    motors.motor2.setSpeed(int(cur_speed))
+    motors.motor2.setSpeed(-int(cur_speed))
 
 def center():
     motors.motor1.setSpeed(0)
@@ -72,6 +53,7 @@ def left():
     motors.motor1.setSpeed(MAX_SPEED)
 def right():
     motors.motor1.setSpeed(-MAX_SPEED)
+
 
 def get_control(degree):
     if degree < 15 and degree > -15:
@@ -81,31 +63,26 @@ def get_control(degree):
     elif degree <= -15:
         return -1
 
-def turnOff():
+def get_ctl_str(control):
+    if control == -1:
+        return "left"
+    elif control == 0:
+        return "center"
+    elif control == 1:
+        return "right"
+    else:
+        raise ValueError
+    
+def turnOff(stat):
     stop()
     center()
-
-atexit.register(turnOff)
-
-view_video = False
-frame_id = 0
-null_frame = np.zeros((160,120,3), np.uint8)
-cv2.imshow('frame', null_frame)
-
-## dagger parameter
-DEFAULT_BETA = 1.0
-beta  = DEFAULT_BETA
-
-## human input variables
-angle = 0.0
-btn   = ord('k')  # 107 - center
-period = 0.05 # sec (=50ms)
-
-total_cnt = 0
-
-if len(sys.argv) == 2:
-    SET_SPEED = int(sys.argv[1])
-    print "Set new speed: ", SET_SPEED
+    print "Control loop statistics"
+    print "======================="
+    print "min/avg/99pct/max (sec): {:.3f} {:.3f} {:.3f} {:.3f}".format(
+        np.min(stat), np.mean(stat), np.percentile(stat, 99), np.max(stat))
+    dmiss_cnt = sum(i > period for i in stat)
+    print "deadline miss(es): {}/{} {:.1f}%".format(dmiss_cnt, len(stat),
+                                float(dmiss_cnt)/len(stat)*100)
 
 def g_tick():
     t = time.time()
@@ -113,80 +90,140 @@ def g_tick():
     while True:
         count += 1
         yield max(t + count*period - time.time(),0)
+
+class Camera:
+    def __init__(self, res=(320, 240), fps=30):
+        print "Initilize camera."
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(3, res[0]) # width
+        self.cap.set(4, res[1]) # height
+        self.cap.set(5, fps)
+        self.frame = None
+        self.enabled = True
         
+    def update(self):
+        while self.enabled:
+            ret, self.frame = self.cap.read() # blocking read.
+
+    def read_frame(self):
+        return self.frame
+
+    def shutdown(self):
+        print ("Close the camera.")
+        self.enabled = False;        
+        self.cap.release()
+
+cfg_width = 320
+cfg_height = 240
+cfg_fps = 30
+
+cam = Camera((cfg_width, cfg_height), cfg_fps)
+cam_thr = Thread(target=cam.update, args=())
+cam_thr.start()
+time.sleep(2)
+
+frame_id = 0
+angle = 0.0
+btn   = 107
+period = 1.0/20 # sec (=50ms)
+
+motors.setSpeeds(0, 0)
+# ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+# ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+# fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fourcc = cv2.cv.CV_FOURCC(*'XVID')
+vidfile = cv2.VideoWriter('out-video.avi', fourcc, 
+	cfg_fps, (cfg_width,cfg_height))
+keyfile = open('out-key.csv', 'w+')
+keyfile_btn = open('out-key-btn.csv', 'w+')
+keyfile.write("ts_micro,frame,wheel\n")
+keyfile_btn.write("ts_micro,frame,btn,speed\n")
+rec_start_time = 0
+SET_SPEED = MAX_SPEED * 6 / 10 
+cur_speed = SET_SPEED
+print "MAX speed:", MAX_SPEED
+print "cur speed:", cur_speed
+
+dstat = []
+atexit.register(turnOff, stat=dstat)
+
+null_frame = np.zeros((cfg_width,cfg_height,3), np.uint8)
+cv2.imshow('frame', null_frame)
+ch = cv2.waitKey(1) & 0xFF
+
+if len(sys.argv) == 2:
+    SET_SPEED = MAX_SPEED * int(sys.argv[1]) / 10 
+    print "Set new speed: ", SET_SPEED
+
 g = g_tick()
 
+print ("Enter the main loop.")
+m_ctrl = -99
+view_video = False
+ts = init_ts = time.time()
 while True:
     time.sleep(next(g))    
     ts = time.time()
-    
-    # 0. read a image frame
-    ret, frame = cap.read()
 
+    # 0. read a frame
+    frame = cam.read_frame()
+        
     if view_video == True:
         cv2.imshow('frame', frame)
 
-    total_cnt = total_cnt + 1
-    
     # 1. machine input
     img = preprocess.preprocess(frame)
-    angle_dnn = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
-    m_ctrl = get_control(rad2deg(angle_dnn)) # default is to use machine control output
+    # print ("Perform an inference operation.")
+    angle_dnn = model.y.eval(feed_dict={model.x: [img],
+                                        model.keep_prob: 1.0})[0][0]
+    angle_dnn = rad2deg(angle_dnn)
+    m_ctrl = get_control(angle_dnn)
 
     # 2. human input (safety backup)
-    h_ctrl = -99
+    h_ctrl = -99    
     ch = cv2.waitKey(1) & 0xFF
 
-    # 2.1. service task
-    if ch == ord('a'):
+    # 2.1. steering key    
+    if ch == ord('j'):
+        h_ctrl = -1
+        angle = deg2rad(-30)
+        btn = ch
+    elif ch == ord('k'):
+        h_ctrl = 0
+        angle = deg2rad(0)
+        btn = ch
+    elif ch == ord('l'):
+        h_ctrl = 1
+        angle = deg2rad(30)
+        btn = ch
+    # 2.1. service task        
+    elif ch == ord('a'):
         ffw()
         print "accel"
     elif ch == ord('s'):
         stop()
-        print "stop"
-        btn   = ch
+        print "stop"                
     elif ch == ord('z'):
         rew()
         print "reverse"
     elif ch == ord('q'):
         break
-    elif ch == ord('r'):
-        print "toggle record mode"
-        if rec_start_time == 0:
-            rec_start_time = ts
-        else:
-            rec_start_time = 0
     elif ch == ord('t'):
         print "toggle video mode"
         if view_video == False:
             view_video = True
         else:
             view_video = False
-    # 2.2. steering key
-    elif ch == ord('j'):
-        # left 
-        angle = deg2rad(-30)
-        btn = ch
-        h_ctrl = -1
-    elif ch == ord('k'):
-        # center
-        angle = deg2rad(0)
-        btn = ch
-        h_ctrl = 0
-    elif ch == ord('l'):
-        # right
-        angle = deg2rad(30)
-        btn = ch
-        h_ctrl = 1
-
+	    
     # 3. decision
-    if h_ctrl == m_ctrl or h_ctrl == -99:
+    if m_ctrl == h_ctrl or h_ctrl == -99:
         # machine == human or there's no human input 
         ctrl = m_ctrl
+        ctrl_by = "M"
     else:
         # if there's human input, use it.
         ctrl = h_ctrl
-        print '[M]',
+        ctrl_by = "H"
         
     # 4. control
     if ctrl == 0:
@@ -195,13 +232,22 @@ while True:
         right()
     elif ctrl == -1:
         left()
+
+    # statistics update
+    dur = time.time() - ts
+    print ("%s %.3f %d %s %d (ms)" %
+        (ctrl_by, ts - init_ts, angle_dnn, get_ctl_str(ctrl), int(dur*1000)))
+    if dur > period:
+        print ("--> deadline miss.")
+    if ts - init_ts > 1.0:
+        # ignore first 1 sec.
+        dstat.append(dur)
         
-    # 5. record data
     if ctrl == h_ctrl:
-        # human intervened for recovery. must be interesting to record.
+        # human override.
         # increase frame_id
-        frame_id = frame_id + 1
-        
+        frame_id += 1
+
         # write input (angle)
         str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
         keyfile.write(str)
@@ -212,16 +258,13 @@ while True:
         
         # write video stream
         vidfile.write(frame)
-        
-	# print ts, frame_id, angle, btn
 
-        if frame_id >= 200:
-            print "recorded 200 frames"
+        if frame_id >= 1000:
+            print "recorded 1000 frames"
             break
 
-    print ts, frame_id, ctrl, int((time.time() - ts)*1000)
-    
-cap.release()
+stop()
+cam.shutdown()
 keyfile.close()
 keyfile_btn.close()
 vidfile.release()
