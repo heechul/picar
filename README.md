@@ -4,6 +4,10 @@
 
 DeepPicar is a low-cost autonomous RC car platform using a deep convolutional neural network (CNN). DeepPicar is a small scale replication of NVIDIA's real self-driving car called Dave-2, which drove on public roads using a CNN. DeepPicar uses the same CNN architecture of NVIDIA's Dave-2 and can drive itself in real-time locally on a Raspberry Pi 3. 
 
+The release branch can be cloned using the command:
+	
+	$ git clone --depth 1 https://github.com/heechul/picar/
+
 ## Hardware Configuration
 DeepPicar is comprised of the following components:
 
@@ -84,6 +88,9 @@ NVIDIA Jetson TX2:
 	$ ./test-model_timings_x2_cpu.sh # Run all multicore and multimodel tests while using the CPU only
 	$ ./benchmark_timings_x2.sh # Run all synthetic benchmark/co-runner tests while utilizing the GPU
 	$ ./benchmark_timings_x2_cpu.sh # Run all synthetic benchmark/co-runner tests while only using the CPU
+	
+The bandwidth benchmark used in the co-runner tests can be found in the
+[IsolBench](https://github.com/CSL-KU/IsolBench/) suite.
     
 ## Additional Information
 Please refer to 
