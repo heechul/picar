@@ -6,7 +6,9 @@ import params
 
 def weight_variable(name, shape):
     W = tf.get_variable(name, shape=shape, initializer=tf.contrib.layers.xavier_initializer())#Create weights
-    return tf.sign(W) #Change weights to -1 or 1
+	alpha = tf.abs(W) 
+	alpha = tf.reduce_sum(alpha) #Calculate the optimal scaling factor
+    return (alpha * tf.sign(W)) #Change weights to -1 or 1
 	#return tf.contrib.quantization.python.quantize_v2(W, -1, 1, tf.qint8).output #Change weight values to -1 or 1 and datatype to 8 bit size rather than 32 bit_length
 																				  #Doesn't work with tf.nn.conv2d as that requires half, bfloat16, or float32 datatypes as input
 	
