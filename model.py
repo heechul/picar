@@ -5,7 +5,11 @@ import tensorflow as tf
 import params
 
 def weight_variable(name, shape):
-    return tf.get_variable(name, shape=shape, initializer=tf.contrib.layers.xavier_initializer())
+    W = tf.get_variable(name, shape=shape, initializer=tf.contrib.layers.xavier_initializer())#Create weights
+    return tf.sign(W) #Change weights to -1 or 1
+	#return tf.contrib.quantization.python.quantize_v2(W, -1, 1, tf.qint8).output #Change weight values to -1 or 1 and datatype to 8 bit size rather than 32 bit_length
+																				  #Doesn't work with tf.nn.conv2d as that requires half, bfloat16, or float32 datatypes as input
+	
     # initial = tf.truncated_normal(shape, stddev=0.1)
     # return tf.Variable(initial)
 
@@ -14,7 +18,8 @@ def bias_variable(shape):
     return tf.Variable(initial)
 
 def conv2d(x, W, stride):
-    return tf.nn.conv2d(x, W, strides=[1, stride, stride, 1], padding='VALID')
+	#x = tf.sign(x) #Change values of inputs to -1 or 1, uncomment for binary inputs
+     return tf.nn.conv2d(x, W, strides=[1, stride, stride, 1], padding='VALID')
 
 x = tf.placeholder(tf.float32, shape=[None, params.img_height, params.img_width, params.img_channels])
 y_ = tf.placeholder(tf.float32, shape=[None, 1])
