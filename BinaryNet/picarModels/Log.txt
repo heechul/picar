@@ -1,0 +1,57 @@
+2018-03-08 13:12:12 [program started on Thu Mar  8 13:12:12 2018] 
+2018-03-08 13:12:12 [command line arguments] 
+2018-03-08 13:12:12 stcWeights false 
+2018-03-08 13:12:12 LR 0.015625 
+2018-03-08 13:12:12 modelsFolder ./Models/ 
+2018-03-08 13:12:12 batchSize 100 
+2018-03-08 13:12:12 optimization adam 
+2018-03-08 13:12:12 preProcDir /home/mbechtel/Documents/GitHub/BinaryNet/PreProcData/Cifar10 
+2018-03-08 13:12:12 network ./Models/BinaryNet_DeepPicar_Model 
+2018-03-08 13:12:12 stcNeurons true 
+2018-03-08 13:12:12 constBatchSize false 
+2018-03-08 13:12:12 LRDecay 0 
+2018-03-08 13:12:12 whiten true 
+2018-03-08 13:12:12 augment false 
+2018-03-08 13:12:12 load  
+2018-03-08 13:12:12 nGPU 1 
+2018-03-08 13:12:12 dp_prepro false 
+2018-03-08 13:12:12 format rgb 
+2018-03-08 13:12:12 save /home/mbechtel/Documents/GitHub/BinaryNet/Results/ThuMar813:12:122018 
+2018-03-08 13:12:12 dataset Cifar10 
+2018-03-08 13:12:12 normalization simple 
+2018-03-08 13:12:12 devid 1 
+2018-03-08 13:12:12 visualize 1 
+2018-03-08 13:12:12 type cuda 
+2018-03-08 13:12:12 threads 8 
+2018-03-08 13:12:12 SBN true 
+2018-03-08 13:12:12 momentum 0 
+2018-03-08 13:12:12 weightDecay 0 
+2018-03-08 13:12:12 runningVal false 
+2018-03-08 13:12:12 epoch 4 
+2018-03-08 13:12:12 [----------------------] 
+2018-03-08 13:12:13 ==> Network 
+2018-03-08 13:12:13 nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> output]
+  (1): cudnnBinarySpatialConvolution(3 -> 24, 5x5, 1,1, 1,1)
+  (2): nn.HardTanh
+  (3): BinarizedNeurons
+  (4): cudnnBinarySpatialConvolution(24 -> 36, 5x5, 1,1, 1,1)
+  (5): nn.HardTanh
+  (6): BinarizedNeurons
+  (7): cudnnBinarySpatialConvolution(36 -> 48, 5x5, 1,1, 1,1)
+  (8): nn.HardTanh
+  (9): BinarizedNeurons
+  (10): cudnnBinarySpatialConvolution(48 -> 64, 3x3, 1,1, 1,1)
+  (11): nn.HardTanh
+  (12): BinarizedNeurons
+  (13): cudnnBinarySpatialConvolution(64 -> 64, 3x3, 1,1, 1,1)
+  (14): nn.HardTanh
+  (15): BinarizedNeurons
+} 
+2018-03-08 13:12:13 ==>131348 Parameters 
+2018-03-08 13:12:13 ==> Loss 
+2018-03-08 13:12:13 SqrtHingeEmbeddingCriterion 
+2018-03-08 13:12:13 nil 
+2018-03-08 13:12:13 
+==> Starting Training
+ 
