@@ -74,7 +74,6 @@ for i, layer in ipairs(model.modules) do
       learningRates[{{counter+1, counter+bias_size}}]:fill(GLR)
       clipvector[{{counter+1, counter+bias_size}}]:fill(0)
       counter = counter+bias_size
-      counter = counter+bias_size
     elseif layer.__typename == 'cudnnBinarySpatialConvolution' then
       local size_w=layer.weight:size();
       local weight_size = size_w[1]*size_w[2]*size_w[3]*size_w[4]
