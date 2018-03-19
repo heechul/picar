@@ -24,45 +24,38 @@ end
 local model = nn.Sequential()
 
 --Convolutional Layer 1
-model:add(SpatialConvolution(3,24,5,5,2,2,0,0,opt.stcWeights))
+model:add(nn.SpatialConvolution(3,24,5,5,2,2))
 model:add(nn.ReLU())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
 --Convolutional Layer 2
-model:add(SpatialConvolution(24,36,5,5,2,2,0,0,opt.stcWeights))
+model:add(nn.SpatialConvolution(24,36,5,5,2,2))
 model:add(nn.ReLU())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
 --Convolutional Layer 3
-model:add(SpatialConvolution(36,48,5,5,2,2,0,0,opt.stcWeights))
+model:add(nn.SpatialConvolution(36,48,5,5,2,2))
 model:add(nn.ReLU())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
 --Convolutional Layer 4
-model:add(SpatialConvolution(48,64,3,3,1,1,0,0,opt.stcWeights))
+model:add(nn.SpatialConvolution(48,64,3,3))
 model:add(nn.ReLU())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
 --Convolutional Layer 5
-model:add(SpatialConvolution(64,64,3,3,1,1,0,0,opt.stcWeights))
+model:add(nn.SpatialConvolution(64,64,3,3))
 model:add(nn.ReLU())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
 --Fully Connected Layer 1
 model:add(nn.View(-1,1152))
-model:add(BinaryLinear(1152,100,opt.stcWeights))
+model:add(nn.Linear(1152,100))
 model:add(nn.ReLU())
 model:add(nn.Dropout())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
 --Fully Connected Layer 2
-model:add(BinaryLinear(100,10,opt.stcWeights))
+model:add(nn.Linear(100,10))
 model:add(nn.ReLU())
 model:add(nn.Dropout())
-model:add(BinarizedNeurons(opt.stcNeurons))
 
---Fully Connected Layer 3
-model:add(BinaryLinear(10,1,opt.stcWeights))
+--Fully Connected Layer 3]
+model:add(nn.Linear(10,1))
 
 local dE, param = model:getParameters()
 local weight_size = dE:size(1)
