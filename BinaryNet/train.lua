@@ -1,4 +1,5 @@
 require 'torch'
+require 'cutorch'
 require 'xlua'
 require 'optim'
 require 'gnuplot'
@@ -16,7 +17,7 @@ cmd:option('-stcWeights',         false,                  'use stochastic binari
 opt = cmd:parse(arg or {})
 
 local params = require('params')
-local model = require("Models/BinaryNet_DeepPicar_Model").model
+local model = require(params.model_file).model
 model:cuda()
 require("LuaRandomSample")
 
@@ -56,20 +57,52 @@ local function load_batch(set)
       batch_angles[#batch_angles+1] = set.angles[batchNums[i]]
     end
 
-    batch_frames = TableToTensor(batch_frames)
-    batch_angles = torch.Tensor(batch_angles)
+    batch_frames = TableToTensor(batch_frames):cuda()
+    batch_angles = torch.Tensor(batch_angles):cuda()
 
-    return batchNums, batch_frames, batch_angles
+    return batch_frames, batch_angles
 end
 
-criterion = nn.MSECriterion()
+function getTimePassed(seconds)
+  local minutes = math.floor(seconds / 60)
+  local remaining = seconds % 60
+  return minutes,remaining
+end
+
+criterion = nn.MSECriterion():cuda()
+parameters,gradParameters = model:getParameters()
+local optimState = {learningRate = 0.01}
+
+starttime = os.time()
+local save_path = paths.concat(params.save_dir, params.save_file)
+local clone = model:clone('weight','bias','running_mean','running_std')
 
 for i = 1,params.training_steps do
     frame_batch, angle_batch = load_batch(train_set)
 
-    criterion:forward(model:forward(frame_batch), angle_batch)
+    function feval(parameters)
+      gradParameters:zero()
 
-    model:zeroGradParameters()
-    model:backward(frame_batch, criterion:backward(angle_batch))
-    model:updateParameters(2^-6)
+      local outputs = model:forward(frame_batch)
+      local loss = criterion:forward(outputs, angle_batch)
+      local dloss_doutputs = criterion:backward(outputs, angle_batch)
+      model:backward(frame_batch, dloss_doutputs)
+
+      return loss, gradParameters
+    end
+    optim.sgd(feval, parameters, optimState)
+
+    if i % 10 == 0 then
+      val_frames, val_angles = load_batch(train_set)
+      local trainloss = criterion:forward(model:forward(frame_batch), angle_batch)
+      local valloss = criterion:forward(model:forward(val_frames), val_angles)
+      print("Finished "..i.." training steps, train loss "..trainloss..", val loss "..valloss)
+    end
+
+    if i % 100 == 0 then
+      torch.save(save_path, model:clearState())
+      timepassed = os.time() - starttime
+      minutes,seconds = getTimePassed(timepassed)
+      print('Model saved. Time passed: '..minutes..'m'..seconds..'s')
+    end
 end
