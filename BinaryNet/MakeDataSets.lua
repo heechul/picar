@@ -20,11 +20,6 @@ local val_set =
   angles = {}
 }
 
-local test_set =
-{
-  frames = {}
-}
-
 local trainEpochs = table.getn(params.train_sets)
 
 print("Training Data:")
@@ -99,36 +94,13 @@ for i = 1,valEpochs do
   end
 end
 
-local testEpochs = table.getn(params.test_sets)
-
-print("Testing Data:")
-
-for i = 1,testEpochs do
-  local epochNum = params.test_sets[i]
-
-  print("    Getting data from epoch "..epochNum)
-
-  local avipath = paths.concat("epochs", "out-video-"..epochNum..".avi")
-  local vid = cv.VideoCapture{avipath}
-
-  local ret, frame = vid:read{}
-
-  while ret do
-    test_set.frames[#test_set.frames+1] = img
-    ret = vid:read{frame}
-  end
-end
-
 assert(table.getn(train_set.frames) == table.getn(train_set.angles), "Unequal number of frames and angles")
 assert(table.getn(val_set.frames) == table.getn(val_set.angles), "Unequal number of frames and angles")
 
 print("# of Training frames/angles = "..table.getn(train_set.frames))
 print("# of Validation frames/angles = "..table.getn(val_set.frames))
-print("# of Testing frames/angles = "..table.getn(test_set.frames))
 
 local train_file = paths.concat("datasets", "train.t7")
 torch.save(train_file, train_set)
 local val_file = paths.concat("datasets", "val.t7")
 torch.save(val_file, val_set)
-local test_file = paths.concat("datasets", "test.t7")
-torch.save(test_file, test_set)
