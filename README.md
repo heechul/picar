@@ -6,7 +6,7 @@ DeepPicar is a low-cost autonomous RC car platform using a deep convolutional ne
 
 The release branch can be cloned using the command:
 	
-	$ git clone --depth 1 https://github.com/heechul/picar/
+	$ git clone --depth=1 https://github.com/heechul/picar/
 
 ## Hardware Configuration
 DeepPicar is comprised of the following components:
