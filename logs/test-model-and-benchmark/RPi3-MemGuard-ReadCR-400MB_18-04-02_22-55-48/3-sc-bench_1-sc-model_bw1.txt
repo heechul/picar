@@ -1,0 +1,6 @@
+assigned to cpu 1
+memsize=16384 KB, type=read, cpuid=1
+stop at 10000
+g_nread(bytes read) = 38319161344
+elapsed = 91.28 sec ( 91277112 usec )
+CPU1: B/W = 400.36 MB/s | CPU1: average = 152.45 ns

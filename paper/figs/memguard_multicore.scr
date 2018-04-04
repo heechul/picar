@@ -1,0 +1,29 @@
+set terminal pdf font "Times-Roman,14"
+set output "memguard_multicore.pdf"
+set yrange [0.0:100.0]
+set xlabel "Bandwidth Reservation Size" 
+set ylabel "Avg. processing time (ms)" offset 2.5
+set nokey
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+#set arrow from -1,50 to 2,50 nohead dt "-"
+#set label  "20" at 2.05,53 
+#set label  "Hz" at 2.05,45
+
+#set arrow from -1,33.33 to 2,33.33 nohead dt "-"
+#set label  "30" at 2.05,36 
+#set label  "Hz" at 2.05,28
+
+set label "127.33" at 3.2,95
+
+set boxwidth 0.5
+plot  "memguard_multicore.dat"  u 2:xticlabel(1) with boxes fs solid 0.2
+
+#plot  "memguard_multicore.dat"  using 2:xticlabel(1) title "no throttle" lt -1,\
+#      ""                  using 3 title "1000 MB/s" lt -1,\
+#      ""                  using 4 title "750 MB/s" lt -1,\
+#      ""                  using 5 title "500 MB/s" lt -1,\
+#      ""                  using 6 title "250 MB/s" lt -1

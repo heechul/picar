@@ -1,0 +1,6 @@
+assigned to cpu 3
+memsize=16384 KB, type=read, cpuid=3
+stop at 10000
+g_nread(bytes read) = 6962544640
+elapsed = 66.86 sec ( 66861744 usec )
+CPU3: B/W = 99.31 MB/s | CPU3: average = 614.60 ns

@@ -177,7 +177,7 @@ while True:
         frame_id += 1
         
         # write input (angle)
-        str = "{},{},{}\n".format(int(ts*1000), frame_id, angle)
+        str = "{},{},{},{}\n".format(int(ts*1000), frame_id, angle, cur_speed)
         keyfile.write(str)
         
         # write input (button: left, center, stop, speed)

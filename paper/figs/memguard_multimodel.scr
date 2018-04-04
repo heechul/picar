@@ -1,0 +1,30 @@
+set terminal pdf enhanced mono font "Times-Roman,14"
+set output "memguard_multimodel.pdf"
+set yrange [0.0:100.0]
+set ylabel "Avg. processing time (ms)" offset 2.5
+#set xlabel "(#of {/Times:Bold N}Ns) x (#of {/Times:Bold C}ores/NN)"
+set xlabel "Bandwidth Reservation Size"
+set nokey
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+#set arrow from -1,50 to 2,50 nohead dt "-"
+#set label  "20" at 2.05,53 
+#set label  "Hz" at 2.05,45
+
+#set arrow from -1,33.33 to 2,33.33 nohead dt "-"
+#set label  "30" at 2.05,36 
+#set label  "Hz" at 2.05,28
+
+set label "156.39" at 3.2,95
+
+set boxwidth 0.5
+plot  "memguard_multimodel.dat"  u 2:xticlabel(1) with boxes fs solid 0.2
+
+#set boxwidth 1
+#set termoption dash
+#set arrow from 0.5,0 to 0.5,100 nohead dt "-"
+#plot  "memguard_multimodel.dat"  using 2:xticlabel(1)  title "no throttle" lt -1,\
+#      ""                  using 3 title "MemGuard" lt -1

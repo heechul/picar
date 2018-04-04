@@ -3,7 +3,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.65\textwidth]{figs/DeepPicar_platform}
+  \includegraphics[width=.4\textwidth]{figs/DeepPicar_platform}
   \caption{DeepPicar platform.}
   \label{fig:overview}
 \end{figure}
@@ -49,7 +49,7 @@ estimated cost of the system.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.65\textwidth]{figs/architecture}
+  \includegraphics[width=0.4\textwidth]{figs/architecture}
   \caption{DeepPicar's neural network architecture: 9 layers (5
     convolutional, 4 fully-connected layers), 27 million connections,
     250K parameters. The CNN architecture is identical to the one 
@@ -61,7 +61,7 @@ estimated cost of the system.
 For the neural network architecture, we implement
 NVIDIA DAVE-2's convolutional neural network (CNN) using a TensorFlow
 based CNN model in ~\cite{deeptesla}. Note, however, that the CNN model
-in~\cite{deeptesla} was considerably bigger than NVIDIA's CNN model as
+in~\cite{deeptesla} was considerably larger than NVIDIA's CNN model as
 it contained an additional fully-connected layer of approximately 1.3M
 additional parameters. We eliminated the additional layer to
 faithfully recreate the NVIDIA's original CNN model.
@@ -79,32 +79,26 @@ processing is minimal.
 
 \begin{figure}[h]
   \centering
-%% <<<<<<< HEAD
-%%   \includegraphics[width=.5\textwidth]{figs/track_new2}
-%%   \caption{One of the custom tracks used for training/testing.}
-%%   \label{fig:track}
-%% =======
-  \begin{subfigure}{0.55\textwidth}
+  \begin{subfigure}{0.4\textwidth}
     \includegraphics[width=\textwidth]{figs/track_new2}
     \caption{Track 1.}
     \label{fig:track}
   \end{subfigure}
   \hfill
-  \begin{subfigure}{0.7\textwidth}
+  \begin{subfigure}{0.4\textwidth}
     \includegraphics[width=\textwidth]{figs/track-2}
     \caption{Track 2.}
     \label{fig:track2}
   \end{subfigure}
   \caption{Custom tracks used for training/testing}
   \label{fig:tracks}
-%% >>>>>>> f3814396d8701264f2439b42fbe8bbb608c41452
 \end{figure}
 
 % data collection and training.
 To collect the training data, a human pilot manually drives the RC car
 on tracks we created (Figure~\ref{fig:tracks}) to record
 timestamped videos and contol commands. The stored data is then copied 
-to a desktop computer, which is equipped with a NVIDIA GTX 1050 Ti GPU, 
+to a desktop computer, which is equipped with a NVIDIA GTX 1060 GPU, 
 where we train the network to accelerate training speed. 
 For comparison, training the network on the Raspbeery Pi 3 takes
 approximately 4 hours, whereas it takes only about 4 minutes on the
@@ -125,9 +119,9 @@ desktop computer using the GTX 1050 Ti GPU.
 % inferencing on pi3
 Once the network is trained on the desktop computer, the trained model
 is copied back to the Raspberry Pi 3. The network is then used
-by the car's main controller, which feeds a image frame from the web
+by the car's main controller, which feeds an image frame from the web
 camera as input to the network. In each control period, the produced 
-steering angle output is then converted as the PWM values of the 
+steering angle output is then converted into the PWM values of the 
 steering motor of the car. Figure~\ref{fig:controlloop} shows simplified 
 pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
 network inferencing, is the most computationally intensive and dominates the
@@ -146,7 +140,7 @@ platform that can precisely control the car's steering angle.
 Other issues we observed in training/testing the network, which
 can affect the prediction accuracy of the CNN, are camera and actuator
 (motor) control latencies. In DeepPicar's
-context, the camera latency is from the time the camera
+context, the camera latency  measured from the time the camera
 sensor observes the scene to the time the computer actually reads the
 digitized image data. This time can be noticable depending on the camera 
 used and the performance of the Pi. Higher camera latency could
@@ -182,7 +176,7 @@ higher speed is inherently more challenging because the CNN controller
 has less time to recover from mistakes (bad predictions).  Also, we
 find that the prediction accuracy is significantly affected by the
 quality of training data as well as various environmental factors such
-as the lighting condition. We plan to investigate more systematic ways
+as lighting conditions. We plan to investigate more systematic ways
 to improve the CNN's prediction accuracies.
 
 We would like to stress, however, that the issues related to the

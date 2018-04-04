@@ -59,7 +59,7 @@ compared.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/compare_core}
+  \includegraphics[width=.45\textwidth]{figs/compare_core}
   \caption{Average control loop execution time.} 
   \label{fig:sys_core}
 \end{figure}
@@ -79,11 +79,11 @@ WCET by a clear margin,
 and, in the case of the TX2, 50 Hz or even 100 Hz real-time control is
 feasible with the help of its GPU. Another observation is that the TX2
 (GPU) performance does not change much, as most of the neural network 
-computation is done at the GPU.
+computation is done by the GPU.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/compare_model}
+  \includegraphics[width=.45\textwidth]{figs/compare_model}
   \caption{Average control loop execution time when multiple DNN
     models are co-scheduled. }
   \label{fig:sys_model}
@@ -100,7 +100,7 @@ accomodate multiple instances of the DNN models we tested.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/compare_benchmark}
+  \includegraphics[width=.45\textwidth]{figs/compare_benchmark}
   \caption{Average control loop execution time in the presence of an
     increasing number of memory intensive applications on idle CPU cores.}
   \label{fig:sys_bench}
@@ -108,7 +108,7 @@ accomodate multiple instances of the DNN models we tested.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/compare_l2missrate}
+  \includegraphics[width=.45\textwidth]{figs/compare_l2missrate}
   \caption{L2 miss rates in the presence of an increasing number of 
 			memory intensive applications on idle CPU cores.}
   \label{fig:sys_l2miss}
@@ -116,7 +116,6 @@ accomodate multiple instances of the DNN models we tested.
 
 Finally, we compare the effect of co-scheduling memory bandwidth
 intensive synthetic benchmarks on the DNN control loop timing. 
-
 Figure~\ref{fig:sys_bench} shows the results. As discussed in 
 Section~\ref{sec:eval-memhog}, we observed dramatic execution time
 increases, up to 11.6X, in Raspberry Pi 3 as we increased the number of
@@ -151,8 +150,8 @@ poor indicator to the execution time of the control loop. As shown
 already, the Raspberry Pi 3's increased L2 misses do not fully explain
 increases in processing times. In case of the Intel UP, as the number of
 interfering Bandwidth benchmark instances increases, the L2 miss rates
-even drop slightly. In case of the TX2 (CPU), from solo to one co-runner,
-L2 miss rate increase almost twice, but then the execution time
+drop slightly. In the case of the TX2 (CPU), from solo to one co-runner,
+L2 miss rates almost double, but then the execution time
 increase is a little less than 10\%. However, when there are
 co-runners, even though the L2 miss rates are largely unchanged, the
 DNN processing time increases significantly. The TX2 (GPU) also shows
@@ -170,7 +169,7 @@ but not L2 cache space sensitive.
 %% and TX2 have ARM based CPUs.
 
 
-In summary, we find that today's embedded computing platforms, even as
+In summary, we find that todays embedded computing platforms, even as
 inexpensive as a Raspberry Pi 3, are powerful enough to support
 vision and end-to-end deep learning based real-time control
 applications. Furthermore, availability of CPU cores and GPU on these

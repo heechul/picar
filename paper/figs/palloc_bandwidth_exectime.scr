@@ -1,7 +1,7 @@
 set terminal pdf font "Times-Roman,14"
 set output "palloc_bandwidth_exectime.pdf"
-set yrange [0.0:20]
-set ylabel "Normalized Ratio" offset 1.5
+set yrange [0.0:100]
+set ylabel "Avg. Processing Time (ms)" offset 1.5
 
 set style data histogram
 set style histogram cluster gap 1.5

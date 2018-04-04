@@ -1,0 +1,14 @@
+# started on Mon Apr  2 22:57:05 2018
+
+
+ Performance counter stats for 'bandwidth -a read -m 16384 -t 10000 -c 1':
+
+        11,594,118      cache-misses:u            #    2.403 % of all cache refs      (68.59%)
+       482,403,011      cache-references:u                                            (65.49%)
+       932,334,825      LLC-loads:u                                                   (63.82%)
+       468,016,916      LLC-load-misses:u         #   50.20% of all LL-cache hits     (67.01%)
+     1,880,541,059      r19:u                                                         (67.62%)
+       461,033,607      rc2:u                                                         (67.50%)
+
+      71.766547185 seconds time elapsed
+

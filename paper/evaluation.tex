@@ -14,7 +14,7 @@ and
 
 \subsection{Setup}
 
-The Raspberry Pi 3 Model B platform used in DeepPicar equips a Boardcom
+The Raspberry Pi 3 Model B platform used in DeepPicar equips a Broadcom
 BCM2837 SoC, which has a quad-core ARM Cortex-A53 cluster,
 running at up to 1.2GHz. Each core has a 32K private Instruction cache
 and a 32K private Data cache, and all cores share a 512KB L2 cache.
@@ -31,7 +31,7 @@ For real-time control of a car (or any robot), the control loop
 frequency must be sufficiently high so that the car can quickly
 react to the changing environment and its internal states. In general,
 control performance improves when the frequency is higher, though
-computation time and the type of the particular physical system are
+computation time and the type of particular physical system are
 factors in determining a proper control loop frequency. While a standard
 control system may be comprised of multiple control loops with
 differing control frequencies---e.g., an inner control loop for lower-level
@@ -52,7 +52,7 @@ the execution times of DeepPicar's DNN inference operations.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=.75\textwidth]{figs/Fig7_new}
+  \includegraphics[width=.5\textwidth]{figs/Fig7_new}
   \caption{DeepPicar's control loop processing times over 1000 input image frames.}
   \label{fig:control-loop-timing}
 \end{figure}
@@ -87,7 +87,7 @@ Second, we find that the measured average
 execution time of a single control loop is 22.87 ms, or 43.7 Hz and
 the 99 percentile time is 23.38 ms.
 This means that the DeepPicar can operate
-at a up to 40 Hz control frequency in real-time using only the on-board
+at up to 40 Hz control frequency in real-time using only the on-board
 Raspberry Pi 3 computing platform, as no remote computing resources 
 were necessary. We consider these results surprising given the complexity
 of the deep neural network, and the fact that the inference operation
@@ -116,7 +116,7 @@ attractive real-time workload.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/perf_vs_corecnt}
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_corecnt}
   \caption{Average control loop execution time vs. \#of CPU
     cores.}
   \label{fig:perf-vs-corecnt}
@@ -176,7 +176,7 @@ models as they are running.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/perf_vs_modelcnt}
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_modelcnt}
   \caption{Timing impact of co-scheduling multiple DNNs. 1Nx1C: one DNN
     model using one core; 4Nx1C: four DNN models each using one core;
     1Nx2C: one DNN model using two cores; 2Nx2C: two DNN models each
@@ -244,23 +244,34 @@ We run a single DNN model on one core, and
 co-schedule an increasing number of the memory intensive synthetic
 benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
   IsolBench suite, with the following command line parameters: \texttt{\$
-  bandwdith -a write -m 16384}}, on the remaining idle cores.
+  bandwdith -a write -m 16384 -t 1000}}, on the remaining idle cores.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{figs/perf_vs_bandwidth}
-  \caption{Effect of memory performance hogs on the DNN
-    inferencing. The DNN model uses Core 0 and memory-hog co-runners
-    use the rest of the cores.}
-  \label{fig:}
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth}
+  \caption{Average processing time vs. the number of memory
+    memory intensive co-runners introduced.}
+  \label{fig:perf_vs_bandwidth}
 \end{figure}
 
-Figure~\ref{fig:} shows the normalized execution time (first group) and
-L2 miss-rate (last group)
-of the DNN model running on the Core 0 as a function of the number of
-co-scheduled memory intensive synthetic benchmarks. We also shows the
-normalized total system bus access count (middle group), which is
-representative of memory bandwidth usage of all the cores.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth_mem}
+  \caption{Effect of memory performance hogs on the shared resources. 
+    The DNN model uses Core 0 and memory-hog co-runners
+    use the rest of the cores.}
+  \label{fig:perf_vs_bandwidth_mem}
+\end{figure}
+
+
+Figure~\ref{fig:perf_vs_bandwidth} shows the execution time of the DNN 
+model and Figure~\ref{fig:perf_vs_bandwidth_mem} shows both the normalized
+total memory bus accesses (first group) and L2 miss rates (second group).
+In both figures, the DNN model is running on Core 0 as a function of the 
+number of co-scheduled memory intensive synthetic benchmarks.
+%% We also show 
+%% the normalized total system bus access count (middle group), which is
+%% representative of memory bandwidth usage of all the cores.
 First, as we
 increase the number of co-runners, the DNN model's execution times are
 increased exponentially---by up to 11.6X---even though the DNN model
@@ -292,7 +303,8 @@ partitioning does not provide memory performance guarantees.
 %% hardware platform running on a single DNN workload, we suspect that
 %% many AI workloads may exhibit similar characteristics.
 
-%% \input{evaluation-cachepart}
+\input{evaluation-cachepart}
+\input{evaluation-drampart}
 
 \subsection{Summary of the Findings}
 So far, we have evaluated DeepPicar's real-time
@@ -325,12 +337,19 @@ performance appears to be very sensitive to memory performance; we
 observe up to 11.6X slowdown in DNN performance by co-scheduling 
 synthetic memory bandwidth intensive applications on idle cores.
 
-%% Lastly, we find that partitioning the shared L2 cache provides 
-%% practically no benefits to the real-time performance of the DNN. To the 
-%% contrary, performance is constant regardless of the amount of cache 
-%% space used. We also find that performance becomes worse when memory
-%% intensive co-runners are introduced as they generate more memory 
-%% contention when partitioning is enabled. Furthermore, we 
-%% find that performance remains consistent when multiple models are run 
-%% simultaneously. As such, we conclude that the shared L2 cache is not 
-%% essential to the DNN's real-time performance.
+Fifth, we find that partitioning the shared L2 cache provides 
+practically no benefits to the real-time performance of the DNN. To the 
+contrary, performance is constant regardless of the amount of cache 
+space used. Furthermore, we find that performance remains consistent 
+when multiple models are run simultaneously, and when memory intensive
+read co-runners are introduced. As such, we conclude that 
+the shared L2 cache is not essential to the DNN's real-time performance.
+
+Lastly, we find that memory bandwidth throttling results in significant
+changes to model performance. When less bandwidth is given to models,
+whether they're running alone or concurrently, we find that their performance
+decreases noticably. When memory intensive co-runners are
+present, we find that limiting the available bandwidth of the co-runners
+actually results in improved model performance. As such, we conclude
+that the shared DRAM memory is essential to the DNN's real-time 
+performance.
