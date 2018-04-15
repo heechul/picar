@@ -86,7 +86,7 @@ processing is minimal.
   \end{subfigure}
   \hfill
   \begin{subfigure}{0.4\textwidth}
-    \includegraphics[width=\textwidth]{figs/track-2}
+    \includegraphics[width=\textwidth]{figs/track-3}
     \caption{Track 2.}
     \label{fig:track2}
   \end{subfigure}
@@ -98,11 +98,11 @@ processing is minimal.
 To collect the training data, a human pilot manually drives the RC car
 on tracks we created (Figure~\ref{fig:tracks}) to record
 timestamped videos and contol commands. The stored data is then copied 
-to a desktop computer, which is equipped with a NVIDIA GTX 1060 GPU, 
+to a desktop computer, which is equipped with a NVIDIA Titan Xp GPU, 
 where we train the network to accelerate training speed. 
 For comparison, training the network on the Raspbeery Pi 3 takes
 approximately 4 hours, whereas it takes only about 4 minutes on the
-desktop computer using the GTX 1050 Ti GPU.
+desktop computer using the Titan Xp GPU.
 
 \begin{figure}[h]
    \lstset{language=python,

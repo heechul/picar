@@ -2,19 +2,24 @@ set terminal pdf font "Times-Roman,14"
 set output "memguard_bandwidth.pdf"
 set yrange [0.0:100]
 set ylabel "Avg. Processing Time (ms)" offset 1.5
-set xlabel "# of Co-runners"
+#set xlabel "# of Co-runners"
+set xlabel "Bandwidth Reservation Size"
+set nokey
 
 set style data histogram
 set style histogram cluster gap 1.5
 set style fill pattern border
 
-#set arrow from -1,1 to 2,1 nohead dt "-"
+set arrow from -0.5,46.4 to 5.5,46.4 nohead dt "-"
+set label "so-" at 5.525,50
+set label "lo" at 5.6,43
 
-set key left top
+#set key left top
 
-set boxwidth 1
-plot  "memguard_bandwidth.dat"  using 2:xticlabel(1) title "no throttle" lt -1,\
-      ""                  using 3 title "400 MB/s" lt -1,\
-      ""                  using 4 title "300 MB/s" lt -1,\
-      ""                  using 5 title "200 MB/s" lt -1,\
-      ""                  using 6 title "100 MB/s" lt -1
+set boxwidth 0.5
+plot  "memguard_bandwidth.dat"  u 2:xticlabel(1) with boxes fs solid 0.2
+#plot  "memguard_bandwidth.dat"  using 2:xticlabel(1) title "no throttle" lt -1,\
+      #""                  using 3 title "400 MB/s" lt -1,\
+      #""                  using 4 title "300 MB/s" lt -1,\
+      #""                  using 5 title "200 MB/s" lt -1,\
+      #""                  using 6 title "100 MB/s" lt -1

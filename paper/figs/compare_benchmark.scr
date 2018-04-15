@@ -7,8 +7,8 @@ set style data histogram
 set style histogram cluster gap 1.5
 set style fill pattern border
 
-set label "254" at -0.37,140
-set label "537" at 0.45,140
+set label "253" at -0.37,140
+set label "526" at 0.45,140
 
 set arrow from -1,50 to 4,50 nohead dt "."
 set label  "20 Hz" at 3.5,48 font "Times-Roman,14"

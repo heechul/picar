@@ -1,0 +1,16 @@
+set terminal pdf font "Times-Roman,14"
+set output "compare_writebus.pdf"
+set yrange [0.0:100]
+set ylabel "Normalized Bus Accesses" offset 1.5
+
+set style data histogram
+set style histogram cluster gap 1.5
+set style fill pattern border
+
+set arrow from -1,1 to 4,1 nohead dt "-"
+
+set boxwidth 1
+plot  "compare_writebus.dat"  using 2:xticlabel(1) title "solo" lt -1,\
+      ""                  using 3 title "+1 co-runner" lt -1,\
+      ""                  using 4 title "+2 co-runners" lt -1,\
+      ""                  using 5 title "+3 co-runners" lt -1

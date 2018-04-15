@@ -17,7 +17,7 @@ set style fill pattern border
 #set label  "30" at 2.05,36 
 #set label  "Hz" at 2.05,28
 
-set label "127.33" at 3.2,95
+set label "116.55" at 4.1,95
 
 set boxwidth 0.5
 plot  "memguard_multicore.dat"  u 2:xticlabel(1) with boxes fs solid 0.2

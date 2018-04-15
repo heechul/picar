@@ -2,13 +2,18 @@ set terminal pdf font "Times-Roman,14"
 set output "perf_vs_bandwidth.pdf"
 set yrange [0.0:600]
 set ylabel "Avg. Processing Time (ms)" offset 1.5
-set nokey
+#set nokey
+
+set key top left
 
 set style data histogram
 set style histogram cluster gap 1.5
 set style fill pattern border
 
-#set arrow from -1,1 to 3,1 nohead dt "-"
+set arrow from -1,100 to 2,100 nohead dt "-"
+
+set label "10" at 3.5,100
+set label "Hz" at 3.5,70
 
 #set label  "11.6" at -.1,9 
 
@@ -16,9 +21,8 @@ set style fill pattern border
 
 #set label  "78.6" at 1.5,25 
 
-set boxwidth 0.5
-plot  "perf_vs_bandwidth.dat"  u 2:xticlabel(1) with boxes fs solid 0.2
-      
-	  #""                  using 3 title "+1 co-runner" lt -1,\
-      #""                  using 4 title "+2 co-runners" lt -1,\
-      #""                  using 5 title "+3 co-runners" lt -1
+set boxwidth 1
+plot  "perf_vs_bandwidth.dat"  u 2:xticlabel(1) title "solo",\
+	  ""                  using 3 title "+1 co-runner" lt -1,\
+      ""                  using 4 title "+2 co-runners" lt -1,\
+      ""                  using 5 title "+3 co-runners" lt -1

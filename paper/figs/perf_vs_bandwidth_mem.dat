@@ -1,2 +1,6 @@
-"Bus accesses"		1.0  8.1  36.3 78.6
-"L2 miss-rate"		1.0  1.5  2.2  2.6
+#"BwRead Bus"		1.0	 10.4 12.2 14.5
+"BwRead Bus"		1.0	 7.4 9.09 10.5
+#"BwWrite Bus"		1.0  8.1  36.3 78.6
+"BwWrite Bus"		1.0  6.5  24.2 47.1
+"BwRead L2"		1.0	 1.47  1.52  1.54
+"BwWrite L2"		1.0  1.44  1.83  1.95

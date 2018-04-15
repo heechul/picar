@@ -100,31 +100,37 @@ accomodate multiple instances of the DNN models we tested.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.45\textwidth]{figs/compare_benchmark}
+  \includegraphics[width=.45\textwidth]{figs/compare_benchmark_read}
   \caption{Average control loop execution time in the presence of an
-    increasing number of memory intensive applications on idle CPU cores.}
-  \label{fig:sys_bench}
+    increasing number of memory intensive read applications on idle CPU cores.}
+  \label{fig:sys_bench_read}
 \end{figure} 
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.45\textwidth]{figs/compare_l2missrate}
-  \caption{L2 miss rates in the presence of an increasing number of 
-			memory intensive applications on idle CPU cores.}
-  \label{fig:sys_l2miss}
-\end{figure}
+  \includegraphics[width=.45\textwidth]{figs/compare_benchmark}
+  \caption{Average control loop execution time in the presence of an
+    increasing number of memory intensive write applications on idle CPU cores.}
+  \label{fig:sys_bench}
+\end{figure} 
 
 Finally, we compare the effect of co-scheduling memory bandwidth
 intensive synthetic benchmarks on the DNN control loop timing. 
-Figure~\ref{fig:sys_bench} shows the results. As discussed in 
+Figure~\ref{fig:sys_bench_read} and ~\ref{fig:sys_bench} shows 
+the results for read and write co-runners, respectively. For read co-runners,
+the performance of all platforms decreased as additional BwRead processes
+were introduced, but none of them displayed any significant or unexpected
+execution time increases. The Pi 3 suffered an increase of up to 1.6X; the 
+Intel UP increased up to 1.3X; the TX2 (CPU) and TX2(GPU) saw increases 
+up to1.6X and 2.2X, respectively. For write co-runners, as discussed in 
 Section~\ref{sec:eval-memhog}, we observed dramatic execution time
-increases, up to 11.6X, in Raspberry Pi 3 as we increased the number of
+increases, up to 11.6X, in the Raspberry Pi 3 as we increased the number of
 co-scheduled tasks. We also observe increased control loop execution
 timing in the Intel Up and Jetson TX2, but the degree of the increase is 
 not as dramatic as the Pi 3. Compared to their respective solo timings 
 (i.e., the model runs on a single core in isolation), Intel UP suffers up to
-2.3X execution time increase; TX2 (CPU) and TX2 (GPU) suffer up to
-2.2X and 2.1X increases, respectively. This is somewhat surprising
+2.3X execution time increase; TX2 (CPU) and TX2 (GPU) both suffer up to
+2.3X increases. This is somewhat surprising
 because the Raspberry Pi 3's cores are in-order architecture based while
 the cores in the Intel Up and NVIDIA TX2 are out-of-order architecture
 based, and that the memory intensive tasks on out-of-order cores can
@@ -135,7 +141,7 @@ the measured memory bandwidth results in Table~\ref{tbl:platforms}
 ('Measured Bandwidth').
 
 Another interesting observation is that the TX2 (GPU) also suffers
-considerable execution time increase (2.1X) despite the fact that the
+considerable execution time increase (2.3X) despite the fact that the
 co-scheduled synthetic tasks do not utilize the GPU. In other words,
 the DNN model has dedicated access to the GPU. This is, however, a
 known characteristic of integrated CPU-GPU architecture based
@@ -144,8 +150,26 @@ subsystem~\cite{Ali2017}. As a result, the TX2 (GPU) fails to meet the
 10ms deadline for 100 Hz control that would have been feasible if
 there was no contention between the CPU cores and the GPU.
 
-Figure~\ref{fig:sys_l2miss} shows the L2 miss rates of DNN control
-loop. The key takeaway of this result is that the L2 miss rate is a
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/compare_readl2}
+  \caption{L2 miss rates in the presence of an increasing number of 
+			memory intensive read applications on idle CPU cores.}
+  \label{fig:sys_readl2miss}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/compare_l2missrate}
+  \caption{L2 miss rates in the presence of an increasing number of 
+			memory intensive write applications on idle CPU cores.}
+  \label{fig:sys_l2miss}
+\end{figure}
+
+Figures~\ref{fig:sys_readl2miss} and ~\ref{fig:sys_l2miss} show
+the L2 miss rates of DNN control loops when read and write co-runners
+are introduced, respectively. The key takeaway of this result is that the 
+L2 miss rate is a
 poor indicator to the execution time of the control loop. As shown
 already, the Raspberry Pi 3's increased L2 misses do not fully explain
 increases in processing times. In case of the Intel UP, as the number of
@@ -154,10 +178,42 @@ drop slightly. In the case of the TX2 (CPU), from solo to one co-runner,
 L2 miss rates almost double, but then the execution time
 increase is a little less than 10\%. However, when there are
 co-runners, even though the L2 miss rates are largely unchanged, the
-DNN processing time increases significantly. The TX2 (GPU) also shows
+CNN processing time increases significantly. The TX2 (GPU) also shows
 similar behavior. All of these results essentially point to the fact
 that DNN inferencing workload is largely memory performance sensitive
 but not L2 cache space sensitive. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/compare_readbus}
+  \caption{Bus accesses in the presence of an increasing number of 
+			memory intensive read applications on idle CPU cores.}
+  \label{fig:sys_readbus}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/compare_writebus}
+  \caption{Bus accesses in the presence of an increasing number of 
+			memory intensive write applications on idle CPU cores.}
+  \label{fig:sys_writebus}
+\end{figure}
+
+\color{red}FIXME: I believe the bus access results for the Intel UP are wrong. 
+I couldn't get the IDI off-core response event to work, so I used the bus-cycles 
+perf event, which I think is incorrect.
+
+\color{black}Figures~\ref{fig:sys_readbus} and ~\ref{fig:sys_writebus} show the
+normalized bus accesses for each of the platforms as read and write
+co-runners are introduced, respectively. Unlike the L2 miss rates of the
+model, the total number of bus accesses more closely align with the 
+execution time increases that are seen in each of the platforms. For the Pi 3, both 
+the execution time and bus accesses increase at exponential rates. In the TX2(GPU), 
+the bus accesses increase in a similar linear fashion to the execution time. The main outlier
+is the TX2(CPU) which has bus accesses increase at a faster rate similar to that of the Pi 3.
+However, the bus accesses seem to increase linearly, which is also seen in the
+execution time. As a result, we find that the total number of bus accesses have a higher 
+correlation to the model execution time than L2 miss rates.
 
 %% However, the L2 miss rates of the Pi 3 and TX2 platforms follow the same expected 
 %% pattern, as can be seen in Figure~\ref{fig:sys_l2miss}. Namely, the 

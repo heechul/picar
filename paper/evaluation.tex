@@ -50,14 +50,14 @@ the execution times of DeepPicar's DNN inference operations.
 % https://robotics.stackexchange.com/questions/231/what-frequency-does-my-quadcopter-output-sense-calculate-output-update-loop-need 
 % https://quadmeup.com/pid-looptime-why-it-is-not-only-about-frequency/
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \includegraphics[width=.5\textwidth]{figs/Fig7_new}
   \caption{DeepPicar's control loop processing times over 1000 input image frames.}
   \label{fig:control-loop-timing}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[h]
   \centering
   \begin{tabular} {| c | r | r | r | r |}
     \hline
@@ -263,7 +263,6 @@ benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
   \label{fig:perf_vs_bandwidth_mem}
 \end{figure}
 
-
 Figure~\ref{fig:perf_vs_bandwidth} shows the execution time of the DNN 
 model and Figure~\ref{fig:perf_vs_bandwidth_mem} shows both the normalized
 total memory bus accesses (first group) and L2 miss rates (second group).
@@ -297,6 +296,24 @@ techniques~\cite{Gracioli2015,Kim2016} may not be effective isolation
 solutions for DeepPicar's DNN processing workload, as cache
 partitioning does not provide memory performance guarantees.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/a53_vs_a7}
+  \caption{DNN model performance on different in-order
+ARM Cortex cores.}
+  \label{fig:a53_vs_a7}
+\end{figure}
+
+We do find the performance of the model in the presence of 
+write co-runners surprising, as it has been previously shown in experiments
+on another in-order ARM core, the Cortex A7, that write interference was not as 
+significant\cite{Valsan2016}. We also tested the model, in the presence of write 
+co-runners, on the A7 cores of the Odroid XU4 platform to see if  the same model 
+behavior would also be seen there. The results can be seen in Figure ~\ref{fig:a53_vs_a7}. 
+As expected, when the model is run on A7 cores, the intereference of the write
+co-runners is not as impactful on model performance as it can still operate at 
+under 10 Hz. 
+
 %% Instead, memory controller focused isolation solutions,
 %% either hardware or software-based ones (e.g.,~\cite{Guo2017,Yun2013}),
 %% may be more important. Although our observation is made on a single
@@ -322,7 +339,7 @@ which is expected.
 
 Second, we find that scalability of Tensorflow's DNN 
 implementation is limited. We find that using all four cores can double 
-performance of the DNN, but compared to using three cores, performance
+performance of the CNN, but compared to using three cores, performance
 improvement is relatively minimal.
 
 Third, we find that consolidating multiple DNN models---on different CPU
@@ -341,15 +358,15 @@ Fifth, we find that partitioning the shared L2 cache provides
 practically no benefits to the real-time performance of the DNN. To the 
 contrary, performance is constant regardless of the amount of cache 
 space used. Furthermore, we find that performance remains consistent 
-when multiple models are run simultaneously, and when memory intensive
-read co-runners are introduced. As such, we conclude that 
-the shared L2 cache is not essential to the DNN's real-time performance.
+when memory intensive read co-runners are introduced, even though
+the model has its own isolated cache space. As such, we 
+conclude that the shared L2 cache is not essential to the DNN's real-time 
+performance.
 
 Lastly, we find that memory bandwidth throttling results in significant
-changes to model performance. When less bandwidth is given to models,
-whether they're running alone or concurrently, we find that their performance
-decreases noticably. When memory intensive co-runners are
+changes to model performance. When less bandwidth is given to the model,
+we find that it performs worse. When memory intensive co-runners are
 present, we find that limiting the available bandwidth of the co-runners
-actually results in improved model performance. As such, we conclude
+results in significantly improved model execution times. As such, we conclude
 that the shared DRAM memory is essential to the DNN's real-time 
 performance.
