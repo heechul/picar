@@ -31,7 +31,7 @@ requires a high computing capacity as well as the means to guaranteeing
 the timings. On the other hand, the computing hardware platform must
 also satisfy cost, size, weight, and power constraints, which require a
 highly efficient computing platform. These two conflicting
-requirements  complicate the platform selection process as observed in
+requirements complicate the platform selection process as observed in
 ~\cite{Otterness2017}.
 
 %% For example, while today's self-driving car
@@ -43,47 +43,56 @@ requirements  complicate the platform selection process as observed in
 
 % related work and remaining problems
 To understand what kind of computing hardware is needed for AI
-workloads, we need a testbed and realistic workloads. While using a real 
-car-based testbed would be most ideal, it is not only highly expensive, but also
-poses serious safety concerns that hinder development and exploration.
-Therefore, there is a strong need for safer and less costly
-testbeds. There are already several relatively inexpensive RC-car
-based testbeds, such as MIT's 
-RaceCar~\cite{shin2017project} and UPenn's F1$/$10 racecar~\cite{upennf1tenth}.
-However, these RC-car testbeds still cost more than \$3,000, requiring
-considerable investment.
+workloads, we need a testbed and realistic workloads. While using a
+real car-based testbed would be most ideal, it is not only highly
+expensive, but also poses serious safety concerns that hinder
+development and exploration. Therefore, there is a need for safer and
+less costly testbeds.
 
-% our goals
-Instead, we want to build a low cost testbed that still employs the
-state-of-the art AI technologies. Specifically, we focus on an end-to-end
-deep learning based real-time control system,
-which was developed for a real self-driving car, NVIDIA
-DAVE-2~\cite{Bojarski2016}, and uses the same methodology on a
-smaller and less costly setup. In developing the testbed, our
-goals are (1) to analyze real-time issues in DNN based end-to-end
-control; and (2) to evaluate real-time performance of contemporary embedded
-platforms for such a workload.
+%% There are already several relatively inexpensive RC-car
+%% based testbeds, such as MIT's 
+%% RaceCar~\cite{shin2017project} and UPenn's F1$/$10 racecar~\cite{upennf1tenth}.
+%% However, these RC-car testbeds still cost more than \$3,000, requiring
+%% considerable investment.
+
+%% % our goals
+%% Instead, we want to build a low cost testbed that still employs the
+%% state-of-the art AI technologies. Specifically, we focus on an end-to-end
+%% deep learning based real-time control system,
+%% which was developed for a real self-driving car, NVIDIA
+%% DAVE-2~\cite{Bojarski2016}, and uses the same methodology on a
+%% smaller and less costly setup. In developing the testbed, our
+%% goals are (1) to analyze real-time issues in DNN based end-to-end
+%% control; and (2) to evaluate real-time performance of contemporary embedded
+%% platforms for such a workload.
 
 % DeepPicar introduction
 In this paper, we present DeepPicar, a low-cost autonomous car
-platform for research. From a hardware perspective,
+testbed for research. From a hardware perspective,
 DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
 computer, a web camera and a RC car, all of which are affordable
 components (less than \$100 in total).
-The DeepPicar, however, employs state-of-the-art AI
-technologies, including a vision-based end-to-end control system that
-utilizes a deep convolutional neural network (CNN).
-The network receives an image frame from a single forward
+The DeepPicar, however, employs a state-of-the-art AI
+technology, namely deep learning based end-to-end real-time control,
+which utilizes a deep convolutional neural network (CNN).
+The CNN receives an image frame from a single forward
 looking camera as input and generates a predicted steering angle
 value as output at each control period in \emph{real-time}.
-The network has 9 layers, about 27 million connections
+The CNN has 9 layers, about 27 million connections
 and 250 thousand parameters (weights).
-The network architecture is almost identical to that of NVIDIA's DAVE-2
-self-driving car~\cite{Bojarski2016}, which uses a significantly more powerful
-computer (Drive PX computer~\cite{drivepx}) than a Raspberry Pi~3.
-We chose to use a Pi 3 not only because it is affordable, but also because it is representative
-of today's mainstream low-end embedded multicore platforms found in
-smartphones and other embedded devices.
+DeepPicar's CNN architecture is identical to that of NVIDIA's
+real-sized self-driving car, called DAVE-2~\cite{Bojarski2016}, which
+drove on public roads without human driver's intervention while only
+using the CNN, which runs on a significantly more powerful computing
+platform (Drive PX~\cite{drivepx}).
+
+%% , which uses a significantly more
+%% powerful computer (Drive PX computer~\cite{drivepx}) than a Raspberry
+%% Pi~3.
+%% We chose to use a Pi 3 not only because it is affordable, but 
+%% also because it is representative of today's mainstream low-end
+%% embedded multicore platforms found in smartphones and other embedded
+%% devices.
 
 %% Other than the difference in scale (RC car vs. real car), the only other
 %% differences between the two systems---from the computing
@@ -95,24 +104,24 @@ smartphones and other embedded devices.
 %% powerful but also more expensive.
 
 % how we trained (maybe moved to a later section)
-We apply a standard imitation learning methodology to train the car to
-follow tracks on the ground. We collect data for
-training and validation by manually
-controlling the RC car and recording the vision (from the webcam
-mounted on the RC-car) and the human control inputs. We then train the
-network offline using the collected data on a desktop computer, which
-is equipped with a NVIDIA GTX 1050 Ti GPU. Finally, the trained network is copied
-back to the Raspberry Pi 3, which is then used to perform inference
-operations---locally on the Pi 3---in the car's main control loop in
-real-time. For real-time control, each inference operation must
-be completed within the desired control period (e.g., 33.$\overline{\mbox{33}}$ ms
- period for 30 Hz control frequency).
+%% We apply a standard imitation learning methodology to train the car to
+%% follow tracks on the ground. We collect data for
+%% training and validation by manually
+%% controlling the RC car and recording the vision (from the webcam
+%% mounted on the RC-car) and the human control inputs. We then train the
+%% network offline using the collected data on a desktop computer, which
+%% is equipped with a NVIDIA GTX 1050 Ti GPU. Finally, the trained network is copied
+%% back to the Raspberry Pi 3, which is then used to perform inference
+%% operations---locally on the Pi 3---in the car's main control loop in
+%% real-time. For real-time control, each inference operation must
+%% be completed within the desired control period (e.g., 33.$\overline{\mbox{33}}$ ms
+%%  period for 30 Hz control frequency).
 % how we evaluated (in terms real-time performance)
 
 % what are our findings?
-Using the DeepPicar platform, we systematically analyze its real-time
+Using DeepPicar, we systematically analyze its real-time
 capabilities in the context of deep-learning based real-time
-control, especially on real-time deep neural network inferencing.
+control, especially on real-time deep neural network \emph{inferencing}.
 We also evaluated other, more powerful, embedded computing
 platforms to better understand achievable real-time performance of
 DeepPicar's deep-learning based control system and the impact of
@@ -145,29 +154,32 @@ computing hardware architectures.
 %   space. we find applying cache partitioning does not help improve
 %   isolation of DNN workload when memory bandwidth is contended.
 From the systematic study, we have made a number of interesting
-observations from the perspective of real-time systems.
+observations.
 % predictability
-First, we find that DNN inferencing is highly predictable---from the
-timing perspective---as the amount of computation needed to complete a
-single inference is fixed at the DNN architecture design time and does
-not change at runtime over different inputs (e.g., different image
+First, we find that CNN inferencing is highly time predictable as the
+amount of computation needed to complete a 
+single inference is fixed at the network architecture design time and
+does not change at runtime over different inputs (e.g., different image
 frames). This predictable timing behavior is obviously a desirable
 property for real-time systems.
 %% , which gives another reason for the
 %% real-time community to be interested in the use of DNNs.
 
 % performance on low-cost embedded multicore
-Second, we find that real-time processing of DeepPicar's CNN is
-feasible on today's embedded computing platforms, even one  
-as inexpensive as the Raspberry Pi 3. We find that the control loop 
-completes in under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two 
-cores of the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
-do so 100\% of the time; or we can achieve 20 Hz control frequency using
-just one core.
-Other tested embedded platforms, the Intel UP and NVIDIA TX2, offer even
-better performance, and are capable of supporting deep-learning based 
-real-time control over 100 Hz control frequency on the TX2 when its
-embedded GPU is used.
+Second, we find that real-time processing of CNN inferencing is
+feasible on today's embedded computing platforms, even one   
+as inexpensive as the Raspberry Pi 3. For example, just one Cortex-A53
+core of the Raspberry Pi3 is able to complete the CNN inferencing task
+in less than 50ms, sufficient to support 20 Hz control loop. 
+%% We find that the control loop 
+%% completes in under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two 
+%% cores of the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
+%% do so 100\% of the time; or we can achieve 20 Hz control frequency using
+%% just one core.
+%% Other tested embedded platforms, the Intel UP and NVIDIA TX2, offer even
+%% better performance, and are capable of supporting deep-learning based 
+%% real-time control over 100 Hz control frequency on the TX2 when its
+%% embedded GPU is used.
 We find that all the tested embedded computing platforms have 
 enough computing capacity to consolidate multiple instances of
 DeepPicar's DNN workload.
@@ -175,38 +187,39 @@ DeepPicar's DNN workload.
 % all platforms have enough capacity to consolidate
 Third, contention in shared hardware resources remains an important
 issue when consolidating multiple workloads. 
-In particular, we find that DNN inferencing is highly sensitive to
-memory performance interference, as we observe up to an 11.6X control
-loop execution time increase when memory performance intensive
-applications are co-scheduled on idle CPU cores.
-On the other hand, we find that DNN inferencing is not sensitive to
-cache space.
+We observe up to 11.6X control
+loop execution time increase due to shared resource contention when
+memory intensive  applications are co-scheduled on idle CPU cores.
+We find that DeepPicar's inferencing task is highly
+sensitive to memory bandwidth, but not cache space.
+
 %% ; we show that applying cache partitioning has negligible impact
 %% in providing timing isolation on consolidated scenarios.
-This finding
-suggests that in order to guarantee real-time performance of DNN-based
-control applications, solutions to guarantee their memory performance
-are more important.
+%% This finding
+%% suggests that in order to guarantee real-time performance of DNN-based
+%% control applications, solutions to guarantee their memory performance
+%% are more important.
 
 % contributions
 The {\bf contributions} of this paper are as follows:
 \begin{itemize}
-  \item We present DeepPicar, a low-cost autonomous car testbed, which
-    is based on a state-of-the-art end-to-end deep learning, as 
-    open-source~\footnote{The source code, and build 
-instructions for the DeepPicar
-can be found at: \url{https://github.com/heechul/picar}}, with the
-    goal of lowering the economic and safety-related barriers to the study
-    of autonomous cars.
-
-  \item We systematically analyze real-time characteristics of DeepPicar's
-    DNN inferencing workload on a number of representative
-    contemporary embedded computing platforms. While larger embedded
-    platforms have been evaluated, as in  \cite{Otterness2017}, to the
-    best of our knowledge, no prior work investigated the
-    impacts of shared resource contention on DNN inferencing workloads
-    in the context of smaller embedded platforms like the Raspberry Pi 3.
-
+  \item We present DeepPicar, a low-cost autonomous car testbed using
+    a state-of-the-art CNN for end-to-end real-time control, to lower
+    economic and safety-related barriers to the study autonomous
+    cars.~\footnote{The source code, dataset, and build instructions
+      of DeepPicar can be found at:\fixme{Michael github url}}  
+    
+  \item We provide extensive systematic experimental results using
+    DeepPicar's CNN inferencing workload on a number of representative
+    contemporary embedded computing platforms. The results provide
+    insights for real-time processing of the CNN workload and the
+    effect of consolidation.
+    
+    %% While larger embedded
+    %% platforms have been evaluated, as in  \cite{Otterness2017}, to the
+    %% best of our knowledge, no prior work investigated the
+    %% impacts of shared resource contention on DNN inferencing workloads
+    %% in the context of smaller embedded platforms like the Raspberry Pi 3.
 \end{itemize}
 
 The remaining sections of the paper are as follows.

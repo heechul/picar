@@ -71,11 +71,12 @@ As in DAVE-2, the CNN takes a raw color image (200x66 RGB pixels)
 as input and produces a single steering angle value as
 output. Figure~\ref{fig:architecture} shows the network architecture
 used in this paper, which is comprised of 9 layers, 250K parameters,
-and about 27 million connections as in NVIDIA DAVE-2's. Note, however,
-that we did not apply the normalization mentioned
-in~\cite{Bojarski2016}, as it does not include trainable parameters
-and its computational demand with respect to the overall CNN
-processing is minimal.
+and about 27 million connections as in NVIDIA DAVE-2's.
+%% Note, however,
+%% that we did not apply the normalization mentioned
+%% in~\cite{Bojarski2016}, as it does not include trainable parameters
+%% and its computational demand with respect to the overall CNN
+%% processing is minimal.
 
 \begin{figure}[h]
   \centering
@@ -99,10 +100,11 @@ To collect the training data, a human pilot manually drives the RC car
 on tracks we created (Figure~\ref{fig:tracks}) to record
 timestamped videos and contol commands. The stored data is then copied 
 to a desktop computer, which is equipped with a NVIDIA Titan Xp GPU, 
-where we train the network to accelerate training speed. 
-For comparison, training the network on the Raspbeery Pi 3 takes
-approximately 4 hours, whereas it takes only about 4 minutes on the
-desktop computer using the Titan Xp GPU.
+where we train the network to accelerate training speed.
+
+%% For comparison, training the network on the Raspbeery Pi 3 takes
+%% approximately 4 hours, whereas it takes only about 4 minutes on the
+%% desktop computer using the Titan Xp GPU.
 
 \begin{figure}[h]
    \lstset{language=python,
@@ -119,10 +121,10 @@ desktop computer using the Titan Xp GPU.
 % inferencing on pi3
 Once the network is trained on the desktop computer, the trained model
 is copied back to the Raspberry Pi 3. The network is then used
-by the car's main controller, which feeds an image frame from the web
-camera as input to the network. In each control period, the produced 
-steering angle output is then converted into the PWM values of the 
-steering motor of the car. Figure~\ref{fig:controlloop} shows simplified 
+by the car's main controlller, which feeds an image frame from the web
+camera as input to the network at each control period. The network
+produced steering angle output is then converted into the PWM values
+of the car's steering motor. Figure~\ref{fig:controlloop} shows simplified 
 pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
 network inferencing, is the most computationally intensive and dominates the
 execution time.
@@ -134,13 +136,13 @@ only supports three discrete angles---left (-30$^{\circ}$), center
 Currently, we approximate the network generated real-valued
 angle to the closest one of the three angles, which may
 introduce inaccuracy in control.
-In the future, we plan to use a different (more expensive) RC car
-platform that can precisely control the car's steering angle.
+%% In the future, we plan to use a different (more expensive) RC car
+%% platform that can precisely control the car's steering angle.
 
 Other issues we observed in training/testing the network, which
 can affect the prediction accuracy of the CNN, are camera and actuator
 (motor) control latencies. In DeepPicar's
-context, the camera latency  measured from the time the camera
+context, the camera latency is from the time the camera
 sensor observes the scene to the time the computer actually reads the
 digitized image data. This time can be noticable depending on the camera 
 used and the performance of the Pi. Higher camera latency could
@@ -152,8 +154,7 @@ In our platform, the combined latency is measured to be around
 50 ms. In other words, in the recorded video and control data, a
 control action (left, center, right) taken by the CNN appears to be
 applied 50 ms later. Considering that camera's framerate is 30Hz
-(33.$\overline{\mbox{33}}$ ms/frame), this is about two frames after the 
-control action.
+(33.3 ms/frame), this is about two frames after the control action.
 %% We experimentally measured the camera
 %% latency and found it to be around 50-100 ms.
 If this value is too high, control performance may suffer.
@@ -171,7 +172,9 @@ that the DeepPicar could remain on a fairly challenging track for over
 10 minutes at a moderate speed (50\% throttle), at which point we stopped
 the experiment, and more than one minute at a higher speed (75\%
 throttle)~\footnote{A collection of self-driving videos can be found
-  at: \url{https://photos.app.goo.gl/ce93sU7jPk4ywO8u2}}. Running at
+  at: \fixme{Michael: link your video}
+  %% \url{https://photos.app.goo.gl/ce93sU7jPk4ywO8u2}
+}. Running at
 higher speed is inherently more challenging because the CNN controller
 has less time to recover from mistakes (bad predictions).  Also, we
 find that the prediction accuracy is significantly affected by the
@@ -179,9 +182,11 @@ quality of training data as well as various environmental factors such
 as lighting conditions. We plan to investigate more systematic ways
 to improve the CNN's prediction accuracies.
 
-We would like to stress, however, that the issues related to the
-CNN's accuracies have no impact on the \emph{computational 
-aspects of the system}, and that our main focus of this study is
-not in improving network accuracy but in closely replicating the
-DAVE-2's network architecture and studying its real-time
-characteristics.
+We would like to stress, however, that
+%% the issues related to the
+%% CNN's accuracies have no impact on the \emph{computational 
+%% aspects of the system}, and that 
+our main focus of this study is not in improving the network accuracy
+but in closely replicating the DAVE-2's network architecture and
+studying its real-time characteristics, which will be presented in the
+subsequent section.

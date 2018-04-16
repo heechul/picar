@@ -18,11 +18,11 @@ The Raspberry Pi 3 Model B platform used in DeepPicar equips a Broadcom
 BCM2837 SoC, which has a quad-core ARM Cortex-A53 cluster,
 running at up to 1.2GHz. Each core has a 32K private Instruction cache
 and a 32K private Data cache, and all cores share a 512KB L2 cache.
-The chip also includes Broadcom's Videocore IV
-GPU, although we did not use the GPU in our evaluation due to the lack
-of sofware support (TensorFlow is not compatible with the Raspberry Pi's GPU).
-For software, we use Ubuntu MATE 16.04, TensorFlow 1.1 and Python
-2.7. We disabled DVFS (dynamic voltage frequency scaling) and
+The chip also includes Broadcom's Videocore IV GPU, although we did
+not use the GPU in our evaluation, due to the lack of sofware support
+\footnote{TensorFlow currently only support NVIDIA's GPUs.}.
+For software, we use Ubuntu MATE 16.04, TensorFlow 1.1.
+We disabled DVFS (dynamic voltage frequency scaling) and
 configured the clock speed of each core statically at the maximum 1.2GHz.
 
 \subsection{Inference Timing for Real-Time Control}
@@ -91,8 +91,7 @@ at up to 40 Hz control frequency in real-time using only the on-board
 Raspberry Pi 3 computing platform, as no remote computing resources 
 were necessary. We consider these results surprising given the complexity
 of the deep neural network, and the fact that the inference operation
-performed by TensorFlow only utilizes the CPU cores of the
-Raspberry Pi 3 (its GPU is not supported by Tensorflow).
+performed by TensorFlow only utilizes the CPU cores of the Raspberry Pi 3.
 In comparison, NVIDIA's DAVE-2 system, which has the exact same neural
 network architecture, reportedly runs at 30 Hz~\cite{Bojarski2016}. 
 Although we believe it was not

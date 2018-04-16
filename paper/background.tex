@@ -60,8 +60,9 @@ intensive and requires high throughput, which is generally not
 available on embedded platforms. The inferencing phase, on the
 other hand, is relatively less computationally intensive and latency becomes
 as important, if not moreso, as computational throughput, because many
-use cases have strict real-time requirements (e.g., search query
-latency).
+use cases have strict real-time requirements.
+
+%% (e.g., search query latency)
 
 %% \cite{Levine2016}: ``In this paper, we aim to answer
 %% the following question: does training the perception and control
@@ -88,7 +89,7 @@ latency).
 %%   section at the end.}
 Real-time embedded systems, such as an autonomous vehicle, present
 unique challenges for deep learning, as the computing platforms of such
-systems must satisfy two often conflicting goals~\cite{Otterness2017}:
+systems must satisfy two often conflicting goals:
 %% Recent successes in AI, including NVIDIA's DAVE-2 showing, are due
 %% in large part to the increased computing performance,
 %% which afforded researchers to train and use ever deeper neural networks with
@@ -99,7 +100,7 @@ systems must satisfy two often conflicting goals~\cite{Otterness2017}:
 enough computing capacity for real-time processing of computationally
 expensive AI workloads (deep neural networks); and
 (2) The platform must also satisfy various
-constraints such as cost, size, weight, and power consumption limits.
+constraints such as cost, size, weight, and power consumption limits~\cite{Otterness2017}.
 
 Accelerating AI workloads, especially inferencing
 operations, has received a lot of attention from academia and industry
@@ -119,8 +120,8 @@ workloads and the hardware platform being utilized.
 
 The \emph{primary objectives of this study} are to understand (1) the
 necessary computing performance for applying AI technology-based
-robotics systems, and (2) what kind of computing architecture and
-runtime supports are most appropriate for such a workload. To
-achieve these goals, we implement a low-cost autonomous car platform
+robotics systems, and (2) the characteristics of the computing
+platform to support such a workload.
+To achieve these goals, we implement a low-cost autonomous car platform
 as a case-study and systematically conduct experiments, which we will 
 describe in the subsequent sections.
