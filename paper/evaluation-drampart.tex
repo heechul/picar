@@ -48,18 +48,18 @@ is dependent on shared DRAM memory performance.
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/memguard_bandwidth}
-  \caption{Timing impact of co-scheduling memory intensive read
+  \caption{Timing impact of co-scheduling memory intensive
 co-runners when memory bandwidth throttling is enabled. }
   \label{fig:memguard_bandwidth}
 \end{figure}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.45\textwidth]{figs/memguard_bwwrite}
-  \caption{Timing impact of co-scheduling memory intensive write
-co-runners when memory bandwidth throttling is enabled. }
-  \label{fig:memguard_bwwrite}
-\end{figure}
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=.45\textwidth]{figs/memguard_bwwrite}
+%%   \caption{Timing impact of co-scheduling memory intensive write
+%% co-runners when memory bandwidth throttling is enabled. }
+%%   \label{fig:memguard_bwwrite}
+%% \end{figure}
 
 We also test the performance of the model in the presence of three
 memory intensive read and write benchmarks to determine the effects of 
@@ -71,11 +71,11 @@ reservation size of 500 MB/s, and decrease that to a minimum of 100 MB/s.
 In the case of write co-runners, MemGuard accounts for L2 refills but not
 write-backs, so each benchmark would effectively have twice the bandwidth
 of their reservation size. Due to this, we give write co-runners an initial 
-reservation size of 250 MB/s and decrease it to a minimum of 50 MB/s.
-The results can be see in Figures \ref{fig:memguard_bandwidth} and
-\ref{fig:memguard_bwwrite}. When less memory bandwidth is given to 
-the both the  read and write co-runners, the performance of the model 
-improves. 
+reservation size of 250 MB/s and decrease it to a minimum of 50 MB/s, but
+their effective bandwidths are the same as the read co-runners.
+The results can be see in Figures \ref{fig:memguard_bandwidth}. 
+When less memory bandwidth is given to both the read and write 
+co-runners, the performance of the model improves. 
 %% In the case of one co-runner, the performance of the model remains 
 %% constant even as the reservation sizes are decreased, however, it 
 %% still improves compared to when throttling wasn't enabled. 
