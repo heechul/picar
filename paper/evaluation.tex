@@ -113,14 +113,6 @@ attractive real-time workload.
 
 \subsection{Effect of the Core Count to Inference Timing}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.45\textwidth]{figs/perf_vs_corecnt}
-  \caption{Average control loop execution time vs. \#of CPU
-    cores.}
-  \label{fig:perf-vs-corecnt}
-\end{figure}
-
 In this experiment, we investigate the scalability of performing
 inference operations of DeepPicar's neural network with respect to the
 number of cores. As noted earlier, the Raspberry Pi 3 platform has
@@ -129,6 +121,14 @@ provides a programmable mechanism to adjust how many cores are to be
 used by the library. Leveraging this feature, we repeat the
 same experiment described in the previous subsection with varying
 numbers of CPU cores---from one to four.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/perf_vs_corecnt}
+  \caption{Average control loop execution time vs. \#of CPU
+    cores.}
+  \label{fig:perf-vs-corecnt}
+\end{figure}
 
 Figure~\ref{fig:perf-vs-corecnt} shows the average execution time of
 the control loop as we vary the number of cores used by
@@ -186,7 +186,7 @@ models as they are running.
 
 Figure~\ref{fig:perf-vs-modelcnt} shows the results. In the figure, the
 X-axis shows the system configuration: \#of DNN models x \#of CPU
-cores/DNN. For example, '4Nx1C' means running four DNN models each of
+cores/DNN. For example, `4Nx1C' means running four DNN models each of
 which is assigned to run on one CPU core, whereas `2Nx2C' means running
 two DNN models, each of which is assigned to run on two CPU
 cores. The Y-axis shows the average inference timing.
@@ -194,7 +194,7 @@ The two bars on the left show the impact of co-scheduling four DNN
 models. Compared to executing a single DNN model on one CPU core
 (1Nx1C), when four DNN models are co-scheduled (4Nx1C), each model
 suffers an average inference time increase of approximately 11 ms,
-$\sim$24\%. On the other hand, when two DNN models, each using two CPU
+or 24\%. On the other hand, when two DNN models, each using two CPU
 cores, are co-scheduled (2Nx2C), the average inference timing is increased by
 about 4 ms, or 13\%, compared to the baseline of running one model
 using two CPU cores (1Nx2C). 
@@ -236,7 +236,8 @@ cache~\cite{Gracioli2015} and DRAM~\cite{Yun2013}.
 %% experiment, we use memory intensive synthetic benchmarks to test the
 %% hypothesis.
 
-\subsection{Effect of Co-scheduling Synthetic Memory Intensive Tasks}\label{sec:eval-memhog}
+\subsection{Effect of Co-scheduling Synthetic Memory Intensive
+  Tasks}\label{sec:eval-memhog} 
 
 In this experiment, we investigate \emph{worst-case} impact of shared 
 resource contention to DeepPicar's DNN inference timing using  

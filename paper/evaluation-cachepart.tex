@@ -1,13 +1,5 @@
 \subsection{Effect of Cache Partitioning}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=.5\textwidth]{figs/cache-mapping}
-  \caption{A memory mapping of the cache sets for the Broadcom 
-BCM2837 processor used in the Raspberry Pi 3 Model B.}
-  \label{fig:cache-mapping}
-\end{figure}
-
 %% \begin{figure}[h]
 %%   \centering
 %%   \includegraphics[width=.7\textwidth]{figs/palloc_multicore_l2missrate}
@@ -40,12 +32,29 @@ BCM2837 processor used in the Raspberry Pi 3 Model B.}
 %%   \label{fig:palloc_bandwidth_l2missrate}
 %% \end{figure}
 
-In order to validate the effectiveness of cache partitioning, we patch
-the kernel with PALLOC~\cite{yun2014rtas}, which is a kernel-level
-color-aware page allocator, supporting cache partitioning. 
-Figure~\ref{fig:cache-mapping} shows the physical address mapping of
-Raspberry Pi3's BCM2837 processor. We use the bits 13 and 14 for
-coloring, which results in 4 page colors.
+Cache partitioning is a well-known technique to improve isolation in
+real-time systems by giving a dedicated cache space to individaul task
+or core. In this experiment, we use PALLOC~\cite{yun2014rtas}, a
+page-coloring based cache partitioning solution for Linux, to
+investigate the effect of cache partitioning in protecting DeepPicar's
+DNN based controller.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.5\textwidth]{figs/cache-mapping}
+  \caption{Physical address mapping of L1/L2 caches of Broadcom
+    BCM2837 processor in Raspberry Pi 3.}
+  \label{fig:cache-mapping}
+\end{figure}
+
+Page coloring is a OS technique that controls the physical addresses
+of memory pages. By allocating pages over non-overlapping sets of the
+cache, the OS can effectively partition the cache.
+Figure~\ref{fig:cache-mapping} shows the physical address
+mapping of Raspberry Pi 3's BCM2837 processor, which has 32K private
+L1 I\&D (4way) caches and a share 512KB L2 (16 way) cache. In order not
+to partition the private L1 caches, we use the bit 13 and 14 for
+coloring, which results in 4 usuable page colors.
 
 %% determine if the DNN is mostly affected by the DRAM 
 %% controller, we partition the L2 cache of the Pi3 and reperform the 
@@ -66,32 +75,75 @@ coloring, which results in 4 page colors.
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_multicore}
-  \caption{Cache space sensitivity of the control loop exectuion time.}
+  \caption{Cache space sensitivity of the DNN controller. \fixme{I
+      think 'no part.' bar is not necessary here.}}
   \label{fig:palloc_multicore}
 \end{figure}
 
 In the first experiment, we investigate the cache space sensitivity of
-the DeepPicar's DNN-based control loop. Using PALLOC, we create 4
-different cgroups which are configured to use 1, 2,
-3, and 4 colors (25\%, 50\%, 75\%, and 100\% of the L2 cache
-space, respectively). We then execute the control loop on each cache
-partition (cgroup) and measure the average processing time. 
+DeepPicar's DNN-based control loop. Using PALLOC, we create 4
+different cgroups which are configured to use 4, 3,
+2, and 1 colors (100\%, 75\%, 50\% and 25\% of the L2 cache
+space, respectively). We then execute the DNN control loop (inference)
+on each cache partition (cgroup) and measure the average processing
+time.
 
-If performance improves as a result of partitioning the shared cache 
-then we know that the DNN, to some extent, relies on the shared cache 
-in addition to the shared DRAM. On the other 
-hand, if there is no improvement in performance, then it can be 
-observed that the shared memory is more critical for the DNN.
+Figure~\ref{fig:palloc_multicore} shows the result. As can be seen,
+the DNN inference timing is hardly changed at all regardless of the
+size of the allocated L2 cache space. In other words, we find that
+the DNN workload is largely insensitive to L2 cache space.
+
+The next experiment further validates this finding. In this
+experiment, we repeat the experiment in
+Section~\ref{sec:eval-memhog}---i.e., co-scheduling the DNN model and
+three Bandwidth (BwRead or BwWrite) instances---but this time we
+ensure that each task is given equal amounts of L2 cache space by
+assigning one color to each task's cache partition.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.45\textwidth]{figs/palloc_bandwidth_exectime}
+  \caption{Average processing time vs. the number of memory
+memory intensive co-runners. Unlike
+Figure~\ref{fig:perf_vs_bandwidth}, the shared L2 cache is equally
+partitioned and each task is given a dedicated cache
+partition. \fixme{how about changing the figure style to be the same
+  as Figure 9.}}
+  \label{fig:palloc_bandwidth_exectime}
+\end{figure}
+
+Figure \ref{fig:palloc_bandwidth_exectime} shows the
+result. For BwRead, when cache partitioning is enabled, DNN
+performance becomes slightly better, with a improvement of  
+\textasciitilde6.5\%. For BwWrite, cache partitioning actually makes
+the DNN performance slightly worse that that of w/o partitioning. In
+either case, the main observation is that cache partitioning is not
+effective in providing timing isolation to our DNN workload.
+
+%% By partitioning the shared L2 cache, we find that no noticable 
+%% improvements are gained and that performance remains consistent. 
+%% In all experiements, the model shows no sensitivity to the shared L2 
+%% cache. As a result, we conclude that cache partitioning is not an 
+%% effective isolation mechanism, and that the performance of the shared 
+%% DRAM controller is of greater importance to the real-time efficiacy of 
+%% the DeepPicar.
+
+%% If performance improves as a result of partitioning the shared cache 
+%% then we know that the DNN, to some extent, relies on the shared cache 
+%% in addition to the shared DRAM. On the other 
+%% hand, if there is no improvement in performance, then it can be 
+%% observed that the shared memory is more critical for the DNN.
+
 %% We run the DNN model with different amounts of L2 cache being
 %% available based on the number of colors being used. For example, if two 
 %% colors are used, then 25\% of the L2 cache is available, whereas if all 
 %% 8 colors are used, 100\% of the L2 cache is available. Particularly, we 
 %% test the performance of the model when it utilizes a single core and
 %% all four of the available cores. 
-The results can be seen in 
-\ref{fig:palloc_multicore}. As expected, the amount of L2 cache 
-available to the model does not result in any significant changes in 
-performance. 
+
+%% As expected, the amount of L2 cache 
+%% available to the model does not result in any significant changes in 
+%% performance. 
 %% This can also be seen by the L2 miss rates of the model 
 %% seen in \ref{fig:palloc_multicore_l2missrate}. As more cache space 
 %% becomes avaiable, the percentage of L2 misses decreases, which doesn't 
@@ -115,22 +167,6 @@ performance.
 %% these results, we find that contention for the L2 cache is not the main
 %% source of interference between multiple DNN models.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.45\textwidth]{figs/palloc_bandwidth_exectime}
-  \caption{Timing impact of co-scheduling memory intensive co-runners 
-when cache partitioning is enabled.}
-  \label{fig:palloc_bandwidth_exectime}
-\end{figure}
-
-We also run a single model alongside three memory intensive read co-runners 
-again, but ensure that each task is given equal amounts of L2 cache space.
-For this, we assign one color to each task. The results can be seen in Figure
-\ref{fig:palloc_bandwidth_exectime}. When cache partitioning is enabled, 
-DNN performance becomes slightly better, with a improvement of 
-\textasciitilde6.5\%. However, as the performance improvement is minimal, 
-we do not believe that cache partitioning is effective for protecting the model 
-from interference from other memory intensive processes.
 %% At the same time, though, the L2 miss rates of the model don't correlate 
 %% to the timing increases seen, as is shown in 
 %% \ref{fig:palloc_bandwidth_l2missrate}. Instead, we find that the number
@@ -145,10 +181,3 @@ from interference from other memory intensive processes.
 %% thus showing that the performance of the L2 cache is not vital for DNN 
 %% performance when co-runners are introduced.
 
-By partitioning the shared L2 cache, we find that no noticable 
-improvements are gained and that performance remains consistent. 
-In all experiements, the model shows no sensitivity to the shared L2 
-cache. As a result, we conclude that cache partitioning is not an 
-effective isolation mechanism, and that the performance of the shared 
-DRAM controller is of greater importance to the real-time efficiacy of 
-the DeepPicar.
