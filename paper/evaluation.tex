@@ -187,7 +187,7 @@ models as they are running.
 Figure~\ref{fig:perf-vs-modelcnt} shows the results. In the figure, the
 X-axis shows the system configuration: \#of DNN models x \#of CPU
 cores/DNN. For example, '4Nx1C' means running four DNN models each of
-which is assigned to run on one CPU core, whereas '2Nx2C' means running
+which is assigned to run on one CPU core, whereas `2Nx2C' means running
 two DNN models, each of which is assigned to run on two CPU
 cores. The Y-axis shows the average inference timing.
 The two bars on the left show the impact of co-scheduling four DNN
@@ -200,8 +200,10 @@ about 4 ms, or 13\%, compared to the baseline of running one model
 using two CPU cores (1Nx2C). 
 
 These increases in inference times in the co-scheduled scenarios are
-expected due to contention in the shared hardware
-resources, such as the shared cache and DRAM.
+expected because it is well-known that co-scheduled tasks on a
+multicore platform interfere with each other due to contention in the
+shared hardware resources, such as the shared
+cache~\cite{Gracioli2015} and DRAM~\cite{Yun2013}.
 
 %% \begin{figure}[h]
 %%   \centering
@@ -234,20 +236,21 @@ resources, such as the shared cache and DRAM.
 %% experiment, we use memory intensive synthetic benchmarks to test the
 %% hypothesis.
 
-\subsection{Effect of Co-scheduling Synthetic Benchmarks}\label{sec:eval-memhog}
+\subsection{Effect of Co-scheduling Synthetic Memory Intensive Tasks}\label{sec:eval-memhog}
 
-In this experiment, we further investigate the impact of shared
-resource contention to the DNN inference timing of DeepPicar using  
-synthetic memory benchmarks. Specifically, we use the \emph{Bandwidth}
+In this experiment, we investigate \emph{worst-case} impact of shared 
+resource contention to DeepPicar's DNN inference timing using  
+a synthetic memory benchmark. Specifically, we use the \emph{Bandwidth}
 benchmark from the IsolBench suite~\cite{Valsan2016}, which
 sequentially reads or writes a big array; we henceforth refer BwRead 
 as Bandwidth with read accesses and BwWrite as the one with write
 accesses. The experiment setup is as follows. We run a single DNN
 model on one core, and co-schedule an increasing number of the
 Bandwidth benchmark instances on the other cores. We repeat the
-experiement first with BwRead~\footnote{\texttt{\$ bandwdith -a read
-    -m 16384 -t 1000}} and next with BwWrite~\footnote{\texttt{\$
-    bandwdith -a write -m 16384 -t 1000}}.
+experiement first with BwRead and next with BwWrite.
+
+%% ~\footnote{\texttt{\$ bandwdith -a read  -m 16384 -t 1000}} 
+%% ~\footnote{\texttt{\$ bandwdith -a write -m 16384 -t 1000}}.
   
 \begin{figure}[h]
   \centering
@@ -267,17 +270,28 @@ experiement first with BwRead~\footnote{\texttt{\$ bandwdith -a read
 %% \end{figure}
 
 Figure~\ref{fig:perf_vs_bandwidth} shows the execution times of the DNN 
-model against varying number of BwRead and BwWrite co-runners. First,
-note that BwWrite cause significantly high execution time incrase---up
+model against varying number of BwRead and BwWrite co-runners. Note
+that BwWrite cause significantly high execution time incrase---up 
 to 11.6X---on the DNN inferencing timing while BwRead causes
 relatively much smaller time increase. While execution time increase
 was expected, the degree of which is quite surprising---\emph{if the DNN
-controller was driving an actual car, it would result in crash of the
+controller was driving an actual car, it would result in a crash of the
 car!}
 
-\fixme{story: is cache space contention the reason? traditional
-  solution is cache partitioning. so, next we evaluate if cache
-  partitioning can solve the problem. spolier alert: it does not.}
+Given the importance of predictable timing on real-time control, such
+as our DNN based control task, we wanted to understand (1) the main
+source of the timing and (2) to evaluate existing isolation methods to
+avoid this kind of timing interference. Specifically, shared cache
+space and DRAM bandwidth are two most well-known sources of contention
+in multicore. Thus, in the following, we investigate test if and how
+they influence the observed timing interference and how effective are
+the existing mitigation methods. To our surprise, we find that neither
+the cache space nor DRAM bandwidth is the root cause of the
+DeepPicar's observed worst-case execution time increase.
+
+%% \fixme{story: is cache space contention the reason? traditional
+%%   solution is cache partitioning. so, next we evaluate if cache
+%%   partitioning can solve the problem. spolier alert: it does not.}
 
 %% Figure~\ref{fig:perf_vs_bandwidth_mem} shows both the normalized
 %% total memory bus accesses (first group) and L2 miss rates (second group).
@@ -310,14 +324,6 @@ car!}
 %% techniques~\cite{Gracioli2015,Kim2016} may not be effective isolation
 %% solutions for DeepPicar's DNN processing workload, as cache
 %% partitioning does not provide memory performance guarantees.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.45\textwidth]{figs/a53_vs_a7}
-  \caption{DNN model performance on different in-order
-ARM Cortex cores. \fixme{this may be better in the plaform comparison section}.}
-  \label{fig:a53_vs_a7}
-\end{figure}
 
 %% We do find the performance of the model in the presence of 
 %% write co-runners surprising, as it has been previously shown in experiments
