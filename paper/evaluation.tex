@@ -169,7 +169,8 @@ In this experiment, we launch multiple instances of DeepPicar's DNN
 model at the same time and measure its impact on their inference
 timings. In other words, we are interested in how shared resource
 contention affects inference timing. These instances are not identical
-copies of the same model, but are instead copies of different models. 
+copies of the same model, but are instead copies of different models
+(but of the same network architecture). 
 This is done to ensure that no L2 cache memory is shared between the 
 models as they are running.
 
@@ -199,8 +200,8 @@ about 4 ms, or 13\%, compared to the baseline of running one model
 using two CPU cores (1Nx2C). 
 
 These increases in inference times in the co-scheduled scenarios are
-expected and are caused by contention in the shared hardware
-resources, such as the shared L2 cache and/or the DRAM controller.
+expected due to contention in the shared hardware
+resources, such as the shared cache and DRAM.
 
 %% \begin{figure}[h]
 %%   \centering
@@ -233,18 +234,21 @@ resources, such as the shared L2 cache and/or the DRAM controller.
 %% experiment, we use memory intensive synthetic benchmarks to test the
 %% hypothesis.
 
-\subsection{Effect of Co-scheduling Memory Performance Hogs}\label{sec:eval-memhog}
+\subsection{Effect of Co-scheduling Synthetic Benchmarks}\label{sec:eval-memhog}
 
-In this experiment, we investigate the impact of contended DRAM
-requests to the DNN inference timing of DeepPicar.
-For the experiment, we use a synthetic memory
-intensive benchmark from the IsolBench suite~\cite{Valsan2016}.
-We run a single DNN model on one core, and
-co-schedule an increasing number of the memory intensive synthetic
-benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
-  IsolBench suite, with the following command line parameters: \texttt{\$
-  bandwdith -a write -m 16384 -t 1000}}, on the remaining idle cores.
-
+In this experiment, we further investigate the impact of shared
+resource contention to the DNN inference timing of DeepPicar using  
+synthetic memory benchmarks. Specifically, we use the \emph{Bandwidth}
+benchmark from the IsolBench suite~\cite{Valsan2016}, which
+sequentially reads or writes a big array; we henceforth refer BwRead 
+as Bandwidth with read accesses and BwWrite as the one with write
+accesses. The experiment setup is as follows. We run a single DNN
+model on one core, and co-schedule an increasing number of the
+Bandwidth benchmark instances on the other cores. We repeat the
+experiement first with BwRead~\footnote{\texttt{\$ bandwdith -a read
+    -m 16384 -t 1000}} and next with BwWrite~\footnote{\texttt{\$
+    bandwdith -a write -m 16384 -t 1000}}.
+  
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth}
@@ -253,36 +257,48 @@ benchmarks~\footnote{We use the \emph{Bandwidth} benchmark in the
   \label{fig:perf_vs_bandwidth}
 \end{figure}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth_mem}
-  \caption{Effect of memory performance hogs on the shared resources. 
-    The DNN model uses Core 0 and memory-hog co-runners
-    use the rest of the cores.}
-  \label{fig:perf_vs_bandwidth_mem}
-\end{figure}
+%% \begin{figure}[h]
+%%   \centering
+%%   \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth_mem}
+%%   \caption{Effect of memory performance hogs on the shared resources. 
+%%     The DNN model uses Core 0 and memory-hog co-runners
+%%     use the rest of the cores.}
+%%   \label{fig:perf_vs_bandwidth_mem}
+%% \end{figure}
 
-Figure~\ref{fig:perf_vs_bandwidth} shows the execution time of the DNN 
-model and Figure~\ref{fig:perf_vs_bandwidth_mem} shows both the normalized
-total memory bus accesses (first group) and L2 miss rates (second group).
-In both figures, the DNN model is running on Core 0 as a function of the 
-number of co-scheduled memory intensive synthetic benchmarks.
-%% We also show 
-%% the normalized total system bus access count (middle group), which is
-%% representative of memory bandwidth usage of all the cores.
-First, as we
-increase the number of co-runners, the DNN model's execution times are
-increased exponentially---by up to 11.6X---even though the DNN model
-is running on a dedicated core (Core 0). On the other hand, the DNN
-model's L2 cache-miss rates do not increase as much.
-In other words, the DNN model's execution increase is not fully
-explained by increased contention in the L2 cache space.
-Instead, the exponential increase in the total number of bus accesses,
-due to the memory-hog co-runners, appears to be more closely
-correlated with the DNN model's execution time increase. This means
-the high memory bandwidth pressure from the co-scheduled
-memory intensive benchmarks increased the DNN model's
-memory access latency.
+Figure~\ref{fig:perf_vs_bandwidth} shows the execution times of the DNN 
+model against varying number of BwRead and BwWrite co-runners. First,
+note that BwWrite cause significantly high execution time incrase---up
+to 11.6X---on the DNN inferencing timing while BwRead causes
+relatively much smaller time increase. While execution time increase
+was expected, the degree of which is quite surprising---\emph{if the DNN
+controller was driving an actual car, it would result in crash of the
+car!}
+
+\fixme{story: is cache space contention the reason? traditional
+  solution is cache partitioning. so, next we evaluate if cache
+  partitioning can solve the problem. spolier alert: it does not.}
+
+%% Figure~\ref{fig:perf_vs_bandwidth_mem} shows both the normalized
+%% total memory bus accesses (first group) and L2 miss rates (second group).
+%% In both figures, the DNN model is running on Core 0 as a function of the 
+%% number of co-scheduled memory intensive synthetic benchmarks.
+%% %% We also show 
+%% %% the normalized total system bus access count (middle group), which is
+%% %% representative of memory bandwidth usage of all the cores.
+%% First, as we
+%% increase the number of co-runners, the DNN model's execution times are
+%% increased exponentially---by up to 11.6X---even though the DNN model
+%% is running on a dedicated core (Core 0). On the other hand, the DNN
+%% model's L2 cache-miss rates do not increase as much.
+%% In other words, the DNN model's execution increase is not fully
+%% explained by increased contention in the L2 cache space.
+%% Instead, the exponential increase in the total number of bus accesses,
+%% due to the memory-hog co-runners, appears to be more closely
+%% correlated with the DNN model's execution time increase. This means
+%% the high memory bandwidth pressure from the co-scheduled
+%% memory intensive benchmarks increased the DNN model's
+%% memory access latency.
 
 %% Instead, as we hypothesized in the previous
 %% experiment, the increased memory pressure from the co-scheduled memory
@@ -290,28 +306,28 @@ memory access latency.
 %% time increase. Therefore, we conclude that DeepPicar's DNN model is
 %% more senstive to DRAM access latency than L2 cache space.
 
-This observation suggests that shared cache partitioning
-techniques~\cite{Gracioli2015,Kim2016} may not be effective isolation
-solutions for DeepPicar's DNN processing workload, as cache
-partitioning does not provide memory performance guarantees.
+%% This observation suggests that shared cache partitioning
+%% techniques~\cite{Gracioli2015,Kim2016} may not be effective isolation
+%% solutions for DeepPicar's DNN processing workload, as cache
+%% partitioning does not provide memory performance guarantees.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/a53_vs_a7}
   \caption{DNN model performance on different in-order
-ARM Cortex cores.}
+ARM Cortex cores. \fixme{this may be better in the plaform comparison section}.}
   \label{fig:a53_vs_a7}
 \end{figure}
 
-We do find the performance of the model in the presence of 
-write co-runners surprising, as it has been previously shown in experiments
-on another in-order ARM core, the Cortex A7, that write interference was not as 
-significant\cite{Valsan2016}. We also tested the model, in the presence of write 
-co-runners, on the A7 cores of the Odroid XU4 platform to see if  the same model 
-behavior would also be seen there. The results can be seen in Figure ~\ref{fig:a53_vs_a7}. 
-As expected, when the model is run on A7 cores, the intereference of the write
-co-runners is not as impactful on model performance as it can still operate at 
-under 10 Hz. 
+%% We do find the performance of the model in the presence of 
+%% write co-runners surprising, as it has been previously shown in experiments
+%% on another in-order ARM core, the Cortex A7, that write interference was not as 
+%% significant\cite{Valsan2016}. We also tested the model, in the presence of write 
+%% co-runners, on the A7 cores of the Odroid XU4 platform to see if  the same model 
+%% behavior would also be seen there. The results can be seen in Figure ~\ref{fig:a53_vs_a7}. 
+%% As expected, when the model is run on A7 cores, the intereference of the write
+%% co-runners is not as impactful on model performance as it can still operate at 
+%% under 10 Hz. 
 
 %% Instead, memory controller focused isolation solutions,
 %% either hardware or software-based ones (e.g.,~\cite{Guo2017,Yun2013}),
