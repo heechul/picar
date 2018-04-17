@@ -9,9 +9,9 @@ set style data histogram
 set style histogram cluster gap 1.5
 set style fill pattern border
 
-set arrow from -0.5,50 to 4.5,50 nohead dt "-"
-set label  "20" at 4.55,53 
-set label  "Hz" at 4.55,45
+set arrow from -0.5,50 to 3.5,50 nohead dt "-"
+set label  "20" at 3.55,53 
+set label  "Hz" at 3.55,45
 
 #set arrow from -1,33.33 to 2,33.33 nohead dt "-"
 #set label  "30" at 2.05,36 
