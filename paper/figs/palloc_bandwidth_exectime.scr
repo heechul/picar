@@ -14,14 +14,13 @@ set arrow from -1,100 to 2,100 nohead dt "-"
 set label "10" at 2,110
 set label "Hz" at 2,80
 
-set label "813.06" at 1.4,550
+set label "813.06" at 1.45,550
 
 set key left top
 #set nokey
 
 set boxwidth 1
-plot  "palloc_bandwidth_exectime.dat"  u 2:xticlabel(1) title "no part.",\
-	  ""                  using 3 title "PALLOC" lt -1,\
-      #""                  using 3 title "+1 co-runner" lt -1,\
-      #""                  using 4 title "+2 co-runners" lt -1,\
-      #""                  using 5 title "+3 co-runners" lt -1
+plot  "palloc_bandwidth_exectime.dat"  u 2:xticlabel(1) title "solo",\
+      ""                  using 3 title "+1 co-runner" lt -1,\
+      ""                  using 4 title "+2 co-runners" lt -1,\
+      ""                  using 5 title "+3 co-runners" lt -1
