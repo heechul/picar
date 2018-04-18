@@ -33,8 +33,8 @@
 %% \end{figure}
 
 Cache partitioning is a well-known technique to improve isolation in
-real-time systems by giving a dedicated cache space to individaul task
-or core. In this experiment, we use PALLOC~\cite{yun2014rtas}, a
+real-time systems by giving a dedicated cache space to each individaul
+task or core. In this experiment, we use PALLOC~\cite{yun2014rtas}, a
 page-coloring based cache partitioning solution for Linux, to
 investigate the effect of cache partitioning in protecting DeepPicar's
 DNN based controller.
@@ -116,9 +116,11 @@ Figure \ref{fig:palloc_bandwidth_exectime} shows the
 result. For BwRead, when cache partitioning is enabled, DNN
 performance becomes slightly better, with a improvement of  
 \textasciitilde6.5\%. For BwWrite, cache partitioning actually makes
-the DNN performance slightly worse that that of w/o partitioning. In
-either case, the main observation is that cache partitioning is not
-effective in providing timing isolation to our DNN workload.
+the DNN performance slightly worse that that of w/o partitioning.
+
+In summary, we find that the DNN inferencing workload is not sensitive
+to cache space and that cache partitioning is not effective in
+providing timing isolation to our DNN workload.
 
 %% By partitioning the shared L2 cache, we find that no noticable 
 %% improvements are gained and that performance remains consistent. 

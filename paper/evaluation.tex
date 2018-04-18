@@ -20,7 +20,7 @@ running at up to 1.2GHz. Each core has a 32K private Instruction cache
 and a 32K private Data cache, and all cores share a 512KB L2 cache.
 The chip also includes Broadcom's Videocore IV GPU, although we did
 not use the GPU in our evaluation, due to the lack of sofware support
-\footnote{TensorFlow currently only support NVIDIA's GPUs.}.
+\footnote{TensorFlow currently only supports NVIDIA's GPUs.}.
 For software, we use Ubuntu MATE 16.04, TensorFlow 1.1.
 We disabled DVFS (dynamic voltage frequency scaling) and
 configured the clock speed of each core statically at the maximum 1.2GHz.
@@ -284,7 +284,7 @@ as our DNN based control task, we wanted to understand (1) the main
 source of the timing and (2) to evaluate existing isolation methods to
 avoid this kind of timing interference. Specifically, shared cache
 space and DRAM bandwidth are two most well-known sources of contention
-in multicore. Thus, in the following, we investigate test if and how
+in multicore. Thus, in the following, we investigate if and how
 they influence the observed timing interference and how effective are
 the existing mitigation methods. To our surprise, we find that neither
 the cache space nor DRAM bandwidth is the root cause of the
@@ -350,14 +350,14 @@ So far, we have evaluated DeepPicar's real-time
 characteristics from the perspective of end-to-end deep learning based
 real-time control, and made several observations.
 
-First, we find that DeepPicar's computing platform,
-the Raspberry Pi 3 Model B, offers computing capacity to
-perform real-time control of the RC car at 30 Hz frequency (or
-33.$\overline{\mbox{33}}$ ms  per control loop). Given the complexity of 
-the DNN used, we were pleasantly surprised by this finding. 
-The time breakdown shows that the DNN inferencing operation, 
-performed by the Tensorflow library, dominates the execution time, 
-which is expected.
+First, we find that DeepPicar's computing platform, the Raspberry Pi
+3, offers sufficient computing capacity to perform deap-learning based
+real-time control at 30 Hz frequency (or 33.3 ms per control
+loop). Given the complexity of the DNN used, we were pleasantly
+surprised by this finding. 
+%% The time breakdown shows that the DNN inferencing operation, 
+%% performed by the Tensorflow library, dominates the execution time, 
+%% which is expected.
 
 Second, we find that scalability of Tensorflow's DNN 
 implementation is limited. We find that using all four cores can double 
@@ -367,28 +367,33 @@ improvement is relatively minimal.
 Third, we find that consolidating multiple DNN models---on different CPU
 cores---is feasible as we find: (1) DNN performance using a single
 core is not much worse than using multiple cores; (2) multiple DNN
-models running simultaneously do not cause severe interference with
-each other.
+models running simultaneously cause moderate interference.
 
 Fourth, we find that consolidating memory (DRAM) performance
-intensive applications could jeopadize DNN performance, because DNN
-performance appears to be very sensitive to memory performance; we 
-observe up to 11.6X slowdown in DNN performance by co-scheduling 
-synthetic memory bandwidth intensive applications on idle cores.
+intensive applications (especially write-heavy ones) can jeopadize
+the DNN inferencing task's performance even when all tasks have
+dedicated cores due to contention in shared hardware resources; we
+observe up to 11.6X slowdown.
 
-Fifth, we find that partitioning the shared L2 cache provides 
-practically no benefits to the real-time performance of the DNN. To the 
-contrary, performance is constant regardless of the amount of cache 
-space used. Furthermore, we find that performance remains consistent 
-when memory intensive read co-runners are introduced, even though
-the model has its own isolated cache space. As such, we 
-conclude that the shared L2 cache is not essential to the DNN's real-time 
-performance.
+Lastly, we find that the DNN inferencing workload is not sensitive
+to cache space and that cache partitioning is not effective in
+providing timing isolation to our DNN workload. On the other hand, we
+find that the DNN workload is sensitive to memory bandwidth and that
+memory bandwidth throttling is effective in improving performance
+isolation.
 
-Lastly, we find that memory bandwidth throttling results in significant
-changes to model performance. When less bandwidth is given to the model,
-we find that it performs worse. When memory intensive co-runners are
-present, we find that limiting the available bandwidth of the co-runners
-results in significantly improved model execution times. As such, we conclude
-that the shared DRAM memory is essential to the DNN's real-time 
-performance.
+%% To the 
+%% contrary, performance is constant regardless of the amount of cache 
+%% space used. Furthermore, we find that performance remains consistent 
+%% when memory intensive read co-runners are introduced, even though
+%% the model has its own isolated cache space. As such, we 
+%% conclude that the shared L2 cache is not essential to the DNN's real-time 
+%% performance.
+
+%% Lastly, we find that memory bandwidth throttling results in significant
+%% changes to model performance. When less bandwidth is given to the model,
+%% we find that it performs worse. When memory intensive co-runners are
+%% present, we find that limiting the available bandwidth of the co-runners
+%% results in significantly improved model execution times. As such, we conclude
+%% that the shared DRAM memory is essential to the DNN's real-time 
+%% performance.
