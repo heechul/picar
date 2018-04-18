@@ -75,8 +75,7 @@ coloring, which results in 4 usuable page colors.
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_multicore}
-  \caption{Cache space sensitivity of the DNN controller. \fixme{I
-      think 'no part.' bar is not necessary here.}}
+  \caption{Cache space sensitivity of the DNN controller.}
   \label{fig:palloc_multicore}
 \end{figure}
 
@@ -104,11 +103,8 @@ assigning one color to each task's cache partition.
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_bandwidth_exectime}
   \caption{Average processing time vs. the number of memory
-memory intensive co-runners. Unlike
-Figure~\ref{fig:perf_vs_bandwidth}, the shared L2 cache is equally
-partitioned and each task is given a dedicated cache
-partition. \fixme{how about changing the figure style to be the same
-  as Figure 9.}}
+memory intensive co-runners; Each core (task) is given a equal-sized
+dedicated cache partition.}
   \label{fig:palloc_bandwidth_exectime}
 \end{figure}
 
