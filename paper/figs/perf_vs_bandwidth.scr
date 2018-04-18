@@ -12,8 +12,8 @@ set style fill pattern border
 
 set arrow from -1,100 to 2,100 nohead dt "-"
 
-set label "10" at 3.5,100
-set label "Hz" at 3.5,70
+set label "10" at 2,110
+set label "Hz" at 2,80
 
 #set label  "11.6" at -.1,9 
 
