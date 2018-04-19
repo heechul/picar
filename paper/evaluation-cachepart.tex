@@ -33,13 +33,16 @@
 %% \end{figure}
 
 Cache partitioning is a well-known technique to improve isolation in
-real-time systems by giving a dedicated cache space to each individaul
+multicore by giving a dedicated cache space to each individaul 
 task or core. In this experiment, we use PALLOC~\cite{yun2014rtas}, a
-page-coloring based cache partitioning solution for Linux, to
-investigate the effect of cache partitioning in protecting DeepPicar's
-DNN based controller.
+page-coloring based kernel-level memory allocator for Linux.
+Page coloring is a OS technique that controls the physical addresses
+of memory pages. By allocating pages over non-overlapping sets of the
+cache, the OS can effectively partition the cache.
+Using PALLOC, we investigate the effect of cache partitioning in
+protecting DeepPicar's DNN based controller.
 
-\begin{figure}
+\begin{figure} [h]
   \centering
   \includegraphics[width=.5\textwidth]{figs/cache-mapping}
   \caption{Physical address mapping of L1/L2 caches of Broadcom
@@ -47,9 +50,6 @@ DNN based controller.
   \label{fig:cache-mapping}
 \end{figure}
 
-Page coloring is a OS technique that controls the physical addresses
-of memory pages. By allocating pages over non-overlapping sets of the
-cache, the OS can effectively partition the cache.
 Figure~\ref{fig:cache-mapping} shows the physical address
 mapping of Raspberry Pi 3's BCM2837 processor, which has 32K private
 L1 I\&D (4way) caches and a share 512KB L2 (16 way) cache. In order not
@@ -72,20 +72,20 @@ coloring, which results in 4 usuable page colors.
 %% etc.). In the case of bit 12, since we use 2 colors for each partition,
 %% the L1 Data cache is not partitioned in our experiments.
 
+In the first experiment, we investigate the cache space sensitivity of
+DeepPicar's DNN-based control loop. Using PALLOC, we create 4
+different cgroups which are configured to use 4, 3,
+2, and 1 colors (100\%, 75\%, 50\% and 25\% of the L2 cache
+space, respectively). We then execute the DNN control loop (inference)
+on one core using a different cgroup cache partition, one at a time,
+and measure the average processing time.
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_multicore}
   \caption{Cache space sensitivity of the DNN controller.}
   \label{fig:palloc_multicore}
 \end{figure}
-
-In the first experiment, we investigate the cache space sensitivity of
-DeepPicar's DNN-based control loop. Using PALLOC, we create 4
-different cgroups which are configured to use 4, 3,
-2, and 1 colors (100\%, 75\%, 50\% and 25\% of the L2 cache
-space, respectively). We then execute the DNN control loop (inference)
-on each cache partition (cgroup) and measure the average processing
-time.
 
 Figure~\ref{fig:palloc_multicore} shows the result. As can be seen,
 the DNN inference timing is hardly changed at all regardless of the

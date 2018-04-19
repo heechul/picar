@@ -1,4 +1,3 @@
-
 \section{Evaluation}\label{sec:evaluation}
 
 In this section, we experimentally analyze various real-time aspects
@@ -13,20 +12,20 @@ and
 %% (5) the effect of partitioning the shared L2 cache.
 
 \subsection{Setup}
-
 The Raspberry Pi 3 Model B platform used in DeepPicar equips a Broadcom
 BCM2837 SoC, which has a quad-core ARM Cortex-A53 cluster,
-running at up to 1.2GHz. Each core has a 32K private Instruction cache
-and a 32K private Data cache, and all cores share a 512KB L2 cache.
+running at up to 1.2GHz. Each core has private 32K I/D caches
+and all cores share a 512KB L2 cache.
 The chip also includes Broadcom's Videocore IV GPU, although we did
 not use the GPU in our evaluation, due to the lack of sofware support
 \footnote{TensorFlow currently only supports NVIDIA's GPUs.}.
 For software, we use Ubuntu MATE 16.04, TensorFlow 1.1.
 We disabled DVFS (dynamic voltage frequency scaling) and
 configured the clock speed of each core statically at the maximum 1.2GHz.
+We use the SCHED\_FIFO real-time scheduler to schedule the DNN control
+task while using the CFS when executing memory intensive co-runners.
 
 \subsection{Inference Timing for Real-Time Control}
-
 For real-time control of a car (or any robot), the control loop
 frequency must be sufficiently high so that the car can quickly
 react to the changing environment and its internal states. In general,
@@ -42,9 +41,11 @@ replaces the traditional multi-layer control pipline. (Refer to
 Figure~\ref{fig:end-to-end-control} on the differences between the
 standard robotics control vs. end-to-end deep learning approach).
 This means that the DNN inference operation must be completed
-within the inner-most control loop update frequency. To understand
-achievable control-loop update frequencies, we experimentally measured
-the execution times of DeepPicar's DNN inference operations.
+within the inner-most control loop update frequency.
+
+To understand achievable control-loop update frequencies, we
+experimentally measured the execution times of DeepPicar's DNN
+inference operations.
 
 % 50-200Hz for quadcopters:
 % https://robotics.stackexchange.com/questions/231/what-frequency-does-my-quadcopter-output-sense-calculate-output-update-loop-need 
@@ -119,7 +120,7 @@ number of cores. As noted earlier, the Raspberry Pi 3 platform has
 four Cortex-A53 cores and TensorFlow 
 provides a programmable mechanism to adjust how many cores are to be
 used by the library. Leveraging this feature, we repeat the
-same experiment described in the previous subsection with varying
+experiment in the previous subsection but with using varying
 numbers of CPU cores---from one to four.
 
 \begin{figure}[h]
@@ -137,8 +138,7 @@ time decreases---from 46.30 ms on a single core to 22.86 ms on four
 cores (over a 100\% improvement). However, the improvement is far from an ideal
 linear scaling. In particular, from 3 cores to 4 cores, the
 improvement is mere 2.80 ms, or 12\%. In short, we find that the
-scalability of DeepPicar's deep neural network is not ideal on the
-platform.
+scalability of DeepPicar's deep neural network is not ideal.
 
 As noted in~\cite{NVIDIA2015}, DNN inferencing is inherently more
 difficult to parallelize than training because the easiest
@@ -147,9 +147,9 @@ parallel), is not available or is limited. Specifically, in DeepPicar,
 only one image frame, obtained from the camera, can be processed at a
 time. Thus, more fine-grained algorithmic parallelization is needed to
 improve inference performance~\cite{NVIDIA2015}, which generally does
-not scale very well. 
+not scale well. 
 
-On the other hand, the poor scalability opens up the possibility of
+On the other hand, the limited scalability opens up the possibility of
 consolidating multiple different tasks or different neural network
 models rather than allocating all cores for a single neural network
 model.
@@ -200,10 +200,10 @@ about 4 ms, or 13\%, compared to the baseline of running one model
 using two CPU cores (1Nx2C). 
 
 These increases in inference times in the co-scheduled scenarios are
-expected because it is well-known that co-scheduled tasks on a
+expected because co-scheduled tasks on a
 multicore platform interfere with each other due to contention in the
 shared hardware resources, such as the shared
-cache~\cite{Gracioli2015} and DRAM~\cite{Yun2013}.
+cache and DRAM~\cite{Gracioli2015,Yun2013}.
 
 %% \begin{figure}[h]
 %%   \centering
@@ -270,14 +270,13 @@ experiement first with BwRead and next with BwWrite.
 %%   \label{fig:perf_vs_bandwidth_mem}
 %% \end{figure}
 
-Figure~\ref{fig:perf_vs_bandwidth} shows the execution times of the DNN 
-model against varying number of BwRead and BwWrite co-runners. Note
-that BwWrite cause significantly high execution time incrase---up 
-to 11.6X---on the DNN inferencing timing while BwRead causes
-relatively much smaller time increase. While execution time increase
-was expected, the degree of which is quite surprising---\emph{if the DNN
-controller was driving an actual car, it would result in a crash of the
-car!}
+Figure~\ref{fig:perf_vs_bandwidth} shows the result. Note
+that BwWrite co-runners cause significantly high execution time
+incrases---up to 11.6X---on DNN inferencing while BwRead co-runners
+cause relatively much smaller time increases. While execution time
+increases are expected, the degree of which in the worst-case is quite
+surprising---\emph{if the DNN controller was driving an actual car, it
+  would result in a crash of the car!}
 
 Given the importance of predictable timing on real-time control, such
 as our DNN based control task, we wanted to understand (1) the main
@@ -286,9 +285,11 @@ avoid this kind of timing interference. Specifically, shared cache
 space and DRAM bandwidth are two most well-known sources of contention
 in multicore. Thus, in the following, we investigate if and how
 they influence the observed timing interference and how effective are
-the existing mitigation methods. To our surprise, we find that neither
-the cache space nor DRAM bandwidth is the root cause of the
-DeepPicar's observed worst-case execution time increase.
+the existing mitigation methods.
+
+%% To our surprise, we find that neither
+%% the cache space nor DRAM bandwidth is the root cause of the
+%% DeepPicar's observed worst-case execution time increase.
 
 %% \fixme{story: is cache space contention the reason? traditional
 %%   solution is cache partitioning. so, next we evaluate if cache

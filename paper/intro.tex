@@ -126,6 +126,14 @@ We also evaluated other, more powerful, embedded computing
 platforms to better understand achievable real-time performance of
 DeepPicar's deep-learning based control system and the impact of
 computing hardware architectures.
+From the systematic study, we want to answer the following questions:
+(1) how well does the DNN based real-time inferencing task perform on
+contemporary embedded multicore computing platforms? (2) how
+susceptible is the DNN inferencing task to contention in shared
+hardware resources (e.g., cache and DRAM) when multiple tasks/models
+are consolidated? (3) are the existing state-of-the-art shared resource
+isolation techniques effective in protecting real-time performance of
+the DNN inferencing task?
 
 % Findings:
 %
@@ -153,24 +161,32 @@ computing hardware architectures.
 % - however, we find that dnn processing is not sensitive to cache
 %   space. we find applying cache partitioning does not help improve
 %   isolation of DNN workload when memory bandwidth is contended.
-From the systematic study, we have made a number of interesting
-observations.
-% predictability
-First, we find that CNN inferencing is highly time predictable as the
-amount of computation needed to complete a 
-single inference is fixed at the network architecture design time and
-does not change at runtime over different inputs (e.g., different image
-frames). This predictable timing behavior is obviously a desirable
-property for real-time systems.
-%% , which gives another reason for the
-%% real-time community to be interested in the use of DNNs.
+Our observations are as follows.
+First, we find that real-time processing of the DNN inferencing is
+feasible on contemporary embedded computing platforms, even one   
+as inexpensive as the Raspberry Pi 3. Second, while consolidating
+multiple DNN models and task are feasible but the impact of shared
+resource contention can be catastrophic in the worst-case as we
+observe up to 11.6X slowdown even when the DNN model was given a
+dedicated core. Third, using the state-of-the-art OS-level cache
+partitioning and memory bandwidth control
+mechanisms~\cite{yun2014rtas,Yun2013}, we find that cache space has a
+minimal performance impact to the DNN workload while memory
+performance has a significant impact.
 
+%% % predictability
+%% First, we find that CNN inferencing is highly time predictable as the
+%% amount of computation needed to complete a 
+%% single inference is fixed at the network architecture design time and
+%% does not change at runtime over different inputs (e.g., different image
+%% frames). This predictable timing behavior is obviously a desirable
+%% property for real-time systems.
+%% %% , which gives another reason for the
+%% %% real-time community to be interested in the use of DNNs.
 % performance on low-cost embedded multicore
-Second, we find that real-time processing of CNN inferencing is
-feasible on today's embedded computing platforms, even one   
-as inexpensive as the Raspberry Pi 3. For example, just one Cortex-A53
-core of the Raspberry Pi3 is able to complete the CNN inferencing task
-in less than 50ms, sufficient to support 20 Hz control loop. 
+%% For example, just one Cortex-A53
+%% core of the Raspberry Pi3 is able to complete the CNN inferencing task
+%% in less than 50ms, sufficient to support 20 Hz control loop. 
 %% We find that the control loop 
 %% completes in under 33.$\overline{\mbox{33}}$ ms, or 30 Hz, using just two 
 %% cores of the Raspberry Pi 3's quad-core CPU (w/o using its GPU), and can
@@ -180,18 +196,18 @@ in less than 50ms, sufficient to support 20 Hz control loop.
 %% better performance, and are capable of supporting deep-learning based 
 %% real-time control over 100 Hz control frequency on the TX2 when its
 %% embedded GPU is used.
-We find that all the tested embedded computing platforms have 
-enough computing capacity to consolidate multiple instances of
-DeepPicar's DNN workload.
+%% We find that all the tested embedded computing platforms have 
+%% enough computing capacity to consolidate multiple instances of
+%% DeepPicar's DNN workload.
 
 % all platforms have enough capacity to consolidate
-Third, contention in shared hardware resources remains an important
-issue when consolidating multiple workloads. 
-We observe up to 11.6X control
-loop execution time increase due to shared resource contention when
-memory intensive  applications are co-scheduled on idle CPU cores.
-We find that DeepPicar's inferencing task is highly
-sensitive to memory bandwidth, but not cache space.
+%% Third, contention in shared hardware resources remains an important
+%% issue when consolidating multiple workloads. 
+%% We observe up to 11.6X control
+%% loop execution time increase due to shared resource contention when
+%% memory intensive  applications are co-scheduled on idle CPU cores.
+%% We find that DeepPicar's inferencing task is highly
+%% sensitive to memory bandwidth, but not cache space.
 
 %% ; we show that applying cache partitioning has negligible impact
 %% in providing timing isolation on consolidated scenarios.
@@ -201,25 +217,19 @@ sensitive to memory bandwidth, but not cache space.
 %% are more important.
 
 % contributions
-The {\bf contributions} of this paper are as follows:
+This paper makes the following {\bf contributions}:
 \begin{itemize}
-  \item We present DeepPicar, a low-cost autonomous car testbed using
-    a state-of-the-art CNN for end-to-end real-time control, to lower
-    economic and safety-related barriers to the study autonomous
-    cars.~\footnote{The source code, dataset, and build instructions
-      of DeepPicar can be found at: \url{https://github.com/mbechtel2/DeepPicar-v2}}
-    
-  \item We provide extensive systematic experimental results using
-    DeepPicar's CNN inferencing workload on a number of representative
-    contemporary embedded computing platforms. The results provide
-    insights for real-time processing of the CNN workload and the
-    effect of consolidation.
-    
-    %% While larger embedded
-    %% platforms have been evaluated, as in  \cite{Otterness2017}, to the
-    %% best of our knowledge, no prior work investigated the
-    %% impacts of shared resource contention on DNN inferencing workloads
-    %% in the context of smaller embedded platforms like the Raspberry Pi 3.
+  \item We present DeepPicar, a low-cost autonomous car testbed, which
+    employs a state-of-the-art CNN based end-to-end
+    real-time control.~\footnote{The source code, datasets, and build
+      instructions of DeepPicar can be found at:
+      \url{https://github.com/mbechtel2/DeepPicar-v2}}.
+  \item We provide extensive empirical performance evaluation results
+    of the CNN inferencing workload on a number of contemporary
+    embedded computing platforms.
+  \item We apply the state-of-the-art shared resource isolation
+    techniques and evaluate their effectiveness in protecting the
+    inferencing workload in consolidated settings.
 \end{itemize}
 
 The remaining sections of the paper are as follows.
