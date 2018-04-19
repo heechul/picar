@@ -30,14 +30,15 @@ scale RC car. The main contribution of our paper is not the hardware
 design but in the detailed analysis of computational characteristics
 for the CNN-based end-to-end real-time control.
 
-In this paper, we have analyzed real-time performance of a
-state-of-the art CNN, used in NVIDIA's DAVE-2 self-driving car, on a
+In this paper, we have analyzed real-time performance of a CNN, which
+was used in NVIDIA's DAVE-2 self-driving car~\cite{Bojarski2016}, on a 
 low-cost raspberry pi 3 quad-core platform. It should be noted,
-however, that DAVE-2's CNN we used here is relatively small compared
+however, that DAVE-2's CNN is relatively small compared
 to recent state-of-the-art CNNs, which are increasingly larger and
 deeper. For example, the CNN based object detector models evaluated in
 Google's recent study~\cite{huang2017speed} have between 3M to 54M
-parameters. Using such large CNN models will be challenging on
+parameters, much larger than DAVE-2's CNN.
+Using such large CNN models will be challenging on
 resource constrainted embedded computing platforms, especially for
 real-time applications such as self-driving cars.
 
