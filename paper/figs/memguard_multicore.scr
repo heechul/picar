@@ -1,7 +1,7 @@
 set terminal pdf font "Times-Roman,14"
 set output "memguard_multicore.pdf"
 set yrange [0.0:100.0]
-set xlabel "Bandwidth Reservation Size" 
+set xlabel "Maximum bandwidth (MB/s) for the DNN model" 
 set ylabel "Avg. processing time (ms)" offset 2.5
 set nokey
 

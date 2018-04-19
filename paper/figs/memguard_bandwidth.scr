@@ -3,7 +3,7 @@ set output "memguard_bandwidth.pdf"
 set yrange [0.0:150]
 set ylabel "Avg. Processing Time (ms)" offset 1.5
 #set xlabel "# of Co-runners"
-set xlabel "Effective Bandwidth Reservation Size"
+set xlabel "Maximum bandwidth (MB/s) of each co-running task"
 #set nokey
 
 set style data histogram
