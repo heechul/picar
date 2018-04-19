@@ -5,24 +5,32 @@ End-to-end deep learning based real-time control.
 Specifically, DeepPicar uses a deep convolutional neural network to
 predict steering angles of the car directly from camera input data
 in real-time. Importantly, DeepPicar's neural network architecture is
-almost identical to that of NVIDIA's real self-driving car. 
+identical to that of NVIDIA's real self-driving car DAVE-2. 
 
 Despite the complexity of the neural network, DeepPicar uses a
-low-cost Raspberry Pi 3 quad-core computer as its sole computing
-resource. We systematically analyzed the real-time characteristics of
-the Pi 3 platform in the context of deep-learning based real-time
-control applications, with a special emphasis on real-time deep neural
-network inferencing.
+low-cost embedded quad-core computer, the Raspberry Pi 3,  as its sole
+computing resource.
+We systematically analyzed the platform's real-time capability in
+supporting the DNN-based real-time control task.
 We also evaluated other, more powerful, embedded computing
 platforms to better understand achievable real-time performance of
-DeepPicar's deep-learning based control system and the impact of
+DeepPicar's DNN based control system and the impact of
 computing hardware architectures.
 We find all tested embedded platforms, including the Pi 3, are capable
 of supporting deep-learning based real-time control, from 20 Hz up to
 100 Hz, depending on the platform and its system
-configuration. However, shared resource contention remains an
-important issue that must be considered in applying deep-learning
-models on shared memory based embedded computing platforms.
+configuration. Futhermore, all platforms were capable of consolidating
+multiple DNN models and/or tasks.
+
+However, when consolidating multiple models/tasks, shared resource
+contention remains an important issue that must be considered to
+ensure desired real-time performance on these shared memory based
+embedded computing platforms. 
+Toward this end, we evaluated the impact of shared resource contention
+to the DNN workload in diverse consolidated workload setups, and
+evaluated the effectivness of state-of-the-art shared resource
+isolation mechanisms in protecting real-time performance of the DNN
+workload.
 
 %% As future work, we plan to improve the prediction accuracy of the
 %% system by feeding more data in training.

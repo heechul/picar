@@ -109,10 +109,12 @@ dedicated cache partition.}
 \end{figure}
 
 Figure \ref{fig:palloc_bandwidth_exectime} shows the
-result. For BwRead, when cache partitioning is enabled, DNN
-performance becomes slightly better, with a improvement of  
-\textasciitilde6.5\%. For BwWrite, cache partitioning actually makes
-the DNN performance slightly worse that that of w/o partitioning.
+result. Compared to Figure~\ref{fig:perf_vs_bandwidth} where no cache
+partioning is applied, assigning a dedicated L2 cache parititon to
+each core does not provide significant isolation benefits: For BwRead
+co-runners, cache partitioning slightly improves isolation; but for
+BwWrite co-runners, cache partitioning causes worse worst-case
+slowdown.
 
 In summary, we find that the DNN inferencing workload is not sensitive
 to cache space and that cache partitioning is not effective in

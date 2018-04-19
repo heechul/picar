@@ -74,46 +74,49 @@ compared.
 
 Figure~\ref{fig:sys_core} shows the average control loop completion
 timing of the four system configurations we tested as a function of
-the number of CPU cores used.
-First, both the Intel UP and Jetson TX2 exhibit superior performance when
-compared with the Raspberry Pi 3. 
-When all four CPU cores are used, the Intel UP is 1.33X faster than
-the Pi 3, while the TX2 (CPU) and TX2 (GPU) are 2.79X and 4.16X times faster,
-respectively, than the Pi 3. 
-As a result, they are all able to satisfy the 33.3 ms 
-WCET by a clear margin,
-%%  (in the worst case, the UP Board would 
-%% still meet it by $\sim$20 ms) --> where's the data showing this?
-and, in the case of the TX2, 50 Hz or even 100 Hz real-time control is
-feasible with the help of its GPU. Another observation is that the TX2
-(GPU) performance does not change much, as most of the neural network 
-computation is done by the GPU.
+the number of CPU cores used. (cf. Figure~\ref{fig:perf-vs-corecnt})
+Both the Intel UP and Jetson TX2 exhibit better performance than
+Raspberry Pi 3. When all four CPU cores are used, Intel UP is
+1.33X faster than Pi 3, while TX2 (CPU) and TX2 (GPU) are 2.79X and
+4.16X times faster, respectively, than Pi 3.
+Thus, they all satisfy 33.3 ms WCET by a clear margin, and, in the
+case of the TX2, 50 Hz or even 100 Hz real-time control is feasible
+with the help of its GPU.
+Another observation is that the DNN task's performance on TX2 (GPU)
+does not change much as we increase the number of cores. This
+isbecause most of the neural network computation is done by the GPU.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/compare_model}
-  \caption{Average control loop execution time when multiple DNN
-    models are co-scheduled. }
+  \caption{Timing impact of co-scheduling multiple DNNs on different
+    embedded multicore platforms. %% 1Nx1C: one DNN
+    %% model using one core; 4Nx1C: four DNN models each using one core;
+    %% 1Nx2C: one DNN model using two cores; 2Nx2C: two DNN models each
+    %% using two cores.
+  }
   \label{fig:sys_model}
 \end{figure}
 
 Figure~\ref{fig:sys_model} shows the results of the
-multi-model co-scheduling experiment. Once again, they can comfortably
+multi-model co-scheduling experiment
+(cf. Figure~\ref{fig:perf-vs-modelcnt}). Once again, they can comfortably
 satisfy 30 Hz real-time performance for all of the co-scheduled DNN control
-loops, and in the case of the TX2 (GPU), 100 Hz real-time control is still
-feasible. Given that the GPU must be shared among the co-scheduled DNN
+loops, and in the case of the TX2 (GPU), even 100 Hz real-time control
+is feasible in all co-scheduling setups.
+Given that the GPU must be shared among the co-scheduled DNN
 models, the results suggest that the TX2's GPU has sufficient capacity to
 accomodate multiple instances of the DNN models we tested.
 
 \begin{figure}[h]
   \centering
-  \begin{subfigure}{0.4\textwidth}
+  \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{figs/compare_benchmark_read}
     \caption{BwRead}
     \label{fig:sys_bench_read}
   \end{subfigure}
   \hfill
-  \begin{subfigure}{0.4\textwidth}
+  \begin{subfigure}{0.45\textwidth}
     \includegraphics[width=\textwidth]{figs/compare_benchmark}
     \caption{BwWrite}
     \label{fig:sys_bench_write}    
@@ -124,17 +127,17 @@ accomodate multiple instances of the DNN models we tested.
 \end{figure} 
 
 Figure~\ref{fig:sys_bench} shows the results of synthetic memory
-intensive task co-scheduling experiment. 
+intensive task co-scheduling experiment
+(cf. Figure~\ref{fig:perf_vs_bandwidth}).
 For read co-runners (BwRead), the performance of all platforms
 gradually decreased as additional BwRead instances are introduced: up
-to 1.6X for Pi 3, up to 1.3X for Intel UP, and up to 1.6X and 2.2X for the TX2
-(CPU) and TX2(GPU), respectively.
+to 1.6X for Pi 3, up to 1.3X for Intel UP, and up to 1.6X and 2.2X for
+the TX2 (CPU) and TX2(GPU), respectively.
 For write co-runners (BwWrite), however, we observe generally more
-noticieable execution time increases. In particular, as we discussed
-earlier in Section~\ref{sec:evaluation}, the Pi 3 suffers up to 11.6X
-execution time increase. We also observe increased control loop
-execution timing in the Intel Up and Jetson TX2, although the degree
-of the increase is not as dramatic as the Pi 3.
+noticieable execution time increases. As we discussed
+earlier in Section~\ref{sec:evaluation}, Pi 3 suffers up to 11.6X
+execution time increase, while Intel UP and Jetson TX2 suffer less
+dramatic but still significant execution time increases.
 
 %% Compared to their respective solo timings  
 %% (i.e., the model runs on a single core in isolation), Intel UP suffers up to
@@ -152,13 +155,12 @@ of the increase is not as dramatic as the Pi 3.
 
 Another interesting observation is that the TX2 (GPU) also suffers
 considerable execution time increase (2.3X) despite the fact that the
-co-scheduled synthetic tasks do not utilize the GPU. In other words,
-the DNN model has dedicated access to the GPU. This is, however, a
+co-scheduled synthetic tasks do not utilize the GPU (i.e., gthe DNN
+model has dedicated access to the GPU.) This is, however, a 
 known characteristic of integrated CPU-GPU architecture based
-platforms where both CPU and GPU share the same memory
-subsystem~\cite{Ali2017}. As a result, the TX2 (GPU) fails to meet the
-10ms deadline for 100 Hz control that would have been feasible if
-there was no contention between the CPU cores and the GPU.
+platforms in which both CPU and GPU share the same memory
+subsystem~\cite{Ali2017} and therefore can suffer bandwidth contention
+as we observe in this case.
 
 %% \begin{figure}[h]
 %%   \centering
@@ -237,9 +239,8 @@ there was no contention between the CPU cores and the GPU.
 
 In summary, we find that todays embedded computing platforms, even as
 inexpensive as a Raspberry Pi 3, are powerful enough to support
-vision and end-to-end deep learning based real-time control
-applications. Furthermore, availability of CPU cores and GPU on these
-platforms allow consolidating mutiple deep neural network based AI
+DNN based real-time control applications. Furthermore, availability of
+CPU cores and GPU on these platforms allow consolidating mutiple DNN
 workloads. However, shared resource contention among these diverse
 computing resources remains an important issue that must be understood
 and controlled, especially for safety-critical applications.

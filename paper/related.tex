@@ -20,19 +20,22 @@
 There are several relatively inexpensive RC-car based autonomous car
 testbeds. MIT's RaceCar~\cite{shin2017project} and UPenn's
 F1$/$10~\cite{upennf1tenth} are both based on a Trexx 1/10 scale RC
-car and a powerful NVIDIA Jetson computing platform equipped with many
-sophisticated sensor packages such as a lidar. However, they both cost
-more than \$3,000, requiring considerable
+car and a powerful NVIDIA Jetson multicore computing platform, which
+is equipped with many sophisticated sensor packages such as a lidar.
+However, they both cost more than \$3,000, requiring considerable
 investment. DonkeyCar~\cite{donkeycar} is similar to our DeepPicar as
-it also uses a Raspberry Pi 3 and a CNN for end-to-end control,
-although it costs slightly more because it uses a more expensive 1/16
-scale RC car. The main contribution of our paper is not the hardware
-design but in the detailed analysis of computational characteristics
-for the CNN-based end-to-end real-time control.
+it also uses a Raspberry Pi 3 and a similar CNN for end-to-end
+control, although it costs more (about \$200).
+%% because it uses a more
+%% expensive 1/16 scale RC car than our 1/24 scale one.
+The main contribution of our paper is in the detailed analysis of
+computational aspects of executing a CNN-based real-time control
+workload on diverse embedded computing platforms.
 
-In this paper, we have analyzed real-time performance of a CNN, which
-was used in NVIDIA's DAVE-2 self-driving car~\cite{Bojarski2016}, on a 
-low-cost raspberry pi 3 quad-core platform. It should be noted,
+In this paper, we have analyzed real-time performance of a real-world
+CNN, which was used in NVIDIA's DAVE-2 self-driving
+car~\cite{Bojarski2016}, on a low-cost raspberry pi 3 quad-core 
+platform and other embedded multicore platforms. It should be noted, 
 however, that DAVE-2's CNN is relatively small compared
 to recent state-of-the-art CNNs, which are increasingly larger and
 deeper. For example, the CNN based object detector models evaluated in
@@ -65,15 +68,16 @@ While continuing performance improvements in embedded computing
 platforms will certainly make processing these complex CNNs faster,
 another actively investigated approrach is to reduce the required
 computational complexity itself.
-When a DNN is deployed in those implementations with limited
-resources, such as memory and power, the floating-point operations
-involved in the large matrix multiplications are a burdensome task.
+%% When a DNN is deployed in those implementations with limited
+%% resources, such as memory and power, the floating-point operations
+%% involved in the large matrix multiplications are a burdensome task.
 Many recent advances in network compression have shown promising results
 in reducing such computational cost during the feedforward
 process. The fundamental assumption in those techniques is that the
 DNNs are redundant in their structure and representation. For example,
 network pruning can thin out the network and provides a more condensed
 topology~\cite{han2015deep}.
+
 Another common compression method is to reduce the
 quantization level of the network parameters, so that arithmetic
 defined with the floating-point operations are replaced with low-bit
@@ -106,10 +110,10 @@ XNOR-POP is another hardware implementation that reduced
 the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
 
 These research efforts are expected to make complex DNNs more
-accessible for real-time embedded systems. We plan to investigate the
-feasibility of these approaches in the context of DeepPicar so that we
-can use even more resource constrained micro-controller class
-computing platforms instead of Raspberry Pi3.
+accessible for a wider range of real-time embedded systems. We plan to
+investigate the feasibility of these approaches in the context of
+DeepPicar so that we can use even more resource constrained
+micro-controller class computing platforms.
 
 %% % related work on testbeds
 %% \fixme{maybe we can also discuss MIT racecar, UPENN car, donkey car and other testbeds?
