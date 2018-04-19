@@ -1,6 +1,6 @@
 set terminal pdf font "Times-Roman,14"
 set output "memguard_bandwidth.pdf"
-set yrange [0.0:100]
+set yrange [0.0:150]
 set ylabel "Avg. Processing Time (ms)" offset 1.5
 #set xlabel "# of Co-runners"
 set xlabel "Effective Bandwidth Reservation Size"
@@ -14,8 +14,8 @@ set arrow from -1,46.4 to 6,46.4 nohead dt "-"
 set label "so-" at 6.025,50
 set label "lo" at 6.1,43
 
-set label "537.10" at -0.2,103
-set label "145.18" at 0.8,103
+set label "537.10" at -0.2,155
+#set label "145.18" at 0.8,103
 
 #set key left top
 
