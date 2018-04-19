@@ -23,7 +23,7 @@
             & BCM2837              & X5-Z8350 (Cherry Trail)   & Tegra X2 \\
     CPU     & 4x Cortex-A53@1.2GHz/512KB L2  &
               4x Atom@1.92GHz/2MB L2 &
-              4x Cortex-A57@2GHz/2MB L2 \\
+              4x Cortex-A57@2.0GHz/2MB L2 \\
             &              &              & 2x Denver@2.0GHz/2MB L2 (not used)  \\
     \hline
     GPU     &  VideoCore IV (not used)    &
@@ -33,10 +33,10 @@
     Memory  & 1GB LPDDR2   &  2GB DDR3L     & 8GB LPDDR4              \\
     \hline
 	Peak Memory Bandwidth & 8.5 GB/s & 12.8 GB/s & 59.7 GB/s \\
+	%% \hline
+	%% Measured Bandwidth & 2127.94 MB/s & 3951.94 MB/s & 4447.90 MB/s \\
 	\hline
-	Measured Bandwidth & 2127.94 MB/s & 3951.94 MB/s & 4447.90 MB/s \\
-	\hline
-	Cost (\$) & 35 & 100 & 600 \\
+	Cost  & \$35 & \$100 & \$600 \\
 	\hline
   \end{tabular}
   \end{adjustbox}
@@ -45,11 +45,9 @@
 \end{table*}
 
 In this section, we compare three computing platforms---the Raspberry
-Pi 3, the Intel UP~\footnote{http://www.up-board.org/up/} and the NVIDIA
-Jetson
-TX2~\footnote{http://www.nvidia.com/object/embedded-systems-dev-kits-modules.html}---from
-the point of view of supporting end-to-end deep learning
-based autonomous vehicles. 
+Pi 3, the Intel UP~\cite{intelup} and the NVIDIA Jetson
+TX2~\cite{nvidiajetson}---from the point of view of supporting
+end-to-end deep learning based autonomous vehicles. 
 Table~\ref{tbl:platforms} shows architectural features of the three
 platforms~\footnote{The GPU of Intel UP and the two Denver cores in the
   Tegra TX2 are not used in evaluation due to TensorFlow issues.}.
