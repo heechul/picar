@@ -17,12 +17,25 @@
 
 %% {\bf DNN optimization for embedded systems.}
 
-In this paper, we demonstrated that a low-cost embedded platform such
-as the  Raspberry Pi 3 can successfully run a CNN-based autonomous
-driving control system in real-time. However, it should be noted that
-the CNN we used here is relatively small compared to recent
-state-of-the-art CNNs, which are increasingly larger and deeper.
-For example, the CNN based object detector models evaluated in
+There are several relatively inexpensive RC-car based autonomous car
+testbeds. MIT's RaceCar~\cite{shin2017project} and UPenn's
+F1$/$10~\cite{upennf1tenth} are both based on a Trexx 1/10 scale RC
+car and a powerful NVIDIA Jetson computing platform equipped with many
+sophisticated sensor packages such as a lidar. However, they both cost
+more than \$3,000, requiring considerable
+investment. DonkeyCar~\cite{donkeycar} is similar to our DeepPicar as
+it also uses a Raspberry Pi 3 and a CNN for end-to-end control,
+although it costs slightly more because it uses a more expensive 1/16
+scale RC car. The main contribution of our paper is not the hardware
+design but in the detailed analysis of computational characteristics
+for the CNN-based end-to-end real-time control.
+
+In this paper, we have analyzed real-time performance of a
+state-of-the art CNN, used in NVIDIA's DAVE-2 self-driving car, on a
+low-cost raspberry pi 3 quad-core platform. It should be noted,
+however, that DAVE-2's CNN we used here is relatively small compared
+to recent state-of-the-art CNNs, which are increasingly larger and
+deeper. For example, the CNN based object detector models evaluated in
 Google's recent study~\cite{huang2017speed} have between 3M to 54M
 parameters. Using such large CNN models will be challenging on
 resource constrainted embedded computing platforms, especially for
@@ -109,11 +122,7 @@ computing platforms instead of Raspberry Pi3.
 %%   barrier to entry in researching self-driving cars, helping the
 %%   community blah blah blah.}
   
-%% Another autonomous vehicle platform is the Donkey Car\footnote{https://donkeycar.com}.
-%% Like the DeepPicar, the Donkey Car is a low cost platform that can be 
-%% utilized for researching self-driving cars. However, comparatively, the
-%% DeepPicar is approximately \$200 cheaper than the Donkey Car. 
-%% Furthermore, the Donkey Car was created with an emphasis on model accuracy
+
 %% and the ability of the car to navigate the desired environment. We are 
 %% more focused on the real-time performance of the DeepPicar, and whether
 %% the Raspberry Pi 3 embedded computing platform can properly support autonomous 
