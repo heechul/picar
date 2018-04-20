@@ -138,7 +138,7 @@ three discrete angles---left (-30$^{\circ}$), center
 We approximate the network generated real-valued angle to the closest
 one of the three angles. Although this may introduce inaccuracy in
 control, the observed control performance of the system is respectable,
-likely due to the inherently stocastic nature of DNN.
+likely due to the inherently stocastic nature of CNNs.
 
 %% In the future, we plan to use a different (more expensive) RC car
 %% platform that can precisely control the car's steering angle.
@@ -149,7 +149,7 @@ latency is from the time the camera sensor observes the scene to the
 time the computer actually reads the digitized image data. This time
 can be noticable depending on the camera used and the data processing
 time of the computing platform. Higher camera latency could
-negatively affect control performance, because the DNN would analyze
+negatively affect control performance, because the CNN would analyze
 stale scenes. The actuator (motor) control latency from the time
 the control output is sent to the steering motor to the time the motor
 actually moved at a desired position, which also can takes
@@ -168,7 +168,7 @@ For reference, the latency of human perception is known to be as fast
 as 13 ms~\cite{ThomasBurger2015}. 
 % https://www.pubnub.com/blog/2015-02-09-how-fast-is-realtime-human-perception-and-technology/
 
-Our trained DNN models showed good prediction accuracy, successfully
+Our trained CNN models showed good prediction accuracy, successfully
 navigating several different tracks we used for training.
 For instance, the DeepPicar could remain on Track 1
 (Figure \label{fig:track}) over 10 minutes at a moderate speed (50\%

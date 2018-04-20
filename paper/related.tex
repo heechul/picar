@@ -21,8 +21,8 @@ There are several relatively inexpensive RC-car based autonomous car
 testbeds. MIT's RaceCar~\cite{shin2017project} and UPenn's
 F1$/$10~\cite{upennf1tenth} are both based on a Traxxas 1/10 scale RC
 car and a NVIDIA Jetson multicore computing platform, which
-is equipped with many sophisticated sensor packages such as a lidar.
-However, they both cost more than \$3,000, requiring considerable
+is equipped with many sophisticated sensor packages, such as a lidar.
+However, they both cost more than \$3,000, requiring a considerable
 investment. DonkeyCar~\cite{donkeycar} is similar to our DeepPicar as
 it also uses a Raspberry Pi 3 and a similar CNN for end-to-end
 control, although it costs more (about \$200).
@@ -40,7 +40,7 @@ however, that DAVE-2's CNN is relatively small compared
 to recent state-of-the-art CNNs, which are increasingly larger and
 deeper. For example, the CNN based object detector models evaluated in
 Google's recent study~\cite{huang2017speed} have between 3M to 54M
-parameters, much larger than DAVE-2's CNN.
+parameters, and are much larger than DAVE-2's CNN.
 Using such large CNN models will be challenging on
 resource constrainted embedded computing platforms, especially for
 real-time applications such as self-driving cars.
@@ -66,21 +66,21 @@ real-time applications such as self-driving cars.
 
 While continuing performance improvements in embedded computing
 platforms will certainly make processing these complex CNNs faster,
-another actively investigated approrach is to reduce the required
+another actively investigated approach is to reduce the required
 computational complexity itself.
 %% When a DNN is deployed in those implementations with limited
 %% resources, such as memory and power, the floating-point operations
 %% involved in the large matrix multiplications are a burdensome task.
 Many recent advances in network compression have shown promising results
-in reducing such computational cost during the feedforward
+in reducing such computational costs during the feedforward
 process. The fundamental assumption in those techniques is that the
-DNNs are redundant in their structure and representation. For example,
+CNNs are redundant in their structure and representation. For example,
 network pruning can thin out the network and provides a more condensed
 topology~\cite{han2015deep}.
 
 Another common compression method is to reduce the
 quantization level of the network parameters, so that arithmetic
-defined with the floating-point operations are replaced with low-bit
+defined with floating-point operations are replaced with low-bit
 fixed-point counterparts. To this end, single bit quantization of the
 network parameters or ternary quantization have been recently proposed
 ~\cite{hwang2014fixed,soudry2014expectation,kim2016bitwise,rastegari2016xnor,hubara2016binarized,beauchamp2006embedded,govindu2004analysis}.
@@ -95,13 +95,13 @@ is minimized to an acceptable level.
 
 The XNOR operation and bit counting have been known to be efficient in
 hardware implementations. In~\cite{rastegari2016xnor}, it was shown
-that the binarized convolution can substitute the expensive
+that the binarized convolution could substitute the expensive
 convolutional feedforward operations in a regular Convolutional Neural
 Network (CNN), %% by using only about 1.5\% of the memory space, while
 providing 20 to 60 times faster feedforward. Binary weights were also
 able to provide 7 times faster feedforward than a floating-point
 network for the hand written digit recognition task as well as 23
-times faster matrix multiplication tasks on
+times faster matrix multiplication tasks on a
 GPU~\cite{hubara2016binarized}.
 Moreover, FPGA implementations showed that the XNOR operation is 200
 times cheaper than floating-point multiplications with 
@@ -109,7 +109,7 @@ single precision~\cite{beauchamp2006embedded,govindu2004analysis}.
 XNOR-POP is another hardware implementation that reduced
 the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
 
-These research efforts are expected to make complex DNNs more
+These research efforts are expected to make complex CNNs more
 accessible for a wider range of real-time embedded systems. We plan to
 investigate the feasibility of these approaches in the context of
 DeepPicar so that we can use even more resource constrained

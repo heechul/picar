@@ -1,16 +1,16 @@
 \subsection{Effect of Memory Bandwidth Throttling}
 
-In this subsection, we examine the DNN workload's memory bandwidth
+In this subsection, we examine the CNN workload's memory bandwidth
 sensitivity and the effect of memory bandwidth throttling in providing
 isolation. For the experiments, we use MemGuard\cite{Yun2013}, which 
 can limit the amount of memory bandwidth each core receives. MemGuard
-operates periodically, at an 1ms interval, and uses hardware
+operates periodically, at a 1 ms interval, and uses hardware
 performance counters to throttle cores if they exceed their given
-bandwidth budgets within each regulation period (i.e., 1ms) by
+bandwidth budgets within each regulation period (i.e., 1 ms) by
 scheduling high-priority idle kernel threads, until the next period begins.
 
 
-In the first experiment, we measure the performance of the DNN model
+In the first experiment, we measure the performance of the CNN model
 on a single core, first w/o using MemGuard and then w/
 using MemGuard while varying the core's bandwidth throttling parameter
 from 500 MB/s down to 100 MB/s.
@@ -23,20 +23,19 @@ execution time. }
   \label{fig:memguard_multicore}
 \end{figure}
 
-Figure \ref{fig:memguard_multicore} shows the result. When core
-executing the DNN model is throttled at 400 MB/s or more, performance
+Figure \ref{fig:memguard_multicore} shows the results. When the core
+executing the CNN model is throttled at 400 MB/s or more, the performance
 of the model is largely the same as the non-throttled case. However, as
 we decrease the assigned memory bandwidth below 300 MB/s, we start to
 observe noticeable decreases in the model's performance. In other
-words, the DNN model is sensitive to memory bandwidth and that it
-requires 400 MB/s or more bandwidth should be given to ensure ideal
-performance.
+words, the CNN model is sensitive to memory bandwidth and it
+requires 400 MB/s or more bandwidth to ensure ideal performance.
 
-In the next experiment, we again repeat the experiment in
+In the next experiment, we repeat the experiment in
 Section~\ref{sec:eval-memhog}---i.e., co-scheduling memory intensive
 synthetic tasks---but this time we
 throttle the cores of the co-runners using MemGuard and vary their
-memory bandwidth budgets to see their impact on the DNN model's 
+memory bandwidth budgets to see their impact on the CNN model's 
 performance.
 
 \begin{figure}[h]
@@ -47,17 +46,17 @@ co-runners when memory bandwidth throttling is enabled. }
   \label{fig:memguard_bandwidth}
 \end{figure}
 
-Figures \ref{fig:memguard_bandwidth} shows the result.
+Figures \ref{fig:memguard_bandwidth} shows the results.
 Note that, in case of BwWrite co-runners, we have assigned half the
-bandwidth budget because MemGuard currently only account L2 refills
-but not write-backs, which effectively allow twice the allocated
-memory bandwidth budget. Regardless, the result clearly shows that
-limiting co-runners's memory bandwidth is effective in protecting the
-DNN model's performance.
+bandwidth budget because MemGuard currently only accounts for L2 refills
+but not write-backs, which effectively allows twice the allocated
+memory bandwidth budget. Regardless, the results clearly show that
+limiting the co-runners's memory bandwidth is effective in protecting the
+CNN model's performance.
 
-In summary, we find that the DNN inferencing workload is sensitive to
+In summary, we find that the CNN inferencing workload is sensitive to
 memory bandwidth and that memory bandwidth throttling is effective in
-improving performance isolation of the DNN workload.
+improving the performance isolation of the CNN workload.
 
 %% \begin{figure}[h]
 %%   \centering

@@ -33,14 +33,14 @@
 %% \end{figure}
 
 Cache partitioning is a well-known technique to improve isolation in
-multicore by giving a dedicated cache space to each individaul 
+multicore systems by giving a dedicated cache space to each individaul 
 task or core. In this experiment, we use PALLOC~\cite{yun2014rtas}, a
 page-coloring based kernel-level memory allocator for Linux.
 Page coloring is a OS technique that controls the physical addresses
-of memory pages. By allocating pages over non-overlapping sets of the
-cache, the OS can effectively partition the cache.
-Using PALLOC, we investigate the effect of cache partitioning in
-protecting DeepPicar's DNN based controller.
+of memory pages. By allocating pages over non-overlapping cache sets,
+the OS can effectively partition the cache.
+Using PALLOC, we investigate the effect of cache partitioning on
+protecting DeepPicar's CNN based controller.
 
 \begin{figure} [h]
   \centering
@@ -51,9 +51,9 @@ protecting DeepPicar's DNN based controller.
 \end{figure}
 
 Figure~\ref{fig:cache-mapping} shows the physical address
-mapping of Raspberry Pi 3's BCM2837 processor, which has 32K private
-L1 I\&D (4way) caches and a share 512KB L2 (16 way) cache. In order not
-to partition the private L1 caches, we use the bit 13 and 14 for
+mapping of the Raspberry Pi 3's BCM2837 processor, which has 32K private
+L1 I\&D (4way) caches and a shared 512KB L2 (16 way) cache. In order
+to avoid partitioning the private L1 caches, we use bits 13 and 14 for
 coloring, which results in 4 usuable page colors.
 
 %% determine if the DNN is mostly affected by the DRAM 
@@ -73,28 +73,28 @@ coloring, which results in 4 usuable page colors.
 %% the L1 Data cache is not partitioned in our experiments.
 
 In the first experiment, we investigate the cache space sensitivity of
-DeepPicar's DNN-based control loop. Using PALLOC, we create 4
+the DeepPicar's CNN-based control loop. Using PALLOC, we create 4
 different cgroups which are configured to use 4, 3,
 2, and 1 colors (100\%, 75\%, 50\% and 25\% of the L2 cache
-space, respectively). We then execute the DNN control loop (inference)
+space, respectively). We then execute the CNN control loop (inference)
 on one core using a different cgroup cache partition, one at a time,
 and measure the average processing time.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_multicore}
-  \caption{Cache space sensitivity of the DNN controller.}
+  \caption{Cache space sensitivity of the CNN controller.}
   \label{fig:palloc_multicore}
 \end{figure}
 
-Figure~\ref{fig:palloc_multicore} shows the result. As can be seen,
-the DNN inference timing is hardly changed at all regardless of the
+Figure~\ref{fig:palloc_multicore} shows the results. As can be seen,
+the CNN inference timing hardly changes at all regardless of the
 size of the allocated L2 cache space. In other words, we find that
-the DNN workload is largely insensitive to L2 cache space.
+the CNN workload is largely insensitive to L2 cache space.
 
 The next experiment further validates this finding. In this
 experiment, we repeat the experiment in
-Section~\ref{sec:eval-memhog}---i.e., co-scheduling the DNN model and
+Section~\ref{sec:eval-memhog}---i.e., co-scheduling the CNN model and
 three Bandwidth (BwRead or BwWrite) instances---but this time we
 ensure that each task is given equal amounts of L2 cache space by
 assigning one color to each task's cache partition.
@@ -103,22 +103,22 @@ assigning one color to each task's cache partition.
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_bandwidth_exectime}
   \caption{Average processing time vs. the number of memory
-memory intensive co-runners; Each core (task) is given a equal-sized
+intensive co-runners; Each core (task) is given a equal-sized
 dedicated cache partition.}
   \label{fig:palloc_bandwidth_exectime}
 \end{figure}
 
 Figure \ref{fig:palloc_bandwidth_exectime} shows the
-result. Compared to Figure~\ref{fig:perf_vs_bandwidth} where no cache
+results. Compared to Figure~\ref{fig:perf_vs_bandwidth} where no cache
 partioning is applied, assigning a dedicated L2 cache parititon to
-each core does not provide significant isolation benefits: For BwRead
-co-runners, cache partitioning slightly improves isolation; but for
+each core does not provide significant isolation benefits. For BwRead
+co-runners, cache partitioning slightly improves isolation, but for
 BwWrite co-runners, cache partitioning causes worse worst-case
 slowdown.
 
-In summary, we find that the DNN inferencing workload is not sensitive
+In summary, we find that the CNN inferencing workload is not sensitive
 to cache space and that cache partitioning is not effective in
-providing timing isolation to our DNN workload.
+providing timing isolation for our CNN workload.
 
 %% By partitioning the shared L2 cache, we find that no noticable 
 %% improvements are gained and that performance remains consistent. 
