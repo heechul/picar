@@ -1,4 +1,4 @@
-## <span style="color:red"> ** This repository is obsolete. Please check out the new repository at:** https://github.com/mbechtel2/DeepPicar-v2 </span> 
+## <span style="color:red"> This repository is obsolete. Please check out the new repository at: </span> https://github.com/mbechtel2/DeepPicar-v2 
 
 # DeepPicar
 
