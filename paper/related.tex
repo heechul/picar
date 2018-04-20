@@ -96,8 +96,8 @@ is minimized to an acceptable level.
 The XNOR operation and bit counting have been known to be efficient in
 hardware implementations. In~\cite{rastegari2016xnor}, it was shown
 that the binarized convolution could substitute the expensive
-convolutional feedforward operations in a regular Convolutional Neural
-Network (CNN), %% by using only about 1.5\% of the memory space, while
+convolutional feedforward operations in a regular CNN, by using only
+about 1.5\% of the memory space, while 
 providing 20 to 60 times faster feedforward. Binary weights were also
 able to provide 7 times faster feedforward than a floating-point
 network for the hand written digit recognition task as well as 23
@@ -109,11 +109,12 @@ single precision~\cite{beauchamp2006embedded,govindu2004analysis}.
 XNOR-POP is another hardware implementation that reduced
 the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
 
-These research efforts are expected to make complex CNNs more
-accessible for a wider range of real-time embedded systems. We plan to
+These research efforts are expected to make complex CNNs accessible
+for a wider range of real-time embedded systems. We plan to 
 investigate the feasibility of these approaches in the context of
 DeepPicar so that we can use even more resource constrained
-micro-controller class computing platforms.
+micro-controller class computing platforms in place of the current
+Raspberry Pi 3.
 
 %% % related work on testbeds
 %% \fixme{maybe we can also discuss MIT racecar, UPENN car, donkey car and other testbeds?
