@@ -58,12 +58,12 @@
 We present DeepPicar, a low-cost deep neural network based
 autonomous car platform. DeepPicar is a small scale
 replication of a real self-driving car called DAVE-2 by NVIDIA. DAVE-2
-drove on public roads using a deep convolutional neural network (CNN), 
+uses a deep convolutional neural network (CNN), 
 which takes images from a front-facing camera as input and produces
 car steering angles as output. DeepPicar uses the same 
 network architecture---9 layers, 27 million connections and 250K
-parameters---and can be trained to drive itself using a
-web camera and a modest Raspberry Pi 3 quad-core platform in real-time.
+parameters---and can drive itself in real-time using a web camera and
+a Raspberry Pi 3 quad-core platform.
 Using DeepPicar, we analyze the Pi 3's computing capabilities to 
 support end-to-end deep learning based real-time control of autonomous
 vehicles. 
@@ -74,13 +74,13 @@ workload.
 We find all tested platforms, including the Pi 3, are capable of
 supporting the CNN based real-time control, from 20 Hz up to 100
 Hz depending on hardware platform. 
-However, shared resource contention remains an
-important issue that must be considered in applying deep-learning
-models on shared memory based embedded computing platforms; we observe
-up to 11.6X control loop execution time increase due to such shared
-resource contention. We evaluate state-of-the-art cache
-partitioning and memory bandwidth throttling techniques on the Pi 3
-in protecting the CNN workload. We find cache partition is
+However, we find that shared resource contention remains an
+important issue that must be considered in applying CNN models on
+shared memory based embedded computing platforms; we observe 
+up to 11.6X execution time increase in the CNN based control loop due
+to shared resource contention. To protect the CNN workload, we also
+evaluate state-of-the-art cache partitioning and memory bandwidth
+throttling techniques on the Pi 3. We find cache partition is
 ineffective, while memory bandwidth throttling is an effective
 solution.
 \end{abstract}
