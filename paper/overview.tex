@@ -18,7 +18,7 @@ remotely using a desktop computer.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.4\textwidth]{figs/DeepPicar_platform}
+  \includegraphics[width=.38\textwidth]{figs/DeepPicar_platform}
   \caption{DeepPicar platform.}
   \label{fig:overview}
 \end{figure}
@@ -131,8 +131,8 @@ pseudo code of the controller's main loop. Among the five steps, the 3rd step,
 network inferencing, is the most computationally intensive and dominates the
 execution time.
 
-Note that although the steering angle output of the network ($angle$) is
-a continuous real value, the RC car platform we used only supports
+Note that although the steering angle output of the CNN ($angle$) is
+a continuous real value, the RC car we used only supports
 three discrete angles---left (-30$^{\circ}$), center 
 (0$^{\circ}$), and right (+30$^{\circ}$)---as control inputs.
 We approximate the network generated real-valued angle to the closest
@@ -171,7 +171,7 @@ as 13 ms~\cite{ThomasBurger2015}.
 Our trained CNN models showed good prediction accuracy, successfully
 navigating several different tracks we used for training.
 For instance, the DeepPicar could remain on Track 1
-(Figure \label{fig:track}) over 10 minutes at a moderate speed (50\%
+(Figure~\ref{fig:track}) over 10 minutes at a moderate speed (50\%
 throttle), at which point we stopped the experiment, and more than one
 minute at a higher speed (75\% throttle)~\footnote{Self-driving videos: \url{https://photos.app.goo.gl/q40QFieD5iI9yXU42}
   %% \url{https://photos.app.goo.gl/ce93sU7jPk4ywO8u2}

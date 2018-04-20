@@ -55,26 +55,34 @@
 \maketitle
 
 \begin{abstract}
-We present DeepPicar, a low-cost deep neural network (DNN) based
+We present DeepPicar, a low-cost deep neural network based
 autonomous car platform. DeepPicar is a small scale
-replication of a real self-driving car called Dave-2 by NVIDIA, which
+replication of a real self-driving car called DAVE-2 by NVIDIA. DAVE-2
 drove on public roads using a deep convolutional neural network (CNN), 
-that takes images from a front-facing camera as input and produces
-car steering angles as output. DeepPicar uses almost the exact same 
+which takes images from a front-facing camera as input and produces
+car steering angles as output. DeepPicar uses the same 
 network architecture---9 layers, 27 million connections and 250K
-parameters---and can be trained to drive itself, in real-time, using a
-web camera and a modest Raspberry Pi 3 quad-core platform.
+parameters---and can be trained to drive itself using a
+web camera and a modest Raspberry Pi 3 quad-core platform in real-time.
 Using DeepPicar, we analyze the Pi 3's computing capabilities to 
 support end-to-end deep learning based real-time control of autonomous
-vehicles. We also systematically compare other contemporary embedded
+vehicles. 
+We also systematically compare other contemporary embedded
 computing platforms using the DeepPicar's CNN based real-time control
-software as a workload. 
+workload. 
+
 We find all tested platforms, including the Pi 3, are capable of
-supporting deep-learning based real-time control, from 20 Hz up to 100
+supporting the CNN based real-time control, from 20 Hz up to 100
 Hz depending on hardware platform. 
 However, shared resource contention remains an
 important issue that must be considered in applying deep-learning
-models on shared memory based embedded computing platforms.
+models on shared memory based embedded computing platforms; we observe
+up to 11.6X control loop execution time increase due to such shared
+resource contention. We evaluate state-of-the-art cache
+partitioning and memory bandwidth throttling techniques on the Pi 3
+in protecting the CNN workload. We find cache partition is
+ineffective, while memory bandwidth throttling is an effective
+solution.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -91,6 +99,7 @@ Real-time, Autonomous car, Convolutional neural network, Case study
 %\input{discussion}
 \input{related}
 \input{conclusion}
+\input{acknowledgement}
 %-------------------------------------------------------------------------
 \bibliographystyle{abbrv}
 \bibliography{reference}
