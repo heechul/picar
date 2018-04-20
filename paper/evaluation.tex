@@ -17,12 +17,12 @@ The Raspberry Pi 3 Model B platform used in DeepPicar equips a Broadcom
 BCM2837 SoC, which has a quad-core ARM Cortex-A53 cluster,
 running at up to 1.2GHz. Each core has private 32K I/D caches
 and all cores share a 512KB L2 cache.
-The chip also includes Broadcom's Videocore IV GPU, although we did
+The chip also includes Broadcom's Videocore IV GPU, although we do
 not use the GPU in our evaluation, due to the lack of sofware support
 \footnote{TensorFlow currently only supports NVIDIA's GPUs.}.
 For software, we use Ubuntu MATE 16.04 and TensorFlow 1.1.
-We disabled DVFS (dynamic voltage frequency scaling) and
-configured the clock speed of each core statically at the maximum 1.2GHz.
+We disable DVFS (dynamic voltage frequency scaling) and
+configure the clock speed of each core statically at the maximum 1.2GHz.
 We use the SCHED\_FIFO real-time scheduler to schedule the CNN control
 task while using the CFS when executing memory intensive co-runners.
 
