@@ -1,3 +1,5 @@
+## <b> <span style="color:red"> This repository is obsolete. Please check out the new repository at: https://github.com/mbechtel2/DeepPicar-v2 </span> </b>
+
 # DeepPicar
 
 <p align="center"><img src="https://github.com/heechul/picar/raw/picar-mini-v2.0/paper/figs/DeepPicar_platform.jpg" width="480" height="480"/></p>
