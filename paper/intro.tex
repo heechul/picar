@@ -18,7 +18,7 @@ chip (MobileEye EyeQ), which used a deep neural network for vision-based
 real-time obstacle detection and avoidance. More recently, researchers
 are investigating DNN based end-to-end control of
 cars~\cite{Bojarski2016} and other robots. It is expected that more
-DNN based Artificial Intelligence workloads may be used in future
+DNN based artificial intelligence (AI) workloads may be used in future
 autonomous vehicles.
 
 % big problem
@@ -73,7 +73,7 @@ DeepPicar is comprised of a Raspberry Pi 3 Model B quad-core
 computer, a web camera and a RC car, all of which are affordable
 components (less than \$100 in total).
 The DeepPicar, however, employs a state-of-the-art AI
-technology, namely deep learning based end-to-end real-time control,
+technology, namely end-to-end deep learning based real-time control,
 which utilizes a deep convolutional neural network (CNN).
 The CNN receives an image frame from a single forward
 looking camera as input and generates a predicted steering angle
@@ -83,8 +83,9 @@ and 250 thousand parameters (weights).
 DeepPicar's CNN architecture is identical to that of NVIDIA's
 real-sized self-driving car, called DAVE-2~\cite{Bojarski2016}, which
 drove on public roads without human driver's intervention while only
-using the CNN, which runs on a significantly more powerful computing
-platform (Drive PX~\cite{drivepx}).
+using the CNN.
+%% Note that, DAVE-2 run on a significantly more powerful computing
+%% platform (Drive PX~\cite{drivepx}).
 
 %% , which uses a significantly more
 %% powerful computer (Drive PX computer~\cite{drivepx}) than a Raspberry
@@ -120,20 +121,20 @@ platform (Drive PX~\cite{drivepx}).
 
 % what are our findings?
 Using DeepPicar, we systematically analyze its real-time
-capabilities in the context of deep-learning based real-time
-control, especially on real-time deep neural network \emph{inferencing}.
+capabilities in the context of end-to-end deep-learning based real-time
+control, especially on real-time \emph{inferencing} of the CNN.
 We also evaluated other, more powerful, embedded computing
 platforms to better understand achievable real-time performance of
 DeepPicar's deep-learning based control system and the impact of
 computing hardware architectures.
 From the systematic study, we want to answer the following questions:
-(1) how well does the DNN based real-time inferencing task perform on
-contemporary embedded multicore computing platforms? (2) how
-susceptible is the DNN inferencing task to contention in shared
+(1) How well does the CNN based real-time inferencing task perform on
+contemporary embedded multicore computing platforms? (2) How
+susceptible is the CNN inferencing task to contention in shared
 hardware resources (e.g., cache and DRAM) when multiple tasks/models
-are consolidated? (3) are the existing state-of-the-art shared resource
+are consolidated? (3) Are the existing state-of-the-art shared resource
 isolation techniques effective in protecting real-time performance of
-the DNN inferencing task?
+the CNN inferencing task?
 
 % Findings:
 %
@@ -162,16 +163,16 @@ the DNN inferencing task?
 %   space. we find applying cache partitioning does not help improve
 %   isolation of DNN workload when memory bandwidth is contended.
 Our observations are as follows.
-First, we find that real-time processing of the DNN inferencing is
+First, we find that real-time processing of the CNN inferencing is
 feasible on contemporary embedded computing platforms, even one   
 as inexpensive as the Raspberry Pi 3. Second, while consolidating
-multiple DNN models and task are feasible but the impact of shared
+multiple CNN models and task are feasible but the impact of shared
 resource contention can be catastrophic in the worst-case as we
-observe up to 11.6X slowdown even when the DNN model was given a
+observe up to 11.6X slowdown even when the CNN model was given a
 dedicated core. Third, using the state-of-the-art OS-level cache
 partitioning and memory bandwidth control
 mechanisms~\cite{yun2014rtas,Yun2013}, we find that cache space has a
-minimal performance impact to the DNN workload while memory
+minimal performance impact to the CNN workload while memory
 performance has a significant impact.
 
 %% % predictability
@@ -221,7 +222,7 @@ This paper makes the following {\bf contributions}:
 \begin{itemize}
   \item We present DeepPicar, a low-cost autonomous car testbed, which
     employs a state-of-the-art CNN based end-to-end
-    real-time control.~\footnote{The source code, datasets, and build
+    real-time control~\footnote{The source code, datasets, and build
       instructions of DeepPicar can be found at:
       \url{https://github.com/mbechtel2/DeepPicar-v2}}.
   \item We provide extensive empirical performance evaluation results
@@ -232,16 +233,14 @@ This paper makes the following {\bf contributions}:
     inferencing workload in consolidated settings.
 \end{itemize}
 
-The remaining sections of the paper are as follows.
-Section~\ref{sec:background}
-provides a background of applications in autonomous driving and related works.
+The remainder of the paper is organized as follows.
+Section~\ref{sec:background} provides a background on the application
+of nueral networks in autonomous driving.
 Section~\ref{sec:overview} gives an overview of the DeepPicar
-platform, including the high-level system and the methods used for
-training and inference. Section~\ref{sec:evaluation} presents our
-evaluation of the platform and how different factors can affect
-performance. Section~\ref{sec:comparison} offers a comparison between  
-the Raspberry Pi 3 and other embedded computing platforms to 
-determine their suitably for autonomous driving research.
+testbed. Section~\ref{sec:evaluation} presents extensive real-time
+performance evaluation results we collected on the testbed.
+Section~\ref{sec:comparison} offers a comparison between  
+the Raspberry Pi 3 and other embedded computing platforms.
 %% We discuss more detailed training methods and system-level issues
 %% in~\ref{sec:discussion}. 
 We review related work in
