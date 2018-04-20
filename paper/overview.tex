@@ -128,8 +128,8 @@ camera as input to the network in real-time. At each control period,
 the network produced steering angle output is converted into the PWM values
 of the car's steering motor. Figure~\ref{fig:controlloop} shows simplified 
 pseudo code of the controller's main loop. Among the five steps, the 3rd step, 
-network inferencing, is the most computationally intensive and dominates the
-execution time.
+network inferencing, is the most computationally intensive and is expected to 
+dominate the execution time.
 
 Note that although the steering angle output of the CNN ($angle$) is
 a continuous real value, the RC car we used only supports
