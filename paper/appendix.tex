@@ -1,9 +1,9 @@
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=.9\textwidth]{figs/TrainingLoss}
-  \caption{Change in loss value throughout training.}
-  \label{fig:modelloss}
-\end{figure*}
+%% \begin{figure*}[t]
+%%   \centering
+%%   \includegraphics[width=.9\textwidth]{figs/TrainingLoss}
+%%   \caption{Change in loss value throughout training.}
+%%   \label{fig:modelloss}
+%% \end{figure*}
 
 \subsection{DNN Training and Testing}
 We have trained and tested the deep neural network with several
@@ -19,9 +19,9 @@ track, while the remaining half were of the car driving in the
 opposite direction on the track.
 In total, we collected 2,556 frames for training and 2,609 
 frames for validation.
-The weights of the network are initialized using a Xavier
-initializer~\cite{Glorot2010}, which is known to provide better
-initial values than the random weight assignment method.
+The weights of the network are initialized using the Xavier
+initializer~\cite{Glorot2010}, which is known to perform better
+than a random weight assignment.
 In each training step, we use a batch
 size of 100 frames, which are randomly selected among all the
 collected training images, to optimize the network.
@@ -29,8 +29,8 @@ We repeat this across 2,000 training steps.
 %% When a model was trained
 %% with the  aformentioned data, the training loss was 0.0188 and the
 %% validation  loss was 0.0132.
-Figure~\ref{fig:modelloss} shows the change of the loss value over the
-course of model training.
+%% Figure~\ref{fig:modelloss} shows the change of the loss value over the
+%% course of model training.
 
 In the second method, we use the same data and parameters as  above 
 except that now images are labeled as `curved' and `straight' and we pick an
@@ -47,10 +47,10 @@ performance.
 %% as the former was 0.009, while the latter
 %% was 0.0869
 
-We plan to investigate ways to achieve better prediction accuracy
-in training the network. We also plan to evaluate different RC
-car platforms that have different steering mechanisms to see their
-impact to the control performance.
+%% We plan to investigate ways to achieve better prediction accuracy
+%% in training the network. We also plan to evaluate different RC
+%% car platforms that have different steering mechanisms to see their
+%% impact to the control performance.
 
 \subsection{System-level Factors Affecting Real-Time Performance}
 In using the Raspberry Pi 3 platform, there are a
