@@ -67,7 +67,7 @@ inference operations.
     Image capture        & 1.61  &  1.81 &  1.75  & 0.05 \\ \hline
     Image pre-processing & 2.77  &  2.90 &  2.87  & 0.04 \\ \hline
     CNN inferencing      & 18.49 & 19.30 & 18.99  & 0.20 \\ \hline
-    Total Time           & 22.87 & 23.74 & 23.38  & 0.20 \\ \hline
+    Total Time           & 22.86 & 23.74 & 23.38  & 0.20 \\ \hline
   \end{tabular}
   \caption{Control loop timing breakdown.}
   \label{tbl:control-loop-breakdown}
@@ -86,7 +86,7 @@ dominates the control loop execution time, accounting for about 81\% of
 the execution time.
 
 Second, we find that the measured average
-execution time of a single control loop is 22.87 ms, or 43.7 Hz and
+execution time of a single control loop is 22.86 ms, or 43.7 Hz and
 the 99 percentile time is 23.38 ms.
 This means that the DeepPicar can operate
 at up to 40 Hz control frequency in real-time using only the on-board
@@ -138,7 +138,7 @@ TensorFlow. As expected, as we assign more cores, the average execution
 time decreases---from 46.30 ms on a single core to 22.86 ms on four
 cores (over a 100\% improvement). However, the improvement is far from an ideal
 linear scaling. In particular, from 3 cores to 4 cores, the
-improvement is mere 2.80 ms, or 12\%. In short, we find that the
+improvement is a mere 2.80 ms, or 12\%. In short, we find that the
 scalability of DeepPicar's deep neural network is not ideal.
 
 As noted in~\cite{NVIDIA2015}, CNN inferencing is inherently more
@@ -155,11 +155,11 @@ consolidating multiple different tasks or different neural network
 models rather than allocating all cores for a single neural network
 model.
 For example, it is conceivable to use four cameras and four different
-neural network models, each of which is trained separately for
+neural network models, each of which is trained separately for a
 different purpose and executed on a single dedicated core.
 Assuming we use the same network
 architecture for all models, then one might expect to achieve up to
-20 Hz using one core (given 1 core can deliver 46 ms average
+20 Hz using one core (given that 1 core can deliver 46 ms average
 execution time).
 In the next experiment, we investigate the
 feasibility of such a scenario.
@@ -278,7 +278,7 @@ Figure~\ref{fig:perf_vs_bandwidth} shows the results. Note
 that BwWrite co-runners cause significantly higher execution time
 increases---up to 11.6X---on CNN inferencing while BwRead co-runners
 cause relatively much smaller time increases. While execution time
-increases are expected, the degree that is seen in the worst-case 
+increases are expected, the degree to which that is seen in the worst-case 
 is quite surprising---\emph{if the CNN controller was driving an actual 
 car, it would result in a car crash!}
 

@@ -36,7 +36,7 @@ Cache partitioning is a well-known technique to improve isolation in
 a multicore system by giving a dedicated cache space to each individaul 
 task or core. In this experiment, we use PALLOC~\cite{yun2014rtas}, a
 page-coloring based kernel-level memory allocator for Linux.
-Page coloring is a OS technique that controls the physical addresses
+Page coloring is an OS technique that controls the physical addresses
 of memory pages. By allocating pages over non-overlapping cache sets,
 the OS can effectively partition the cache.
 Using PALLOC, we investigate the effect of cache partitioning on
@@ -103,7 +103,7 @@ assigning one color to each task's cache partition.
   \centering
   \includegraphics[width=.45\textwidth]{figs/palloc_bandwidth_exectime}
   \caption{Average processing time vs. the number of memory
-intensive co-runners; Each core (task) is given a equal-sized
+intensive co-runners; Each core (task) is given an equal-sized
 dedicated cache partition.}
   \label{fig:palloc_bandwidth_exectime}
 \end{figure}
