@@ -121,7 +121,7 @@ number of cores. As noted earlier, the Raspberry Pi 3 platform has
 four Cortex-A53 cores and TensorFlow
 provides a programmable mechanism to adjust how many cores are to be
 used by the library. Leveraging this feature, we repeat the
-experiment in the previous subsection but with using varying
+experiment in the previous subsection but with varying
 numbers of CPU cores---from one to four.
 
 \begin{figure}[h]
@@ -278,7 +278,7 @@ Figure~\ref{fig:perf_vs_bandwidth} shows the results. Note
 that BwWrite co-runners cause significantly higher execution time
 increases---up to 11.6X---on CNN inferencing while BwRead co-runners
 cause relatively much smaller time increases. While execution time
-increases are expected, the degree to which it is seen in the worst-case 
+increases are expected, the degree to which it is seen in the worst-case
 is quite surprising---\emph{if the CNN controller was driving an actual
 car, it would result in a car crash!}
 
