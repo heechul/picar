@@ -6,7 +6,7 @@ of the DeepPicar. This includes
 deep learning inferencing,
 (2) the effect of using multiple cores in accelerating inferencing,
 (3) the effect of co-scheduling multiple deep neural network models,
-and 
+and
 (4) the effect of co-scheduling memory bandwidth intensive co-runners,
 and
 (5) the effect of shared L2 cache partitioning and memory bandwidth
@@ -49,7 +49,7 @@ experimentally measured the execution times of DeepPicar's CNN
 inference operations.
 
 % 50-200Hz for quadcopters:
-% https://robotics.stackexchange.com/questions/231/what-frequency-does-my-quadcopter-output-sense-calculate-output-update-loop-need 
+% https://robotics.stackexchange.com/questions/231/what-frequency-does-my-quadcopter-output-sense-calculate-output-update-loop-need
 % https://quadmeup.com/pid-looptime-why-it-is-not-only-about-frequency/
 
 \begin{figure}[h]
@@ -73,7 +73,7 @@ inference operations.
   \label{tbl:control-loop-breakdown}
 \end{table}
 
-Figure~\ref{fig:control-loop-timing} shows the measured control loop 
+Figure~\ref{fig:control-loop-timing} shows the measured control loop
 processing times of the DeepPicar over 1000 image frames (one per each
 control loop). We omit the first frame's processing time for cache
 warmup. Table~\ref{tbl:control-loop-breakdown} shows the time
@@ -90,12 +90,12 @@ execution time of a single control loop is 22.86 ms, or 43.7 Hz and
 the 99 percentile time is 23.38 ms.
 This means that the DeepPicar can operate
 at up to 40 Hz control frequency in real-time using only the on-board
-Raspberry Pi 3 computing platform, as no remote computing resources 
+Raspberry Pi 3 computing platform, as no remote computing resources
 were necessary. We consider these results surprising given the complexity
 of the deep neural network, and the fact that the inference operation
 performed by TensorFlow only utilizes the CPU cores of the Raspberry Pi 3.
 In comparison, NVIDIA's DAVE-2 system, which has the exact same neural
-network architecture, reportedly runs at 30 Hz~\cite{Bojarski2016}. 
+network architecture, reportedly runs at 30 Hz~\cite{Bojarski2016}.
 Although we believe it was not
 limited by their computing platform (we will experimentally compare
 performance differences among multiple embedded computing platforms,
@@ -118,7 +118,7 @@ attractive real-time workload.
 In this experiment, we investigate the scalability of performing
 inference operations of DeepPicar's neural network with respect to the
 number of cores. As noted earlier, the Raspberry Pi 3 platform has
-four Cortex-A53 cores and TensorFlow 
+four Cortex-A53 cores and TensorFlow
 provides a programmable mechanism to adjust how many cores are to be
 used by the library. Leveraging this feature, we repeat the
 experiment in the previous subsection but with using varying
@@ -148,7 +148,7 @@ parallel), is not available or is limited. Specifically, in DeepPicar,
 only one image frame, obtained from the camera, can be processed at a
 time. Thus, more fine-grained algorithmic parallelization is needed to
 improve inference performance~\cite{NVIDIA2015}, which generally does
-not scale well. 
+not scale well.
 
 On the other hand, the limited scalability opens up the possibility of
 consolidating multiple different tasks or different neural network
@@ -174,8 +174,8 @@ neural network models, that have the same network architecture, and
 run them simultaneously.
 %% These instances are not identical
 %% copies of the same model, but are instead copies of different models
-%% (but of the same network architecture). 
-%% This is done to ensure that no L2 cache memory is shared between the 
+%% (but of the same network architecture).
+%% This is done to ensure that no L2 cache memory is shared between the
 %% models as they are running.
 
 \begin{figure}[h]
@@ -184,7 +184,7 @@ run them simultaneously.
   \caption{Timing impact of co-scheduling multiple CNNs. 1Nx1C: one CNN
     model using one core; 4Nx1C: four CNN models each using one core;
     1Nx2C: one CNN model using two cores; 2Nx2C: two CNN models each
-    using two cores.} 
+    using two cores.}
   \label{fig:perf-vs-modelcnt}
 \end{figure}
 
@@ -201,7 +201,7 @@ suffers an average inference time increase of approximately 11 ms,
 or 24\%. On the other hand, when two CNN models, each using two CPU
 cores, are co-scheduled (2Nx2C), the average inference timing is increased by
 about 4 ms, or 13\%, compared to the baseline of running one model
-using two CPU cores (1Nx2C). 
+using two CPU cores (1Nx2C).
 
 These increases in inference times in the co-scheduled scenarios are
 expected because co-scheduled tasks on a
@@ -213,7 +213,7 @@ cache and DRAM~\cite{Gracioli2015,Yun2013}.
 %%   \centering
 %%   \includegraphics[width=.7\textwidth]{figs/l2missrate_vs_modelcnt}
 %%   \caption{L2 cache miss rates of different neural network and core
-%%     assignments. X-axis is the same as Figure~\ref{fig:perf-vs-modelcnt}.} 
+%%     assignments. X-axis is the same as Figure~\ref{fig:perf-vs-modelcnt}.}
 %%   \label{fig:l2missrate-vs-modelcnt}
 %% \end{figure}
 
@@ -223,11 +223,11 @@ cache and DRAM~\cite{Gracioli2015,Yun2013}.
 %% co-scheduling other models. If the shared L2 cache is the primary
 %% source of inteference, then the measured L2 miss rates will
 %% increase. Figure~\ref{fig:l2missrate-vs-modelcnt} shows the results.
-%% As can be see in the figure, L2 miss rates increase as more models are 
+%% As can be see in the figure, L2 miss rates increase as more models are
 %% co-scheduled, but the increase is less than expected.
-%% This suggests that the shared L2 cache is not the main bottleneck that 
-%% causes execution time increases. In other words, DNN models don't appear 
-%% to be significantly affected by the shared L2 cache space. 
+%% This suggests that the shared L2 cache is not the main bottleneck that
+%% causes execution time increases. In other words, DNN models don't appear
+%% to be significantly affected by the shared L2 cache space.
 %% % L2 partitioning is probably not going to be useful.
 %% Instead, we hypothesize that it is likely caused by the memory
 %% controller---the only other major shared hardware source---where
@@ -241,22 +241,22 @@ cache and DRAM~\cite{Gracioli2015,Yun2013}.
 %% hypothesis.
 
 \subsection{Effect of Co-scheduling Synthetic Memory Intensive
-  Tasks}\label{sec:eval-memhog} 
+  Tasks}\label{sec:eval-memhog}
 
-In this experiment, we investigate the \emph{worst-case} impact of shared 
-resource contention on DeepPicar's CNN inference timing using  
+In this experiment, we investigate the \emph{worst-case} impact of shared
+resource contention on DeepPicar's CNN inference timing using
 a synthetic memory benchmark. Specifically, we use the \emph{Bandwidth}
 benchmark from the IsolBench suite~\cite{Valsan2016}, which
-sequentially reads or writes a big array; we henceforth refer to BwRead 
+sequentially reads or writes a big array; we henceforth refer to BwRead
 as Bandwidth with read accesses and BwWrite as the one with write
 accesses. The experiment setup is as follows: We run a single CNN
 model on one core, and co-schedule an increasing number of the
 Bandwidth benchmark instances on the other cores. We repeat the
 experiement first with BwRead and next with BwWrite.
 
-%% ~\footnote{\texttt{\$ bandwdith -a read  -m 16384 -t 1000}} 
+%% ~\footnote{\texttt{\$ bandwdith -a read  -m 16384 -t 1000}}
 %% ~\footnote{\texttt{\$ bandwdith -a write -m 16384 -t 1000}}.
-  
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth}
@@ -268,7 +268,7 @@ experiement first with BwRead and next with BwWrite.
 %% \begin{figure}[h]
 %%   \centering
 %%   \includegraphics[width=.45\textwidth]{figs/perf_vs_bandwidth_mem}
-%%   \caption{Effect of memory performance hogs on the shared resources. 
+%%   \caption{Effect of memory performance hogs on the shared resources.
 %%     The DNN model uses Core 0 and memory-hog co-runners
 %%     use the rest of the cores.}
 %%   \label{fig:perf_vs_bandwidth_mem}
@@ -278,8 +278,8 @@ Figure~\ref{fig:perf_vs_bandwidth} shows the results. Note
 that BwWrite co-runners cause significantly higher execution time
 increases---up to 11.6X---on CNN inferencing while BwRead co-runners
 cause relatively much smaller time increases. While execution time
-increases are expected, the degree to which that is seen in the worst-case 
-is quite surprising---\emph{if the CNN controller was driving an actual 
+increases are expected, the degree to which it is seen in the worst-case 
+is quite surprising---\emph{if the CNN controller was driving an actual
 car, it would result in a car crash!}
 
 Given the importance of predictable timing for real-time control, such
@@ -288,7 +288,7 @@ source of the timing and (2) evaluate existing isolation methods to
 avoid this kind of timing interference. Specifically, shared cache
 space and DRAM bandwidth are the two most well-known sources of contention
 in multicore systems. Thus, in the following sections, we investigate whether
-and to what extent they influence the observed timing interference and 
+and to what extent they influence the observed timing interference and
 the effectiveness of existing mitigation methods.
 
 %% To our surprise, we find that neither
@@ -301,9 +301,9 @@ the effectiveness of existing mitigation methods.
 
 %% Figure~\ref{fig:perf_vs_bandwidth_mem} shows both the normalized
 %% total memory bus accesses (first group) and L2 miss rates (second group).
-%% In both figures, the DNN model is running on Core 0 as a function of the 
+%% In both figures, the DNN model is running on Core 0 as a function of the
 %% number of co-scheduled memory intensive synthetic benchmarks.
-%% %% We also show 
+%% %% We also show
 %% %% the normalized total system bus access count (middle group), which is
 %% %% representative of memory bandwidth usage of all the cores.
 %% First, as we
@@ -331,15 +331,15 @@ the effectiveness of existing mitigation methods.
 %% solutions for DeepPicar's DNN processing workload, as cache
 %% partitioning does not provide memory performance guarantees.
 
-%% We do find the performance of the model in the presence of 
+%% We do find the performance of the model in the presence of
 %% write co-runners surprising, as it has been previously shown in experiments
-%% on another in-order ARM core, the Cortex A7, that write interference was not as 
-%% significant\cite{Valsan2016}. We also tested the model, in the presence of write 
-%% co-runners, on the A7 cores of the Odroid XU4 platform to see if  the same model 
-%% behavior would also be seen there. The results can be seen in Figure ~\ref{fig:a53_vs_a7}. 
+%% on another in-order ARM core, the Cortex A7, that write interference was not as
+%% significant\cite{Valsan2016}. We also tested the model, in the presence of write
+%% co-runners, on the A7 cores of the Odroid XU4 platform to see if  the same model
+%% behavior would also be seen there. The results can be seen in Figure ~\ref{fig:a53_vs_a7}.
 %% As expected, when the model is run on A7 cores, the intereference of the write
-%% co-runners is not as impactful on model performance as it can still operate at 
-%% under 10 Hz. 
+%% co-runners is not as impactful on model performance as it can still operate at
+%% under 10 Hz.
 
 %% Instead, memory controller focused isolation solutions,
 %% either hardware or software-based ones (e.g.,~\cite{Guo2017,Yun2013}),
@@ -359,13 +359,13 @@ the effectiveness of existing mitigation methods.
 %% 3, offers sufficient computing capacity to perform deap-learning based
 %% real-time control at 30 Hz frequency (or 33.3 ms per control
 %% loop). Given the complexity of the DNN used, we were pleasantly
-%% surprised by this finding. 
-%% %% The time breakdown shows that the DNN inferencing operation, 
-%% %% performed by the Tensorflow library, dominates the execution time, 
+%% surprised by this finding.
+%% %% The time breakdown shows that the DNN inferencing operation,
+%% %% performed by the Tensorflow library, dominates the execution time,
 %% %% which is expected.
 
-%% Second, we find that scalability of Tensorflow's DNN 
-%% implementation is limited. We find that using all four cores can double 
+%% Second, we find that scalability of Tensorflow's DNN
+%% implementation is limited. We find that using all four cores can double
 %% performance of the CNN, but compared to using three cores, performance
 %% improvement is relatively minimal.
 
@@ -387,12 +387,12 @@ the effectiveness of existing mitigation methods.
 %% memory bandwidth throttling is effective in improving performance
 %% isolation.
 
-%% To the 
-%% contrary, performance is constant regardless of the amount of cache 
-%% space used. Furthermore, we find that performance remains consistent 
+%% To the
+%% contrary, performance is constant regardless of the amount of cache
+%% space used. Furthermore, we find that performance remains consistent
 %% when memory intensive read co-runners are introduced, even though
-%% the model has its own isolated cache space. As such, we 
-%% conclude that the shared L2 cache is not essential to the DNN's real-time 
+%% the model has its own isolated cache space. As such, we
+%% conclude that the shared L2 cache is not essential to the DNN's real-time
 %% performance.
 
 %% Lastly, we find that memory bandwidth throttling results in significant
@@ -400,5 +400,5 @@ the effectiveness of existing mitigation methods.
 %% we find that it performs worse. When memory intensive co-runners are
 %% present, we find that limiting the available bandwidth of the co-runners
 %% results in significantly improved model execution times. As such, we conclude
-%% that the shared DRAM memory is essential to the DNN's real-time 
+%% that the shared DRAM memory is essential to the DNN's real-time
 %% performance.

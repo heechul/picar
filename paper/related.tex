@@ -7,7 +7,7 @@
 %%   2) But, the CNN model is rather smaller-kind with respect to today's
 %%   state-of-the-art CNNs, which are much bigger.
 %%   3) disscuss google's object detection api
-%%   paper~\cite{huang2017speed}. 
+%%   paper~\cite{huang2017speed}.
 %%   4) Applying these much more complex DNNs (such as google's detection
 %%   models) may be challenging for embedded computing
 %%   platforms.
@@ -34,8 +34,8 @@ workload on diverse embedded computing platforms.
 
 In this paper, we have analyzed real-time performance of a real-world
 CNN, which was used in NVIDIA's DAVE-2 self-driving
-car~\cite{Bojarski2016}, on a low-cost raspberry pi 3 quad-core 
-platform and other embedded multicore platforms. It should be noted, 
+car~\cite{Bojarski2016}, on a low-cost Raspberry Pi 3 quad-core 
+platform and other embedded multicore platforms. It should be noted,
 however, that DAVE-2's CNN is relatively small compared
 to recent state-of-the-art CNNs, which are increasingly larger and
 deeper. For example, the CNN based object detector models evaluated in
@@ -49,11 +49,11 @@ real-time applications such as self-driving cars.
 %% DAVE-2. Such DNN's can be seen in Google's Object Detection API
 %% The smallest model available in the API is the MobileNet model, which
 %% has 3,191,072 parameters and is approximately 12.7 larger than the
-%% model used by the DeepPicar. The other models all have parameter sizes 
-%% of at least 10 million. Due to the considerable differences in the 
+%% model used by the DeepPicar. The other models all have parameter sizes
+%% of at least 10 million. Due to the considerable differences in the
 %% model sizes, it is likely that running them on platforms like the Pi 3,
-%% and still get acceptable real-time performance would be difficult, 
-%% if not infeasible. 
+%% and still get acceptable real-time performance would be difficult,
+%% if not infeasible.
 
 %% % related work on efficient DNN representation and processing.
 %% While repeated feedforward and backpropagation operations during
@@ -97,20 +97,20 @@ The XNOR operation and bit counting have been known to be efficient in
 hardware implementations. In~\cite{rastegari2016xnor}, it was shown
 that the binarized convolution could substitute the expensive
 convolutional feedforward operations in a regular CNN, by using only
-about 1.5\% of the memory space, while 
+about 1.5\% of the memory space, while
 providing 20 to 60 times faster feedforward. Binary weights were also
 able to provide 7 times faster feedforward than a floating-point
 network for the hand written digit recognition task as well as 23
 times faster matrix multiplication tasks on a
 GPU~\cite{hubara2016binarized}.
 Moreover, FPGA implementations showed that the XNOR operation is 200
-times cheaper than floating-point multiplications with 
+times cheaper than floating-point multiplications with
 single precision~\cite{beauchamp2006embedded,govindu2004analysis}.
 XNOR-POP is another hardware implementation that reduced
 the energy consumption of a CNN by 98.7\%~\cite{jiang2017xnor}.
 
 These research efforts are expected to make complex CNNs accessible
-for a wider range of real-time embedded systems. We plan to 
+for a wider range of real-time embedded systems. We plan to
 investigate the feasibility of these approaches in the context of
 DeepPicar so that we can use even more resource constrained
 micro-controller class computing platforms in place of the current
@@ -127,11 +127,11 @@ Raspberry Pi 3.
 %%   car. Our work is fully reproducible at a very low cost, lowring the
 %%   barrier to entry in researching self-driving cars, helping the
 %%   community blah blah blah.}
-  
 
-%% and the ability of the car to navigate the desired environment. We are 
+
+%% and the ability of the car to navigate the desired environment. We are
 %% more focused on the real-time performance of the DeepPicar, and whether
-%% the Raspberry Pi 3 embedded computing platform can properly support autonomous 
+%% the Raspberry Pi 3 embedded computing platform can properly support autonomous
 %% vehicle operations. To the best of our knowledge, no other studies have
 %% been done to evaluate the capabilities of the Pi 3 for running DNNs and
 %% performing autonomous vehicle operations.
